@@ -1,13 +1,12 @@
 "use client";
-import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image"; // Assicurati che Image sia importato
-import "./fotovoltaico.css"; // ✅ Importa il CSS
-import ModuloContatti from './ModuloContatti';
+import ModuloContatti from "./ModuloContatti";
+  
 
 const FotovoltaicoPage = () => {
   return (
@@ -55,18 +54,30 @@ const FotovoltaicoPage = () => {
     <br/> investi nel tuo futuro rispettando l'ambiente
   </motion.h1>
   <motion.p
-    className="mt-6 text-lg text-justify p-6 rounded-lg text-3xl px-4 md:px-53 text-yellow-400" // Modifica il colore del testo a oro
+    className="mt-6 text-lg text-justify p-6 rounded-lg text-3xl px-4 md:px-46 text-yellow-400" // Modifica il colore del testo a oro
     style={{ fontSize: "1.2rem" }}
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
 >
-  Scegliere un impianto fotovoltaico significa abbracciare un futuro di energia pulita, indipendenza economica e responsabilità ambientale. Immagina di ridurre drasticamente le tue bollette elettriche, fino al 90%, producendo energia direttamente dal sole. Un investimento intelligente che si ripaga in pochi anni, grazie agli incentivi fiscali del 50% e al meccanismo dello scambio sul posto per impianti installati entro il 29 maggio 2025.
+  Scegliere un impianto fotovoltaico significa abbracciare un futuro di energia pulita, indipendenza economica e responsabilità ambientale. Immagina di ridurre drasticamente le tue bollette elettriche, fino al 90%, producendo energia direttamente dal sole. Un investimento intelligente che si ripaga in pochi anni, grazie agli incentivi fiscali del 50% e al meccanismo dello scambio sul posto per impianti installati entro il 29 maggio 2025. Se abiti in un comune con meno di 5.000 abitanti, è possibile installare un impianto fotovoltaico con un contributo a fondo perduto fino al 40% delle spese ammissibili, grazie al PNRR. Per accedere a questo incentivo, è necessario far parte di una Comunità Energetica Rinnovabile (CER). 
 </motion.p>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-8">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-0">
         <a href="#modulo-contatti"> {/* Modifica il pulsante in un link */}
-          <Button className="bg-blue-400 text-black hover:bg-yellow-500">Richiedi un Preventivo</Button>
+          <Button className="bg-blue-500 text-white text-l font-semibold hover:bg-blue-600">Contattaci subito</Button>
           </a>
         </motion.div>
+        <div className="grid md:grid-cols-1 gap-6 items-center max-w-6xl mx-auto mt-8">
+      
+      <Image
+        src="/images/Volantino fotovoltaico.png"
+        alt="Offerta fotovoltaico"
+        width={1144}
+        height={600}
+        className="rounded-xl shadow-xl max-w-full h-auto"
+      priority
+      />
+    </div>
+    <div className="text-2xl font-bold flex justify-center gap-6 mt-20">Scopri tutti i vantaggi che ti offre un'impianto fotovoltaico</div>
 
         <div className="grid md:grid-cols-3 gap-6 mt-8 px-6 max-w-6xl mx-auto">
           {[{
@@ -93,7 +104,7 @@ const FotovoltaicoPage = () => {
 {/* Servizi Section */}
 <section className="py-10 px-6 max-w-6xl mx-auto">
   <h2 className="font-bold text-center text-gray-800" style={{ fontSize: "1.7rem" }}>
-    Perchè scegliere noi
+    Perchè scegliere noi?
   </h2>
   <p className="font-bold text-center text-gray-800" style={{ fontSize: "1.2rem" }}>
     Scopri quanto puoi risparmiare con un impianto fotovoltaico, ti offriamo un servizio completo e senza pensieri:
@@ -147,13 +158,13 @@ const FotovoltaicoPage = () => {
         imgSrc: "/pannelli+inverter.jpeg",
         title: "Impianto standard",
         description: "Pannelli fotovoltaici + inverter ibrido senza batteria di accumulo",
-        filePath: "/moduli-inverter.pdf",
+        filePath: "/moduli+inverter.pdf",
       },
       {
         imgSrc: "/pannelli+inverter+batteria.jpeg",
         title: "Impianto plus",
         description: "Pannelli fotovoltaici + inverter ibrido + batteria di accumulo",
-        filePath: "/moduli-inverter-batteria.pdf",
+        filePath: "/moduli+inverter+batteria.pdf",
       },
     ].map((offer, index) => (
       <div key={index} className="shadow-lg bg-white rounded-lg overflow-hidden">
@@ -179,11 +190,13 @@ const FotovoltaicoPage = () => {
 </section>
 
       {/* Contatti Section */}
-      <section className="bg-black text-white py-10 text-center">
+      <section className="bg-black text-white py-6 text-center">
         <h2 className="font-bold text-center text-gray-800" style={{ fontSize: "1.7rem" }}>Non aspettare, contattaci!</h2>
-        <p className="font-bold text-center text-gray-800" style={{ fontSize: "1.2rem" }}>Fai una scelta consapevole per il tuo portafoglio e per il pianeta. 
+        <p className="font-bold text-center text-gray-800 p-2" style={{ fontSize: "1.2rem" }}>Fai una scelta consapevole per il tuo portafoglio e per il pianeta. 
           <br/>Richiedi un preventivo gratuito e scopri come l'energia solare può trasformare la tua vita.</p>
-          <ModuloContatti /> {/* Sostituisci il pulsante con il modulo */}
+          <div id="modulo-contatti">
+  <ModuloContatti destinatarioEmail="fotovoltaico@faccio-tutto.it" />
+</div>
       </section>
       {/* Footer */}
       <footer className="text-center mt-8 p-6 bg-gray-900 text-gray-300">

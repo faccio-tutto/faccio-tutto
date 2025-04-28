@@ -1,0 +1,34 @@
+/* Stili per il contenitore di CardContent */
+.card-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* (Opzionale) Stili aggiuntivi per le card */
+  #progettazione {
+    /* Stili specifici per la card "progettazione" */
+    background-color: lightblue;
+    border: 1px solid black;
+  }
+  
+  #fotovoltaico {
+    /* Stili specifici per la card "fotovoltaico" */
+    background-color: lightyellow;
+  }
+  
+  /* ... e così via ... */
+  
+  /* Puoi anche aggiungere stili globali qui, ma è meno comune in CSS Modules */
+
+  .header {
+    text-align: center;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background-color: black;
+  }
+
+  html, body {
+    background-color: black !important;
+  }

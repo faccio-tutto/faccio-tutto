@@ -1,0 +1,535 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-sans: Arial, Helvetica, sans-serif; /* Aggiungi un fallback se necessario */
+  --font-mono: monospace; /* Aggiungi un fallback se necessario */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans); /* Usa la variabile CSS per la font */
+}
+
+.bg-custom {
+  background-image: url('/images/architect-multitasking.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.card-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  box-sizing: border-box; /* Assicura che le dimensioni siano calcolate correttamente */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+  transition: transform 0.3s ease; /* Aggiungi la transizione qui */
+}
+
+.card-button:hover .card {
+  transform: scale(1.05);
+}
+
+.card-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.progettazione-container {
+  font-family: var(--font-sans);
+  padding: 20px;
+}
+
+.progettazione-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.progettazione-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.progettazione-header p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.services-section {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+}
+
+.service-card {
+  background-color: #f9f9f9;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 30%;
+}
+
+.service-card h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.service-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.gallery-section {
+  text-align: center;
+}
+
+.gallery-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.gallery {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.gallery img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.container {
+  font-family: var(--font-sans);
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  background-color: #282c34;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.title {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.intro, .work {
+  margin: 40px 0;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.icons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.image {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 20px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.footer {
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 1rem;
+  color: #333;
+  border-radius: 10px;
+}
+
+/* App.css */
+.container {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.header {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.title {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.intro {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.intro-content {
+  position: relative;
+  z-index: 1;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.icons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.services {
+  padding: 40px;
+}
+
+.services-grid {
+  display: flex;
+  justify-content: space-around;
+}
+
+.service-card {
+  width: 300px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.gallery {
+  padding: 40px;
+}
+
+.gallery-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.image {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.footer {
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+/* App.css */
+.container {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+}
+
+.sidebar {
+  width: 400px;
+  padding: 20px;
+}
+
+.sidebar img {
+  width: 100%;
+  height: auto;
+}
+
+/* ... (altri stili) ... */
+
+.container {
+  display: flex;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.sidebar {
+  width: 300px;
+  padding: 20px;
+}
+
+.sidebar img {
+  width: 100%;
+  height: auto;
+}
+
+/* Aggiungi altri stili per header, footer, ecc. */
+
+/* Container principale */
+.container {
+  font-family: 'Arial', sans-serif;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+/* Header */
+.header {
+  grid-column: span 3;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* Sezione Introduzione */
+.intro {
+  margin-bottom: 20px;
+}
+
+.intro h2 {
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.intro p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+/* Sezione Direzione Lavori */
+.work {
+  margin-top: 40px;
+}
+
+.work h2 {
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.work p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Galleria di immagini per il design */
+.gallery {
+  display: flex;
+  gap: 10px;
+}
+
+.gallery img {
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar */
+.sidebar {
+  grid-column: span 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.sidebar img {
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar p {
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Footer */
+.footer {
+  grid-column: span 3;
+  text-align: center;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar {
+    display: none;
+  }
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+header nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header .logo h1 {
+  font-size: 2.5em;
+}
+
+header .logo p {
+  font-size: 1.2em;
+}
+
+.section {
+  padding: 40px;
+  margin: 20px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.product {
+  margin: 20px 0;
+}
+
+.product h3 {
+  font-size: 1.6em;
+  margin-bottom: 10px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+form label {
+  font-weight: bold;
+}
+
+form input, form textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+}
+
+form button {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #555;
+}
+
+footer {
+  background-color: #000000;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  margin-top: 2px;
+}

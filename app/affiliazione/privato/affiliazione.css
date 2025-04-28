@@ -1,0 +1,92 @@
+/* Stile generale del form */
+.affiliazione-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  /* Stile degli input e textarea */
+  .affiliazione-form input,
+  .affiliazione-form textarea,
+  .affiliazione-form button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  /* Stile del pulsante */
+  .affiliazione-form button {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .affiliazione-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Stile dell'input file */
+  .affiliazione-form input[type="file"] {
+    display: none;
+  }
+  
+  .file-upload-label {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .file-upload-label:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Messaggi di errore */
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+
+ /* Riduce lo spazio tra checkbox e testo */
+.flex.items-center.space-x-2 {
+    gap: 6px; /* Distanza minima tra checkbox e testo */
+  }
+  
+  /* Evita che il testo si allinei in modo errato */
+  .text-lg.leading-none {
+    line-height: 1.2;
+  }
+  
+  /* Pulsante "Carica modello ricevuta" */
+  .file-upload-label {
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .file-upload-label:hover {
+    background-color: #218838;
+  }
+
+  .affiliazione-form input,
+.affiliazione-form textarea {
+    color: black; /* Imposta il colore del testo a nero */
+}

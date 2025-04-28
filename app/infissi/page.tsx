@@ -1,11 +1,14 @@
 "use client";
 import React, { useState } from 'react';
 import Image from "next/image";
+import { FaToggleOn } from "react-icons/fa";
+import ModuloContatti from './ModuloContatti';
 
 export default function InfissiPage() {
   const [dimensioni, setDimensioni] = useState(Array(10).fill(''));
-  const [materiale, setMateriale] = useState('alluminio');
-  const [accessorio, setAccessorio] = useState('persiana');
+  const [colore, setColore] = useState('Seleziona un colore');
+  const [materiale, setMateriale] = useState('Seleziona un materiale');
+  const [accessori, setAccessori] = useState('Seleziona un accessorio');
   const [nome, setNome] = useState('');
   const [cognome, setCognome] = useState('');
   const [email, setEmail] = useState('');
@@ -14,17 +17,17 @@ export default function InfissiPage() {
   const [città, setCittà] = useState('');
   const [privacy, setPrivacy] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (!privacy) {
       alert("Devi accettare la privacy policy per continuare.");
       return;
     }
-    console.log({ dimensioni, materiale, accessorio, nome, cognome, email, telefono, via, città, privacy });
+    console.log({ dimensioni, colore, materiale, accessori, nome, cognome, email, telefono, via, città, privacy });
     // Aggiungi qui la logica per inviare i dati del form
   };
 
-  const handleDimensioniChange = (index, value) => {
+  const handleDimensioniChange = (index: number, value: string) => {
     const newDimensioni = [...dimensioni];
     newDimensioni[index] = value;
     setDimensioni(newDimensioni);
@@ -141,12 +144,16 @@ export default function InfissiPage() {
         </div>
       </section>
 
+      {/* Servizi + ModuloContatti Affiancati */}
+<section className="bg-brown-800 py-16 px-6">
+  <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10">
+
       {/* Servizi Section */}
       <section className="bg-brown-800 py-16 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
-          <div className="md:w-1/2">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10">
+          <div className="md:w-2/2">
             <h2 className="text-4xl font-bold text-center md:text-left mb-8">I Nostri Servizi</h2>
-            <ul className="text-lg list-disc list-inside space-y-4">
+            <ul className="text-lg list-disc list-inside space-y-6">
               <li>Sopralluogo e rilievo misure</li>
               <li>Progettazione Personalizzata</li>
               <li>Consulenza Energetica</li>
@@ -162,78 +169,18 @@ export default function InfissiPage() {
               <li>Installazione di Sistemi di Domotica</li>
             </ul>
           </div>
-          <div className="md:w-2/2 p-0 bg-brown rounded-lg">
-            <h3 className="text-2xl font-semibold mb-4 text-center">Compila tutti i campi</h3>
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="dimensioni" className="block text-sm font-medium mb-2">
-                  Dimensioni serramenti (Larghezza x Altezza)
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {dimensioni.map((dimensione, index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      placeholder="cm."
-                      value={dimensione}
-                      onChange={(e) => handleDimensioniChange(index, e.target.value)}
-                      className="p-2 border rounded bg-gray-700"
-                    />
-                  ))}
-                </div>
-              </div>
-              <div>
-                <label htmlFor="accessorio" className="block text-sm font-medium mb-2">Accessori</label>
-                <select id="accessorio" value={accessorio} onChange={(e) => setAccessorio(e.target.value)} className="p-2 border rounded bg-gray-700 w-full">
-                  <option value="persiana">Persiana</option>
-                  <option value="tapparella">Tapparella</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="materiale" className="block text-sm font-medium mb-2">Materiale</label>
-                <select id="materiale" value={materiale} onChange={(e) => setMateriale(e.target.value)} className="p-2 border rounded bg-gray-700 w-full">
-                  <option value="alluminio">Alluminio</option>
-                  <option value="pvc">PVC</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="nome" className="block text-sm font-medium mb-2">Nome</label>
-                <input type="text" id="nome" value={nome} onChange={(e) => setNome(e.target.value)} className="p-2 border rounded bg-gray-700 w-full" required />
-              </div>
-              <div>
-                <label htmlFor="cognome" className="block text-sm font-medium mb-2">Cognome</label>
-                <input type="text" id="cognome" value={cognome} onChange={(e) => setCognome(e.target.value)} className="p-2 border rounded bg-gray-700 w-full" required />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">Indirizzo e-mail</label>
-                <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="p-2 border rounded bg-gray-700 w-full" required />
-              </div>
-              <div>
-                <label htmlFor="telefono" className="block text-sm font-medium mb-2">Telefono</label>
-                <input type="tel" id="telefono" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="p-2 border rounded bg-gray-700 w-full" />
-              </div>
-              <div>
-                <label htmlFor="via" className="block text-sm font-medium mb-2">Via</label>
-                <input type="text" id="via" value={via} onChange={(e) => setVia(e.target.value)} className="p-2 border rounded bg-gray-700 w-full" />
-              </div>
-              <div>
-                <label htmlFor="città" className="block text-sm font-medium mb-2">Città</label>
-                <input type="text" id="città" value={città} onChange={(e) => setCittà(e.target.value)} className="p-2 border rounded bg-gray-700 w-full" />
-              </div>
-              <div className="flex items-center">
-                <input type="checkbox" className="mr-2" checked={privacy} onChange={(e) => setPrivacy(e.target.checked)} />
-                <label className="text-sm text-gray-400">
-                  Acconsento al trattamento dei miei dati personali secondo la normativa sulla privacy.
-                </label>
-              </div>
-              <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mt-4">
-                Richiedi Preventivo
-              </button>
-            </form>
-          </div>
-        </div>
+        </div>      
       </section>
 
+       {/* Colonna Modulo Contatti */}
+    <div className="md:w-1/2 md:pl-6">
+      <h2 className="text-3xl font-bold text-center mb-6 text-white"></h2>
+      <ModuloContatti destinatarioEmail="infissi@faccio-tutto.it" />
+    </div>
+
+  </div>
+</section>
+      
       {/* Footer */}
       <footer className="bg-gray-900 py-8 text-center">
         <p className="text-gray-400">&copy; 2025 faccio-tutto.it | Tutti i diritti riservati</p>
