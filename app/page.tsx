@@ -105,7 +105,7 @@ export default function HomeRepairService() {
     <a href={service.link} key={service.id} className="block transform transition duration-300 hover:scale-105">
       <Card>
   <CardContent>
-    <div className="p-4 text-center shadow-lg rounded-lg w-[500px] h-44 flex flex-col justify-center items-center">
+    <div className="p-4 text-center shadow-lg w-[500px] h-44 flex flex-col justify-center items-center">
       {service.icon}
       <h2 className={`title-${service.id}`}>{service.title}</h2>
       <p className="text-xs text-gray-700">{service.desc}</p>
