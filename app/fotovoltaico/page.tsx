@@ -102,7 +102,7 @@ const FotovoltaicoPage = () => {
 
 
 {/* Servizi Section */}
-<section className="py-10 px-6 max-w-6xl mx-auto">
+<section className="py-10 px-8 max-w-6xl mx-auto">
   <h2 className="font-bold text-center text-gray-800" style={{ fontSize: "1.7rem" }}>
     Perchè scegliere noi?
   </h2>
@@ -176,7 +176,7 @@ const FotovoltaicoPage = () => {
       <p className="text-gray-600 mt-0">{offer.description}</p>
       <div className="mt-6">
         <a href={offer.filePath} target="_blank" rel="noopener noreferrer">
-          <Button className="bg-yellow-400 text-black hover:bg-yellow-500">
+          <Button className="bg-yellow-400 text-white font-semibold hover:bg-yellow-500">
             Guarda la scheda tecnica
           </Button>
         </a>

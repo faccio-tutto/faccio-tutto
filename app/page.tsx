@@ -64,7 +64,7 @@ export default function HomeRepairService() {
       </section>
 
       {/* Servizi */}
-<div className="grid md:grid-cols-3 gap-6 bg-white bg-opacity-80 p-6 rounded-lg mt-6">
+<div className="grid md:grid-cols-3 gap-6 bg-white bg-opacity-80 p-6 mt-6">
   {[{
     id: "progettazione",
     icon: <FaDraftingCompass className="text-3xl mb-12 text-purple-500" />, 

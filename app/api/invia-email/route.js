@@ -22,7 +22,7 @@ export async function POST(request) {
   const emailDestinatario = destinatarioEmail || process.env.MAIL_DESTINATARIO_INFISSI;
 
   const contenutoMail = `
-Hai ricevuto una nuova richiesta di preventivo per un impianto fotovoltaico dal sito faccio-tutto.it:
+Hai ricevuto una nuova richiesta di preventivo dal sito faccio-tutto.it:
 
 📌 **Dati utente**
 - Nome: ${nome}

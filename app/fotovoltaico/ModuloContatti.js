@@ -44,12 +44,12 @@ function ModuloContatti({ destinatarioEmail }) {
   };
 
   try {
-    const res = await fetch('/api/invia-email', {
+    const res = await fetch(`${window.location.origin}/api/invia-email`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
 
     if (res.ok) {

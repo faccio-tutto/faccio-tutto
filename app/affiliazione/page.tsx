@@ -34,13 +34,18 @@ export default function AffiliazionePage() {
 
       {/* Affiliazione Section */}
       <div className="p-6 flex flex-col items-center">
-        <h1 className="text-4xl font-bold mb-6 text-center text-white-500">Diventa Parte della Nostra Rete di Affiliazione</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-red-500">Diventa Parte della Nostra Rete di Affiliazione</h1>
         <p style={{ fontSize: '1.2rem', color: 'white', textAlign: 'justify' }} className="max-w-6xl mb-10">
   Siamo alla ricerca di privati e aziende che vogliano entrare a far parte del nostro network di affiliazione. Offriamo opportunità vantaggiose e supporto completo per aiutarti a crescere nel mondo dei servizi pratici e occasionali.
         </p>
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* Affiliazione per Privati */}
           <div className="bg-gray-300 shadow-lg rounded-lg p-6 text-center">
+          <img
+    src="/images/affiliazione-privato.jpeg" // Assicurati che il file sia nella cartella /public/images
+    alt="Affiliazione Privato"
+    className="w-full h-100 object-cover rounded-md mb-4"
+  />
             <FaUserTie className="text-4xl mb-4 text-yellow-500" />
             <h2 className="text-2xl font-semibold mb-4">Affiliazione per Privati</h2>
             <p style={{ fontSize: '1.0rem', color: 'black', textAlign: 'center' }} className="max-w-6xl mb-10">
@@ -55,6 +60,11 @@ export default function AffiliazionePage() {
 
           {/* Affiliazione per Aziende */}
           <div className="bg-gray-300 shadow-lg rounded-lg p-6 text-center">
+          <img
+    src="/images/affiliazione-azienda.jpeg" // Assicurati che il file sia nella cartella /public/images
+    alt="Affiliazione Azienda"
+    className="w-full h-100 object-cover rounded-md mb-4"
+  />
             <FaBusinessTime className="text-4xl mb-4 text-red-500" />
             <h2 className="text-2xl font-semibold mb-4">Affiliazione per Aziende</h2>
             <p style={{ fontSize: '1.0rem', color: 'black', textAlign: 'center' }} className="max-w-6xl mb-10">
