@@ -87,14 +87,14 @@ export default function InfissiPage() {
 </div>
       </section>
 
-      {/* Cosa Offriamo Section */}
-      <section className="py-16 px-18 text-center">
+  {/* Cosa Offriamo Section */}
+  <section className="py-16 px-18 text-center">
         <h2 style={{ fontSize: "1.8rem", fontWeight: "bold", marginBottom: "2.5rem", color: "#8B4513" }}>Cosa Offriamo</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="flex flex-col items-center">
             <div className="relative w-48 h-32 md:w-96 md:h-64 overflow-hidden rounded-lg mb-4">
               <Image
-                src="/infissi-alluminio.jpg" // Sostituisci con l'immagine degli infissi in alluminio
+                src="/infissi-alluminio.jpg"
                 alt="Infissi in alluminio"
                 layout="fill"
                 objectFit="contain"
@@ -103,34 +103,34 @@ export default function InfissiPage() {
             <div className="bg-gray-100 border border-gray-100 rounded-lg p-6">
               <h3 className="text-2xl text-black font-semibold mb-4">Infissi in alluminio a taglio termico</h3>
               <p className="text-lg font-semibold mb-0">Varietà di infissi in alluminio con isolamento termico e design elegante.</p>
-              <p className="text-lg text-justify text-white">
-                <br /> <h3 className="text-xm text-black font-semibold -mb-8">TIPO DI SISTEMA:</h3>
-                <br />Giunto aperto camera europea
-                <br /><h3 className="text-xm text-black font-semibold -mb-8">PROFILATI ESTRUSI:</h3>
-                <br />Lega d’alluminio 6060 Al Mg 0.5, Si 0.4, Fe 0.2 secondo le norme UNI EN 573
-                <br /><h3 className="text-xm text-black font-semibold -mb-8">STATO DI FORNITURA:</h3>
-                <br />T5 secondo la norma UNI EN 515
-                <br /><h3 className="text-xm text-black font-semibold -mb-8">TOLLERANZE DIMENSIONALI E SPESSORI:</h3>
-                <br />UNI EN 12020-2
-                <br /><h3 className="text-xm text-black font-semibold -mb-8">TIPO DI TENUTA ARIA-ACQUA:</h3>
-                <br />Soluzione a sormonto con guarnizione centrale e guarnizione ad isolamento acustico sulla battuta interna
-                <br /><h3 className="text-xm text-black font-semibold -mb-8">ASSEMBLAGGIO DI PROFILI A TAGLIO TERMICO:</h3>
-                <br />Accoppiamento realizzato mediante l’inserimento di listelli in poliammide rinforzata con fibre di vetro di lunghezza 28 mm, bloccati mediante rullatura in continuo
-                <br /><h3 className="text-xm text-black font-semibold -mb-8">DIMENSIONI DEL SISTEMA:</h3>
-                <br />Telaio fisso profondità 64 mm
-                <br />Telaio mobile profondità 72 mm
-                <br />Sovrapposizione tra profilati soluzione a sormonto interna ed esterna 8 mm
-                <br /><h3 className="text-xm text-black font-semibold -mb-8">IMPIEGO:</h3>
-                <br />Finestre e porte-balcone a una, due, tre o quattro ante; porte e portoncini d’ingresso; vetrate e vetrine; vasistas; serramenti a monoblocco
-                <br /><h3 className="text-xm text-black font-semibold -mb-8">CERTIFICAZIONI:</h3>
-                <br />Trasmittanza termica Uf = 1,9 W/(m2 K)
-              </p>
+              <div className="text-lg text-justify">
+                <h4 className="text-xm text-black font-semibold mt-4">TIPO DI SISTEMA:</h4>
+                <p>Giunto aperto camera europea</p>
+                <h4 className="text-xm text-black font-semibold mt-4">PROFILATI ESTRUSI:</h4>
+                <p>Lega d’alluminio 6060 Al Mg 0.5, Si 0.4, Fe 0.2 secondo le norme UNI EN 573</p>
+                <h4 className="text-xm text-black font-semibold mt-4">STATO DI FORNITURA:</h4>
+                <p>T5 secondo la norma UNI EN 515</p>
+                <h4 className="text-xm text-black font-semibold mt-4">TOLLERANZE DIMENSIONALI E SPESSORI:</h4>
+                <p>UNI EN 12020-2</p>
+                <h4 className="text-xm text-black font-semibold mt-4">TIPO DI TENUTA ARIA-ACQUA:</h4>
+                <p>Soluzione a sormonto con guarnizione centrale e guarnizione ad isolamento acustico sulla battuta interna</p>
+                <h4 className="text-xm text-black font-semibold mt-4">ASSEMBLAGGIO DI PROFILI A TAGLIO TERMICO:</h4>
+                <p>Accoppiamento realizzato mediante l’inserimento di listelli in poliammide rinforzata con fibre di vetro di lunghezza 28 mm, bloccati mediante rullatura in continuo</p>
+                <h4 className="text-xm text-black font-semibold mt-4">DIMENSIONI DEL SISTEMA:</h4>
+                <p>Telaio fisso profondità 64 mm</p>
+                <p>Telaio mobile profondità 72 mm</p>
+                <p>Sovrapposizione tra profilati soluzione a sormonto interna ed esterna 8 mm</p>
+                <h4 className="text-xm text-black font-semibold mt-4">IMPIEGO:</h4>
+                <p>Finestre e porte-balcone a una, due, tre o quattro ante; porte e portoncini d’ingresso; vetrate e vetrine; vasistas; serramenti a monoblocco</p>
+                <h4 className="text-xm text-black font-semibold mt-4">CERTIFICAZIONI:</h4>
+                <p>Trasmittanza termica Uf = 1,9 W/(m2 K)</p>
+              </div>
             </div>
           </div>
           <div className="flex flex-col items-center">
             <div className="relative w-48 h-32 md:w-96 md:h-64 overflow-hidden rounded-lg mb-4">
               <Image
-                src="/infissi-pvc.jpg" // Sostituisci con l'immagine degli infissi in PVC
+                src="/infissi-pvc.jpg"
                 alt="Infissi in PVC"
                 layout="fill"
                 objectFit="contain"
@@ -140,18 +140,18 @@ export default function InfissiPage() {
               <h3 className="text-2xl text-black font-semibold mb-2">Infissi in PVC</h3>
               <p className="text-lg font-semibold mb-2">Soluzioni economiche e performanti per un isolamento ottimale.</p>
               <div className="text-lg text-gray-300 space-y-2 text-justify">
-                <p>
-                  <br /><h3 className="text-xm text-black font-semibold -mb-8">NUMERO DI CAMERE:</h3>
-                  <br />7
-                  <br /><h3 className="text-xm text-black font-semibold -mb-8">UF:</h3>
-                  <br />1,0 W/m2K
-                  <br /><h3 className="text-xm text-black font-semibold -mb-8">ABBATTIMENTO ACUSTICO:</h3>
-                  <br />Fino a 64 dB
-                  <br /><h3 className="text-xm text-black font-semibold -mb-8">PERMEABILITA' DELL'ARIA:</h3>
-                  <br />Fino a C4
-                  <br /><h3 className="text-xm text-black font-semibold -mb-8">RESISTENZA ALLA PIOGGIA BATTENTE:</h3>
-                  <br />Fino a 9A
-                </p>
+                
+                <h4 className="text-xm text-black font-semibold mt-4">NUMERO DI CAMERE:</h4>
+                <p>7</p>
+                <h4 className="text-xm text-black font-semibold mt-4">UF:</h4>
+                <p>1,0 W/m2K</p>
+                <h4 className="text-xm text-black font-semibold mt-4">ABBATTIMENTO ACUSTICO:</h4>
+                <p>Fino a 64 dB</p>
+                <h4 className="text-xm text-black font-semibold mt-4">PERMEABILITA' DELL'ARIA:</h4>
+                <p>Fino a C4</p>
+                <h4 className="text-xm text-black font-semibold mt-4">RESISTENZA ALLA PIOGGIA BATTENTE:</h4>
+                <p>Fino a 9A</p>
+                
               </div>
             </div>
           </div>
@@ -162,6 +162,7 @@ export default function InfissiPage() {
           }
         `}</style>
       </section>
+
 
       {/* Servizi + ModuloContatti Affiancati */}
 <section className="bg-brown-800 py-16 px-6">
