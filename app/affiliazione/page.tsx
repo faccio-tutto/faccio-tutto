@@ -34,7 +34,7 @@ export default function AffiliazionePage() {
 
       {/* Affiliazione Section */}
       <div className="p-6 flex flex-col items-center">
-        <h1 className="text-3xl font-bold mb-6 text-center text-red-500">Diventa Parte della Nostra Rete di Affiliazione</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-red-500">Diventa parte della nostra rete di affiliazione</h1>
         <p style={{ fontSize: '1.2rem', color: 'white', textAlign: 'justify' }} className="max-w-6xl mb-10">
   Siamo alla ricerca di privati e aziende che vogliano entrare a far parte del nostro network di affiliazione. Offriamo opportunità vantaggiose e supporto completo per aiutarti a crescere nel mondo dei servizi pratici e occasionali.
         </p>
@@ -79,9 +79,9 @@ export default function AffiliazionePage() {
         </div>
         
         <div className="text-center mt-8">
-          <h3 className="text-2xl font-semibold mb-4">Unisciti a noi oggi stesso!</h3>
+          <h3 className="text-2xl font-semibold text-red-500 mb-4">Unisciti a noi oggi stesso!</h3>
           <p style={{ fontSize: '1.2rem', color: 'white', textAlign: 'justify' }} className="max-w-6xl mb-10">
-            Sia che tu sia un privato in cerca di opportunità o un'azienda pronta a espandere il proprio business, la nostra piattaforma è il posto giusto per crescere e prosperare.
+            Sia che tu sia un privato in cerca di opportunità o un'azienda pronta a espandere il proprio business, la nostra piattaforma è il posto giusto per crescere e prosperare. Qui, individui e imprese convergono in un ambiente fertile per lo scambio di idee, la collaborazione e la scoperta di risorse preziose. Offriamo gli strumenti e le connessioni necessarie per trasformare le aspirazioni in risultati concreti, supportando ogni passo del tuo percorso verso il successo.
           </p>
           {/* Pulsante spostato più in basso con margine superiore */}
           <motion.div
