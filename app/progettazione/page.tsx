@@ -23,8 +23,8 @@ const App: React.FC = () => {
     {
       images: [
         "/images/drago1.jpg",
-        "/images/drago2.jpg",
-        "/images/drago3.jpg"
+        "/images/drago4.jpg",
+        "/images/drago5.jpg"
       ],
       title: "Ristrutturazione e arredo",
       description: "Progetto di ristrutturazione e arredamento di un appartamento",
