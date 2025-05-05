@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils" // Importa la utility className
 interface CardProps { //Definisci l'interfaccia
   children: React.ReactNode;
   className?: string; // Rendi className opzionale
-  
+
 }
 
-const Card: React.FC<CardProps> = ({ children, className,  }) => {
+const Card: React.FC<CardProps> = ({ children, className, }) => {
   return (
     <div className={cn("rounded-md border", className)}>
       {children}
@@ -18,14 +18,14 @@ const Card: React.FC<CardProps> = ({ children, className,  }) => {
   );
 };
 
-interface CardContentProps{
+interface CardContentProps {
   children: React.ReactNode;
   className?: string;
 }
 
-const CardContent: React.FC<CardContentProps> = ({children, className}) => {
-  return(
-    <div className={cn("p-6", className)}>
+const CardContent: React.FC<CardContentProps> = ({ children, className }) => {
+  return (
+    <div className={cn("p-4 md:p-6", className)}> {/* Aggiungi padding variabile */}
       {children}
     </div>
   )
@@ -78,11 +78,11 @@ export default function HomeRepairService() {
           height={1024}
           className="w-full h-auto"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-6">
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-4 md:p-6"> {/* Padding adattivo */}
           <h2 className="custom-title">Progettazione, Riparazioni, Installazioni</h2>
           <p className="custom-paragraph">Servizi professionali per la tua casa con un solo contatto!</p>
           <a href="mailto:info@faccio-tutto.it">
-            <Button className="bg-blue-500 text-white w-56 h-12 text-base rounded-lg">
+            <Button className="bg-blue-500 text-white w-full md:w-56 h-12 text-base rounded-lg"> {/* Larghezza pulsante adattiva */}
               Contattaci tramite e-mail
             </Button>
           </a>
@@ -90,40 +90,40 @@ export default function HomeRepairService() {
       </section>
 
       {/* Servizi */}
-      <div className="grid md:grid-cols-3 gap-6 bg-white bg-opacity-80 p-6 mt-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 bg-white bg-opacity-80 p-4 md:p-6 mt-6"> {/* Grid adattiva e padding */}
         {[{
           id: "progettazione",
-          icon: <FaDraftingCompass className="text-3xl mb-12 text-purple-500" />,
+          icon: <FaDraftingCompass className="text-3xl mb-6 md:mb-12 text-purple-500" />,
           title: "Progettazione Architettonica",
           desc: "Ristrutturazioni e nuove costruzioni.",
           link: "/progettazione"
         }, {
           id: "fotovoltaico",
-          icon: <FaSolarPanel className="text-3xl mb-12 text-yellow-500" />,
+          icon: <FaSolarPanel className="text-3xl mb-6 md:mb-12 text-yellow-500" />,
           title: "Impianti Fotovoltaici",
           desc: "Progettazione, installazione e manutenzione.",
           link: "/fotovoltaico"
         }, {
           id: "infissi",
-          icon: <FaDoorOpen className="text-5xl mb-8 text-orange-900" />,
+          icon: <FaDoorOpen className="text-5xl mb-4 md:mb-8 text-orange-900" />,
           title: "Vendita e Installazione Infissi",
           desc: "Infissi in PVC e alluminio.",
           link: "/infissi"
         }, {
           id: "riparazione-elettrodomestici",
-          icon: <FaPlug className="text-3xl mb-12 text-orange-500" />,
+          icon: <FaPlug className="text-3xl mb-6 md:mb-12 text-orange-500" />,
           title: "Riparazione Elettrodomestici",
           desc: "Piccoli elettrodomestici per la casa.",
           link: "/riparazione-elettrodomestici"
         }, {
           id: "riparazioni-veloci",
-          icon: <FaWrench className="text-3xl mb-12 text-blue-500" />,
+          icon: <FaWrench className="text-3xl mb-6 md:mb-12 text-blue-500" />,
           title: "Riparazioni Veloci",
           desc: "Interventi rapidi su riparazioni domestiche.",
           link: "/riparazioni-veloci"
         }, {
           id: "contatti",
-          icon: <FaPhone className="text-3xl mb-12 text-green-500" />,
+          icon: <FaPhone className="text-3xl mb-6 md:mb-12 text-green-500" />,
           title: "Prenota Subito",
           desc: "Contattaci per fissare un appuntamento.",
           link: "/prenota"
@@ -131,7 +131,7 @@ export default function HomeRepairService() {
           <a href={service.link} key={service.id} className="block transform transition duration-300 hover:scale-105">
             <Card className="border-gray-200">
               <CardContent>
-                <div className="p-4 text-center shadow-lg rounded-lg w-[500px] h-44 flex flex-col justify-center items-center">
+                <div className="p-4 text-center shadow-lg rounded-lg w-full h-auto flex flex-col justify-center items-center"> {/* Altezza automatica e larghezza piena */}
                   {service.icon}
                   <h2 className={`title-${service.id}`}>{service.title}</h2>
                   <p className="text-xs text-gray-700">{service.desc}</p>
@@ -149,4 +149,3 @@ export default function HomeRepairService() {
     </div>
   );
 }
-
