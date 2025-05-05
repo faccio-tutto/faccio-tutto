@@ -22,7 +22,7 @@ const App: React.FC = () => {
     },
     {
       images: [
-        "/images/drago.jpg",
+        "/images/drago1.jpg",
         "/images/drago2.jpg",
         "/images/drago3.jpg"
       ],
