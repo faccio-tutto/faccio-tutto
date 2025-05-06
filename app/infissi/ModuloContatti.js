@@ -34,11 +34,11 @@ function ModuloContatti({ destinatarioEmail }) {
       return;
     }
     const almenoUnaDimensioneInserita = dimensioni.some((val) => val.trim() !== '');
-if (!almenoUnaDimensioneInserita) {
-  setInvioStato('errore');
-  alert('Inserisci almeno una dimensione per i serramenti.');
-  return;
-}
+    if (!almenoUnaDimensioneInserita) {
+      setInvioStato('errore');
+      alert('Inserisci almeno una dimensione per i serramenti.');
+      return;
+    }
 
     setInvioStato('inviando');
 
@@ -108,29 +108,41 @@ if (!almenoUnaDimensioneInserita) {
   return (
     <section id="modulo-contatti" className="mx-auto max-w-7xl px-0">
       <div className="flex flex-col items-center justify-center">
-        <div className="md:w-2/2 p-0 bg-brown rounded-lg">
+        <div className="md:w-1/1 p-0 bg-brown rounded-lg">
           <h3 className="text-2xl font-semibold mb-6 text-center">Compila tutti i campi</h3>
           <form className="space-y-0" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="dimensioni" className="block text-sm font-medium mb-2">
-                Dimensioni serramenti (Larghezza x Altezza)
+                Dimensioni serramenti
               </label>
-              <div className="grid grid-cols-2 gap-4 mb-0">
+              <div className="grid grid-cols-1 gap-4 mb-0">
                 {dimensioni.map((dimensione, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    placeholder={`cm.`}
-                    value={dimensione}
-                    onChange={(e) => handleDimensioniChange(index, e.target.value)}
-                    style={{ width: "180px" }}
-                    className="w-full p-2 border rounded bg-gray-700 text-white placeholder:text-sm"
-                  />
+                  <div key={index} className="flex items-center gap-8">
+                    <label className="text-xs font-medium text-gray-700">
+                      Finestra {index + 1}:
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Larghezza (cm)"
+                      value={dimensione.split('x')[0] || ''}
+                      onChange={(e) => handleDimensioniChange(index, `${e.target.value}x${dimensione.split('x')[1] || ''}`)}
+                      style={{ width: "120px" }}
+                      className="w-full p-2 border rounded bg-gray-700 text-white placeholder:text-sm"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Altezza (cm)"
+                      value={dimensione.split('x')[1] || ''}
+                      onChange={(e) => handleDimensioniChange(index, `${dimensione.split('x')[0] || ''}x${e.target.value}`)}
+                      style={{ width: "120px" }}
+                      className="w-full p-2 border rounded bg-gray-700 text-white placeholder:text-sm"
+                    />
+                  </div>
                 ))}
               </div>
             </div>
             <div>
-              <label htmlFor="colore" className="block text-sm font-medium mb-2">
+            <label htmlFor="colore" className="block text-sm font-medium mb-2" style={{ marginRight: '10px' }}>
                 Colore
               </label>
               <select
@@ -143,7 +155,7 @@ if (!almenoUnaDimensioneInserita) {
                 <option value="legno">Legno</option>
                 <option value="ral">Ral</option>
               </select>
-              <label htmlFor="materiale" className="block text-sm font-medium mb-2">
+              <label htmlFor="materiale" className="block text-sm font-medium mb-2" style={{ marginTop: '56px', marginRight: '10px' }}>
                 Materiale
               </label>
               <select
@@ -156,7 +168,7 @@ if (!almenoUnaDimensioneInserita) {
                 <option value="alluminio">Alluminio</option>
                 <option value="pvc">PVC</option>
               </select>
-              <label htmlFor="accessori" className="block text-sm font-medium mb-1">
+              <label htmlFor="accessori" className="block text-sm font-medium mb-1" style={{ marginTop: '54px', marginRight: '10px' }}>
                 Accessori
               </label>
               <select
@@ -165,7 +177,7 @@ if (!almenoUnaDimensioneInserita) {
                 onChange={(e) => setAccessori(e.target.value)}
                 className="p-3 border rounded bg-gray-700 w-full"
               >
-                <option value="">Seleziona un accessorio</option> {/* Added a default option */}
+                <option value="">Seleziona un accessorio</option>
                 <option value="persiana">Persiana</option>
                 <option value="tapparella">Tapparella</option>
                 <option value="tapparella motorizzata">Tapparella motorizzata</option>
