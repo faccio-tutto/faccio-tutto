@@ -18,6 +18,12 @@ export async function POST(request) {
       colore,
       accessori,
       destinatarioEmail,
+      partitaIva,
+      legaleRappresentante,
+      sitoWeb,
+      visuraCamerale,
+      documentoIdentita,
+      nomeAzienda,
     } = body;
 
     const defaultDestinatario = process.env.MAIL_DESTINATARIO_INFISSI;
@@ -41,12 +47,22 @@ Hai ricevuto una nuova richiesta di preventivo dal sito faccio-tutto.it:
 - Via: ${via}
 - Città: ${città}
 
+**Dati Azienda:**
+- Nome Azienda: ${nomeAzienda}
+- Partita IVA: ${partitaIva}
+- Legale Rappresentante: ${legaleRappresentante}
+- Sito Web: ${sitoWeb || 'N/A'}
+
 📐 **Dimensioni Finestre**
 ${dimensioni.filter((val) => val.trim()).map((val, i) => `  - Finestra ${i + 1}: ${val}`).join('\n')}
 
 🎨 **Colore:** ${colore}
 🧱 **Materiale:** ${materiale}
 🧩 **Accessori:** ${accessori}
+
+**Documenti Allegati:**
+Visura Camerale: ${visuraCamerale ? 'Si' : 'No'}
+Documento Identità: ${documentoIdentita ? 'Si' : 'No'}
 
 ✉️ **Messaggio aggiuntivo:** ${messaggio || 'Nessun messaggio'}
 `;

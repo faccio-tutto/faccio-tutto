@@ -117,18 +117,23 @@ function ModuloContatti({ destinatarioEmail }) {
               />
               <label
                 htmlFor="documento"
-                className="inline-block bg-green-600 text-white font-semibold px-3 py-1 text-xs rounded cursor-pointer hover:bg-green-700"
+                className="inline-block bg-green-600 text-white font-semibold px-3 py-1 text-xs rounded cursor-pointer hover:bg-green-700 mb-4"
               >
                 Carica Documento
               </label>
               {documento && <p className="text-sm text-gray-500 mt-1 sm:mt-0">File selezionato: {documento.name}</p>}
             </div>
             <div>
-              <div>
-                <label htmlFor="messaggio" className="block text-sm text-left font-medium text-gray-600">Messaggio</label>
-                <textarea id="messaggio" value={messaggio} onChange={(e) => setMessaggio(e.target.value)} rows={4} className="mt-1 p-3 border rounded-md w-full text-black"></textarea>
-              </div>
-              <div className="flex items-center">
+            <div>
+              <label htmlFor="messaggio" className="block text-sm text-left font-medium text-gray-600 -mb-4">Messaggio</label>
+              <br/>
+              <span className="text-gray-500 text-sm text-left block -mb-1">
+                (descrivi brevemente cosa sai fare e per quale tipologia di lavori vorresti essere contattato)
+              </span>
+              <div className="text-black flex flex-col items-start"></div>
+              <textarea id="messaggio" value={messaggio} onChange={(e) => setMessaggio(e.target.value)} rows={4} className="mt-1 p-3 border rounded-md w-full text-black"></textarea>
+            </div>
+            <div className="flex items-center">
                 <input
                   type="checkbox"
                   className="mr-3"
