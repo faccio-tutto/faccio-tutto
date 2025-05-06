@@ -11,9 +11,11 @@ function ModuloContatti({ destinatarioEmail }) {
   const [messaggio, setMessaggio] = useState('');
   const [privacy, setPrivacy] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [invioStato, setInvioStato] = useState(''); // Stato per gestire lo stato di invio
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setInvioStato('inviando'); // Imposta lo stato di invio a "inviando
 
     // Validazioni
     if (!privacy) {
@@ -67,56 +69,59 @@ function ModuloContatti({ destinatarioEmail }) {
 
   return (
     <div id="modulo-contatti" className="flex justify-center items-center min-h-screen px-4">
-       <div className="p-8 rounded-lg shadow-lg w-full max-w-md"></div>
+       <div className="p-6 rounded-lg shadow-lg w-full max-w-md"></div>
       {success ? (
-        <div className="text-green-500 justify-center font-bold text-xl">Messaggio inviato con successo!</div>
+        <div className="text-green-500 text-center font-bold text-xl">Messaggio inviato con successo!</div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 gap-4">
             <div>
-              <label htmlFor="nome" className="block text-sm font-medium text-gray-600">Nome</label>
-              <input type="text" id="nome" value={nome} onChange={(e) => setNome(e.target.value)} className="mt-1 p-3 border rounded-md w-full" required />
+              <label htmlFor="nome" className="block text-sm font-medium text-gray-700">Nome</label>
+              <input type="text" id="nome" value={nome} onChange={(e) => setNome(e.target.value)} className="mt-1 p-3 border border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
             </div>
             <div>
               <label htmlFor="cognome" className="block text-sm font-medium text-gray-600">Cognome</label>
-              <input type="text" id="cognome" value={cognome} onChange={(e) => setCognome(e.target.value)} className="mt-1 p-3 border rounded-md w-full" required />
+              <input type="text" id="cognome" value={cognome} onChange={(e) => setCognome(e.target.value)} className="mt-1 p-3 border border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
             </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-600">Indirizzo e-mail</label>
-              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 p-3 border rounded-md w-full" required />
+              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 p-3 border border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
             </div>
             <div>
               <label htmlFor="telefono" className="block text-sm font-medium text-gray-600">Telefono</label>
-              <input type="tel" id="telefono" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="mt-1 p-3 border rounded-md w-full" />
+              <input type="tel" id="telefono" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="mt-1 p-3 border border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
             </div>
             <div>
               <label htmlFor="via" className="block text-sm font-medium text-gray-600">Via</label>
-              <input type="text" id="via" value={via} onChange={(e) => setVia(e.target.value)} className="mt-1 p-3 border rounded-md w-full" />
+              <input type="text" id="via" value={via} onChange={(e) => setVia(e.target.value)} className="mt-1 p-3 border border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
             </div>
             <div>
               <label htmlFor="città" className="block text-sm font-medium text-gray-600">Città</label>
-              <input type="text" id="città" value={città} onChange={(e) => setCittà(e.target.value)} className="mt-1 p-3 border rounded-md w-full" />
+              <input type="text" id="città" value={città} onChange={(e) => setCittà(e.target.value)} className="mt-1 p-3 border border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
             </div>
             <div>
               <label htmlFor="messaggio" className="block text-sm font-medium text-gray-600">Messaggio</label>
-              <textarea id="messaggio" value={messaggio} onChange={(e) => setMessaggio(e.target.value)} rows={4} className="mt-1 p-3 border rounded-md w-full"></textarea>
+              <textarea id="messaggio" value={messaggio} onChange={(e) => setMessaggio(e.target.value)} rows={4} className="mt-1 p-3 border border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
               </div>
-              <div className="flex items-center">
-
+              <div className="flex items-start">
+      <div className="flex items-center h-5">
         <input
           type="checkbox"
-          className="mr-3"
+          className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded mr-3"
           checked={privacy}
           onChange={(e) => setPrivacy(e.target.checked)}
         />
-        <label className="text-sm text-gray-500 whitespace-nowrap">
+        </div>
+        <div className="ml-3 text-sm">
+        <label htmlFor="privacy" className="font-medium text-gray-700">
           Accetto i{' '}
-          <a href="/termini e condizioni.pdf" className="text-blue-500">termini e condizioni</a>{' '}
+          <a href="/termini e condizioni.pdf" className="text-blue-500 hover:underline">termini e condizioni</a>{' '}
           e acconsento al trattamento
           <br />
           dei miei dati personali secondo la{' '}
-          <a href="/normativa privacy.pdf" className="text-blue-500">normativa sulla privacy.</a>
+          <a href="/normativa privacy.pdf" className="text-blue-500 hover:underline">normativa sulla privacy.</a>
         </label>
+      </div>
       </div>
 
       <button
