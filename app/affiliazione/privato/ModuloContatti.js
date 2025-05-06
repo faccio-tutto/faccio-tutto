@@ -72,11 +72,11 @@ function ModuloContatti({ destinatarioEmail }) {
 }; // Closing brace for handleSubmit
 
   return (
-    <div id="modulo-contatti" className="flex justify-center items-center px-4 py-12 bg-white min-h-screen">
+    <div id="modulo-contatti" className="flex justify-center items-start px-4 py-12 bg-white min-h-screen w-full">
       {success ? (
         <div className="text-green-500 justify-center font-bold text-xl">Messaggio inviato con successo!</div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md">
           <div className="flex flex-col space-y-4 p-4 rounded-lg shadow-lg w-full max-w-md bg-white">
             <h2 className="text-2xl font-bold text-center text-gray-800">Modulo di Contatto</h2>
             <p className="text-sm text-gray-500 text-center"></p>
@@ -107,6 +107,7 @@ function ModuloContatti({ destinatarioEmail }) {
             </div>
             <div>
               <label className="block text-sm text-left font-medium text-gray-600 mb-1 sm:mt-0">Documento d'identità</label>
+              <div className="flex flex-col items-start">
               <input
                 type="file"
                 id="documento"
@@ -116,32 +117,33 @@ function ModuloContatti({ destinatarioEmail }) {
               />
               <label
                 htmlFor="documento"
-                className="inline-block bg-green-600 text-white font-semibold px-4 py-2 rounded cursor-pointer hover:bg-green-700"
+                className="inline-block bg-green-600 text-white font-semibold px-3 py-1 text-xs rounded cursor-pointer hover:bg-green-700"
               >
                 Carica Documento
               </label>
               {documento && <p className="text-sm text-gray-500 mt-1 sm:mt-0">File selezionato: {documento.name}</p>}
             </div>
             <div>
-              <label htmlFor="messaggio" className="block text-sm text-left font-medium text-gray-600">Messaggio</label>
-              <textarea id="messaggio" value={messaggio} onChange={(e) => setMessaggio(e.target.value)} rows={4} className="mt-1 p-3 border rounded-md w-full text-black"></textarea>
-            </div>
-            <div className="flex items-center">
-
-              <input
-                type="checkbox"
-                className="mr-3"
-                checked={privacy}
-                onChange={(e) => setPrivacy(e.target.checked)}
-              />
-              <label className="text-sm text-gray-500 whitespace-nowrap">
-                Accetto i{' '}
-                <a href="/termini e condizioni.pdf" className="text-blue-500">termini e condizioni</a>{' '}
-                e acconsento al trattamento
-                <br />
-                dei miei dati personali secondo la{' '}
-                <a href="/normativa privacy.pdf" className="text-blue-500">normativa sulla privacy.</a>
-              </label>
+              <div>
+                <label htmlFor="messaggio" className="block text-sm text-left font-medium text-gray-600">Messaggio</label>
+                <textarea id="messaggio" value={messaggio} onChange={(e) => setMessaggio(e.target.value)} rows={4} className="mt-1 p-3 border rounded-md w-full text-black"></textarea>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  className="mr-3"
+                  checked={privacy}
+                  onChange={(e) => setPrivacy(e.target.checked)}
+                />
+                <label className="text-sm text-gray-500 whitespace-nowrap">
+                  Accetto i{' '}
+                  <a href="/termini e condizioni.pdf" className="text-blue-500">termini e condizioni</a>{' '}
+                  e acconsento al trattamento
+                  <br />
+                  dei miei dati personali secondo la{' '}
+                  <a href="/normativa privacy.pdf" className="text-blue-500">normativa sulla privacy.</a>
+                </label>
+              </div>
             </div>
 
             <button
@@ -150,6 +152,7 @@ function ModuloContatti({ destinatarioEmail }) {
             >
               Invia richiesta
             </button>
+          </div>
           </div>
         </form>
       )}

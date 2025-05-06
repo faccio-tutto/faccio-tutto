@@ -41,8 +41,9 @@ const AffiliazionePrivati = () => {
                         <br/>Ti contatteremo al più presto per fornirti tutte le informazioni necessarie.
                     </p>
                     <div className="mt-8 bg-black items-center"></div>
-                    <div id="modulo-contatti"></div>
+                    <div id="modulo-contatti" className="flex justify-center">
                     <ModuloContatti destinatarioEmail="affiliazione@faccio-tutto.it" />
+                    </div>
                     </section>
                     {/* Link per scaricare il modello di ricevuta */}
                     <div className="mt-6 text-center -mb-0">
