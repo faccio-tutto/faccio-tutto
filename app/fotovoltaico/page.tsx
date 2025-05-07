@@ -76,6 +76,14 @@ const FotovoltaicoPage = () => {
         className="rounded-xl shadow-xl max-w-full h-auto"
       priority
       />
+      <Image
+        src="/images/reddito energetico.png"
+        alt="Rddito energetico"
+        width={1144}
+        height={600}
+        className="rounded-xl shadow-xl max-w-full h-auto"
+      priority
+      />
     </div>
     <div className="text-2xl font-bold flex justify-center gap-6 mt-20">Scopri tutti i vantaggi che ti offre un'impianto fotovoltaico</div>
 
