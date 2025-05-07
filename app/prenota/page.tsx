@@ -73,7 +73,7 @@ export default function ContattiPage() {
         {/* Layout aggiornato */}
         <div className="flex flex-col md:flex-row items-start gap-12 w-full max-w-6xl">
           {/* Pulsanti contatti */}
-          <div className="flex flex-col gap-6 w-full md:w-1/3">
+          <div className="flex flex-col gap-6 w-full md:w-2/2">
             {contactItems.map((item, index) => (
               <motion.div
                 key={index}

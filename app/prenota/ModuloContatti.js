@@ -87,7 +87,7 @@ const ModuloContatti = () => {
         </motion.div>
       )}
       <form onSubmit={handleSubmit} className="-mt-4">
-        <div className="grid grid-cols-1 gap-3">
+        <div className="grid gap-3">
           <div>
             <label htmlFor="nome" className="block text-sm font-medium text-gray-600">Nome</label>
             <input type="text" id="nome" value={nome} onChange={(e) => setNome(e.target.value)} className="mt-1 p-3 border rounded-md w-full" required />
