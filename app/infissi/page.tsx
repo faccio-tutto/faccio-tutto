@@ -59,24 +59,26 @@ const InfissiPage = () => {
         </ul>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative flex items-center justify-center overflow-hidden h-[600px] sm:h-[700px]">
-        <Image
-          src="/images/prodotti.png"
-          alt="Infissi di alta qualità"
-          layout="fill"
-          objectFit="cover"
-          className="opacity-40"
-          priority
-        />
+       {/* Hero Section */}
+       <section className="relative flex items-center justify-center overflow-hidden h-[600px] sm:h-[700px]">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/prodotti.png"
+            alt="Infissi di alta qualità"
+            layout="fill"
+            objectFit="cover"
+            className="opacity-40"
+            priority
+          />
+        </div>
         <div className="absolute z-10 text-center p-4 w-full flex flex-col items-center">
-          <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 text-brown-custom relative z-20 w-full">
+          <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 text-brown-custom relative z-20 w-full px-4">
             Infissi di Alta Qualità
           </h2>
-          <p className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white relative z-20 w-full">
+          <p className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white relative z-20 w-full px-4">
             Soluzioni su misura per la tua casa
           </p>
-          <div className="text-justify relative z-20 w-full">
+          <div className="text-justify relative z-20 w-full px-4">
             <p className="text-base sm:text-lg leading-relaxed text-white w-full mx-auto">
               Eleva il comfort e il valore della tua casa con i nostri infissi di alta
               qualità. Ogni soluzione è progettata su misura per integrarsi
