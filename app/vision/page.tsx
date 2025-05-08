@@ -43,7 +43,7 @@ export default function VisionPage() {
           il saper fare ha più valore del titolo di studio.
           Vogliamo creare una comunità collaborativa in cui le persone si supportano a vicenda attraverso lo
           scambio di competenze.
-          L'obiettivo è quello di generare delle occasioni di lavoro che siano inclusive e aperete a tutti, 
+          L'obiettivo è quello di generare delle occasioni di lavoro che siano inclusive e aperte a tutti, 
           indipendentemente dal loro background professionale.
           Su questa piattaforma si vuole creare un ambiente stimolante per mettersi alla prova, garantire la qualità 
           dei servizi offerti, ottenere dei feedback e costruire un portfolio di competenze. 
