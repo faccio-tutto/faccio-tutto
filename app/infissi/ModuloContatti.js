@@ -118,7 +118,7 @@ function ModuloContatti({ destinatarioEmail }) {
               <div className="grid grid-cols-1 gap-4 mb-0">
                 {dimensioni.map((dimensione, index) => (
                   <div key={index} className="flex items-center gap-8">
-                    <label className="text-xs font-medium text-gray-700">
+                    <label className="text-xm font-medium text-gray-700">
                       Finestra {index + 1}:
                     </label>
                     <input
@@ -178,9 +178,9 @@ function ModuloContatti({ destinatarioEmail }) {
                 className="p-3 border rounded bg-gray-700 w-full"
               >
                 <option value="">Seleziona un accessorio</option>
-                <option value="persiana">Persiana</option>
-                <option value="tapparella">Tapparella</option>
-                <option value="tapparella motorizzata">Tapparella motorizzata</option>
+                <option value="persiana">Persiana in alluminio</option>
+                <option value="tapparella">Tapparella in alluminio</option>
+                <option value="tapparella motorizzata">Tapparella motorizzata in alluminio</option>
               </select>
             </div>
             <div>
