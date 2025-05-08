@@ -58,7 +58,7 @@ const InfissiPage = () => {
           ))}
         </ul>
       </nav>
-  
+
       {/* Hero Section */}
       <section className="relative flex items-center justify-center overflow-hidden h-[600px] sm:h-[700px]">
         <Image
@@ -70,14 +70,14 @@ const InfissiPage = () => {
           priority
         />
         <div className="absolute z-10 text-center p-4 w-full flex flex-col items-center">
-          <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 text-brown-custom relative z-20 max-w-full px-4">
+          <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 text-brown-custom relative z-20 w-full">
             Infissi di Alta Qualità
           </h2>
-          <p className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white relative z-20 max-w-full px-4">
+          <p className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white relative z-20 w-full">
             Soluzioni su misura per la tua casa
           </p>
           <div className="text-justify relative z-20 w-full">
-            <p className="text-base sm:text-lg leading-relaxed text-white max-w-full mx-auto px-4">
+            <p className="text-base sm:text-lg leading-relaxed text-white w-full mx-auto">
               Eleva il comfort e il valore della tua casa con i nostri infissi di alta
               qualità. Ogni soluzione è progettata su misura per integrarsi
               perfettamente con il tuo stile abitativo, garantendo un'estetica
@@ -109,7 +109,7 @@ const InfissiPage = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Cosa Offriamo Section */}
       <section className="py-12 px-6 text-center">
         <h2 style={{ fontSize: "1.75rem", fontWeight: "bold", marginBottom: "0.5rem", color: "#8B4513" }}>Cosa Offriamo</h2>
