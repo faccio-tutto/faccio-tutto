@@ -78,7 +78,15 @@ const FotovoltaicoPage = () => {
       />
       <Image
         src="/images/reddito energetico.png"
-        alt="Rddito energetico"
+        alt="Reddito energetico"
+        width={1144}
+        height={600}
+        className="rounded-xl shadow-xl max-w-full h-auto"
+      priority
+      />
+       <Image
+        src="/images/40 fondi PNRR.png"
+        alt="40 fondi PNRR"
         width={1144}
         height={600}
         className="rounded-xl shadow-xl max-w-full h-auto"
