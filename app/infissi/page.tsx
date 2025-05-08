@@ -60,7 +60,7 @@ const InfissiPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[600px] flex items-center justify-center">
         <Image
           src="/images/prodotti.png"
           alt="Infissi di alta qualità"
@@ -69,8 +69,8 @@ const InfissiPage = () => {
           className="opacity-40"
         />
         <div className="absolute z-10 text-center">
-          <h2 style={{ fontSize: "2.4rem", fontWeight: "bold", marginBottom: "2.0rem", color: "#8B4513" }}>Infissi di Alta Qualità</h2>
-          <p style={{ fontSize: "1.9rem", fontWeight: "bold", marginBottom: "2.0rem", color: "#FFFFFF" }}>Soluzioni su misura per la tua casa</p>
+          <h2 style={{ fontSize: "2.0rem", fontWeight: "bold", marginBottom: "2.0rem", color: "#8B4513" }}>Infissi di Alta Qualità</h2>
+          <p style={{ fontSize: "1.6rem", fontWeight: "bold", marginBottom: "2.0rem", color: "#FFFFFF" }}>Soluzioni su misura per la tua casa</p>
           <div className="text-justify">
             <div className="text-justify">
               <p className="mx-4 sm:mx-24 text-base sm:text-xl leading-relaxed" style={{ fontSize: "1.4rem", color: "#FFFFFF" }}>
