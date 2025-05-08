@@ -59,19 +59,9 @@ const InfissiPage = () => {
         </ul>
       </nav>
 
-       {/* Hero Section */}
-       <section className="relative flex items-center justify-center overflow-hidden h-[600px] sm:h-[700px]">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/prodotti.png"
-            alt="Infissi di alta qualità"
-            layout="fill"
-            objectFit="cover"
-            className="opacity-40"
-            priority
-          />
-        </div>
-        <div className="absolute z-10 text-center p-4 w-full flex flex-col items-center">
+      {/* Hero Section */}
+      <section className="relative flex items-center justify-center py-16 md:py-24">
+        <div className="text-center p-4 w-full flex flex-col items-center">
           <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 text-brown-custom relative z-20 w-full px-4">
             Infissi di Alta Qualità
           </h2>
