@@ -71,7 +71,7 @@ const InfissiPage = () => {
             priority
           />
         </div>
-        <div className="absolute z-10 text-center p-4 w-full flex flex-col items-center">
+        <div className="absolute z-10 text-center p-4 w-full flex flex-col items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}> {/* Added background color */}
           <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 text-brown-custom relative z-20 w-full px-4">
             Infissi di Alta Qualità
           </h2>
