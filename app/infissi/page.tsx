@@ -87,7 +87,6 @@ const InfissiPage = () => {
         </div>
       </section>
 
-
       {/* Cosa Offriamo Section */}
       <section className="py-12 px-6 text-center">
         <h2 style={{ fontSize: "1.75rem", fontWeight: "bold", marginBottom: "0.5rem", color: "#8B4513" }}>Cosa Offriamo</h2>
