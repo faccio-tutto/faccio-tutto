@@ -93,7 +93,7 @@ const InfissiPage = () => {
           <div className="flex flex-col items-center bg-gray-800 rounded-lg shadow-lg overflow-hidden" style={{ backgroundColor: '#A18D65' }}>
             <div className="relative w-full h-48 md:h-64 overflow-hidden">
               <Image
-                src="/IMAGES/infissi-alluminio.jpg"
+                src="/images/infissi-alluminio.jpg"
                 alt="Infissi in alluminio"
                 layout="fill"
                 objectFit="cover"
