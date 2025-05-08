@@ -175,18 +175,18 @@ export default function InfissiPage() {
             <h2 className="text-8xl font-bold text-center md:text-left mb-8">I Nostri Servizi</h2>
             <ul className="text-lg list-disc list-inside space-y-6">
               <li>Sopralluogo e rilievo misure</li>
-              <li>Progettazione Personalizzata</li>
-              <li>Consulenza Energetica</li>
-              <li>Preventivi Dettagliati</li>
-              <li>Gestione Pratiche Burocratiche</li>
-              <li>Finanziamenti Personalizzati</li>
+              <li>Progettazione personalizzata</li>
+              <li>Consulenza energetica</li>
+              <li>Preventivi dettagliati</li>
+              <li>Gestione pratiche burocratiche</li>
+              <li>Finanziamenti personalizzati</li>
               <li>Vendita e consulenza personalizzata</li>
               <li>Installazione professionale con garanzia</li>
               <li>Assistenza post-vendita</li>
-              <li>Smaltimento Infissi Usati</li>
-              <li>Manutenzione Programmata</li>
-              <li>Riparazioni e Sostituzioni</li>
-              <li>Installazione di Sistemi di Domotica</li>
+              <li>Smaltimento infissi usati</li>
+              <li>Manutenzione programmata</li>
+              <li>Riparazioni e sostituzioni</li>
+              <li>Installazione di sistemi di domotica</li>
             </ul>
           </div>
         </div>      
