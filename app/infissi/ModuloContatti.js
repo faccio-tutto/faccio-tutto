@@ -109,7 +109,7 @@ function ModuloContatti({ destinatarioEmail }) {
     <section id="modulo-contatti" className="mx-auto max-w-7xl px-0">
       <div className="flex flex-col items-center justify-center">
         <div className="md:w-1/1 p-0 bg-brown rounded-lg">
-          <h3 className="text-2xl font-semibold mb-6 text-center">Compila tutti i campi</h3>
+          <h3 style={{ fontSize: "1.2rem" }} className="text-2xl font-semibold mb-6 text-center">Compila tutti i campi</h3>
           <form className="space-y-0" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="dimensioni" className="block text-sm font-medium mb-2">

@@ -34,6 +34,7 @@ const InfissiPage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       {/* Navbar */}
       <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
         <div className="flex items-center gap-1">
@@ -42,7 +43,7 @@ const InfissiPage = () => {
           </a>
           <h1 className="text-2xl font-bold">faccio-tutto.it</h1>
         </div>
-        <ul className="flex gap-6">
+        <ul className="flex flex-wrap gap-4 text-sm sm:gap-6 sm:text-base">
           {[
             { name: "Home", href: "/" },
             { name: "Mission", href: "/mission" },
@@ -72,7 +73,7 @@ const InfissiPage = () => {
   <p style={{ fontSize: "1.9rem", fontWeight: "bold", marginBottom: "2.0rem", color: "#FFFFFF" }}>Soluzioni su misura per la tua casa</p>
   <div className="text-justify">
     <div className="text-justify">
-      <p style={{ fontSize: "1.4rem", fontWeight: "", marginBottom: "2.0rem", color: "#FFFFFF", marginLeft: "6rem", marginRight: "6rem" }}>
+      <p className="mx-4 sm:mx-24 text-base sm:text-xl leading-relaxed" style={{ fontSize: "1.4rem", color: "#FFFFFF" }}>
         Eleva il comfort e il valore della tua casa con i nostri infissi di alta qualità. Ogni soluzione è progettata su misura per integrarsi perfettamente con il tuo stile abitativo, garantendo un'estetica raffinata e prestazioni superiori nel tempo.
 
         La nostra attenzione ai dettagli si traduce nella scelta di materiali di primissima qualità, selezionati per la loro durabilità, efficienza energetica e resistenza agli agenti atmosferici. Dagli eleganti profili ai meccanismi di apertura fluidi e affidabili, ogni accessorio è pensato per offrirti funzionalità ottimali e una lunga durata.
@@ -90,14 +91,14 @@ const InfissiPage = () => {
       {/* Cosa Offriamo Section */}
       <section className="py-12 px-6 text-center">
         <h2 style={{ fontSize: "1.75rem", fontWeight: "bold", marginBottom: "0.5rem", color: "#8B4513" }}>Cosa Offriamo</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 gap-y-12 max-w-6xl mx-auto">
           <div className="flex flex-col items-center bg-gray-800 rounded-lg shadow-lg overflow-hidden" style={{ backgroundColor: '#A18D65' }}>
             <div className="relative w-full h-48 md:h-64 overflow-hidden">
               <Image
                 src="/images/infissi-alluminio.jpg"
                 alt="Infissi in alluminio"
                 layout="fill"
-                objectFit="cover"
+                className="object-cover"
               />
             </div>
             <div className="p-4 text-left w-full">
@@ -132,7 +133,7 @@ const InfissiPage = () => {
                 src="/images/infissi-pvc.jpg"
                 alt="Infissi in PVC"
                 layout="fill"
-                style={{ objectFit: "cover" }}
+                className="object-cover"
               />
             </div>
             <div className="p-4 text-left w-full">
@@ -157,11 +158,11 @@ const InfissiPage = () => {
 
       {/* Servizi + ModuloContatti Affiancati */}
       <section className="bg-black py-12 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10 gap-y-12 px-2 sm:px-6">
           {/* Servizi Section */}
           <div className="md:w-1/2">
-            <h2 className="text-2xl font-bold mb-6 text-white text-center md:text-left">I Nostri Servizi</h2>
-            <ul className="text-base list-disc list-inside space-y-3 text-gray-300">
+            <h2 style={{ fontSize: "1.5rem", fontWeight: "bold" }} className="text-2xl font-bold mb-6 text-white text-center md:text-left">I Nostri Servizi</h2>
+            <ul style={{ fontSize: "1.4rem" }} className="text-base list-disc list-inside space-y-3 text-gray-300">
               <li>Sopralluogo e rilievo misure</li>
               <li>Progettazione personalizzata</li>
               <li>Consulenza energetica</li>
@@ -181,7 +182,7 @@ const InfissiPage = () => {
 
           {/* Colonna Modulo Contatti */}
           <div className="md:w-1/2">
-            <h2 className="text-3xl font-bold text-center mb-6 text-white">Richiedi un Preventivo Gratuito</h2>
+            <h2 style={{ fontSize: "1.4rem" }} className="text-3xl font-bold text-center mb-6 text-white">Richiedi un Preventivo Gratuito</h2>
             <ModuloContatti destinatarioEmail="infissi@faccio-tutto.it" />
           </div>
         </div>
