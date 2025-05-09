@@ -60,53 +60,36 @@ const InfissiPage = () => {
       </nav>
 
       {/* Hero Section */}
-<section className="relative flex items-center justify-center py-16 md:py-24 overflow-hidden">
-  {/* Sfondo con effetto parallasse */}
-  <div
-  className="absolute inset-0 bg-no-repeat bg-top bg-fixed opacity-20 z-10
-             bg-[length:100%_auto] sm:bg-cover"
-  style={{
-    backgroundImage: "url('/images/prodotti.webp')"
-  }}
-></div>
+      <section className="relative flex items-center justify-center py-16 md:py-24 overflow-hidden">
+  {/* Contenitore con immagine ridimensionabile */}
+  <div className="absolute inset-0 flex justify-center z-0">
+    <img
+      src="/images/prodotti.webp"
+      alt="Sfondo infissi"
+      className="w-full max-w-[1200px] object-contain sm:object-cover"
+    />
+  </div>
 
-  {/* Contenuto sovrapposto */}
-  <div className="text-center p-4 w-full flex flex-col items-center relative z-20">
-    <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 text-brown-custom w-full px-4">
+  {/* Overlay per contrasto */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/30 z-10"></div>
+
+  {/* Contenuto */}
+  <div className="relative z-20 px-6 max-w-4xl w-full text-white text-left">
+    <h2 className="text-2xl sm:text-4xl font-bold mb-4 text-orange-200">
       Infissi di Alta Qualità
     </h2>
-    <p className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white w-full px-4">
+    <p className="text-lg sm:text-xl font-semibold mb-6 text-white">
       Soluzioni su misura per la tua casa
     </p>
-    <div className="text-justify w-full px-4">
-      <p className="text-base sm:text-lg leading-relaxed text-white w-full mx-auto">
-        Eleva il comfort e il valore della tua casa con i nostri infissi di alta
-        qualità. Ogni soluzione è progettata su misura per integrarsi
-        perfettamente con il tuo stile abitativo, garantendo un'estetica
-        raffinata e prestazioni superiori nel tempo.
-        <br />
-        <br />
-        La nostra attenzione ai dettagli si traduce nella scelta di materiali di
-        primissima qualità, selezionati per la loro durabilità, efficienza
-        energetica e resistenza agli agenti atmosferici. Dagli eleganti profili
-        ai meccanismi di apertura fluidi e affidabili, ogni accessorio è pensato
-        per offrirti funzionalità ottimali e una lunga durata.
-        <br />
-        <br />
-        Affidati alla nostra posa in opera specializzata, eseguita da artigiani
-        esperti che curano ogni dettaglio per assicurare una perfetta
-        sigillatura e un'installazione impeccabile. La nostra manodopera
-        qualificata garantisce non solo un risultato estetico eccellente, ma
-        anche la massima performance in termini di isolamento termico e
-        acustico, contribuendo a un significativo risparmio energetico e a un
-        maggiore benessere abitativo.
-        <br />
-        <br />
-        Scegliere i nostri infissi significa investire in un comfort duraturo,
-        in una maggiore sicurezza per la tua casa e in un design che valorizza
-        ogni ambiente. Trasforma la tua abitazione in uno spazio accogliente,
-        efficiente e bello da vivere, grazie alla qualità senza compromessi
-        dei nostri prodotti e alla professionalità del nostro team.
+    <div className="space-y-4 text-sm sm:text-base leading-relaxed text-white">
+      <p>
+        Eleva il comfort e il valore della tua casa con i nostri infissi di alta qualità. Ogni soluzione è progettata su misura per integrarsi perfettamente con il tuo stile abitativo, garantendo un'estetica raffinata e prestazioni superiori nel tempo.
+      </p>
+      <p>
+        La nostra attenzione ai dettagli si traduce nella scelta di materiali di primissima qualità, selezionati per la loro durabilità, efficienza energetica e resistenza agli agenti atmosferici. Dagli eleganti profili ai meccanismi di apertura fluidi e affidabili, ogni accessorio è pensato per offrirti funzionalità ottimali e una lunga durata.
+      </p>
+      <p>
+        Affidati alla nostra posa in opera specializzata, eseguita da artigiani esperti che curano ogni dettaglio per assicurare una perfetta sigillatura e un'installazione impeccabile...
       </p>
     </div>
   </div>
