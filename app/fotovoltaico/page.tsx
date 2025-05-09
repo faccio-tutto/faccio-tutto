@@ -24,7 +24,7 @@ const FotovoltaicoPage = () => {
                         <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
                           <FaInstagramSquare />
                         </a>
-                        <a href="https://www.linkedin.com/company/107244096/admin/dashboard/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
+                        <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
                           <FaLinkedin />
                         </a>
                         </h1>
