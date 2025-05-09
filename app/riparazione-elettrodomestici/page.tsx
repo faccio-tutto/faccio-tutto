@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { TfiEmail } from "react-icons/tfi";
 import styles from "./page.module.css";
 import ModuloContatti from './ModuloContatti';
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 
 const RepairPage = () => {
   const appliances = [
@@ -48,37 +50,37 @@ const RepairPage = () => {
       transition={{ duration: 0.8 }}
       className="min-h-screen bg-black text-white flex flex-col"
     >
-      {/* Navbar */}
-      <nav className="bg-black text-white py-4 px-6 flex justify-between items-center shadow-md">
-        <div className="flex items-center gap-2">
-          <a href="/">
-            <Image
-              src="/logo faccio tutto 3.png"
-              alt="Logo Faccio Tutto"
-              width={180}
-              height={180}
-              className="rounded-full"
-            />
-          </a>
-          <h1 className="text-2xl font-semibold">faccio-tutto.it</h1>
-        </div>
-        <ul className="flex gap-8">
-          {[
-            { name: "Home", href: "/" },
-            { name: "Mission", href: "/mission" },
-            { name: "Vision", href: "/vision" },
-            { name: "Chi siamo", href: "/chisiamo" },
-            { name: "Affiliazione", href: "/affiliazione" },
-            { name: "Contatti", href: "/contatti" },
-          ].map((link) => (
-            <li key={link.href}>
-              <a href={link.href} className="hover:text-blue-400 transition-colors duration-300">
-                {link.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+       {/* Navbar */}
+            <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
+              <div className="flex items-center gap-1">
+                <a href="/">
+                  <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
+                </a>
+                <h1 className="text-2xl font-bold flex items-center gap-2">
+                  faccio-tutto.it 
+                  <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
+                    <FaInstagramSquare />
+                  </a>
+                  <a href="https://www.linkedin.com/company/107244096/admin/dashboard/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
+                    <FaLinkedin />
+                  </a>
+                  </h1>
+              </div>
+              <ul className="flex gap-6">
+                {[
+                  { name: "Home", href: "/" },
+                  { name: "Mission", href: "/mission" },
+                  { name: "Vision", href: "/vision" },
+                  { name: "Chi siamo", href: "/chisiamo" },
+                  { name: "Affiliazione", href: "/affiliazione" },
+                  { name: "Contatti", href: "/contatti" },
+                ].map((link) => (
+                  <li key={link.href}>
+                    <a href={link.href} className="hover:underline">{link.name}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
 {/* Header */}
 <header className="text-center py-20" style={{ backgroundColor: "#000000" }}> {/* Nero */}

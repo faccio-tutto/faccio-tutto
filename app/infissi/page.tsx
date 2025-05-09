@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Image from "next/image";
 import { FaToggleOn, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import ModuloContatti from './ModuloContatti';
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 
 const InfissiPage = () => {
   const [dimensioni, setDimensioni] = useState(Array(10).fill(''));
@@ -35,29 +37,38 @@ const InfissiPage = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      {/* Navbar */}
-      <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
-        <div className="flex items-center gap-1">
-          <a href="/">
-            <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
-          </a>
-          <h1 className="text-2xl font-bold">faccio-tutto.it</h1>
-        </div>
-        <ul className="flex flex-wrap gap-4 text-sm sm:gap-6 sm:text-base">
-          {[
-            { name: "Home", href: "/" },
-            { name: "Mission", href: "/mission" },
-            { name: "Vision", href: "/vision" },
-            { name: "Chi siamo", href: "/chisiamo" },
-            { name: "Affiliazione", href: "/affiliazione" },
-            { name: "Contatti", href: "/contatti" },
-          ].map((link) => (
-            <li key={link.href}>
-              <a href={link.href} className="hover:underline">{link.name}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+     {/* Navbar */}
+           <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
+             <div className="flex items-center gap-1">
+               <a href="/">
+                 <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
+               </a>
+               <h1 className="text-2xl font-bold flex items-center gap-2">
+                 faccio-tutto.it 
+                 <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
+                   <FaInstagramSquare />
+                 </a>
+                 <a href="https://www.linkedin.com/company/107244096/admin/dashboard/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
+                   <FaLinkedin />
+                 </a>
+                 </h1>
+             </div>
+             <ul className="flex gap-6">
+               {[
+                 { name: "Home", href: "/" },
+                 { name: "Mission", href: "/mission" },
+                 { name: "Vision", href: "/vision" },
+                 { name: "Chi siamo", href: "/chisiamo" },
+                 { name: "Affiliazione", href: "/affiliazione" },
+                 { name: "Contatti", href: "/contatti" },
+               ].map((link) => (
+                 <li key={link.href}>
+                   <a href={link.href} className="hover:underline">{link.name}</a>
+                 </li>
+               ))}
+             </ul>
+           </nav>
+     
 
       {/* Hero Section */}
       <section className="relative flex items-center justify-center py-16 md:py-24 overflow-hidden">

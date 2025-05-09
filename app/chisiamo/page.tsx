@@ -2,17 +2,27 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 
 export default function ChisiamoPage() {
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Navbar */}
+       {/* Navbar */}
             <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
               <div className="flex items-center gap-1">
                 <a href="/">
                   <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
                 </a>
-                <h1 className="text-2xl font-bold">faccio-tutto.it</h1>
+                <h1 className="text-2xl font-bold flex items-center gap-2">
+                  faccio-tutto.it 
+                  <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
+                    <FaInstagramSquare />
+                  </a>
+                  <a href="https://www.linkedin.com/company/107244096/admin/dashboard/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
+                    <FaLinkedin />
+                  </a>
+                  </h1>
               </div>
               <ul className="flex gap-6">
                 {[

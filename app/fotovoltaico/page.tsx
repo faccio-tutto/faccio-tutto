@@ -6,42 +6,44 @@ import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image"; // Assicurati che Image sia importato
 import ModuloContatti from "./ModuloContatti";
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
   
 
 const FotovoltaicoPage = () => {
   return (
     <div className="bg-black min-h-screen text-white">
-      {/* Navbar */}
-      <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
-        <div className="flex items-center gap-1">
-          <Link href="/">
-            <Image
-              src="/logo faccio tutto 3.png"
-              alt="Logo Faccio Tutto"
-              width={200}
-              height={200}
-              className="rounded"
-            />
-          </Link>
-          <h1 className="text-2xl font-bold">faccio-tutto.it</h1>
-        </div>
-        <ul className="flex gap-6">
-          {[
-            { name: "Home", href: "/" },
-            { name: "Mission", href: "/mission" },
-            { name: "Vision", href: "/vision" },
-            { name: "Chi siamo", href: "/chisiamo" },
-            { name: "Affiliazione", href: "/affiliazione" },
-            { name: "Contatti", href: "/contatti" },
-          ].map((link) => (
-            <li key={link.href}>
-              <Link href={link.href} className="hover:underline">
-                {link.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+       {/* Navbar */}
+                  <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
+                    <div className="flex items-center gap-1">
+                      <a href="/">
+                        <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
+                      </a>
+                      <h1 className="text-2xl font-bold flex items-center gap-2">
+                        faccio-tutto.it 
+                        <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
+                          <FaInstagramSquare />
+                        </a>
+                        <a href="https://www.linkedin.com/company/107244096/admin/dashboard/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
+                          <FaLinkedin />
+                        </a>
+                        </h1>
+                    </div>
+                    <ul className="flex gap-6">
+                      {[
+                        { name: "Home", href: "/" },
+                        { name: "Mission", href: "/mission" },
+                        { name: "Vision", href: "/vision" },
+                        { name: "Chi siamo", href: "/chisiamo" },
+                        { name: "Affiliazione", href: "/affiliazione" },
+                        { name: "Contatti", href: "/contatti" },
+                      ].map((link) => (
+                        <li key={link.href}>
+                          <a href={link.href} className="hover:underline">{link.name}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
 
       {/* Hero Section */}
 <section className="relative bg-black text-white py-10 text-center">

@@ -3,6 +3,8 @@ import { FaWrench, FaPhone, FaEnvelope, FaDraftingCompass, FaSolarPanel, FaPlug,
 import Image from "next/image";
 import React from 'react';
 import { cn } from "@/lib/utils" // Importa la utility className
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 
 interface CardProps { //Definisci l'interfaccia
   children: React.ReactNode;
@@ -40,7 +42,15 @@ export default function HomeRepairService() {
           <a href="/">
             <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
           </a>
-          <h1 className="text-2xl font-bold">faccio-tutto.it</h1>
+          <h1 className="text-2xl font-bold flex items-center gap-2">
+            faccio-tutto.it 
+            <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
+              <FaInstagramSquare />
+            </a>
+            <a href="https://www.linkedin.com/company/107244096/admin/dashboard/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
+              <FaLinkedin />
+            </a>
+            </h1>
         </div>
         <ul className="flex gap-6">
           {[

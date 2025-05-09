@@ -4,6 +4,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaBuilding, FaDraftingCompass } from "react-icons/fa";
 import { TfiEmail } from "react-icons/tfi";
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 
 const App: React.FC = () => {
   const [hoveredImages, setHoveredImages] = useState<{ [key: number]: string | null }>({});
@@ -68,28 +70,36 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navbar */}
-      <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
-        <div className="flex items-center gap-1">
-          <a href="/">
-            <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
-          </a>
-          <h1 className="text-2xl font-bold">faccio-tutto.it</h1>
-        </div>
-        <ul className="flex gap-6">
-          {[
-            { name: "Home", href: "/" },
-            { name: "Mission", href: "/mission" },
-            { name: "Vision", href: "/vision" },
-            { name: "Chi siamo", href: "/chisiamo" },
-            { name: "Affiliazione", href: "/affiliazione" },
-            { name: "Contatti", href: "/contatti" },
-          ].map((link) => (
-            <li key={link.href}>
-              <a href={link.href} className="hover:underline">{link.name}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+            <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
+              <div className="flex items-center gap-1">
+                <a href="/">
+                  <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
+                </a>
+                <h1 className="text-2xl font-bold flex items-center gap-2">
+                  faccio-tutto.it 
+                  <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
+                    <FaInstagramSquare />
+                  </a>
+                  <a href="https://www.linkedin.com/company/107244096/admin/dashboard/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
+                    <FaLinkedin />
+                  </a>
+                  </h1>
+              </div>
+              <ul className="flex gap-6">
+                {[
+                  { name: "Home", href: "/" },
+                  { name: "Mission", href: "/mission" },
+                  { name: "Vision", href: "/vision" },
+                  { name: "Chi siamo", href: "/chisiamo" },
+                  { name: "Affiliazione", href: "/affiliazione" },
+                  { name: "Contatti", href: "/contatti" },
+                ].map((link) => (
+                  <li key={link.href}>
+                    <a href={link.href} className="hover:underline">{link.name}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
       <header style={{ backgroundColor: "black", padding: "20px", textAlign: "center" }}>
         <h1 style={{ fontSize: "2.2rem", fontWeight: "bold", color: "#6B46C1" }}>Progettazione Architettonica e Direzione Lavori</h1>
