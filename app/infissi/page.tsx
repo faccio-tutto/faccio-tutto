@@ -74,22 +74,20 @@ const InfissiPage = () => {
   <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/30 z-10"></div>
 
   {/* Contenuto */}
-  <div className="relative z-20 px-6 max-w-4xl w-full text-white text-left">
-    <h2 className="text-2xl sm:text-4xl font-bold mb-4 text-orange-200">
-      Infissi di Alta Qualità
-    </h2>
-    <p className="text-lg sm:text-xl font-semibold mb-6 text-white">
+  <div className="relative z-20 px-4 sm:px-6 max-w-[1200px] w-full text-white mx-auto text-center">
+  <h2 style={{ fontSize: "1.75rem", fontWeight: "bold", marginBottom: "0.5rem", color: "#8B4513" }}>Infissi di alta qualità</h2>
+    <p className="text-base sm:text-lg font-medium mb-6 text-white">
       Soluzioni su misura per la tua casa
     </p>
-    <div className="space-y-4 text-sm sm:text-base leading-relaxed text-white">
+    <div className="space-y-4 text-[1.125rem] sm:text-[1.25rem] leading-relaxed text-white text-justify">
       <p>
-        Eleva il comfort e il valore della tua casa con i nostri infissi di alta qualità. Ogni soluzione è progettata su misura per integrarsi perfettamente con il tuo stile abitativo, garantendo un'estetica raffinata e prestazioni superiori nel tempo.
-      </p>
-      <p>
-        La nostra attenzione ai dettagli si traduce nella scelta di materiali di primissima qualità, selezionati per la loro durabilità, efficienza energetica e resistenza agli agenti atmosferici. Dagli eleganti profili ai meccanismi di apertura fluidi e affidabili, ogni accessorio è pensato per offrirti funzionalità ottimali e una lunga durata.
-      </p>
-      <p>
-        Affidati alla nostra posa in opera specializzata, eseguita da artigiani esperti che curano ogni dettaglio per assicurare una perfetta sigillatura e un'installazione impeccabile...
+      Eleva il comfort e il valore della tua casa con i nostri infissi di alta qualità. Ogni soluzione è progettata su misura per integrarsi perfettamente con il tuo stile abitativo, garantendo un'estetica raffinata e prestazioni superiori nel tempo.
+
+La nostra attenzione ai dettagli si traduce nella scelta di materiali di primissima qualità, selezionati per la loro durabilità, efficienza energetica e resistenza agli agenti atmosferici. Dagli eleganti profili ai meccanismi di apertura fluidi e affidabili, ogni accessorio è pensato per offrirti funzionalità ottimali e una lunga durata.
+
+Affidati alla nostra posa in opera specializzata, eseguita da artigiani esperti che curano ogni dettaglio per assicurare una perfetta sigillatura e un'installazione impeccabile. La nostra manodopera qualificata garantisce non solo un risultato estetico eccellente, ma anche la massima performance in termini di isolamento termico e acustico, contribuendo a un significativo risparmio energetico e a un maggiore benessere abitativo.
+
+Scegliere i nostri infissi significa investire in un comfort duraturo, in una maggiore sicurezza per la tua casa e in un design che valorizza ogni ambiente. Trasforma la tua abitazione in uno spazio accogliente, efficiente e bello da vivere, grazie alla qualità senza compromessi dei nostri prodotti e alla professionalità del nostro team.
       </p>
     </div>
   </div>
