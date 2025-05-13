@@ -67,6 +67,9 @@ const App: React.FC = () => {
     },
   ];
 
+  const isImageHovered = Object.values(hoveredImages).some(image => image);
+
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navbar */}
@@ -75,7 +78,7 @@ const App: React.FC = () => {
                 <a href="/">
                   <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
                 </a>
-                <h1 className="text-2xl font-bold flex items-center gap-2">
+                <h1 className="text-xl font-normal flex items-center gap-2">
                   faccio-tutto.it 
                   <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
                     <FaInstagramSquare />
@@ -102,14 +105,14 @@ const App: React.FC = () => {
             </nav>
 
       <header style={{ backgroundColor: "black", padding: "20px", textAlign: "center" }}>
-        <h1 style={{ fontSize: "2.2rem", fontWeight: "bold", color: "#6B46C1" }}>Progettazione Architettonica e Direzione Lavori</h1>
-        <p style={{ fontSize: "1.6rem", color: "grey" }}>Innovazione e qualità per il tuo edificio ed il tuo spazio</p>
+        <h1 style={{ fontSize: "2.0rem", fontWeight: "bold", color: "#6B46C1" }}>Progettazione Architettonica e Direzione Lavori</h1>
+        <p style={{ fontSize: "1.5rem", color: "grey" }}>Innovazione e qualità per il tuo edificio ed il tuo spazio</p>
       </header>
 
       <main className="flex flex-col md:flex-row p-4 md:p-8 gap-8">
         {/* Contenuto principale */}
         <section className="w-full md:w-3/4">
-          <h2 style={{ fontSize: "1.8rem", fontWeight: "bold", color: "white", textAlign: "justify" }}>Progettazione Architettonica</h2>
+          <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", color: "white", textAlign: "justify" }}>Progettazione Architettonica</h2>
           <FaDraftingCompass size={30} className="text-purple-500 mb-2" />
           <p style={{ fontSize: "1.2rem", color: "white", textAlign: "justify" }}>
             La progettazione architettonica si configura come il processo creativo e tecnico fondamentale che dà forma all'ambiente costruito. Essa trascende la mera realizzazione di edifici, configurandosi come un'arte applicata che armonizza funzionalità, estetica e sostenibilità. Nel cuore di ogni progetto, l'architetto agisce come un interprete delle esigenze del committente, traducendo desideri e necessità in spazi vivibili e coerenti con il contesto.
@@ -130,7 +133,7 @@ const App: React.FC = () => {
           </div>
           <div className="mt-12">
           </div>
-          <h2 style={{ fontSize: "1.8rem", fontWeight: "bold", color: "white", textAlign: "justify" }}>Direzione dei lavori</h2>
+          <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", color: "white", textAlign: "justify" }}>Direzione dei lavori</h2>
           <FaBuilding size={30} className="text-purple-500 mb-2" />
           <p style={{ fontSize: "1.2rem", color: "white", textAlign: "justify" }}>
             La direzione dei lavori rappresenta una fase cruciale nella realizzazione di un progetto architettonico, un'attività che va ben oltre la semplice supervisione del cantiere. Il direttore dei lavori è un professionista che assume la responsabilità di garantire che l'opera sia eseguita in conformità al progetto approvato, nel rispetto delle normative vigenti e delle migliori pratiche costruttive.
@@ -173,7 +176,7 @@ const App: React.FC = () => {
               <p className="text-sm text-gray-600 mt-2 text-center">{project.description}</p>
             </div>
           ))}
-          {Object.values(hoveredImages).some(image => image) && (
+          {isImageHovered && (
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -185,6 +188,26 @@ const App: React.FC = () => {
           )}
         </aside>
       </main>
+
+      {/* Immagini affiancate */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-8 px-4">
+        <Image
+          src="/images/post 10 maggio progettazione.png"
+          alt="Progettazione e direzione lavori"
+          width={550}
+          height={300}
+          className="rounded-xl shadow-xl max-w-full h-auto"
+          priority
+        />
+        <Image
+          src="/images/post 8 maggio architettura.png"
+          alt="Progettazione e direzione lavori"
+          width={550}
+          height={300}
+          className="rounded-xl shadow-xl max-w-full h-auto"
+          priority
+        />
+      </div>
 
       <div className="text-center my-12">
         <motion.a

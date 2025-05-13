@@ -14,7 +14,7 @@ export default function ChisiamoPage() {
                 <a href="/">
                   <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
                 </a>
-                <h1 className="text-2xl font-bold flex items-center gap-2">
+                <h1 className="text-xl font-normal flex items-center gap-2">
                   faccio-tutto.it 
                   <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
                     <FaInstagramSquare />
@@ -42,7 +42,7 @@ export default function ChisiamoPage() {
 
       {/* Chisiamo Section */}
       <div className="p-10 flex flex-col items-center">
-        <h1 className="text-4xl font-bold mb-6 text-center">Chi siamo</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">Chi siamo</h1>
         <div className="max-w-5xl text-justify mb-8 bg-black bg-opacity-70 p-6 rounded-lg">
         <p className="chisiamo-text">
           Siamo un'azienda che crede nel valore delle persone, al di là delle competenze lavorative ognuno di noi ha delle capacità, delle abilità, delle attitudini che esprime magari solo a casa propria o le mette a disposizione di pochi conoscenti, adesso, invece, questo "talento" può essere espresso su larga scala e riconosciuto sempre da più persone grazie ai feedback ricevuti. 

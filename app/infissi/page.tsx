@@ -43,7 +43,7 @@ const InfissiPage = () => {
                <a href="/">
                  <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
                </a>
-               <h1 className="text-2xl font-bold flex items-center gap-2">
+               <h1 className="text-xl font-normal flex items-center gap-2">
                  faccio-tutto.it 
                  <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
                    <FaInstagramSquare />
@@ -177,8 +177,8 @@ Scegliere i nostri infissi significa investire in un comfort duraturo, in una ma
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10 gap-y-12 px-2 sm:px-6">
           {/* Servizi Section */}
           <div className="md:w-1/2">
-            <h2 style={{ fontSize: "1.5rem", fontWeight: "bold" }} className="text-2xl font-bold mb-6 text-white text-center md:text-left">I Nostri Servizi</h2>
-            <ul style={{ fontSize: "1.4rem" }} className="text-base list-disc list-inside space-y-3 text-gray-300">
+            <h2 style={{ fontSize: "1.4rem", fontWeight: "bold" }} className="text-2xl font-bold mb-6 text-white text-center md:text-left">I Nostri Servizi</h2>
+            <ul style={{ fontSize: "1.3rem" }} className="text-base list-disc list-inside space-y-3 text-gray-300">
               <li>Sopralluogo e rilievo misure</li>
               <li>Progettazione personalizzata</li>
               <li>Consulenza energetica</li>

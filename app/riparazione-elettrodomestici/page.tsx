@@ -56,7 +56,7 @@ const RepairPage = () => {
                 <a href="/">
                   <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
                 </a>
-                <h1 className="text-2xl font-bold flex items-center gap-2">
+                <h1 className="text-xl font-normal flex items-center gap-2">
                   faccio-tutto.it 
                   <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
                     <FaInstagramSquare />

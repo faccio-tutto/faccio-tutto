@@ -1,0 +1,13 @@
+/* Esempio di stile per un'immagine di sfondo */
+.bg-image {
+    background-image: url('/images/sfondo sito web.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: white; /* oppure trasparente o quello che vuoi */
+}
+
+.custom-title {
+    color: white !important; /* <-- questo vince sempre su Tailwind */
+    font-size: 2rem;
+  }

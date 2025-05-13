@@ -34,7 +34,7 @@ export default function Home() {
                 <a href="/">
                   <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
                 </a>
-                <h1 className="text-2xl font-bold flex items-center gap-2">
+                <h1 className="text-xl font-normal flex items-center gap-2">
                   faccio-tutto.it 
                   <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
                     <FaInstagramSquare />
@@ -97,7 +97,7 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mb-8">
           SERVIZI SPECIALIZZATI PER LA CASA E LA TECNOLOGIA
         </h2>
-        <p className="text-xl text-center mb-0">
+        <p className="text-xl text-justify mb-0">
           Vogliamo creare una rete di professionisti indipendenti che offrono servizi di riparazione, configurazione e installazione per la casa e la tecnologia.
           <br />I nostri artigiani sono persone comuni che hanno sviluppato competenze specializzate attraverso l'interesse personale e l'esperienza pratica.
         </p>
@@ -106,29 +106,29 @@ export default function Home() {
         </h2>
         <ul className="text-left text-white list-disc list-inside mb-4">
           <li>RIPARAZIONI DOMESTICHE:
-            <br />Riparazioni idrauliche, elettriche, di elettrodomestici, mobili e altro ancora.</li>
-          <li>CONFIGURAZIONE DI DISPOSITIVI:
-            <br />Configurazione di smart home, assistenti vocali, reti domestiche, dispositivi mobili e altro ancora.</li>
-          <li>INSTALLAZIONI:
+            <br/>Riparazioni idrauliche, elettriche, di elettrodomestici, mobili e altro ancora.</li>
+            <br/><li>CONFIGURAZIONE DI DISPOSITIVI:
+            <br/>Configurazione di smart home, assistenti vocali, reti domestiche, dispositivi mobili e altro ancora.</li>
+            <br/><li>INSTALLAZIONI:
             <br />Installazione di lampadari, tende, scaffali, supporti TV, prese elettriche, interruttori smart e altro ancora.</li>
         </ul>
         <h3 className="text-2xl font-semibold mb-4">ECCO ALCUNI DEI NOSTRI SERVIZI</h3>
         <ul className="text-left text-white list-disc list-inside mb-4">
           <li>COMPETENZA SPECIALIZZATA:
-            <br />I nostri artigiani hanno competenze specifiche in una o più aree di servizio.</li>
-          <li>FLESSIBILITA':
+            <br/>I nostri artigiani hanno competenze specifiche in una o più aree di servizio.</li>
+            <br/><li>FLESSIBILITA':
             <br /> Offriamo servizi su richiesta e ci adattiamo alle esigenze dei nostri clienti.</li>
-          <li>PREZZI COMPETITIVI:
+            <br/><li>PREZZI COMPETITIVI:
             <br />I nostri prezzi sono inferiori a quelli delle aziende tradizionali.</li>
-          <li>SERVIZIO PERSONALIZZATO:
+            <br/><li>SERVIZIO PERSONALIZZATO:
             <br />Offriamo un servizio attento e personalizzato per ogni cliente.</li>
-          <li>COMUNITA':
+            <br/><li>COMUNITA':
             <br />Supportiamo gli artigiani locali e promuoviamo l'economia di prossimità.</li>
         </ul>
         <p className="mt-4">
         </p>
 
-        <div className="grid md:grid-cols-3 gap-4 -mt-120">
+        <div className="grid md:grid-cols-3 gap-4 -mt-145">
           {services.map((service, index) => (
             <motion.div
               key={index}

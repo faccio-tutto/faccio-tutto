@@ -14,7 +14,7 @@ export default function VisionPage() {
                <a href="/">
                  <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
                </a>
-               <h1 className="text-2xl font-bold flex items-center gap-2">
+               <h1 className="text-xl font-normal flex items-center gap-2">
                  faccio-tutto.it 
                  <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
                    <FaInstagramSquare />
@@ -42,7 +42,7 @@ export default function VisionPage() {
 
       {/* Mission Section */}
       <div className="p-6 flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-6 text-center">La Nostra Vision</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">La Nostra Vision</h1>
         <div className="max-w-5xl text-justify mb-8 bg-black bg-opacity-70 p-6 rounded-lg">
         <p className="mission-text">
         Crediamo in un mondo in cui chiunque sappia fare qualcosa possa offrire il proprio talento
