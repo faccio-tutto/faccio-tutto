@@ -137,7 +137,7 @@ const MainContent = () => {
                     <section className="relative text-center w-full">
                         <div className="bg-black bg-opacity-50 p-4 md:p-6 flex flex-col items-center">
                             <h2 className="custom-title">Progettazione - riparazioni - installazioni</h2>
-                            <p className="text-yellow-400 text-2xl md:text-2xl font-bold mb-4">Servizi per la tua casa con un solo contatto!</p>
+                            <p className="text-yellow-400 text-2xl md:text-2xl font-bold mb-4">Tanti servizi con un solo contatto!</p>
                             <section className="bg-black bg-opacity-80 text-gray-600 rounded-lg shadow-lg p-6 mt-0">
   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
     
