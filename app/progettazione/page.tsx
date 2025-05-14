@@ -17,8 +17,8 @@ const App: React.FC = () => {
         "/images/obbiettivamente2.jpg",
         "/images/obbiettivamente3.jpg"
       ],
-      title: "Rendering",
-      description: "Progettazione e arredo di uno studio fotografico",
+      title: "Ristrutturazione e interior design",
+      description: "Progetto di ristrutturazione di uno studio fotografico",
     },
     {
       images: [
@@ -26,8 +26,8 @@ const App: React.FC = () => {
         "/images/drago4.jpg",
         "/images/drago5.jpg"
       ],
-      title: "Ristrutturazione e arredo",
-      description: "Progetto di ristrutturazione e arredamento di un appartamento",
+      title: "Ristrutturazione e interior design",
+      description: "Progetto di ristrutturazione e arredo di un appartamento",
     },
     {
       images: [
@@ -44,8 +44,8 @@ const App: React.FC = () => {
         "/images/frenk2.jpg",
         "/images/frenk3.jpg"
       ],
-      title: "Ristrutturazione e arredo",
-      description: "Progetto di ristrutturazione di un appartamento",
+      title: "Ristrutturazione e interior design",
+      description: "Progetto di ristrutturazione e arredo di un appartamento",
     },
     {
       images: [
@@ -53,7 +53,7 @@ const App: React.FC = () => {
         "/images/cri2.jpg",
         "/images/cri3.jpg"
       ],
-      title: "Progettazione e arredo",
+      title: "Progettazione",
       description: "Progettazione di una villa moderna",
     },
     {
@@ -62,8 +62,8 @@ const App: React.FC = () => {
         "/images/ale2.jpg",
         "/images/ale3.jpg"
       ],
-      title: "Ristrutturazione e arredo",
-      description: "Ristrutturazione di un attico a Palermo",
+      title: "Ristrutturazione e interior design",
+      description: "Progetto di ristrutturazione di un attico a Palermo",
     },
   ];
 
