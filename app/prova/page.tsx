@@ -62,23 +62,6 @@ const Button: React.FC<ButtonProps> = ({ children, className, variant, size, ...
 };
 
 const MainContent = () => {
-    const heroTitle = "Progettazione, Riparazioni, Installazioni";
-    const coloredTitle = heroTitle.split(', ').flatMap((phrase, index) => {
-        const words = phrase.split(' ');
-        return words.map((word, wordIndex) => (
-            <React.Fragment key={`${index}-${wordIndex}`}>
-                <span className={
-                    index === 0 ? 'text-purple-500' :
-                    index === 1 ? 'text-orange-500' :
-                    index === 2 ? 'text-yellow-500' :
-                    'text-white' // Colore predefinito se ci fossero più frasi
-                }>
-                    {word}
-                </span>
-                {wordIndex < words.length - 1 && ' '} {/* Aggiunge uno spazio tra le parole */}
-            </React.Fragment>
-        ));
-    });
 
         const [hoveredImages, setHoveredImages] = React.useState<{ [key: number]: string | null }>({});
         const isImageHovered = Object.values(hoveredImages).some(image => image);
@@ -133,86 +116,56 @@ const MainContent = () => {
                     </div>
                 </div>
     
-                {/* Colonna centrale (Hero Section e testo) */}
+                {/* Center Column (Hero Section e testo) */}
                 <div className="w-full md:w-2/2 flex flex-col items-center mt-8 md:mt-0">
                     <section className="relative text-center w-full">
-                        <div className="bg-black bg-opacity-50 p-4 md:p-6 flex flex-col items-center">
-                            <h2 className="custom-title">Progettazione, Riparazioni, Installazioni</h2>
-                            <p className="text-yellow-400 text-2xl md:text-2xl font-bold mb-4">Servizi per la tua casa con un solo contatto!</p>
-                            <section className="bg-black bg-opacity-80 text-gray-600 rounded-lg shadow-lg p-6 mt-0">
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-    
-    {/* Progettazione */}
-    <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/progettazione.png" alt="Progettazione" width={200} height={200} className="rounded shadow-md object-cover" />
-      <p className="text-base text-justify font-medium">
-        Hai bisogno di un progetto per la tua casa o per la tua nuova attività? Affidati ai nostri esperti in progettazione architettonica e direzione lavori.
-      </p>
-    </div>
-
-    {/* Risparmio energetico */}
-    <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/energia-verde.png" alt="Risparmio energetico" width={200} height={200} className="rounded shadow-md object-cover" />
-      <p className="text-base text-justify font-medium">
-        Vuoi risparmiare energia e prenderti cura dell’ambiente? Scopri le nostre soluzioni con impianti fotovoltaici e infissi ad alta efficienza.
-      </p>
-    </div>
-
-    {/* Riparazione elettrodomestici */}
-    <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/riparazione-elettrodomestici.png" alt="Riparazione piccoli elettrodomestici" width={200} height={200} className="rounded shadow-md object-cover" />
-      <p className="text-base text-justify font-medium">
-        Sei affezionato ai tuoi oggetti e preferisci ripararli piuttosto che buttarli? Ci occupiamo della riparazione di piccoli elettrodomestici con competenza e attenzione.
-      </p>
-    </div>
-
-    {/* Piccole riparazioni domestiche */}
-    <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/piccole-riparazioni.png" alt="Riparazioni domestiche" width={200} height={200} className="rounded shadow-md object-cover" />
-      <p className="text-base text-justify font-medium">
-        Cerchi qualcuno per piccole riparazioni in casa, ma nessuno è disponibile? Con <strong>faccio-tutto.it</strong> trovi anche chi si occupa degli interventi più semplici ma importanti.
-      </p>
-    </div>
-  </div>
-
-  <div className="mt-8 text-center">
-    <h3 className="text-xl font-bold text-gray-600 mb-2">Un solo riferimento per ogni esigenza</h3>
-    <p className="text-base text-gray-400 mb-4">
-      Progettazione, installazioni, riparazioni e risparmio energetico: <strong>faccio-tutto.it</strong> è il tuo punto di riferimento per servizi affidabili e su misura.
-    </p>
-  </div>
-</section>
-                            <a href="mailto:info@faccio-tutto.it">
-                            <Button className="bg-yellow-500 hover:bg-yellow-600 text-white w-full md:w-56 h-12 text-base rounded-lg flex items-center justify-center gap-2">
-                                    Contattaci 
-                                    <FaEnvelope />
-                                </Button>
-                            </a>
+                        <div className="bg-black bg-opacity-50 p-4 md:p- flex flex-col items-center">
+                            <h1 className="text-3xl text-white font-bold mb-6 text-center">La Nostra Mission</h1>
+                            <section className="bg-black bg-opacity-80 rounded-lg shadow-lg p-0 mt-0">
+                                <div className="max-w-3xl text-gray-500 text-justify mb-8 bg-black bg-opacity-70 p-0 rounded-lg">
+                                    <p className="text-lg text-white">
+                                        <br/>Crediamo che ogni persona abbia competenze utili che possono essere messe a disposizione della comunità,
+                                             senza necessariamente essere un professionista certificato o una ditta, vorremmo creare un ambiente inclusivo dove ogni abilità sia valorizzata, indipendentemente dall'età, genere, background culturale o livello di istruzione.<br/>
+                                             I nostri obiettivi principali sono quelli di:<br/>
+                                       <br/>1. Dare opportunità di guadagno a chiunque abbia abilità pratiche.<br/>
+                                        <br/>2. Offrire un'alternativa economica e accessibile per piccoli lavori.<br/>
+                                        <br/>3. Creare una rete di fiducia basata su recensioni e competenze reali.<br/>
+                                        <br/>Con la nostra piattaforma, vogliamo democratizzare il mondo del lavoro occasionale, rendendolo più flessibile, accessibile e vantaggioso per tutti.
+                                        Garantiamo la massima trasparenza nelle recensioni e nella comunicazione tra utenti, per costruire una comunità affidabile e onesta.
+                                        Ci impegniamo a migliorare costantemente la nostra piattaforma, integrando nuove tecnologie e funzionalità per soddisfare le esigenze in continua evoluzione dei nostri utenti.
+                                    </p>
+                                </div>
+                            </section>
                         </div>
                     </section>
                 </div>
-    
+
                 {/* Colonna di destra (Post recenti) */}
                 <div className="w-full md:w-4/4 bg-red-500 p-4 rounded-xl shadow-lg space-y-2 mt-8 md:mt-0">
-                    <h3 className="text-lg font-bold text-white text-center">Post recenti</h3>
+                    <h3 className="text-lg font-bold text-white text-center"></h3>
                     <div className="grid grid-cols-1 gap-4">
-                        {[
-                            "/images/Volantino fotovoltaico.png",
-                            "/images/reddito energetico.png",
-                            "/images/40 fondi PNRR.png",
-                            "/images/post 8 maggio architettura.png",
-                            "/images/Post 10 maggio progettazione.png",
-                        ].map((src, index) => (
-                            <div
-                                key={index}
-                                className="transform transition duration-300 hover:scale-105 cursor-pointer group relative overflow-hidden"
-                                onMouseEnter={() => setHoveredImages(prev => ({ ...prev, [index]: src }))}
-                                onMouseLeave={() => setHoveredImages(prev => ({ ...prev, [index]: null }))}
-                            >
-                                <Image src={src} alt={`Volantino ${index + 1}`} className="rounded-md w-full object-contain" width={500} height={500} layout="responsive" />
-                                {/* Non abbiamo più bisogno del div di ingrandimento qui */}
-                            </div>
-                        ))}
+                    {[
+  { src: "/images/handyman.jpg", caption: "Piccoli lavori domestici" },
+  { src: "/images/riparazioni-elettrodomestici.jpg", caption: "Riparazioni di elettrodomestici" },
+  { src: "/images/home-repair.jpg", caption: "Semplici interventi" },
+].map((item, index) => (
+  <div
+    key={index}
+    className="transform transition duration-300 hover:scale-105 cursor-pointer group relative overflow-hidden"
+    onMouseEnter={() => setHoveredImages(prev => ({ ...prev, [index]: item.src }))}
+    onMouseLeave={() => setHoveredImages(prev => ({ ...prev, [index]: null }))}
+  >
+    <Image
+      src={item.src}
+      alt={`Volantino ${index + 1}`}
+      className="rounded-md w-full object-contain"
+      width={500}
+      height={500}
+      layout="responsive"
+    />
+    <p className="text-white text-sm mt-2 text-center">{item.caption}</p>
+  </div>
+))}
                     </div>
                 </div>
     
@@ -278,8 +231,8 @@ const MainContent = () => {
                 {/* Hero Image */}
                 <div className="w-full relative h-[300px] md:h-[660px]">
                     <Image
-                        src="/architect-multitasking.jpg"
-                        alt="Architetto multitasking"
+                        src="/images/sfondo mission.png"
+                        alt="sfondo chi siamo"
                         fill
                         style={{ objectFit: "contain" }}
                         priority
