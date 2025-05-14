@@ -200,7 +200,7 @@ const MainContent = () => {
                             "/images/reddito energetico.png",
                             "/images/40 fondi PNRR.png",
                             "/images/post 8 maggio architettura.png",
-                            "/images/post 10 maggio progettazione.png",
+                            "/images/post 10 maggio.png",
                             "/images/post 14 maggio.png",
                         ].map((src, index) => (
                             <div

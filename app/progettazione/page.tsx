@@ -192,7 +192,7 @@ const App: React.FC = () => {
       {/* Immagini affiancate */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-8 px-4">
         <Image
-          src="/images/post 10 maggio progettazione.png"
+          src="/images/post 10 maggio.png"
           alt="Progettazione e direzione lavori"
           width={550}
           height={300}
