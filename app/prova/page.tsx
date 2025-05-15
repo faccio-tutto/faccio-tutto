@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaWrench, FaPhone, FaEnvelope, FaDraftingCompass, FaSolarPanel, FaPlug, FaDoorOpen, FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 import { cn } from '@/lib/utils';
-import './prova.css';
 import { Card, CardContent } from "@/components/ui/card"; // Assumo tu abbia questi componenti
 import { motion } from 'framer-motion'; // Assicurati di aver installato framer-motion
 
@@ -120,19 +119,22 @@ const MainContent = () => {
                 <div className="w-full md:w-2/2 flex flex-col items-center mt-8 md:mt-0">
                     <section className="relative text-center w-full">
                         <div className="bg-black bg-opacity-50 p-4 md:p- flex flex-col items-center">
-                            <h1 className="text-3xl text-white font-bold mb-6 text-center">La Nostra Mission</h1>
+                            <h1 className="text-3xl text-white font-bold mb-6 text-center">La Nostra Vision</h1>
                             <section className="bg-black bg-opacity-80 rounded-lg shadow-lg p-0 mt-0">
                                 <div className="max-w-3xl text-gray-500 text-justify mb-8 bg-black bg-opacity-70 p-0 rounded-lg">
                                     <p className="text-lg text-white">
-                                        <br/>Crediamo che ogni persona abbia competenze utili che possono essere messe a disposizione della comunità,
-                                             senza necessariamente essere un professionista certificato o una ditta, vorremmo creare un ambiente inclusivo dove ogni abilità sia valorizzata, indipendentemente dall'età, genere, background culturale o livello di istruzione.<br/>
-                                             I nostri obiettivi principali sono quelli di:<br/>
-                                       <br/>1. Dare opportunità di guadagno a chiunque abbia abilità pratiche.<br/>
-                                        <br/>2. Offrire un'alternativa economica e accessibile per piccoli lavori.<br/>
-                                        <br/>3. Creare una rete di fiducia basata su recensioni e competenze reali.<br/>
-                                        <br/>Con la nostra piattaforma, vogliamo democratizzare il mondo del lavoro occasionale, rendendolo più flessibile, accessibile e vantaggioso per tutti.
-                                        Garantiamo la massima trasparenza nelle recensioni e nella comunicazione tra utenti, per costruire una comunità affidabile e onesta.
-                                        Ci impegniamo a migliorare costantemente la nostra piattaforma, integrando nuove tecnologie e funzionalità per soddisfare le esigenze in continua evoluzione dei nostri utenti.
+                                        <br/>Crediamo in un mondo in cui chiunque sappia fare qualcosa possa offrire il proprio talento
+          senza bisogno di essere un professionista certificato. Offriamo un'opportunità a chiunque
+          voglia mettere a disposizione le proprie competenze, creando una rete di aiuto reciproco
+          e occasioni di lavoro accessibili a tutti. L'idea centrale è quella di superare la barriera 
+          delle certificazioni formali, valorizzando le capacità pratiche di ogni individuo perchè a volte 
+          il saper fare ha più valore del titolo di studio.
+          Vogliamo creare una comunità collaborativa in cui le persone si supportano a vicenda attraverso lo
+          scambio di competenze.
+          L'obiettivo è quello di generare delle occasioni di lavoro che siano inclusive e aperte a tutti, 
+          indipendentemente dal loro background professionale.
+          Su questa piattaforma si vuole creare un ambiente stimolante per mettersi alla prova, garantire la qualità 
+          dei servizi offerti, ottenere dei feedback e costruire un portfolio di competenze. 
                                     </p>
                                 </div>
                             </section>
@@ -145,9 +147,9 @@ const MainContent = () => {
                     <h3 className="text-lg font-bold text-white text-center"></h3>
                     <div className="grid grid-cols-1 gap-4">
                     {[
-  { src: "/images/handyman.jpg", caption: "Piccoli lavori domestici" },
-  { src: "/images/riparazioni-elettrodomestici.jpg", caption: "Riparazioni di elettrodomestici" },
-  { src: "/images/home-repair.jpg", caption: "Semplici interventi" },
+  { src: "/images/operaio-tenda.jpg", caption: "Talento alla portata di tutti" },
+  { src: "/images/operaio-lampadario.jpg", caption: "Lavori semplici, senza complicazioni" },
+  { src: "/images/operaio-chiodi.jpg", caption: "Un aiuto concreto per la casa" },
 ].map((item, index) => (
   <div
     key={index}
@@ -231,7 +233,7 @@ const MainContent = () => {
                 {/* Hero Image */}
                 <div className="w-full relative h-[300px] md:h-[660px]">
                     <Image
-                        src="/images/sfondo mission.png"
+                        src="/images/sfondo vision.png"
                         alt="sfondo chi siamo"
                         fill
                         style={{ objectFit: "contain" }}
