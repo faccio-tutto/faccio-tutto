@@ -14,44 +14,43 @@ function ModuloContatti({ destinatarioEmail }) {
   const [invioStato, setInvioStato] = useState(''); // Stato per gestire lo stato di invio
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setInvioStato('inviando'); // Imposta lo stato di invio a "inviando
+  e.preventDefault();
+  setInvioStato('inviando');
 
-    // Validazioni
-    if (!privacy) {
-      setInvioStato('errore');
-      alert('Devi accettare i termini e le condizioni sulla privacy.');
-      return;
-    }
-    if (!nome || !cognome || !email) {
-      setInvioStato('errore');
-      alert('Nome, cognome ed email sono obbligatori.');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setInvioStato('errore');
-      alert('Email non valida.');
-      return;
-    }
-    // Costruisci il body della richiesta
-  const body = {
-    nome,
-    cognome,
-    email,
-    telefono,
-    via,
-    città,
-    messaggio,
-    destinatarioEmail // lo passi dal componente ModuloContatti
-  };
+  if (!privacy) {
+    setInvioStato('errore');
+    alert('Devi accettare i termini e le condizioni sulla privacy.');
+    return;
+  }
+
+  if (!nome || !cognome || !email) {
+    setInvioStato('errore');
+    alert('Nome, cognome ed email sono obbligatori.');
+    return;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    setInvioStato('errore');
+    alert('Email non valida.');
+    return;
+  }
+
+  // ✅ Usa FormData invece di JSON
+  const formData = new FormData();
+  formData.append('nome', nome);
+  formData.append('cognome', cognome);
+  formData.append('email', email);
+  formData.append('telefono', telefono);
+  formData.append('via', via);
+  formData.append('città', città);
+  formData.append('messaggio', messaggio);
+  formData.append('destinatarioEmail', destinatarioEmail);
+  formData.append('tipoUtente', 'privato'); // ⚠️ Necessario
 
   try {
     const res = await fetch(`${window.location.origin}/api/invia-email`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
+      body: formData, // ✅ niente header manuale qui!
     });
 
     if (res.ok) {
@@ -61,11 +60,11 @@ function ModuloContatti({ destinatarioEmail }) {
       console.error("Errore:", err.error);
       alert("Errore nell'invio del modulo: " + err.error);
     }
-} catch (error) {
-  console.error("Errore di rete:", error);
-  alert("Errore di rete. Riprova.");
-}
-}; // Closing brace for handleSubmit
+  } catch (error) {
+    console.error("Errore di rete:", error);
+    alert("Errore di rete. Riprova.");
+  }
+};
 
   return (
     <div id="modulo-contatti" className="flex justify-center items-center min-h-screen px-4">
