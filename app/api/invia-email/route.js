@@ -1,99 +1,160 @@
-import nodemailer from 'nodemailer';
-import { NextResponse, NextRequest } from 'next/server';
+import { Readable } from 'stream';
+import Busboy from 'busboy';
+import { NextResponse } from 'next/server';
+import { sendEmail } from '@/app/emailService';
+import fs from 'fs';
+import path from 'path';
 
-export async function POST(request) {
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+export async function POST(req) {
   try {
-    const body = await request.json();
+    const contentType = req.headers.get('content-type');
+    if (!contentType) throw new Error('Missing Content-Type');
 
-    const {
-      nome,
-      cognome,
-      email,
-      telefono,
-      via,
-      città,
-      messaggio,
-      dimensioni = [],
-      materiale,
-      colore,
-      accessori,
-      destinatarioEmail,
-      partitaIva,
-      legaleRappresentante,
-      sitoWeb,
-      visuraCamerale,
-      documentoIdentita,
-      nomeAzienda,
-    } = body;
+   const body = await req.arrayBuffer();
+const readable = Readable.from(Buffer.from(body));
+const busboy = Busboy({ headers: { 'content-type': contentType } });
 
-    const defaultDestinatario = process.env.MAIL_DESTINATARIO_INFISSI;
-    const mailDestinatario = destinatarioEmail || defaultDestinatario;
+const fields = {};
+const files = {};
 
-    if (!mailDestinatario) {
-      return NextResponse.json(
-        { success: false, error: 'Destinatario email non configurato.' },
-        { status: 400 },
-      );
-    }
-
-    const contenutoMail = `
-Hai ricevuto una nuova richiesta di preventivo dal sito faccio-tutto.it:
-
-📌 **Dati utente**
-- Nome: ${nome}
-- Cognome: ${cognome}
-- Email: ${email}
-- Telefono: ${telefono}
-- Via: ${via}
-- Città: ${città}
-
-**Dati Azienda:**
-- Nome Azienda: ${nomeAzienda}
-- Partita IVA: ${partitaIva}
-- Legale Rappresentante: ${legaleRappresentante}
-- Sito Web: ${sitoWeb || 'N/A'}
-
-📐 **Dimensioni Finestre**
-${dimensioni.filter((val) => val.trim()).map((val, i) => `  - Finestra ${i + 1}: ${val}`).join('\n')}
-
-🎨 **Colore:** ${colore}
-🧱 **Materiale:** ${materiale}
-🧩 **Accessori:** ${accessori}
-
-**Documenti Allegati:**
-Visura Camerale: ${visuraCamerale ? 'Si' : 'No'}
-Documento Identità: ${documentoIdentita ? 'Si' : 'No'}
-
-✉️ **Messaggio aggiuntivo:** ${messaggio || 'Nessun messaggio'}
-`;
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '465', 10),
-      secure: process.env.SMTP_PORT === '465',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-      logger: true,
-      debug: true,
+  return await new Promise((resolve, reject) => {
+  busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+    let buffer = Buffer.alloc(0);
+    file.on('data', (data) => {
+      buffer = Buffer.concat([buffer, data]);
     });
+    file.on('end', () => {
+      if (filename) {
+        files[fieldname] = {
+          filename: typeof filename === 'string' ? filename : 'file.pdf',
+          mimetype: mimetype || 'application/octet-stream',
+          buffer,
+        };
+      }
+    });
+  });
 
-    const mailOptions = {
-      from: `"Faccio Tutto" <${process.env.SMTP_USER}>`,
-      to: mailDestinatario,
-      subject: `Richiesta Preventivo da ${nome} ${cognome}`,
-      text: contenutoMail,
-      html: `<pre>${contenutoMail}</pre>`,
-    };
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Message sent: %s', info.messageId);
+   busboy.on('field', (fieldname, value) => {
+  console.log('Ricevuto campo:', fieldname, '=>', value);
+  fields[fieldname] = value.normalize('NFC');
+});
 
-    return NextResponse.json({ success: true, message: 'Email inviata correttamente!' }, { status: 200 });
-  } catch (error) {
-    console.error('Errore invio email:', error);
-    return NextResponse.json(
-      { success: false, error: error.message || 'Errore sconosciuto durante l\'invio dell\'email.' },
-      { status: 500 },
+      busboy.on('finish', async () => {
+        console.log('Tutti i campi ricevuti:', fields);
+        console.log('Campi:', fields);
+        console.log('File ricevuti:', Object.keys(files));
+
+        // ✅ Salvataggio file opzionale
+        const uploadDir = path.resolve('./uploads');
+        if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+
+        for (const [key, file] of Object.entries(files)) {
+          const safeFilename = typeof file.filename === 'string' ? file.filename : 'file';
+          const savePath = path.join(uploadDir, safeFilename);
+          fs.writeFileSync(savePath, file.buffer);
+        }
+
+                // ✅ Controllo campi obbligatori in base al tipo utente
+const tipoUtente = fields.tipoUtente?.normalize('NFC').toLowerCase();
+console.log('Tipo utente ricevuto:', tipoUtente);
+
+if (tipoUtente === 'azienda') {
+  if (
+    !fields.email ||
+    !fields.partitaIva ||
+    !files.visuraCamerale ||
+    !files.documentoIdentita
+  ) {
+    return resolve(
+      NextResponse.json(
+        {
+          error:
+            'Campi obbligatori mancanti (email, partita IVA, documento o visura)',
+        },
+        { status: 400 }
+      )
     );
+  }
+} else if (tipoUtente === 'privato') {
+  if (!fields.email || !fields.nome || !fields.cognome) {
+    return resolve(
+      NextResponse.json(
+        {
+          error:
+            'Campi obbligatori mancanti per privato (nome, cognome, email)',
+        },
+        { status: 400 }
+      )
+    );
+  }
+} else {
+  console.error('Valore tipoUtente non valido:', tipoUtente);
+  return resolve(
+    NextResponse.json(
+      { error: 'Tipo utente non valido o mancante' },
+      { status: 400 }
+    )
+  );
+}
+
+        // ✉️ Corpo email
+let html = `<h2>Richiesta di affiliazione</h2>`;
+
+if (tipoUtente === 'azienda') {
+  html += `
+    <p><strong>Azienda:</strong> ${fields.nomeAzienda}</p>
+    <p><strong>Partita IVA:</strong> ${fields.partitaIva}</p>
+    <p><strong>Legale Rappresentante:</strong> ${fields.legaleRappresentante}</p>
+  `;
+} else if (tipoUtente === 'privato') {
+  html += `
+    <p><strong>Nome:</strong> ${fields.nome}</p>
+    <p><strong>Cognome:</strong> ${fields.cognome}</p>
+  `;
+}
+
+html += `
+  <p><strong>Email:</strong> ${fields.email}</p>
+  <p><strong>Telefono:</strong> ${fields.telefono}</p>
+  <p><strong>Sito Web:</strong> ${fields.sitoWeb}</p>
+  <p><strong>Indirizzo:</strong> ${fields.via}, ${fields['citta']}</p>
+  <p><strong>Messaggio:</strong> ${fields.messaggio}</p>
+`;
+
+if (fields['citta']) {
+  fields['città'] = fields['cittÃ '];
+  delete fields['cittÃ '];
+}
+        // 📎 Allegati
+        const attachments = Object.entries(files).map(([_, file]) => ({
+          filename: file.filename,
+          content: file.buffer,
+          contentType: file.mimetype,
+        }));
+
+        // 📤 Invio email
+        try {
+          const result = await sendEmail({ fields, attachments });
+          console.log('Allegati email:', attachments);
+          resolve(NextResponse.json({ success: true }));
+        } catch (emailError) {
+          console.error('Errore durante l’invio email:', emailError);
+          resolve(NextResponse.json({ error: 'Errore durante l’invio email' }, { status: 500 }));
+        }
+      });
+
+      busboy.on('error', (err) => reject(err));
+      readable.pipe(busboy);
+    });
+    
+  } catch (error) {
+    console.error('Errore nella route:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
