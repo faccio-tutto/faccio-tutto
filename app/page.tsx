@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaWrench, FaPhone, FaEnvelope, FaDraftingCompass, FaSolarPanel, FaPlug, FaDoorOpen, FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 import { cn } from '@/lib/utils';
-import { Card, CardContent } from "@/components/ui/card"; // Assumo tu abbia questi componenti
 import { motion } from 'framer-motion'; // Assicurati di aver installato framer-motion
 
 type CardContentProps = React.HTMLAttributes<HTMLDivElement>;

@@ -1,12 +1,12 @@
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-  host: 'smtps.aruba.it',
-  port: 465,
+  host: process.env.SMTP_HOST,
+  port: parseInt(process.env.EMAIL_PORT),
   secure: true,
   auth: {
-    user: 'affiliazione@faccio-tutto.it',
-    pass: 'Eduardo19!',
+    user: process.env.MAIL_DESTINATARIO_AFFILIAZIONE,
+    pass: process.env.SMTP_PASS,
   },
 });
 
