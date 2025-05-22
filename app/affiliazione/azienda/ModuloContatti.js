@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 
 function ModuloContatti({ destinatarioEmail }) {
-  formData.append('tipoUtente', 'azienda');
+  const [nome, setNome] = useState('');
+    const [cognome, setCognome] = useState('');
   const [telefono, setTelefono] = useState('');
   const [email, setEmail] = useState('');
   const [via, setVia] = useState('');
@@ -44,6 +45,9 @@ function ModuloContatti({ destinatarioEmail }) {
 
     // Costruisci il body della richiesta con FormData
     const formData = new FormData();
+    formData.append('tipoUtente', 'azienda');
+    formData.append('nome', nome);
+    formData.append('cognome', cognome);
     formData.append('nomeAzienda', nomeAzienda);
     formData.append('partitaIva', partitaIva);
     formData.append('legaleRappresentante', legaleRappresentante);
@@ -63,6 +67,9 @@ function ModuloContatti({ destinatarioEmail }) {
     if (visuraCamerale) formData.append('visuraCamerale', visuraCamerale);
 if (documentoIdentita) formData.append('documentoIdentita', documentoIdentita);
 
+
+setNome('');
+setCognome('');
 setTelefono('');
 setEmail('');
 setVia('');
