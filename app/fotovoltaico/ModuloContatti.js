@@ -48,7 +48,7 @@ function ModuloContatti({ destinatarioEmail }) {
   formData.append('tipoUtente', 'privato'); // ⚠️ Necessario
 
   try {
-    const res = await fetch(`${window.location.origin}/api/invia-email`, {
+    const res = await fetch(`${window.location.origin}/api/invia-email-formdata`, {
       method: 'POST',
       body: formData, // ✅ niente header manuale qui!
     });

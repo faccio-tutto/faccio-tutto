@@ -52,7 +52,7 @@ if (documentoIdentita) formData.append('documentoIdentita', documentoIdentita);
 
 
 try {
-  const res = await fetch('/api/invia-email', {
+  const res = await fetch('/api/invia-email-formdata', {
     method: 'POST',
     body: formData,
   });

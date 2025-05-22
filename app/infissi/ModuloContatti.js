@@ -42,7 +42,7 @@ function ModuloContatti({ destinatarioEmail }) {
 
     setInvioStato('inviando');
 
-    const formData = {
+    const formDataToSend = {
       nome,
       cognome,
       email,
@@ -55,16 +55,19 @@ function ModuloContatti({ destinatarioEmail }) {
       colore,
       accessori,
       destinatarioEmail: destinatarioEmail, // Includi l'email di destinazione nei dati inviati
+      tipoUtente: 'privato', // oppure 'azienda' se serve
     };
 
     try {
-      const response = await fetch('/api/invia-email', { // Crea un'API route in Next.js
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+     const response = await fetch("/api/invia-email-json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formDataToSend),
+    });
+
+     const result = await response.json();
 
       if (response.ok) {
         setInvioStato('successo');
@@ -86,8 +89,6 @@ function ModuloContatti({ destinatarioEmail }) {
         setInvioStato('errore');
         alert('Si è verificato un errore durante l\'invio della richiesta. Riprova più tardi.');
         console.error('Errore nell\'invio:', response);
-        const errorData = await response.json();
-        console.error('Dettagli errore:', errorData);
       }
     } catch (error) {
       setInvioStato('errore');
