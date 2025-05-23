@@ -4,8 +4,61 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import ModuloContatti from './ModuloContatti';
-import { FaInstagramSquare } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
+import { FaWrench, FaPhone, FaEnvelope, FaDraftingCompass, FaSolarPanel, FaPlug, FaDoorOpen, FaInstagramSquare, FaLinkedin, FaHome } from "react-icons/fa";
+import { cn } from '@/lib/utils';
+ // Assicurati di aver installato framer-motion
+
+type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
+
+const CustomCardContent: React.FC<CardContentProps> = ({ children, className, ...props }) => (
+    <div className={`card-content ${className}`} {...props}>
+        {children}
+    </div>
+);
+
+type CardProps = React.HTMLAttributes<HTMLDivElement>;
+
+const CustomCard: React.FC<CardProps> = ({ children, className, ...props }) => {
+    return (
+        <div className={`rounded-lg shadow-md ${className}`} {...props}>
+            {children}
+        </div>
+    );
+};
+
+type ButtonProps = {
+    children: React.ReactNode;
+    className?: string;
+    variant?: "ghost" | "default" | string;
+    size?: "icon" | string;
+    [key: string]: any;
+};
+
+const Button: React.FC<ButtonProps> = ({ children, className, variant, size, ...props }) => {
+    let baseClasses = "inline-flex items-center justify-start rounded-md text-sm font-bold transition-colors";
+
+    if (variant === "ghost") {
+        baseClasses += " hover:bg-gray-100";
+    } else if (variant === "default") {
+        baseClasses += " bg-yellow-500 text-black hover:bg-yellow-600";
+    } else {
+        baseClasses += " bg-white text-gray-900 hover:bg-gray-100";
+    }
+
+    if (size === "icon") {
+        baseClasses += " h-9 w-9 p-0";
+    } else {
+        baseClasses += " px-4 py-2"; // Ridotto il padding per contenere il testo
+    }
+
+    baseClasses = cn(baseClasses, className);
+
+    return (
+        <button className={baseClasses} {...props}>
+            {children}
+        </button>
+    );
+};
 
 export default function ContattiPage() {
   const contactItems = [
@@ -64,53 +117,81 @@ export default function ContattiPage() {
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="p-8 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]"
-      >
-        <h1 className="text-3xl font-bold mb-10 text-center text-blue-400">Contattaci</h1>
-        <p className="text-lg text-center mb-8 max-w-2xl">
-          Siamo qui per rispondere a tutte le tue domande. Non esitare a contattarci per qualsiasi informazione o richiesta.
-        </p>
+  transition={{ duration: 0.8 }}
+  className="p-8 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]"
+>
+  <h1 className="text-3xl font-bold mb-10 text-center text-blue-400">Contattaci</h1>
+  <p className="text-lg text-center mb-8 max-w-2xl">
+    Siamo qui per rispondere a tutte le tue domande. Non esitare a contattarci per qualsiasi informazione o richiesta.
+  </p>
 
-        {/* Layout aggiornato */}
-        <div className="flex flex-col md:flex-row items-start gap-12 w-full max-w-6xl">
-          {/* Pulsanti contatti */}
-          <div className="flex flex-col gap-6 w-full md:w-2/2">
-            {contactItems.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="flex flex-col items-center w-full"
-              >
-                <div className="w-48 h-40 bg-blue-250 rounded-xl flex justify-center items-center shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                  <Image src={item.src} width={200} height={120} alt={item.alt} className="object-contain" />
-                </div>
-                <h2 className="text-lg font-semibold mt-4 text-center w-full text-blue-400">{item.text}</h2>
-              </motion.div>
-            ))}
-          </div>
+  {/* Layout aggiornato */}
+  <div className="container mx-auto px-4 flex flex-col md:flex-row items-start gap-8 relative z-10 py-8">
+    {/* Servizi - NUOVI PULSANTI */}
+    <div className="w-full md:w-4/4 space-y-4 mb-8 md:mb-0 bg-gray-200 p-4 rounded-lg shadow-lg">
+      <div className="grid grid-cols-1 gap-4 bg-white bg-opacity-80 p-4 rounded-lg">
+        {[
+          {
+                id: "home",
+                icon: <FaHome className="text-3xl mb-0 text-red-500" />,
+                title: "Indirizzo sede",
+                description: "Via J.F.Kennedy 67, Canicattì (AG)",
+                link: "https://www.google.com/maps/place/Via+John+Fitzgerald+Kennedy,+67,+92024+Canicatt%C3%AC+AG/@37.3547205,13.8486844,17z/data=!3m1!4b1!4m6!3m5!1s0x13109243e58decef:0x341491fc3493e451!8m2!3d37.3547163!4d13.8512593!16s%2Fg%2F11csmbjss5?entry=ttu&g_ep=EgoyMDI1MDUxNS4xIKXMDSoASAFQAw%3D%3D"
+            },
+            {
+                id: "mail",
+                icon: <FaEnvelope className="text-3xl mb-0 text-blue-500" />,
+                title: "Indirizzo e-mail",
+                description: "info@faccio-tutto.it",
+                link: "info@faccio-tutto.it"
+            },
+            {
+                id: "telefono",
+                icon: <FaPhone className="text-3xl mb-0 text-green-500" />,
+                title: "Numero di telefono",
+                description: "+39 333 4491881",
+                link: "+39 333 4491881"
+            }
+        ].map(service => (
+            <a
+    key={service.id}
+    href={
+        service.id === "mail"
+            ? `mailto:${service.link}`
+            : service.id === "telefono"
+            ? `tel:${service.link.replace(/\s+/g, '')}`
+            : service.link
+    }
+    target={service.id === "home" ? "_blank" : undefined}
+    rel={service.id === "home" ? "noopener noreferrer" : undefined}
+    className="block transform transition duration-300 hover:scale-105"
+>
+                <CustomCard className="border-gray-200 bg-transparent">
+                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
+                        <div className="rounded-full p-3 shadow-md bg-white">
+                            {service.icon}
+                        </div>
+                        <h3 className="text-sm font-semibold mt-2 text-gray-800">
+                            {service.title}
+                        </h3>
+                        {service.description && (
+                            <p style={{ fontSize: '14px' }} className="text-gray-600 mt-1">{service.description}</p>
+                        )}
+                    </CustomCardContent>
+                </CustomCard>
+            </a>
+        ))}
+    </div>
+</div>
 
-          {/* Modulo contatti */}
-          <div className="w-full md:w-4/4">
-          <ModuloContatti destinatarioEmail="info@faccio-tutto.it" />
-            <div className="mt-2 text-left">
-            </div>
-          </div>
-        </div>
-
-        {/* Pulsante per tornare alla home */}
-        <Link href="/">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3 }}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-xl mt-12"
-          >
-            Torna alla Home
-          </motion.button>
-        </Link>
-      </motion.div>
+                  {/* Modulo contatti */}
+         <div className="w-full md:w-2/3 mx-auto">
+           <ModuloContatti destinatarioEmail="info@faccio-tutto.it" />
+           <div className="mt-0 text-left"></div>
+         </div>
+  </div>
+  </motion.div>
+  {/* Footer */}
 
       <footer className="text-center mt-8 p-6 bg-gray-900 text-gray-300">
         <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
