@@ -1,17 +1,21 @@
 "use client";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
+import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import Image from "next/image"; // Assicurati che Image sia importato
-import ModuloContatti from "./ModuloContatti";
-import { FaInstagramSquare } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaBuilding, FaDraftingCompass, FaDoorOpen, FaPlug, FaWrench, FaPhone, FaSolarPanel } from "react-icons/fa";
+import { TfiEmail } from "react-icons/tfi";
+import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
+import ModuloContatti from './ModuloContatti';
+import { CheckCircle } from "lucide-react";
+import { cn } from '@/lib/utils'; // Assicurati di avere questa funzione per la gestione delle classi
+import { Card, CardContent } from "@/components/ui/card"; // Assicurati di avere questi componenti per le card
+import { Button } from "@/components/ui/button"; // Assicurati di avere questo componente per i pulsanti
   
 
 const FotovoltaicoPage = () => {
   return (
+    <>
     <div className="bg-black min-h-screen text-white">
        {/* Navbar */}
                   <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
@@ -45,8 +49,57 @@ const FotovoltaicoPage = () => {
                     </ul>
                   </nav>
 
+<main className="flex flex-col gap-6 px-6">
+  {/* Colonna sinistra: pulsanti laterali */}
+  <aside className="hidden md:block sticky top-4 h-fit w-1/8 z-10">
+    <div className="bg-gray-200 p-4 rounded-lg shadow-lg space-y-4">
+      {[{
+        id: "progettazione",
+        icon: <FaDraftingCompass className="text-3xl text-purple-500" />,
+        title: "Progettazione architettonica",
+        link: "/progettazione"
+      }, {
+        id: "fotovoltaico",
+        icon: <FaSolarPanel className="text-3xl text-yellow-500" />,
+        title: "Impianti fotovoltaici",
+        link: "/fotovoltaico"
+      }, {
+        id: "infissi",
+        icon: <FaDoorOpen className="text-3xl text-orange-900" />,
+        title: "Vendita e installazione infissi",
+        link: "/infissi"
+      }, {
+        id: "riparazione-elettrodomestici",
+        icon: <FaPlug className="text-3xl text-orange-500" />,
+        title: "Riparazione elettrodomestici",
+        link: "/riparazione-elettrodomestici"
+      }, {
+        id: "riparazioni-veloci",
+        icon: <FaWrench className="text-3xl text-blue-500" />,
+        title: "Riparazioni veloci",
+        link: "/riparazioni-veloci"
+      }, {
+        id: "contatti",
+        icon: <FaPhone className="text-3xl text-green-500" />,
+        title: "Prenota subito",
+        link: "/prenota"
+      }].map(service => (
+        <Link
+          href={service.link}
+          key={service.id}
+          className="block p-4 bg-white rounded-lg shadow hover:scale-105 transition-transform text-center"
+        >
+          <div className="w-14 h-14 flex items-center justify-center rounded-full bg-white shadow-md mb-2 mx-auto">
+  {service.icon}
+</div>
+          <h3 className="text-sm font-semibold text-gray-800">{service.title}</h3>
+        </Link>
+      ))}
+    </div>
+  </aside>
+  
       {/* Hero Section */}
-<section className="relative bg-black text-white py-10 text-center">
+<section className="relative text-white -mt-245 py-0 text-center">
   <motion.h1
     className="text-3xl font-bold text-yellow-400" // Modifica il colore del testo a oro
     initial={{ opacity: 0, y: -50 }}
@@ -56,7 +109,7 @@ const FotovoltaicoPage = () => {
     <br/> investi nel tuo futuro rispettando l'ambiente
   </motion.h1>
   <motion.p
-    className="mt-6 text-lg text-justify p-6 rounded-lg text-3xl px-4 md:px-46 text-yellow-400" // Modifica il colore del testo a oro
+    className="mt-4 text-lg text-justify p-4 rounded-lg text-3xl px-4 md:px-54 text-yellow-400" // Modifica il colore del testo a oro
     style={{ fontSize: "1.2rem" }}
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -70,34 +123,10 @@ const FotovoltaicoPage = () => {
         </motion.div>
         <div className="grid md:grid-cols-1 gap-6 items-center max-w-6xl mx-auto mt-8">
       
-      <Image
-        src="/images/Volantino fotovoltaico.png"
-        alt="Offerta fotovoltaico"
-        width={1144}
-        height={600}
-        className="rounded-xl shadow-xl max-w-full h-auto"
-      priority
-      />
-      <Image
-        src="/images/reddito energetico.png"
-        alt="Reddito energetico"
-        width={1144}
-        height={600}
-        className="rounded-xl shadow-xl max-w-full h-auto"
-      priority
-      />
-       <Image
-        src="/images/40 fondi PNRR.png"
-        alt="40 fondi PNRR"
-        width={1144}
-        height={600}
-        className="rounded-xl shadow-xl max-w-full h-auto"
-      priority
-      />
     </div>
-    <div className="text-2xl font-bold flex justify-center gap-6 mt-20">Scopri tutti i vantaggi che ti offre un'impianto fotovoltaico</div>
+    <div className="text-2xl font-bold flex justify-center gap-6 mt-14">Scopri tutti i vantaggi che ti offre un'impianto fotovoltaico</div>
 
-        <div className="grid md:grid-cols-3 gap-6 mt-8 px-6 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 mt-8 px-8 max-w-6xl mx-auto">
           {[{
             img: "/bolletta.jpeg", title: "Risparmio sulla bolletta", text: "Riduci i costi della bolletta fino al 90% grazie all'autoproduzione."
           }, {
@@ -117,7 +146,6 @@ const FotovoltaicoPage = () => {
           ))}
         </div>
       </section>
-
 
 {/* Servizi Section */}
 <section className="py-10 px-8 max-w-6xl mx-auto">
@@ -205,22 +233,28 @@ const FotovoltaicoPage = () => {
       </div>
     ))}
   </div>
-</section>
+      </section>
+      </main>
 
       {/* Contatti Section */}
       <section className="bg-black text-white py-6 text-center">
-        <h2 className="font-bold text-center text-gray-800" style={{ fontSize: "1.7rem" }}>Non aspettare, contattaci!</h2>
-        <p className="font-bold text-center text-gray-800 p-2" style={{ fontSize: "1.2rem" }}>Fai una scelta consapevole per il tuo portafoglio e per il pianeta. 
+        <h2 className="font-bold text-center text-white" style={{ fontSize: "1.7rem" }}>Non aspettare, contattaci!</h2>
+        <p className="font-bold text-center text-white p-2" style={{ fontSize: "1.2rem" }}>Fai una scelta consapevole per il tuo portafoglio e per il pianeta. 
           <br/>Richiedi un preventivo gratuito e scopri come l'energia solare può trasformare la tua vita.</p>
           <div id="modulo-contatti">
   <ModuloContatti destinatarioEmail="fotovoltaico@faccio-tutto.it" />
 </div>
       </section>
+
       {/* Footer */}
       <footer className="text-center mt-8 p-6 bg-gray-900 text-gray-300">
         <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
       </footer>
     </div>
+  );
+
+export default FotovoltaicoPage;
+    </>
   );
 };
 

@@ -1,14 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { FaBuilding, FaDraftingCompass } from "react-icons/fa";
+import { FaBuilding, FaDraftingCompass, FaDoorOpen, FaPlug, FaWrench, FaPhone, FaSolarPanel } from "react-icons/fa";
 import { TfiEmail } from "react-icons/tfi";
-import { FaInstagramSquare } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
+import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 
 const App: React.FC = () => {
-  const [hoveredImages, setHoveredImages] = useState<{ [key: number]: string | null }>({});
+  type HoveredImages = { [key: number]: string | null };
+  const [hoveredImages, setHoveredImages] = useState<HoveredImages>({});
 
   const projects = [
     {
@@ -110,8 +111,57 @@ const App: React.FC = () => {
       </header>
 
       <main className="flex flex-col md:flex-row p-4 md:p-8 gap-8">
-        {/* Contenuto principale */}
-        <section className="w-full md:w-3/4">
+
+  {/* Pulsanti laterali a sinistra */}
+  <aside className="w-full md:w-1/6 space-y-4">
+    <div className="bg-gray-200 p-4 rounded-lg shadow-lg">
+      {[{
+        id: "progettazione",
+        icon: <FaDraftingCompass className="text-3xl text-purple-500" />,
+        title: "Progettazione architettonica",
+        link: "/progettazione"
+      }, {
+        id: "fotovoltaico",
+        icon: <FaSolarPanel className="text-3xl text-yellow-500" />,
+        title: "Impianti fotovoltaici",
+        link: "/fotovoltaico"
+      }, {
+        id: "infissi",
+        icon: <FaDoorOpen className="text-3xl text-orange-900" />,
+        title: "Vendita e installazione infissi",
+        link: "/infissi"
+      }, {
+        id: "riparazione-elettrodomestici",
+        icon: <FaPlug className="text-3xl text-orange-500" />,
+        title: "Riparazione elettrodomestici",
+        link: "/riparazione-elettrodomestici"
+      }, {
+        id: "riparazioni-veloci",
+        icon: <FaWrench className="text-3xl text-blue-500" />,
+        title: "Riparazioni veloci",
+        link: "/riparazioni-veloci"
+      }, {
+        id: "contatti",
+        icon: <FaPhone className="text-3xl text-green-500" />,
+        title: "Prenota subito",
+        link: "/prenota"
+      }].map(service => (
+        <Link
+          href={service.link}
+          key={service.id}
+          className="block mb-4 p-4 bg-white rounded-lg shadow hover:scale-105 transition-transform flex flex-col items-center text-center"
+        >
+          <div className="rounded-full p-3 mb-2 bg-white shadow-md">
+            {service.icon}
+          </div>
+          <h3 className="text-sm font-semibold text-gray-800">{service.title}</h3>
+        </Link>
+      ))}
+    </div>
+  </aside>
+
+  {/* Contenuto principale che già hai */}
+  <section className="w-full md:w-3/4">
           <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", color: "white", textAlign: "justify" }}>Progettazione Architettonica</h2>
           <FaDraftingCompass size={30} className="text-purple-500 mb-2" />
           <p style={{ fontSize: "1.2rem", color: "white", textAlign: "justify" }}>
@@ -128,7 +178,7 @@ const App: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
             {["/images/building-phase-0.png", "/images/building-phase-1.png", "/images/building-phase-2.png"].map((src, index) => (
-              <Image key={index} src={src} alt={`Phase ${index}`} width={300} height={300} className="rounded-lg shadow-lg" />
+              <Image key={index} src={src} alt={`Phase ${index}`} width={280} height={280} className="rounded-lg shadow-lg" />
             ))}
           </div>
           <div className="mt-12">
@@ -144,13 +194,13 @@ const App: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
             {["/images/direzione3.jpeg", "/images/direzione2.jpeg", "/images/direzione1.jpeg"].map((src, index) => (
-              <Image key={index} src={src} alt={`Phase ${index}`} width={300} height={300} className="rounded-lg shadow-lg" />
+              <Image key={index} src={src} alt={`Phase ${index}`} width={280} height={280} className="rounded-lg shadow-lg" />
             ))}
           </div>
         </section>
 
         {/* Barra laterale con progetti recenti */}
-        <aside className="w-full md:w-1/4 flex flex-col gap-6 mt-8 md:mt-0">
+        <aside className="w-full md:w-1/4 flex flex-col gap-4 mt-8 md:mt-0">
           <h3 className="text-lg font-semibold text-gray-300 mb-4">Progetti Recenti</h3>
           {projects.map((project, index) => (
             <div
