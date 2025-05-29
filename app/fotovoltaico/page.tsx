@@ -49,7 +49,7 @@ const FotovoltaicoPage = () => {
                     </ul>
                   </nav>
 
-<main className="flex flex-col gap-6 px-6">
+<main className="flex flex-col gap-6 px-6 mt-35">
   {/* Colonna sinistra: pulsanti laterali */}
   <aside className="hidden md:block sticky top-4 h-fit w-1/8 z-10">
     <div className="bg-gray-200 p-4 rounded-lg shadow-lg space-y-4">
@@ -238,11 +238,11 @@ const FotovoltaicoPage = () => {
       </section>
 
       {/* Contatti Section */}
-      <section className="bg-black text-white py-6 text-center">
+      <section className="bg-black text-white py-6 mt-10 text-center">
         <h2 className="font-bold text-center text-white" style={{ fontSize: "1.7rem" }}>Non aspettare, contattaci!</h2>
         <p className="font-bold text-center text-white p-2" style={{ fontSize: "1.2rem" }}>Fai una scelta consapevole per il tuo portafoglio e per il pianeta. 
           <br/>Richiedi un preventivo gratuito e scopri come l'energia solare può trasformare la tua vita.</p>
-          <div id="modulo-contatti">
+          <div className="-mt-24 w-35/32" id="modulo-contatti">
   <ModuloContatti destinatarioEmail="fotovoltaico@faccio-tutto.it" />
 </div>
       </section>
