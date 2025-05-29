@@ -98,8 +98,10 @@ const FotovoltaicoPage = () => {
     </div>
   </aside>
   
+  <main className="flex flex-col w-8/7 gap-6">
+  <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
       {/* Hero Section */}
-<section className="relative text-white -mt-245 py-0 text-center">
+<section className="relative text-white -mt-235 py-0 text-center">
   <motion.h1
     className="text-3xl font-bold text-yellow-400" // Modifica il colore del testo a oro
     initial={{ opacity: 0, y: -50 }}
@@ -109,19 +111,19 @@ const FotovoltaicoPage = () => {
     <br/> investi nel tuo futuro rispettando l'ambiente
   </motion.h1>
   <motion.p
-    className="mt-4 text-lg text-justify p-4 rounded-lg text-3xl px-4 md:px-54 text-yellow-400" // Modifica il colore del testo a oro
+    className="mt-4 text-lg text-justify p-4 rounded-lg text-3xl px-4 md:px-20 text-yellow-400" // Modifica il colore del testo a oro
     style={{ fontSize: "1.2rem" }}
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
 >
   Scegliere un impianto fotovoltaico significa abbracciare un futuro di energia pulita, indipendenza economica e responsabilità ambientale. Immagina di ridurre drasticamente le tue bollette elettriche, fino al 90%, producendo energia direttamente dal sole. Un investimento intelligente che si ripaga in pochi anni, grazie agli incentivi fiscali del 50% e per gli impianti fotovoltaici che entreranno in esercizio entro il 29 maggio 2025, è possibile presentare una richiesta di accesso al meccanismo di Scambio sul Posto (SSP) fino al 26 settembre 2025. Se abiti in un comune con meno di 5.000 abitanti, si potrà installare un impianto fotovoltaico con un contributo a fondo perduto fino al 40% delle spese ammissibili, grazie al PNRR. Per accedere a questo incentivo, è necessario far parte di una Comunità Energetica Rinnovabile (CER). 
 </motion.p>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-0">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-10">
         <a href="#modulo-contatti"> {/* Modifica il pulsante in un link */}
           <Button className="bg-blue-500 text-white text-l font-semibold hover:bg-blue-600">Contattaci subito</Button>
           </a>
         </motion.div>
-        <div className="grid md:grid-cols-1 gap-6 items-center max-w-6xl mx-auto mt-8">
+        <div className="grid md:grid-cols-1 gap-6 items-center max-w-6xl mx-auto mt-6">
       
     </div>
     <div className="text-2xl font-bold flex justify-center gap-6 mt-14">Scopri tutti i vantaggi che ti offre un'impianto fotovoltaico</div>
@@ -234,7 +236,6 @@ const FotovoltaicoPage = () => {
     ))}
   </div>
       </section>
-      </main>
 
       {/* Contatti Section */}
       <section className="bg-black text-white py-6 text-center">
@@ -245,6 +246,9 @@ const FotovoltaicoPage = () => {
   <ModuloContatti destinatarioEmail="fotovoltaico@faccio-tutto.it" />
 </div>
       </section>
+    </div>
+  </main>
+</main>
 
       {/* Footer */}
       <footer className="text-center mt-8 p-6 bg-gray-900 text-gray-300">
