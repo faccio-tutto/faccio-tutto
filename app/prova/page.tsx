@@ -1,26 +1,15 @@
-"use client";
+// TestCentering.jsx
+import React from 'react';
 
-import Head from 'next/head';
-import ContactForm from '../components/ContactForm';
+const TestCentering = () => {
+  return (
+    <div className="w-full py-8 px-4 sm:px-6 lg:px-8 bg-black flex justify-center items-center">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <p className="text-gray-800 text-center text-xl">Questo è un test di centratura.</p>
+        <div className="bg-blue-200 h-20 w-20 mx-auto mt-4"></div> {/* Un blocco per visibilità */}
+      </div>
+    </div>
+  );
+};
 
-export default function ContactPage() {
-    return (
-        <div>
-            <Head>
-                <title>Contattaci</title>
-                <meta name="description" content="Pagina di contatto del mio sito web" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
-            <main>
-                <h1>Modulo di Contatto</h1>
-                <p>Compila il modulo sottostante per contattarci.</p>
-                <ContactForm /> {/* Inserisci qui il componente ContactForm */}
-            </main>
-
-            <footer>
-                <p>© 2025 Il mio sito web</p>
-            </footer>
-        </div>
-    );
-}
+export default TestCentering;

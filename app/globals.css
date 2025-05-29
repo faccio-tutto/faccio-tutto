@@ -505,12 +505,6 @@ header .logo p {
   margin-bottom: 10px;
 }
 
-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
 form label {
   font-weight: bold;
 }
