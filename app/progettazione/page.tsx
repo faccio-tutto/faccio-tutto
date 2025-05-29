@@ -113,7 +113,7 @@ const App: React.FC = () => {
       <main className="flex flex-col md:flex-row p-4 md:p-8 gap-8">
 
   {/* Pulsanti laterali a sinistra */}
-  <aside className="w-full md:w-1/6 space-y-4">
+  <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/6 space-y-4">
     <div className="bg-gray-200 p-4 rounded-lg shadow-lg">
       {[{
         id: "progettazione",
