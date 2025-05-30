@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from 'react';
 import Image from "next/image";
-import { FaToggleOn, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import ModuloContatti from './ModuloContatti';
-import { FaInstagramSquare } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
+import { FaBuilding, FaDraftingCompass, FaDoorOpen, FaPlug, FaWrench, FaPhone, FaSolarPanel } from "react-icons/fa";
+import { TfiEmail } from "react-icons/tfi";
+import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
+import Link from "next/link";
 
 const InfissiPage = () => {
   const [dimensioni, setDimensioni] = useState(Array(10).fill(''));
@@ -69,6 +70,54 @@ const InfissiPage = () => {
              </ul>
            </nav>
      
+     
+     {/* Pulsanti laterali a sinistra */}
+  <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/6 space-y-4">
+    <div className="bg-gray-200 p-4 rounded-lg shadow-lg">
+      {[{
+        id: "progettazione",
+        icon: <FaDraftingCompass className="text-3xl text-purple-500" />,
+        title: "Progettazione architettonica",
+        link: "/progettazione"
+      }, {
+        id: "fotovoltaico",
+        icon: <FaSolarPanel className="text-3xl text-yellow-500" />,
+        title: "Impianti fotovoltaici",
+        link: "/fotovoltaico"
+      }, {
+        id: "infissi",
+        icon: <FaDoorOpen className="text-3xl text-orange-900" />,
+        title: "Vendita e installazione infissi",
+        link: "/infissi"
+      }, {
+        id: "riparazione-elettrodomestici",
+        icon: <FaPlug className="text-3xl text-orange-500" />,
+        title: "Riparazione elettrodomestici",
+        link: "/riparazione-elettrodomestici"
+      }, {
+        id: "riparazioni-veloci",
+        icon: <FaWrench className="text-3xl text-blue-500" />,
+        title: "Riparazioni veloci",
+        link: "/riparazioni-veloci"
+      }, {
+        id: "contatti",
+        icon: <FaPhone className="text-3xl text-green-500" />,
+        title: "Prenota subito",
+        link: "/prenota"
+      }].map(service => (
+        <Link
+          href={service.link}
+          key={service.id}
+          className="block mb-4 p-4 bg-white rounded-lg shadow hover:scale-105 transition-transform flex flex-col items-center text-center"
+        >
+          <div className="rounded-full p-3 mb-2 bg-white shadow-md">
+            {service.icon}
+          </div>
+          <h3 className="text-sm font-semibold text-gray-800">{service.title}</h3>
+        </Link>
+      ))}
+    </div>
+  </aside>
 
       {/* Hero Section */}
       <section className="relative flex items-center justify-center py-16 md:py-24 overflow-hidden">

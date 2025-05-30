@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function ModuloContatti({ destinatarioEmail }) {
   const [nome, setNome] = useState('');
@@ -13,6 +13,7 @@ function ModuloContatti({ destinatarioEmail }) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null); // Aggiungi uno stato per gestire gli errori
   const [documentoIdentita, setDocumentoIdentita] = useState(null); // Inizializzato a null
+  const fileInputRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +36,8 @@ function ModuloContatti({ destinatarioEmail }) {
     }
      setError(null);
 
+     if (fileInputRef.current) fileInputRef.current.value = null;
+
     // Costruisci il body della richiesta
   const formData = new FormData();
   formData.append('tipoUtente', 'privato');
@@ -52,7 +55,7 @@ if (documentoIdentita) formData.append('documentoIdentita', documentoIdentita);
 
 
 try {
-  const res = await fetch('/api/invia-email-formdata', {
+  const res = await fetch('/api/invia-email-formidable', {
     method: 'POST',
     body: formData,
   });
@@ -127,6 +130,7 @@ const handleDocumentoChange = (e) => {
               <label className="block text-sm text-left font-medium text-gray-600 mb-1 sm:mt-0">Documento d'identità</label>
               <div className="flex flex-col items-start">
               <input
+              ref={fileInputRef}
                 type="file"
                 id="documentoIdentita"
                 name="documentoIdentita"

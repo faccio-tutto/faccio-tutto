@@ -46,10 +46,10 @@ const AffiliazionePrivati = () => {
                     
                     {/* Inserimento del modulo contatti */}
                     <section className="text-white py-6 text-center">
-                    <p className="text-lg text-center">
+                    <div className="text-lg text-gray-500 text-bold text-center">
                         Se sei un privato e desideri affiliarti, compila il modulo qui sotto. 
                         <br/>Ti contatteremo al più presto per fornirti tutte le informazioni necessarie.
-                    </p>
+                    </div>
                     <div className="mt-8 bg-black items-center"></div>
                     <div id="modulo-contatti" className="flex justify-center">
                     <ModuloContatti destinatarioEmail="affiliazione@faccio-tutto.it" />
