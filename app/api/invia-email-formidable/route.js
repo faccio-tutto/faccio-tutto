@@ -61,20 +61,28 @@ export async function POST(req) {
     } = fields;
 
     const attachments = [];
-const fileInput = files.documentoIdentita;
-const file = Array.isArray(fileInput) ? fileInput[0] : fileInput;
-
-if (file && file.filepath) {
-  const stats = fs.statSync(file.filepath);
-  console.log(`File dimensione: ${stats.size} byte`);
-
+// Documento Identità
+const fileDocumento = Array.isArray(files.documentoIdentita) ? files.documentoIdentita[0] : files.documentoIdentita;
+if (fileDocumento && fileDocumento.filepath) {
   attachments.push({
-    filename: file.originalFilename || 'documento.pdf',
-    path: file.filepath,
-    contentType: file.mimetype || 'application/pdf',
+    filename: fileDocumento.originalFilename || 'documento_identita.pdf',
+    path: fileDocumento.filepath,
+    contentType: fileDocumento.mimetype || 'application/pdf',
   });
 } else {
-  console.warn('Nessun file valido ricevuto o filepath mancante:', fileInput);
+  console.warn('Documento identità mancante o non valido:', fileDocumento);
+}
+
+// Visura Camerale
+const fileVisura = Array.isArray(files.visuraCamerale) ? files.visuraCamerale[0] : files.visuraCamerale;
+if (fileVisura && fileVisura.filepath) {
+  attachments.push({
+    filename: fileVisura.originalFilename || 'visura_camerale.pdf',
+    path: fileVisura.filepath,
+    contentType: fileVisura.mimetype || 'application/pdf',
+  });
+} else {
+  console.warn('Visura camerale mancante o non valida:', fileVisura);
 }
 
     const transporter = nodemailer.createTransport({

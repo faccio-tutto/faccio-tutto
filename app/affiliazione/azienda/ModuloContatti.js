@@ -85,7 +85,7 @@ setVisuraCamerale(null);
 setDocumentoIdentita(null);
 
     try {
-      const res = await fetch('/api/invia-email-formdata', {
+      const res = await fetch('/api/invia-email-formidable', {
   method: 'POST',
   body: formData,
 });
@@ -172,7 +172,7 @@ setDocumentoIdentita(null);
                 >
                   Carica Visura Camerale
                 </label>
-                {visuraCamerale && <p className="text-sm text-gray-500 mt-1">File selezionato: {visuraCamerale.name}</p>}
+                {visuraCamerale && <div className="text-sm text-gray-500 mt-1">File selezionato: {visuraCamerale.name}</div>}
               </div>
             </div>
 
@@ -192,7 +192,7 @@ setDocumentoIdentita(null);
                 >
                   Carica Documento
                 </label>
-                {documentoIdentita && <p className="text-sm text-gray-500 mt-1">File selezionato: {documentoIdentita.name}</p>}
+                {documentoIdentita && <div className="text-sm text-gray-500 mt-1">File selezionato: {documentoIdentita.name}</div>}
               </div>
             </div>
 
