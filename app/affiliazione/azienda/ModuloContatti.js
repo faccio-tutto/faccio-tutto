@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function ModuloContatti({ destinatarioEmail }) {
   const [nome, setNome] = useState('');
@@ -20,6 +20,8 @@ function ModuloContatti({ destinatarioEmail }) {
   const [sitoWeb, setSitoWeb] = useState('');
   const [visuraCamerale, setVisuraCamerale] = useState(null); // Inizializzato a null
   const [documentoIdentita, setDocumentoIdentita] = useState(null); // Inizializzato a null
+ const fileInputRefDocumento = useRef();
+const fileInputRefVisura = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,6 +44,9 @@ function ModuloContatti({ destinatarioEmail }) {
       return;
     }
     setError(null);
+
+      if (fileInputRefDocumento.current) fileInputRefDocumento.current.value = null;
+if (fileInputRefVisura.current) fileInputRefVisura.current.value = null;
 
     // Costruisci il body della richiesta con FormData
     const formData = new FormData();
@@ -67,7 +72,14 @@ function ModuloContatti({ destinatarioEmail }) {
     if (visuraCamerale) formData.append('visuraCamerale', visuraCamerale);
 if (documentoIdentita) formData.append('documentoIdentita', documentoIdentita);
 
+  try {
+      const res = await fetch('/api/invia-email-formidable', {
+  method: 'POST',
+  body: formData,
+});
 
+ if (res.ok) {
+    setSuccess(true);
 setNome('');
 setCognome('');
 setTelefono('');
@@ -84,16 +96,9 @@ setSitoWeb('');
 setVisuraCamerale(null);
 setDocumentoIdentita(null);
 
-    try {
-      const res = await fetch('/api/invia-email-formidable', {
-  method: 'POST',
-  body: formData,
-});
-
-      if (res.ok) {
-        setSuccess(true);
-      } else {
+ } else {
        let errorMsg = 'Errore nell\'invio del modulo.';
+ 
       try {
         const err = await res.json();
         errorMsg = err?.error || errorMsg;
@@ -172,7 +177,16 @@ setDocumentoIdentita(null);
                 >
                   Carica Visura Camerale
                 </label>
-                {visuraCamerale && <div className="text-sm text-gray-500 mt-1">File selezionato: {visuraCamerale.name}</div>}
+                {visuraCamerale && (
+  <a
+    href={URL.createObjectURL(visuraCamerale)}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-sm text-blue-500 underline mt-1"
+  >
+    Visura camerale: {visuraCamerale.name}
+  </a>
+)}
               </div>
             </div>
 
@@ -192,7 +206,16 @@ setDocumentoIdentita(null);
                 >
                   Carica Documento
                 </label>
-                {documentoIdentita && <div className="text-sm text-gray-500 mt-1">File selezionato: {documentoIdentita.name}</div>}
+                {documentoIdentita && (
+                  <a
+    href={URL.createObjectURL(documentoIdentita)}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-sm text-blue-500 underline mt-1"
+  >
+    Documento d'identità: {documentoIdentita.name}
+  </a>
+)}
               </div>
             </div>
 

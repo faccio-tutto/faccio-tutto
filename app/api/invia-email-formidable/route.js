@@ -4,7 +4,6 @@ import formidable from 'formidable';
 import nodemailer from 'nodemailer';
 import fs from 'fs';
 
-// Disabilita il body parser built-in di Next.js
 export const config = {
   api: {
     bodyParser: false,
@@ -39,37 +38,54 @@ export async function POST(req) {
         }
       );
     });
+   const tipoUtente = fields.tipoUtente?.[0];
+console.log("TIPO UTENTE:", tipoUtente);
+console.log('FIELDS:', fields);
+console.log('FILES:', files);
 
-    console.log('FIELDS:', fields);
-    console.log('FILES:', files);
+// Costruisci testo email con tutti i campi
+ const testoEmail = `Hai ricevuto una nuova richiesta di affiliazione da un ${tipoUtente === 'privato' ? 'Privato' : 'Azienda'}:
+
+Azienda: ${fields.nomeAzienda?.[0] || '—'}
+Partita IVA: ${fields.partitaIva?.[0] || '—'}
+Legale Rappresentante: ${fields.legaleRappresentante?.[0] || '—'}
+Sito Web: ${fields.sitoWeb?.[0] || '—'}
+
+Nome: ${fields.nome?.[0] || '—'}
+Cognome: ${fields.cognome?.[0] || '—'}  
+Indirizzo email: ${fields.email?.[0] || '—'}
+Telefono: ${fields.telefono?.[0] || '—'}
+Via: ${fields.via?.[0] || '—'}
+Città: ${fields.citta?.[0] || '—'}
+Messaggio: ${fields.messaggio?.[0] || '—'}
+`;
 
     // Costruzione degli allegati da file caricati
     const allegati = [];
+    let fileArray = []; 
+   if (tipoUtente === 'privato' && files.documentoIdentita) {
+  fileArray = Array.isArray(files.documentoIdentita)
+    ? files.documentoIdentita
+    : [files.documentoIdentita];
+}
 
-    if (files.documentoIdentita) {
-      const fileArray = Array.isArray(files.documentoIdentita)
-        ? files.documentoIdentita
-        : [files.documentoIdentita];
+if (tipoUtente === 'azienda') {
+  if (files.documentoIdentita) {
+    fileArray.push(...(Array.isArray(files.documentoIdentita) ? files.documentoIdentita : [files.documentoIdentita]));
+  }
+  if (files.visuraCamerale) {
+    fileArray.push(...(Array.isArray(files.visuraCamerale) ? files.visuraCamerale : [files.visuraCamerale]));
+  }
+}
 
-      for (const file of fileArray) {
-        allegati.push({
-          filename: file.originalFilename,
-          content: await fs.promises.readFile(file.filepath),
-        });
-      }
-    }
-
-    // Costruisci testo email con tutti i campi
-    const testoEmail = `
-Nuova richiesta da 
-Nome: ${fields.nome}
-Cognome: ${fields.cognome}  
-Indirizzo email: ${fields.email}
-Telefono: ${fields.telefono}
-Via: ${fields.via}
-Città: ${fields.citta}
-Messaggio: ${fields.messaggio}
-`;
+for (const file of fileArray) {
+  const buffer = await fs.promises.readFile(file.filepath);
+  console.log("📎 Allegato:", file.originalFilename, "size:", buffer.length);
+  allegati.push({
+    filename: file.originalFilename,
+    content: buffer,
+  });
+}
 
     // Configura transporter SMTP usando variabili ambiente
    const transporter = nodemailer.createTransport({

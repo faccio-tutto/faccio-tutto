@@ -151,7 +151,7 @@ const handleDocumentoChange = (e) => {
     rel="noopener noreferrer"
     className="text-sm text-blue-500 underline mt-1"
   >
-    Visualizza documento
+    Documento identità caricato: {documentoIdentita.name}
   </a>
 )}
             </div>
