@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button"; // Assicurati di avere questo c
 
 const FotovoltaicoPage = () => {
   return (
-    <div className="bg-black min-h-screen text-white">
+    <div className="bg-black min-h-screen text-gray-500">
        {/* Navbar */}
       <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
         <div className="flex items-center gap-1">
@@ -125,9 +125,9 @@ const FotovoltaicoPage = () => {
               </a>
             </motion.div>
             <div className="grid md:grid-cols-1 gap-6 items-center max-w-6xl mx-auto mt-6"></div>
-            <div className="text-2xl font-bold flex justify-center gap-6 mt-14">Scopri tutti i vantaggi che ti offre un'impianto fotovoltaico</div>
+            <div className="text-2xl text-yellow-400 font-bold flex justify-center gap-6 mt-14">Scopri tutti i vantaggi che ti offre un'impianto fotovoltaico</div>
 
-            <div className="grid md:grid-cols-3 gap-6 mt-8 px-8 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-6 mt-8 px-8 max-w-6xl mx-auto text-gray-500">
               {[{
                 img: "/bolletta.jpeg", title: "Risparmio sulla bolletta", text: "Riduci i costi della bolletta fino al 90% grazie all'autoproduzione."
               }, {
@@ -139,8 +139,8 @@ const FotovoltaicoPage = () => {
                   <img src={item.img} alt={item.title} className="w-full h-48 object-cover shadow-lg bg-[#1E1E1E] text-[#D1D1D1]" />
                   <CardContent>
                     <div className="p-6">
-                      <h3 className="text-xl font-semibold text-[#FFD700]">{item.title}</h3>
-                      <p className="mt-2">{item.text}</p>
+                      <div className="text-xl font-semibold text-[#FFD700]">{item.title}</div>
+                      <div className="texy-gray-500 mt-2">{item.text}</div>
                     </div>
                   </CardContent>
                 </Card>
@@ -150,12 +150,12 @@ const FotovoltaicoPage = () => {
 
           {/* Servizi Section */}
           <section className="py-10 px-8 max-w-6xl mx-auto">
-            <h2 className="font-bold text-center text-gray-800" style={{ fontSize: "1.7rem" }}>
+            <div className="font-bold text-center text-yellow-400" style={{ fontSize: "1.7rem" }}>
               Perchè scegliere noi?
-            </h2>
-            <p className="font-bold text-center text-gray-800" style={{ fontSize: "1.2rem" }}>
+            </div>
+            <div className="font-bold text-center text-gray-500" style={{ fontSize: "1.2rem" }}>
               Scopri quanto puoi risparmiare con un impianto fotovoltaico, ti offriamo un servizio completo e senza pensieri:
-            </p>
+            </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6 mt-8">
               {[
                 {
@@ -180,8 +180,8 @@ const FotovoltaicoPage = () => {
                     <CardContent>
                       <div className="p-6">
                         <CheckCircle className="text-green-500 mr-4 inline-block" />
-                        <span className="text-xl font-semibold text-yellow-400">{service.title}</span>
-                        <p className="text-gray-600 mt-2">{service.description}</p>
+                        <span className="text-xl font-semibold text-yellow-500">{service.title}</span>
+                        <div className="text-gray-500 mt-2">{service.description}</div>
                       </div>
                     </CardContent>
                   </Card>
@@ -192,10 +192,10 @@ const FotovoltaicoPage = () => {
 
           {/* Offerte Section */}
           <section className="py-10 bg-black text-center">
-            <h2 className="font-bold text-center text-gray-200" style={{ fontSize: "1.7rem" }}>
+            <div className="font-bold text-center text-yellow-500" style={{ fontSize: "1.7rem" }}>
               Le nostre configurazioni
-            </h2>
-            <p className="font-bold text-center text-gray-200" style={{ fontSize: "1.2rem" }}>"CHIAVI IN MANO"</p>
+            </div>
+            <div className="font-bold text-center text-gray-500" style={{ fontSize: "1.2rem" }}>"CHIAVI IN MANO"</div>
             <div className="grid md:grid-cols-2 gap-6 mt-8 px-6 max-w-6xl mx-auto">
               {[
                 {
@@ -217,7 +217,7 @@ const FotovoltaicoPage = () => {
                     <CardContent>
                       <div className="p-6">
                         <h3 className="text-xl font-semibold">{offer.title}</h3>
-                        <p className="text-gray-600 mt-0">{offer.description}</p>
+                        <div className="text-gray-500 mt-0">{offer.description}</div>
                         <div className="mt-6">
                           <a href={offer.filePath} target="_blank" rel="noopener noreferrer">
                             <Button className="bg-yellow-400 text-white font-semibold hover:bg-yellow-500">
@@ -235,9 +235,9 @@ const FotovoltaicoPage = () => {
 
           {/* Contatti Section - CON IL MODULO DI CONTATTO */}
           <section className="bg-black text-white py-6 mt-10 text-center">
-            <h2 className="font-bold text-center text-white" style={{ fontSize: "1.7rem" }}>Non aspettare, contattaci!</h2>
-            <p className="font-bold text-center text-white p-2" style={{ fontSize: "1.2rem" }}>Fai una scelta consapevole per il tuo portafoglio e per il pianeta.
-              <br/>Richiedi un preventivo gratuito e scopri come l'energia solare può trasformare la tua vita.</p>
+            <div className="font-bold text-center text-yellow-500" style={{ fontSize: "1.7rem" }}>Non aspettare, contattaci!</div>
+            <div className="font-bold text-center text-gray-500 p-2" style={{ fontSize: "1.2rem" }}>Fai una scelta consapevole per il tuo portafoglio e per il pianeta.
+              <br/>Richiedi un preventivo gratuito e scopri come l'energia solare può trasformare la tua vita.</div>
             {/* Il modulo di contatto ora è contenuto qui. Le sue classi interne lo centreranno. */}
             <div className="mt-4 w-full max-w-4xl mx-auto" id="modulo-contatti">
                 <ModuloContatti destinatarioEmail="fotovoltaico@faccio-tutto.it" />
