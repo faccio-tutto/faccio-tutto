@@ -68,7 +68,7 @@ export default function Home() {
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl font-bold"
+          className="text-3xl font-bold"
         >
           Riparazioni veloci
         </motion.h1>
@@ -84,10 +84,10 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2 }}
-          className="mt-6"
+          className="text-gray-400 mt-6"
         >
           <Link href="/contatti"> {/* Usa Link per collegare alla pagina /contatti */}
-          <Button className="bg-blue-500 text-blue-600 px-6 py-3 rounded-xl shadow-lg hover:bg-blue-600">
+          <Button className="bg-blue-500 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-blue-600">
             Contattaci Ora
           </Button>
           </Link>
@@ -99,10 +99,10 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mb-8">
           SERVIZI SPECIALIZZATI PER LA CASA E LA TECNOLOGIA
         </h2>
-        <p className="text-xl text-justify mb-0">
+        <div className="text-xl text-justify text-gray-400 mb-0">
           Vogliamo creare una rete di professionisti indipendenti che offrono servizi di riparazione, configurazione e installazione per la casa e la tecnologia.
           <br />I nostri artigiani sono persone comuni che hanno sviluppato competenze specializzate attraverso l'interesse personale e l'esperienza pratica.
-        </p>
+        </div>
         <h2 className="text-2xl font-semibold mb-8">
           COSA OFFRIAMO
         </h2>
@@ -147,9 +147,9 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 px-4 bg-black text-white text-center">
+      <section className="py-20 px-4 bg-black text-xl text-white text-center">
         <h2 className="text-3xl font-semibold">Hai bisogno di aiuto?</h2>
-        <p className="mt-2">Contattaci per una riparazione veloce e professionale!</p>
+        <div className="text-gray-400 mt-2">Contattaci per una riparazione veloce e professionale!</div>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -157,7 +157,7 @@ export default function Home() {
           className="mt-6"
         >
           <Link href="/contatti"> {/* Usa Link per collegare alla pagina /contatti */}
-          <Button className="bg-blue-500 text-blue-600 px-6 py-3 rounded-xl shadow-lg hover:bg-blue-600">
+          <Button className="bg-blue-500 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-blue-600">
             Clicca quì
           </Button>
           </Link>
