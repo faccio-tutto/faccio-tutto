@@ -115,52 +115,54 @@ const App: React.FC = () => {
       <main className="flex flex-col md:flex-row p-4 md:p-8 gap-8">
 
   {/* Pulsanti laterali a sinistra */}
-  <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/6 space-y-4">
-    <div className="bg-gray-200 p-4 rounded-lg shadow-lg">
-      {[{
-        id: "progettazione",
-        icon: <FaDraftingCompass className="text-3xl text-purple-500" />,
-        title: "Progettazione architettonica",
-        link: "/progettazione"
-      }, {
-        id: "fotovoltaico",
-        icon: <FaSolarPanel className="text-3xl text-yellow-500" />,
-        title: "Impianti fotovoltaici",
-        link: "/fotovoltaico"
-      }, {
-        id: "infissi",
-        icon: <FaDoorOpen className="text-3xl text-orange-900" />,
-        title: "Vendita e installazione infissi",
-        link: "/infissi"
-      }, {
-        id: "riparazione-elettrodomestici",
-        icon: <FaPlug className="text-3xl text-orange-500" />,
-        title: "Riparazione elettrodomestici",
-        link: "/riparazione-elettrodomestici"
-      }, {
-        id: "riparazioni-veloci",
-        icon: <FaWrench className="text-3xl text-blue-500" />,
-        title: "Riparazioni veloci",
-        link: "/riparazioni-veloci"
-      }, {
-        id: "contatti",
-        icon: <FaPhone className="text-3xl text-green-500" />,
-        title: "Prenota subito",
-        link: "/prenota"
-      }].map(service => (
-        <Link
-          href={service.link}
-          key={service.id}
-          className="block mb-4 p-4 bg-white rounded-lg shadow hover:scale-105 transition-transform flex flex-col items-center text-center"
-        >
-          <div className="rounded-full p-3 mb-2 bg-white shadow-md">
-            {service.icon}
+ <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/6 z-10">
+  <div className="bg-gray-200 px-4 py-6 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
+            {[
+              {
+                id: "progettazione",
+                icon: <FaDraftingCompass className="text-3xl text-purple-500" />,
+                title: "Progettazione architettonica",
+                link: "/progettazione"
+              }, {
+                id: "fotovoltaico",
+                icon: <FaSolarPanel className="text-3xl text-yellow-500" />,
+                title: "Impianti fotovoltaici",
+                link: "/fotovoltaico"
+              }, {
+                id: "infissi",
+                icon: <FaDoorOpen className="text-3xl text-orange-900" />,
+                title: "Vendita e installazione infissi",
+                link: "/infissi"
+              }, {
+                id: "riparazione-elettrodomestici",
+                icon: <FaPlug className="text-3xl text-orange-500" />,
+                title: "Riparazione elettrodomestici",
+                link: "/riparazione-elettrodomestici"
+              }, {
+                id: "riparazioni-veloci",
+                icon: <FaWrench className="text-3xl text-blue-500" />,
+                title: "Riparazioni veloci",
+                link: "/riparazioni-veloci"
+              }, {
+                id: "contatti",
+                icon: <FaPhone className="text-3xl text-green-500" />,
+                title: "Prenota subito",
+                link: "/prenota"
+              }].map(service => (
+                <Link
+                  href={service.link}
+                  key={service.id}
+                  // MODIFICHE QUI: Rimosso completamente `p-4`
+                  className="w-28 h-28 flex flex-col justify-center items-center bg-white rounded-lg shadow hover:scale-105 transition-transform text-center mx-auto"
+      >
+        <div className="w-14 h-14 flex items-center justify-center rounded-full bg-white shadow-md mb-2">
+          {service.icon}
+        </div>
+        <h3 className="text-sm font-semibold text-gray-800">{service.title}</h3>
+      </Link>
+              ))}
           </div>
-          <h3 className="text-sm font-semibold text-gray-800">{service.title}</h3>
-        </Link>
-      ))}
-    </div>
-  </aside>
+        </aside>
 
   {/* Contenuto principale che già hai */}
   <section className="w-full md:w-3/4">
