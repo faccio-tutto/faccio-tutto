@@ -82,36 +82,38 @@ export default function ContattiPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white">
        {/* Navbar */}
-                  <nav className="bg-black text-white py-1 px-6 flex justify-between items-center shadow-lg">
-                    <div className="flex items-center gap-1">
-                      <a href="/">
-                        <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
-                      </a>
-                      <h1 className="text-xl font-normal flex items-center gap-2">
-                        faccio-tutto.it 
-                        <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
-                          <FaInstagramSquare />
-                        </a>
-                        <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
-                          <FaLinkedin />
-                        </a>
-                        </h1>
-                    </div>
-                    <ul className="flex gap-6">
-                      {[
-                        { name: "Home", href: "/" },
-                        { name: "Mission", href: "/mission" },
-                        { name: "Vision", href: "/vision" },
-                        { name: "Chi siamo", href: "/chisiamo" },
-                        { name: "Affiliazione", href: "/affiliazione" },
-                        { name: "Contatti", href: "/contatti" },
-                      ].map((link) => (
-                        <li key={link.href}>
-                          <a href={link.href} className="hover:underline">{link.name}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  </nav>
+                 <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
+  <div className="flex items-center gap-1 min-w-[220px]">
+    <a href="/">
+      <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={160} height={160} className="rounded" />
+    </a>
+    <h1 className="text-base sm:text-xl font-normal flex items-center gap-2">
+      faccio-tutto.it
+      <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
+        <FaInstagramSquare className="text-lg sm:text-xl" />
+      </a>
+      <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
+        <FaLinkedin className="text-lg sm:text-xl" />
+      </a>
+    </h1>
+  </div>
+
+  {/* Scrollable menu on small screens */}
+  <ul className="flex gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible w-full sm:w-auto mt-2 sm:mt-0 text-sm sm:text-base">
+    {[
+      { name: "Home", href: "/" },
+      { name: "Mission", href: "/mission" },
+      { name: "Vision", href: "/vision" },
+      { name: "Chi siamo", href: "/chisiamo" },
+      { name: "Affiliazione", href: "/affiliazione" },
+      { name: "Contatti", href: "/contatti" },
+    ].map((link) => (
+      <li key={link.href} className="whitespace-nowrap">
+        <a href={link.href} className="hover:underline">{link.name}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
             
       {/* Contatti Section */}
       <motion.div
@@ -175,7 +177,7 @@ export default function ContattiPage() {
                             {service.title}
                         </h3>
                         {service.description && (
-                            <p style={{ fontSize: '14px' }} className="text-gray-600 mt-1">{service.description}</p>
+                            <div style={{ fontSize: '14px' }} className="text-gray-600 mt-1">{service.description}</div>
                         )}
                     </CustomCardContent>
                 </CustomCard>
