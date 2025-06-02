@@ -48,10 +48,17 @@ function ModuloContatti({ destinatarioEmail }) {
   formData.append('tipoUtente', 'privato'); // ⚠️ Necessario
 
   try {
-    const res = await fetch(`${window.location.origin}/api/invia-email-json`, {
-      method: 'POST',
-      body: formData, // ✅ niente header manuale qui!
-    });
+    const res = await fetch('/api/invia-email-json', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    nome, cognome, email, telefono, via, città, messaggio,
+    destinatarioEmail,
+    tipoUtente: 'privato'
+  }),
+});
 
     if (res.ok) {
       setSuccess(true);
@@ -73,7 +80,7 @@ function ModuloContatti({ destinatarioEmail }) {
       <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8">
         {success ? (
           // Success message: centered using `w-full max-w-md mx-auto`
-          <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg w-full max-w-md mx-auto" role="alert">
+          <div className="bg-green-500 border-l-4 border-green-700 text-white p-4 rounded-lg shadow-lg w-full max-w-md mx-auto" role="alert">
             <p className="font-bold text-center text-xl">Messaggio inviato con successo!</p>
             <p className="text-center">Ti risponderemo il prima possibile.</p>
           </div>
