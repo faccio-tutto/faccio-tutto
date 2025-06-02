@@ -244,39 +244,38 @@ const MainContent = () => {
     
         return (
             <div className="min-h-screen flex flex-col">
-                <nav className={`bg-black text-white py-0 ${navPaddingX} flex items-center justify-between shadow-lg`}>
-                    {/* Logo e titolo */}
-                    <div className="flex items-center gap-1">
-                        <Link href="/">
-                            <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={200} height={200} className="rounded" />
-                        </Link>
-                        <h1 className="text-xl font-normal flex items-center gap-2">
-                            faccio-tutto.it
-                            <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
-                                <FaInstagramSquare />
-                            </a>
-                            <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
-                                <FaLinkedin />
-                            </a>
-                        </h1>
-                    </div>
-    
-                    {/* Menù */}
-                    <ul className="flex gap-8">
-                        {[
-                            { name: "Home", href: "/" },
-                            { name: "Mission", href: "/mission" },
-                            { name: "Vision", href: "/vision" },
-                            { name: "Chi siamo", href: "/chisiamo" },
-                            { name: "Affiliazione", href: "/affiliazione" },
-                            { name: "Contatti", href: "/contatti" },
-                        ].map((link) => (
-                            <li key={link.href} className="mr-0 ml-0">
-                                <Link href={link.href} className="text-white font-normal hover:underline">{link.name}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
+                <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
+  <div className="flex items-center gap-1 min-w-[220px]">
+    <a href="/">
+      <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={160} height={160} className="rounded" />
+    </a>
+    <h1 className="text-base sm:text-xl font-normal flex items-center gap-2">
+      faccio-tutto.it
+      <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
+        <FaInstagramSquare className="text-lg sm:text-xl" />
+      </a>
+      <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
+        <FaLinkedin className="text-lg sm:text-xl" />
+      </a>
+    </h1>
+  </div>
+
+  {/* Scrollable menu on small screens */}
+  <ul className="flex gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible w-full sm:w-auto mt-2 sm:mt-0 text-sm sm:text-base">
+    {[
+      { name: "Home", href: "/" },
+      { name: "Mission", href: "/mission" },
+      { name: "Vision", href: "/vision" },
+      { name: "Chi siamo", href: "/chisiamo" },
+      { name: "Affiliazione", href: "/affiliazione" },
+      { name: "Contatti", href: "/contatti" },
+    ].map((link) => (
+      <li key={link.href} className="whitespace-nowrap">
+        <a href={link.href} className="hover:underline">{link.name}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
     
                 {/* Hero Image */}
                 <div className="w-full relative h-[300px] md:h-[660px]">
