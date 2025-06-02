@@ -242,7 +242,7 @@ const InfissiPage = () => {
 
               {/* Colonna Modulo Contatti */}
               <div className="md:w-1/2">
-                <div style={{ fontSize: "1.4rem", color: "#8B4513" }} className="text-3xl font-bold text-center mb-6">Richiedi un Preventivo Gratuito</div>
+                <div style={{ fontSize: "1.4rem",  }} className="text-3xl font-bold text-center mb-6">Richiedi un Preventivo Gratuito</div>
                 <ModuloContatti destinatarioEmail="infissi@faccio-tutto.it" />
               </div>
             </div>
