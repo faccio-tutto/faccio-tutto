@@ -7,6 +7,26 @@ import { TfiEmail } from "react-icons/tfi";
 import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 import Link from "next/link";
 
+type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
+const CustomCardContent: React.FC<CardContentProps> = ({ children, className, ...props }) => (
+    // Ho rimosso il padding diretto qui per gestirlo sulla CustomCard se necessario,
+    // o per lasciarlo ereditare dal contenitore.
+    <div className={`card-content ${className}`} {...props}>
+        {children}
+    </div>
+);
+
+// Definizione di CustomCard (copiato dalla HomePage, per consistenza)
+type CardProps = React.HTMLAttributes<HTMLDivElement>;
+const CustomCard: React.FC<CardProps> = ({ children, className, ...props }) => {
+    return (
+        // Ho aggiunto bg-white e border border-gray-300 qui
+        <div className={`rounded-lg shadow-md ${className}`} {...props}>
+            {children}
+        </div>
+    );
+};
+
 const InfissiPage = () => {
   const [nome, setNome] = useState('');
   const [cognome, setCognome] = useState('');
@@ -97,51 +117,49 @@ const InfissiPage = () => {
       <main className="flex flex-col md:flex-row gap-6 px-4 sm:px-6 mt-10">
         {/* Colonna sinistra: pulsanti laterali (Sidebar) */}
         <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/6 z-10">
-  <div className="bg-gray-200 px-4 py-6 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
-            {[
-              {
-                id: "progettazione",
-                icon: <FaDraftingCompass className="text-3xl text-purple-500" />,
-                title: "Progettazione architettonica",
-                link: "/progettazione"
-              }, {
-                id: "fotovoltaico",
-                icon: <FaSolarPanel className="text-3xl text-yellow-500" />,
-                title: "Impianti fotovoltaici",
-                link: "/fotovoltaico"
-              }, {
-                id: "infissi",
-                icon: <FaDoorOpen className="text-3xl text-orange-900" />,
-                title: "Vendita e installazione infissi",
-                link: "/infissi"
-              }, {
-                id: "riparazione-elettrodomestici",
-                icon: <FaPlug className="text-3xl text-orange-500" />,
-                title: "Riparazione elettrodomestici",
-                link: "/riparazione-elettrodomestici"
-              }, {
-                id: "riparazioni-veloci",
-                icon: <FaWrench className="text-3xl text-blue-500" />,
-                title: "Riparazioni veloci",
-                link: "/riparazioni-veloci"
-              }, {
-                id: "contatti",
-                icon: <FaPhone className="text-3xl text-green-500" />,
-                title: "Prenota subito",
-                link: "/prenota"
-              }].map(service => (
-                <Link
-                  href={service.link}
-                  key={service.id}
-                  // MODIFICHE QUI: Rimosso completamente `p-4`
-                  className="w-28 h-28 flex flex-col justify-center items-center bg-white rounded-lg shadow hover:scale-105 transition-transform text-center mx-auto"
-      >
-        <div className="w-14 h-14 flex items-center justify-center rounded-full bg-white shadow-md mb-2">
-          {service.icon}
-        </div>
-        <h3 className="text-sm font-semibold text-gray-800">{service.title}</h3>
-      </Link>
-              ))}
+          <div className="bg-gray-200 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
+            {[{
+              id: "progettazione",
+              icon: <FaDraftingCompass className="text-3xl mb-0 text-purple-500" />,
+              title: "Progettazione architettonica",
+              link: "/progettazione"
+            }, {
+              id: "fotovoltaico",
+              icon: <FaSolarPanel className="text-3xl mb-0 text-yellow-500" />,
+              title: "Impianti fotovoltaici",
+              link: "/fotovoltaico"
+            }, {
+              id: "infissi",
+              icon: <FaDoorOpen className="text-3xl mb-0 text-orange-900" />,
+              title: "Vendita e installazione infissi",
+              link: "/infissi"
+            }, {
+              id: "riparazione-elettrodomestici",
+              icon: <FaPlug className="text-3xl mb-0 text-orange-500" />,
+              title: "Riparazione elettrodomestici",
+              link: "/riparazione-elettrodomestici"
+            }, {
+              id: "riparazioni-veloci",
+              icon: <FaWrench className="text-3xl mb-0 text-blue-500" />,
+              title: "Riparazioni veloci",
+              link: "/riparazioni-veloci"
+            }, {
+              id: "contatti",
+              icon: <FaPhone className="text-3xl mb-0 text-green-500" />,
+              title: "Prenota subito",
+              link: "/prenota"
+            }].map(service => (
+                <Link href={service.link} key={service.id} className="block transform transition duration-300 hover:scale-105 w-full">
+                    <CustomCard className="bg-white border border-gray-300 p-0"> {/* Aggiunto bg-white, border e p-0 qui */}
+                        <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
+                            <div className="rounded-full p-3 shadow-md bg-white">
+                                {service.icon}
+                            </div>
+                            <h3 className={`text-sm font-semibold mt-2 text-gray-800`}>{service.title}</h3>
+                        </CustomCardContent>
+                    </CustomCard>
+                </Link>
+            ))}
           </div>
         </aside>
 
