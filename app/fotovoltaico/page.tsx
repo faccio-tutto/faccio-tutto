@@ -121,7 +121,13 @@ const FotovoltaicoPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              Scegliere un impianto fotovoltaico significa abbracciare un futuro di energia pulita, indipendenza economica e responsabilità ambientale. Immagina di ridurre drasticamente le tue bollette elettriche, fino al 90%, producendo energia direttamente dal sole. Un investimento intelligente che si ripaga in pochi anni, grazie agli incentivi fiscali del 50% e per gli impianti fotovoltaici che entreranno in esercizio entro il 29 maggio 2025, è possibile presentare una richiesta di accesso al meccanismo di Scambio sul Posto (SSP) fino al 26 settembre 2025. Se abiti in un comune con meno di 5.000 abitanti, si potrà installare un impianto fotovoltaico con un contributo a fondo perduto fino al 40% delle spese ammissibili, grazie al PNRR. Per accedere a questo incentivo, è necessario far parte di una Comunità Energetica Rinnovabile (CER).
+              Scegliere un impianto fotovoltaico significa abbracciare un futuro di energia pulita, indipendenza economica e responsabilità ambientale. 
+              Immagina di ridurre drasticamente le tue bollette elettriche fino al 90%, producendo energia direttamente dal sole. Un investimento 
+              intelligente che si ripaga in pochi anni, grazie alla detrazione fiscale in 10 anni del 50% dell'importo. Se abiti in un comune con meno di 50.000 abitanti, 
+              potrai inoltre installare un impianto fotovoltaico con un contributo a fondo perduto del 40% delle spese ammissibili, grazie al PNRR. Per accedere a 
+              questo incentivo, è necessario far parte di una Comunità Energetica Rinnovabile (CER). Noi facciamo parte di "Semplicemente Comunità" 
+              che è un’associazione no profit di Comunità Energetiche Rinnovabili che operano su tutto il territorio nazionale. Unisciti anche tu alla rivoluzione energetica e ricevi un incentivo 
+              per l'energia prodotta dal tuo impianto fotovoltaico o per l'energia consumata all'interno della comunità. 
             </motion.p>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-10">
               <a href="#modulo-contatti">
