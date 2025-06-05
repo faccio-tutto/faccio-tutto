@@ -133,53 +133,55 @@ const MainContent = () => {
     
                 {/* Colonna centrale (Hero Section e testo) */}
                 <div className="w-full md:w-2/2 flex flex-col items-center mt-8 md:mt-0">
-                    <section className="relative text-center w-full">
+                    <section className="relative text-center w-full bg-gray-200 p-4 rounded-lg shadow-lg">
                         <div className="bg-black bg-opacity-50 p-4 md:p-6 flex flex-col items-center">
-                            <h2 className="custom-title">PROGETTAZIONE 
-                                <br/>RIPARAZIONI 
-                                <br/>INSTALLAZIONI</h2>
-                            <p className="text-yellow-400 text-2xl md:text-2xl font-bold mb-4">Tanti servizi con un solo contatto!</p>
+                            <div className="flex flex-col items-center space-y-1"> {/* space-y-1 per uno spazio piccolo e uniforme */}
+                                <span className="text-3xl font-bold text-purple-500">PROGETTAZIONE</span>
+                                <span className="text-3xl font-bold text-yellow-500">INSTALLAZIONI</span>
+                                <span className="text-3xl font-bold text-orange-500 mb-6">RIPARAZIONI</span>
+                            </div>
+                            <div className="text-gray-300 text-xl md:text-xl font-bold mb-4">Tanti servizi con un solo contatto!</div>
                             <section className="bg-black bg-opacity-80 text-gray-600 rounded-lg shadow-lg p-6 mt-0">
   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
     
     {/* Progettazione */}
     <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
       <Image src="/images/progettazione.png" alt="Progettazione" width={200} height={200} className="rounded shadow-md object-cover" />
-      <p className="text-base text-justify font-medium">
+      <div className="text-gray-400 text-lg text-center font-medium">
         Hai bisogno di un progetto per la tua casa o per la tua nuova attività? Affidati ai nostri esperti in progettazione architettonica e direzione lavori.
-      </p>
+      </div>
     </div>
 
     {/* Risparmio energetico */}
     <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
       <Image src="/images/energia-verde.png" alt="Risparmio energetico" width={200} height={200} className="rounded shadow-md object-cover" />
-      <p className="text-base text-justify font-medium">
+      <div className="text-gray-400 text-lg text-center font-medium">
         Vuoi risparmiare energia e prenderti cura dell’ambiente? Scopri le nostre soluzioni con impianti fotovoltaici e infissi ad alta efficienza.
-      </p>
+      </div>
     </div>
 
     {/* Riparazione elettrodomestici */}
     <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
       <Image src="/images/riparazione-elettrodomestici.png" alt="Riparazione piccoli elettrodomestici" width={200} height={200} className="rounded shadow-md object-cover" />
-      <p className="text-base text-justify font-medium">
+      <div className="text-gray-400 text-lg text-center font-medium">
         Sei affezionato ai tuoi oggetti e preferisci ripararli piuttosto che buttarli? Ci occupiamo della riparazione di piccoli elettrodomestici con competenza e attenzione.
-      </p>
+      </div>
     </div>
 
     {/* Piccole riparazioni domestiche */}
     <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
       <Image src="/images/piccole-riparazioni.png" alt="Riparazioni domestiche" width={200} height={200} className="rounded shadow-md object-cover" />
-      <p className="text-base text-justify font-medium">
+      <div className="text-gray-400 text-lg text-center font-medium">
         Cerchi qualcuno per piccole riparazioni in casa, ma nessuno è disponibile? Con <strong>faccio-tutto.it</strong> trovi anche chi si occupa degli interventi più semplici ma importanti.
-      </p>
+      </div>
     </div>
   </div>
 
   <div className="mt-8 text-center">
-    <h3 className="text-xl font-bold text-gray-600 mb-2">Un solo riferimento per ogni esigenza</h3>
-    <p className="text-base text-gray-400 mb-4">
+    <div className="text-xl font-bold text-gray-200 mb-2">Un solo riferimento per ogni esigenza</div>
+    <div className="text-xl text-gray-300 mb-4">
       Progettazione, installazioni, riparazioni e risparmio energetico: <strong>faccio-tutto.it</strong> è il tuo punto di riferimento per servizi affidabili e su misura.
-    </p>
+    </div>
   </div>
 </section>
                             <a href="mailto:info@faccio-tutto.it">
@@ -208,6 +210,7 @@ const MainContent = () => {
                             "/images/post 27 maggio.png",
                             "/images/post 29 maggio.png",
                             "/images/post 3 giugno.png",
+                            "/images/post 5 giugno.png",
                         ].map((src, index) => (
                             <div
                                 key={index}
