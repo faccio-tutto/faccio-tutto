@@ -105,7 +105,7 @@ const FotovoltaicoPage = () => {
               link: "/prenota"
             }].map(service => (
                 <Link href={service.link} key={service.id} className="block transform transition duration-300 hover:scale-105 w-full">
-                    <CustomCard className="bg-white border border-gray-300 p-0"> {/* Aggiunto bg-white, border e p-0 qui */}
+                    <CustomCard className="bg-white border border-gray-200 p-0"> {/* Aggiunto bg-white, border e p-0 qui */}
                         <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
                             <div className="rounded-full p-3 shadow-md bg-white">
                                 {service.icon}
