@@ -76,7 +76,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="mt-4 text-lg"
+          className="text-gray-400 mt-4 text-lg"
         >
           Interventi rapidi per ogni riparazione domestica!
         </motion.p>
@@ -84,7 +84,7 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2 }}
-          className="text-gray-400 mt-6"
+          className="text-gray-400 mt-8"
         >
           <Link href="/contatti"> {/* Usa Link per collegare alla pagina /contatti */}
           <Button className="bg-blue-500 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-blue-600">
@@ -95,18 +95,18 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 px-4 container mx-auto text-justify">
-        <h2 className="text-2xl font-semibold mb-8">
+      <section className="py-20 px-4 container mx-auto">
+        <h2 className="text-2xl font-semibold mb-0 mt-45">
           SERVIZI SPECIALIZZATI PER LA CASA E LA TECNOLOGIA
         </h2>
-        <div className="text-xl text-justify text-gray-400 mb-0">
+        <div className="text-xl text-justify text-gray-300 mb-0">
           Vogliamo creare una rete di professionisti indipendenti che offrono servizi di riparazione, configurazione e installazione per la casa e la tecnologia.
           <br />I nostri artigiani sono persone comuni che hanno sviluppato competenze specializzate attraverso l'interesse personale e l'esperienza pratica.
         </div>
-        <h2 className="text-2xl font-semibold mb-8">
+        <h2 className="text-2xl font-semibold mb-0 mt-45">
           COSA OFFRIAMO
         </h2>
-        <ul className="text-left text-white list-disc list-inside mb-4">
+        <ul className="text-left text-white list-disc list-inside mb-6 mt-2">
           <li>RIPARAZIONI DOMESTICHE:
             <br/>Riparazioni idrauliche, elettriche, di elettrodomestici, mobili e altro ancora.</li>
             <br/><li>CONFIGURAZIONE DI DISPOSITIVI:
@@ -114,7 +114,7 @@ export default function Home() {
             <br/><li>INSTALLAZIONI:
             <br />Installazione di lampadari, tende, scaffali, supporti TV, prese elettriche, interruttori smart e altro ancora.</li>
         </ul>
-        <h3 className="text-2xl font-semibold mb-4">ECCO ALCUNI DEI NOSTRI SERVIZI</h3>
+        <h3 className="text-2xl font-semibold mb-4 -mt-22">ECCO ALCUNI DEI NOSTRI SERVIZI</h3>
         <ul className="text-left text-white list-disc list-inside mb-4">
           <li>COMPETENZA SPECIALIZZATA:
             <br/>I nostri artigiani hanno competenze specifiche in una o più aree di servizio.</li>
@@ -130,7 +130,7 @@ export default function Home() {
         <p className="mt-4">
         </p>
 
-        <div className="grid md:grid-cols-3 gap-4 -mt-145">
+        <div className="grid md:grid-cols-3 gap-4 -mt-160">
           {services.map((service, index) => (
             <motion.div
               key={index}
