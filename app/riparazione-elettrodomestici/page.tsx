@@ -4,8 +4,6 @@ import { FaTools, FaRecycle, FaPhone, FaMailBulk, FaMailchimp, FaRegMoneyBillAlt
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { TfiEmail } from "react-icons/tfi";
-import styles from "./page.module.css";
-import ModuloContatti from './ModuloContatti';
 import { FaInstagramSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 
@@ -165,7 +163,7 @@ In definitiva, la riparazione dei piccoli elettrodomestici rappresenta una scelt
                 className="mx-auto rounded-lg mb-4"
               />
               <h3 className="text-xl font-semibold mb-2">{appliance.name}</h3>
-              <p className="text-gray-400">{appliance.description}</p>
+              <div className="text-lg text-gray-500">{appliance.description}</div>
             </motion.div>
             ))}
           </div>
