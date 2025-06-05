@@ -116,8 +116,8 @@ const InfissiPage = () => {
       {/* Main Content Area: Flex container per sidebar e il resto del contenuto */}
       <main className="flex flex-col md:flex-row gap-6 px-4 sm:px-6 mt-10">
         {/* Colonna sinistra: pulsanti laterali (Sidebar) */}
-        <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/6 z-10">
-          <div className="bg-gray-200 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
+        <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/6 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
+          <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
             {[{
               id: "progettazione",
               icon: <FaDraftingCompass className="text-3xl mb-0 text-purple-500" />,
