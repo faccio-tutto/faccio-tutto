@@ -119,7 +119,7 @@ const RepairPage = () => {
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundColor: "#000000", /* Colore di fallback */
-  minHeight: '300px' /* Altezza minima per visualizzare l'immagine */
+  minHeight: '700px' /* Altezza minima per visualizzare l'immagine */
 }}>
   {/* Overlay per migliorare la leggibilità del testo */}
   <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -127,7 +127,7 @@ const RepairPage = () => {
     initial={{ y: -50, opacity: 0 }}
     animate={{ y: 0, opacity: 1 }}
     transition={{ duration: 0.6 }}
-    className="relative z-10 text-8xl font-bold"
+    className="relative mt-70 z-10 text-8xl font-bold"
     style={{ fontSize: "1.7rem", color: "#FFA500" }} // Giallo
   >
     Ripariamo i tuoi piccoli elettrodomestici
@@ -136,7 +136,7 @@ const RepairPage = () => {
     initial={{ y: 50, opacity: 0 }}
     animate={{ y: 0, opacity: 1 }}
     transition={{ duration: 0.6, delay: 0.2 }}
-    className="relative z-10 text-lg mt-4 max-w-2xl mx-auto"
+    className="relative z-10 text-lg mt-10 max-w-2xl mx-auto"
     style={{ fontSize: "1.2rem", color: "#E5E7EB" }} // Grigio chiaro
   >
     Risparmia denaro e aiuta l'ambiente con il nostro servizio di riparazione professionale e affidabile.
@@ -146,7 +146,7 @@ const RepairPage = () => {
       {/* Main Content container with 2 columns */}
      <main className="flex flex-col md:flex-row gap-6 px-4 sm:px-6 mt-10">
         {/* Colonna sinistra: pulsanti laterali (Sidebar) */}
-        <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-2/8 xl:w-1/6 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
+        <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-2/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
           <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
             {[{
               id: "progettazione",

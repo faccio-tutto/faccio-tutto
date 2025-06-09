@@ -78,7 +78,7 @@ export default function Home() {
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundColor: "#000000", /* Colore di fallback */
-  minHeight: '300px' /* Altezza minima per visualizzare l'immagine */
+  minHeight: '700px' /* Altezza minima per visualizzare l'immagine */
 }}>
   {/* Overlay per migliorare la leggibilità del testo */}
   <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -86,7 +86,7 @@ export default function Home() {
     initial={{ y: -50, opacity: 0 }}
     animate={{ y: 0, opacity: 1 }}
     transition={{ duration: 0.6 }}
-    className="relative z-10 text-8xl font-bold"
+    className="relative z-10 mt-70 text-8xl font-bold"
     style={{ fontSize: "1.7rem", color: "#2196F3" }} // Blue scuro
   >
     RIPARAZIONI VELOCI
@@ -95,7 +95,7 @@ export default function Home() {
     initial={{ y: 50, opacity: 0 }}
     animate={{ y: 0, opacity: 1 }}
     transition={{ duration: 0.6, delay: 0.2 }}
-    className="relative z-10 text-lg text-justify mt-4 max-w-5xl mx-auto"
+    className="relative z-10 mt-10 text-lg text-justify mt-4 max-w-5xl mx-auto"
     style={{ fontSize: "1.2rem", color: "#E5E7EB" }} // Grigio chiaro
   >
     Interventi rapidi per ogni riparazione domestica. Vogliamo creare una rete di professionisti indipendenti che offrono servizi di riparazione, configurazione e installazione per la casa e la tecnologia.
@@ -106,7 +106,7 @@ export default function Home() {
 {/* Main Content container with 2 columns */}
      <main className="flex flex-col md:flex-row gap-6 px-4 sm:px-6 mt-10">
         {/* Colonna sinistra: pulsanti laterali (Sidebar) */}
-        <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-2/8 xl:w-1/6 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
+        <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-2/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
           <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
             {[{
               id: "progettazione",
