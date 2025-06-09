@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
 
 :root {
   --font-sans: Arial, Helvetica, sans-serif;
@@ -201,8 +200,8 @@ h2 {
 }
 
 h3 {
-  font-size: 1.05rem;
-  color: #3B82F6;
+  font-size: 0.90rem;
+  color: #424242;
 }
 
 p {
@@ -556,8 +555,6 @@ header .logo p {
 }
 
 form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
 
@@ -828,7 +825,7 @@ footer {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-@theme inline {
+:root {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -900,12 +897,9 @@ footer {
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
   }
 }
 
