@@ -284,6 +284,37 @@ const MainContent = () => {
   </ul>
 </nav>
     
+    {/* Header */}
+    <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
+      // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
+      backgroundImage: 'url("/architect-multitasking.jpg")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundColor: "#000000", /* Colore di fallback */
+      minHeight: '1000px' /* Altezza minima per visualizzare l'immagine */
+    }}>
+      {/* Overlay per migliorare la leggibilità del testo */}
+      <div className="absolute inset-0 bg-black opacity-50"></div>
+      <motion.h2
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="relative z-10 mt-70 text-8xl font-bold"
+        style={{ fontSize: "1.9rem", color: "#FFFFFF" }} // Blue scuro
+      >
+       UN SOLO RIFERIMENTO PER OGNI ESIGENZA
+      </motion.h2>
+      <motion.p
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="relative z-10 mt-10 text-lg text-justify mt-4 max-w-5xl mx-auto"
+        style={{ fontSize: "1.2rem", color: "#E5E7EB" }} // Grigio chiaro
+      >
+        Progettazione all'avanguardia, installazioni impeccabili, riparazioni tempestive e un focus primario sul risparmio energetico: <strong>faccio-tutto.it</strong> si afferma come il tuo partner di fiducia, un punto di riferimento essenziale per una gamma completa di servizi affidabili e su misura. Che tu stia cercando soluzioni innovative per ridurre i consumi della tua casa o della tua attività, interventi professionali per sistemi esistenti o la realizzazione di progetti complessi che richiedano una visione a 360 gradi, la nostra esperienza e la nostra dedizione ti garantiscono risultati eccellenti. Siamo qui per trasformare le tue esigenze in realtà, offrendo un servizio completo che va dalla consulenza iniziale alla manutenzione post-installazione, sempre con un occhio di riguardo alla tua soddisfazione e al rispetto dell'ambiente. Con <strong>faccio-tutto.it</strong>, hai la certezza di affidarti a specialisti che curano ogni dettaglio, fornendo soluzioni personalizzate che non solo risolvono i problemi ma ti aiutano a raggiungere una maggiore efficienza e un significativo risparmio economico a lungo termine, rendendo la tua esperienza semplice e senza pensieri.
+
+      </motion.p>
+    </header>
                 {/* Hero Image */}
                 <div className="w-full relative h-[300px] md:h-[660px]">
                     <Image
