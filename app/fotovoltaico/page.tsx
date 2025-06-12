@@ -173,6 +173,19 @@ const FotovoltaicoPage = () => {
               ))}
             </div>
           </section>
+          <section className="py-12 px-4 md:px-20 text-center">
+  <div className="text-yellow-400 text-2xl font-semibold mb-10">Guarda il nostro video esplicativo</div>
+  <div className="relative w-full pb-[56.25%] h-0 max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg">
+    <iframe
+      className="absolute top-0 left-0 w-full h-full"
+      src="https://www.youtube.com/embed/LlI9O1JnFAU"
+      title="Analisi risparmio energetico e finanziario impianto fotovoltaico Sicilia"
+      frameBorder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    />
+  </div>
+</section>
 
           {/* Servizi Section */}
           <section className="py-10 px-8 max-w-6xl mx-auto">
