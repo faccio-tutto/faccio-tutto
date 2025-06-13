@@ -18,11 +18,11 @@ const CustomCardContent: React.FC<CardContentProps> = ({ children, className, ..
 type CardProps = React.HTMLAttributes<HTMLDivElement>;
 
 const CustomCard: React.FC<CardProps> = ({ children, className, ...props }) => {
-    return (
-        <div className={`rounded-lg shadow-md ${className}`} {...props}>
-            {children}
-        </div>
-    );
+  return (
+    <div className={`rounded-lg shadow-md ${className}`} {...props}>
+      {children}
+    </div>
+  );
 };
 
 type ButtonProps = {
@@ -64,18 +64,18 @@ const MainContent = () => {
     const coloredTitle = heroTitle.split(', ').flatMap((phrase, index) => {
         const words = phrase.split(' ');
         return words.map((word, wordIndex) => (
-            <React.Fragment key={`${index}-${wordIndex}`}>
-                <span className={
-                    index === 0 ? 'text-purple-500' :
-                    index === 1 ? 'text-orange-500' :
-                    index === 2 ? 'text-yellow-500' :
-                    'text-white' // Colore predefinito se ci fossero più frasi
-                }>
-                    {word}
-                </span>
-                {wordIndex < words.length - 1 && ' '} {/* Aggiunge uno spazio tra le parole */}
-            </React.Fragment>
-        ));
+  <React.Fragment key={`${index}-${wordIndex}`}>
+    <span className={
+      index === 0 ? 'text-purple-500' :
+      index === 1 ? 'text-orange-500' :
+      index === 2 ? 'text-yellow-500' :
+      'text-white'
+    }>
+      {word}
+    </span>
+    {wordIndex < words.length - 1 && ' '}
+  </React.Fragment>
+));
     });
 
         const [hoveredImages, setHoveredImages] = React.useState<{ [key: number]: string | null }>({});
@@ -123,7 +123,7 @@ const MainContent = () => {
                                         <div className="rounded-full p-3 shadow-md bg-white">
                                             {service.icon}
                                         </div>
-                                        <h3 className={`text-sm font-semibold mt-2 text-grey-800`}>{service.title}</h3>
+                                        <h3 className={`text-sm font-semibold mt-2 text-gray-800`}>{service.title}</h3>
                                     </CustomCardContent>
                                 </CustomCard>
                             </Link>
@@ -183,9 +183,48 @@ const MainContent = () => {
       Progettazione, installazioni, riparazioni e risparmio energetico: <strong>faccio-tutto.it</strong> è il tuo punto di riferimento per servizi affidabili e su misura.
     </div>
   </div>
+  
 </section>
+                            {/* New Cards Section */}
+                            <div className="text-3xl text-blue-600">Come funziona faccio-tutto.it?</div>
+                            <div className="grid grid-cols-1 gap-4 mt-8">
+                                <CustomCard className="border-gray-200 bg-transparent">
+                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
+                                        <Image src="/images/richiesta.png" alt="Fai la tua richiesta" width={200} height={200} className="rounded-full shadow-md" />
+                                        <p className="text-xs text-gray-600 mt-8">Fai la tua richiesta</p>
+                                    </CustomCardContent>
+                                </CustomCard>
+                                <CustomCard className="border-gray-200 bg-transparent">
+                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
+                                        <Image src="/images/selezione.png" alt="Selezioniamo i profili migliori" width={200} height={200} className="rounded-full shadow-md" />
+                                        <p className="text-xs text-gray-600 mt-8">Noi selezioniamo i profili migliori per te</p>
+                                    </CustomCardContent>
+                                </CustomCard>
+                                 <CustomCard className="border-gray-200 bg-transparent">
+                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
+                                        <Image src="/images/preventivi.png" alt="Ricevi il preventivo" width={200} height={200} className="rounded-full shadow-md" />
+                              
+                                        <p className="text-xs text-gray-600 mt-8">Ricevi il preventivo</p>
+                                    </CustomCardContent>
+                                </CustomCard>
+                                <CustomCard className="border-gray-200 bg-transparent">
+                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
+                                        <Image src="/images/esecuzione lavori.png" alt="Inizia i lavori" width={200} height={200} className="rounded-full shadow-md" />
+                                        
+                                        <p className="text-xs text-gray-600 mt-8">Se accetti il preventivo, ti mettiamo in contatto con chi eseguirà i lavori</p>
+                                    </CustomCardContent>
+                                </CustomCard>
+                                <CustomCard className="border-gray-200 bg-transparent">
+                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
+                                        <Image src="/images/fine lavori.png" alt="Lascia un feedback" width={200} height={200} className="rounded-full shadow-md" />
+
+                                        <p className="text-xs text-gray-600 mt-8">A lavori completi lascia un feedback e condividi la tua esperienza.</p>
+                                    </CustomCardContent>
+                                </CustomCard>
+                            </div>
+                            {/* End of New Cards Section */}
                             <a href="mailto:info@faccio-tutto.it">
-                            <Button className="bg-yellow-500 hover:bg-yellow-600 text-white w-full md:w-56 h-12 text-base rounded-lg flex items-center justify-center gap-2">
+                            <Button className="bg-yellow-500 hover:bg-yellow-600 text-white w-full md:w-40 h-12 text-base rounded-lg flex items-center justify-center gap-6 mt-20">
                                     Contattaci 
                                     <FaEnvelope />
                                 </Button>
@@ -252,38 +291,38 @@ const MainContent = () => {
         return (
             <div className="min-h-screen flex flex-col">
                 <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
-  <div className="flex items-center gap-1 min-w-[220px]">
-    <a href="/">
-      <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={160} height={160} className="rounded" />
-    </a>
-    <h1 className="text-base sm:text-xl font-normal flex items-center gap-2">
-      faccio-tutto.it
-      <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
-        <FaInstagramSquare className="text-lg sm:text-xl" />
-      </a>
-      <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
-        <FaLinkedin className="text-lg sm:text-xl" />
-      </a>
-    </h1>
-  </div>
+      <div className="flex items-center gap-1 min-w-[220px]">
+        <a href="/">
+          <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={160} height={160} className="rounded" />
+        </a>
+        <h1 className="text-base sm:text-xl font-normal flex items-center gap-2">
+          faccio-tutto.it
+          <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
+            <FaInstagramSquare className="text-lg sm:text-xl" />
+          </a>
+          <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
+            <FaLinkedin className="text-lg sm:text-xl" />
+          </a>
+        </h1>
+      </div>
 
-  {/* Scrollable menu on small screens */}
-  <ul className="flex gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible w-full sm:w-auto mt-2 sm:mt-0 text-sm sm:text-base">
-    {[
-      { name: "Home", href: "/" },
-      { name: "Mission", href: "/mission" },
-      { name: "Vision", href: "/vision" },
-      { name: "Chi siamo", href: "/chisiamo" },
-      { name: "Affiliazione", href: "/affiliazione" },
-      { name: "Contatti", href: "/contatti" },
-    ].map((link) => (
-      <li key={link.href} className="whitespace-nowrap">
-        <a href={link.href} className="hover:underline">{link.name}</a>
-      </li>
-    ))}
-  </ul>
-</nav>
-    
+      {/* Scrollable menu on small screens */}
+      <ul className="flex gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible w-full sm:w-auto mt-2 sm:mt-0 text-sm sm:text-base">
+        {[
+          { name: "Home", href: "/" },
+          { name: "Mission", href: "/mission" },
+          { name: "Vision", href: "/vision" },
+          { name: "Chi siamo", href: "/chisiamo" },
+          { name: "Affiliazione", href: "/affiliazione" },
+          { name: "Contatti", href: "/contatti" },
+        ].map((link) => (
+          <li key={link.href} className="whitespace-nowrap">
+            <a href={link.href} className="hover:underline">{link.name}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+        
                 {/* Hero Image */}
                 <div className="w-full relative h-[300px] md:h-[660px]">
                     <Image
@@ -294,12 +333,12 @@ const MainContent = () => {
                         priority
                     />
                 </div>
-    
+        
                 {/* Contenuto principale con flex-grow */}
                 <div className="flex-grow z-0 py-20" style={{ paddingTop: '20px' }}>
                     <MainContent />
                 </div>
-    
+        
                 {/* Footer fisso in fondo */}
                 <footer className="text-center py-3 bg-gray-800">
                     <p>&copy; 2025 faccio-tutto.it - Tutti i diritti riservati.</p>
