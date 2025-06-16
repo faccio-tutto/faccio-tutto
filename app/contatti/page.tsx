@@ -122,8 +122,8 @@ export default function ContattiPage() {
   transition={{ duration: 0.8 }}
   className="p-8 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]"
 >
-  <h1 className="text-3xl font-bold mb-10 text-center text-blue-400">Contattaci</h1>
-  <p className="text-lg text-center mb-8 max-w-2xl">
+  <h1 className="text-2xl sm:text-3xl font-bold mb-10 text-center text-blue-400">Contattaci</h1>
+  <p className="text-base sm:text-lg text-center mb-8 max-w-2xl">
     Siamo qui per rispondere a tutte le tue domande. Non esitare a contattarci per qualsiasi informazione o richiesta.
   </p>
 
@@ -177,7 +177,7 @@ export default function ContattiPage() {
                             {service.title}
                         </h3>
                         {service.description && (
-                            <div style={{ fontSize: '14px' }} className="text-gray-600 mt-1">{service.description}</div>
+                            <div style={{ fontSize: '13px' }} className="text-gray-600 mt-1">{service.description}</div>
                         )}
                     </CustomCardContent>
                 </CustomCard>
@@ -196,7 +196,7 @@ export default function ContattiPage() {
   {/* Footer */}
 
       <footer className="text-center mt-8 p-6 bg-gray-900 text-gray-300">
-        <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
+        <p>© {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
       </footer>
     </div>
   );
