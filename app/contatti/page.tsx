@@ -123,12 +123,13 @@ export default function ContattiPage() {
   className="p-8 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]"
 >
   <h1 className="text-2xl sm:text-3xl font-bold mb-10 text-center text-blue-400">Contattaci</h1>
-  <p className="text-base sm:text-lg text-center mb-8 max-w-2xl">
-    Siamo qui per rispondere a tutte le tue domande. Non esitare a contattarci per qualsiasi informazione o richiesta.
-  </p>
+<p className="text-base sm:text-lg text-center mb-8 max-w-2xl">
+  Siamo qui per rispondere a tutte le tue domande.<br />
+  Non esitare a contattarci per qualsiasi informazione o richiesta.
+</p>
 
-  {/* Layout aggiornato */}
-  <div className="container mx-auto px-4 flex flex-col md:flex-row items-start gap-8 relative z-10 py-8">
+{/* Layout aggiornato */}
+<div className="container mx-auto px-4 flex flex-col md:flex-row items-start gap-8 relative z-10 py-8">
     {/* Servizi - NUOVI PULSANTI */}
     <div className="w-full md:w-4/4 space-y-4 mb-8 md:mb-0 bg-gray-200 p-4 rounded-lg shadow-lg">
       <div className="grid grid-cols-1 gap-4 bg-white bg-opacity-80 p-4 rounded-lg">
