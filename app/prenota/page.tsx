@@ -82,7 +82,7 @@ export default function ContattiPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white">
        {/* Navbar */}
-                  <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
+                 <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
   <div className="flex items-center gap-1 min-w-[220px]">
     <a href="/">
       <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={160} height={160} className="rounded" />
@@ -123,12 +123,13 @@ export default function ContattiPage() {
   className="p-8 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]"
 >
   <h1 className="text-3xl font-bold mb-10 text-center text-green-400">Prenota subito un appuntamento!</h1>
-  <p className="text-lg text-center mb-8 max-w-2xl">
-    Siamo qui per rispondere a tutte le tue domande. Non esitare a contattarci per qualsiasi informazione o richiesta.
-  </p>
+<p className="text-base sm:text-lg text-center mb-8 max-w-2xl">
+  Siamo qui per rispondere a tutte le tue domande.<br />
+  Non esitare a contattarci per qualsiasi informazione o richiesta.
+</p>
 
-  {/* Layout aggiornato */}
-  <div className="container mx-auto px-4 flex flex-col md:flex-row items-start gap-8 relative z-10 py-8">
+{/* Layout aggiornato */}
+<div className="container mx-auto px-4 flex flex-col md:flex-row items-start gap-8 relative z-10 py-8">
     {/* Servizi - NUOVI PULSANTI */}
     <div className="w-full md:w-4/4 space-y-4 mb-8 md:mb-0 bg-gray-200 p-4 rounded-lg shadow-lg">
       <div className="grid grid-cols-1 gap-4 bg-white bg-opacity-80 p-4 rounded-lg">
@@ -177,7 +178,7 @@ export default function ContattiPage() {
                             {service.title}
                         </h3>
                         {service.description && (
-                            <p style={{ fontSize: '14px' }} className="text-gray-600 mt-1">{service.description}</p>
+                            <div style={{ fontSize: '13px' }} className="text-gray-600 mt-1">{service.description}</div>
                         )}
                     </CustomCardContent>
                 </CustomCard>
@@ -196,7 +197,7 @@ export default function ContattiPage() {
   {/* Footer */}
 
       <footer className="text-center mt-8 p-6 bg-gray-900 text-gray-300">
-        <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
+        <p>© {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
       </footer>
     </div>
   );
