@@ -569,7 +569,7 @@ const FotovoltaicoPage: React.FC = () => {
 
                {/* Sezione Calcolatore (Description) */}
                           <section id="calcolatore-fotovoltaico" className="py-12 rounded-lg mt-10"> 
-                              <div className="mx-auto px-4 sm:px-6 lg:px-24">
+                              <div className="mx-auto px-4 sm:px-6 lg:px-">
                                   <div className="text-base text-justify sm:text-lg leading-relaxed space-y-4"> {/* Adjusted font size for small screens */}
                                       <div className="text-xl text-center font-bold text-yellow-500 mb-4">
                                           SIMULATORE ONLINE PER IL CALCOLO DELLA PRODUCIBILITÀ DI UN IMPIANTO FOTOVOLTAICO
