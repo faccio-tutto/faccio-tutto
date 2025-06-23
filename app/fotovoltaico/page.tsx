@@ -364,7 +364,7 @@ const FotovoltaicoPage: React.FC = () => {
       <div className="flex-col md:flex-row p-4 md:p-8 gap-8 flex"> {/* Added 'flex' here to enable flexbox layout */}
 
   {/* Pulsanti laterali a sinistra */}
- <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/6 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
+ <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
           <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
             {[{
               id: "progettazione",
