@@ -195,7 +195,7 @@ const RepairPage = () => {
 
         {/* Central Content Area - Adjusted Width */}
         {/* La larghezza di questa colonna sarà complementare alla sidebar sinistra */}
-        <div className="text-center w-full md:w-4/5 lg:w-6/8 xl:w-4/6 flex flex-col gap-24 pb-48"> {/* Larghezza calcolata in base alla sidebar sx */}
+        <div className="text-center w-full md:w-/5 lg:w-6/8 xl:w-4/6 flex flex-col gap-24 pb-48"> {/* Larghezza calcolata in base alla sidebar sx */}
           <section id="about" className="bg-black">
             <motion.h2 style={{ color: "#FFA500" }}
               initial={{ opacity: 0 }}

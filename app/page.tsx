@@ -82,112 +82,107 @@ const MainContent = () => {
         const isImageHovered = Object.values(hoveredImages).some(image => image);
     
         return (
-            <div className="container mx-auto px-4 flex flex-col md:flex-row items-start relative z-10 py-8">
+             <div className="flex flex-col lg:flex-row justify-between gap-8 w-full px-4 pb-48">
                 {/* Servizi - NUOVI PULSANTI */}
-                <div className="w-full md:w-4/4 space-y-4 mb-8 md:mb-0 bg-gray-200 p-4 rounded-lg shadow-lg">
-                    <div className="grid grid-cols-1 gap-4 bg-white bg-opacity-80 p-4 rounded-lg">
-                        {[{
-                            id: "progettazione",
-                            icon: <FaDraftingCompass className="text-3xl mb-0 text-purple-500" />,
-                            title: "Progettazione architettonica",
-                            link: "/progettazione"
-                        }, {
-                            id: "fotovoltaico",
-                            icon: <FaSolarPanel className="text-3xl mb-0 text-yellow-500" />,
-                            title: "Impianti fotovoltaici",
-                            link: "/fotovoltaico"
-                        }, {
-                            id: "infissi",
-                            icon: <FaDoorOpen className="text-3xl mb-0 text-orange-900" />,
-                            title: "Vendita e installazione infissi",
-                            link: "/infissi"
-                        }, {
-                            id: "riparazione-elettrodomestici",
-                            icon: <FaPlug className="text-3xl mb-0 text-orange-500" />,
-                            title: "Riparazione elettrodomestici",
-                            link: "/riparazione-elettrodomestici"
-                        }, {
-                            id: "riparazioni-veloci",
-                            icon: <FaWrench className="text-3xl mb-0 text-blue-500" />,
-                            title: "Riparazioni veloci",
-                            link: "/riparazioni-veloci"
-                        }, {
-                            id: "contatti",
-                            icon: <FaPhone className="text-3xl mb-0 text-green-500" />,
-                            title: "Prenota subito",
-                            link: "/prenota"
-                        }].map(service => (
-                            <Link href={service.link} key={service.id} className="block transform transition duration-300 hover:scale-105">
-                                <CustomCard className="border-gray-200 bg-transparent">
-                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                                        <div className="rounded-full p-3 shadow-md bg-white">
-                                            {service.icon}
-                                        </div>
-                                        <h3 className={`text-sm font-semibold mt-2 text-gray-800`}>{service.title}</h3>
-                                    </CustomCardContent>
-                                </CustomCard>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+                <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-2/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
+          <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
+            {[{
+              id: "progettazione",
+              icon: <FaDraftingCompass className="text-3xl mb-0 text-purple-500" />,
+              title: "Progettazione architettonica",
+              link: "/progettazione"
+            }, {
+              id: "fotovoltaico",
+              icon: <FaSolarPanel className="text-3xl mb-0 text-yellow-500" />,
+              title: "Impianti fotovoltaici",
+              link: "/fotovoltaico"
+            }, {
+              id: "infissi",
+              icon: <FaDoorOpen className="text-3xl mb-0 text-orange-900" />,
+              title: "Vendita e installazione infissi",
+              link: "/infissi"
+            }, {
+              id: "riparazione-elettrodomestici",
+              icon: <FaPlug className="text-3xl mb-0 text-orange-500" />,
+              title: "Riparazione elettrodomestici",
+              link: "/riparazione-elettrodomestici"
+            }, {
+              id: "riparazioni-veloci",
+              icon: <FaWrench className="text-3xl mb-0 text-blue-500" />,
+              title: "Riparazioni veloci",
+              link: "/riparazioni-veloci"
+            }, {
+              id: "contatti",
+              icon: <FaPhone className="text-3xl mb-0 text-green-500" />,
+              title: "Prenota subito",
+              link: "/prenota"
+            }].map(service => (
+                <Link href={service.link} key={service.id} className="block transform transition duration-300 hover:scale-105 w-full">
+                    <CustomCard className="bg-white border border-gray-200 p-0"> {/* Aggiunto bg-white, border e p-0 qui */}
+                        <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
+                            <div className="rounded-full p-3 shadow-md bg-white">
+                                {service.icon}
+                            </div>
+                            <h3 className={`text-sm font-semibold mt-2 text-gray-800`}>{service.title}</h3>
+                        </CustomCardContent>
+                    </CustomCard>
+                </Link>
+            ))}
+          </div>
+        </aside>
     
                 {/* Colonna centrale (Hero Section e testo) */}
-                <div className="w-full md:w-2/2 flex flex-col items-center mt-8 md:mt-0">
+                <div className="w-full lg:w-1/1 flex flex-col items-center mt-8 md:mt-0">
                     <section className="relative text-center w-full bg-gray-200 p-4 rounded-lg shadow-lg">
                         <div className="bg-black bg-opacity-50 p-4 md:p-6 flex flex-col items-center">
-                            <div className="flex flex-col items-center space-y-1"> {/* space-y-1 per uno spazio piccolo e uniforme */}
-                                <span className="text-3xl font-bold text-purple-500">PROGETTAZIONE</span>
-                                <span className="text-3xl font-bold text-yellow-500">INSTALLAZIONI</span>
-                                <span className="text-3xl font-bold text-orange-500 mb-6">RIPARAZIONI</span>
-                            </div>
-                            <div className="text-gray-300 text-xl md:text-xl font-bold mb-4">Tanti servizi con un solo contatto!</div>
+                            <div className="text-green-400 text-xl md:text-xl font-bold mb-4">SCOPRI TUTTO QUELLO CHE POSSIAMO OFFRIRTI</div>
                             <section className="bg-black bg-opacity-80 text-gray-600 rounded-lg shadow-lg p-6 mt-0">
   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
     
     {/* Progettazione */}
     <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/progettazione.png" alt="Progettazione" width={200} height={200} className="rounded shadow-md object-cover" />
-      <div className="text-gray-400 text-lg text-center font-medium">
+      <Image src="/images/progettazione.png" alt="Progettazione" width={300} height={300} className="rounded shadow-md object-cover" />
+      <div className="text-gray-200 text-lg text-center font-medium">
         Hai bisogno di un progetto per la tua casa o per la tua nuova attività? Affidati ai nostri esperti in progettazione architettonica e direzione lavori.
       </div>
     </div>
 
     {/* Risparmio energetico */}
     <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/energia-verde.png" alt="Risparmio energetico" width={200} height={200} className="rounded shadow-md object-cover" />
-      <div className="text-gray-400 text-lg text-center font-medium">
+      <Image src="/images/energia-verde.png" alt="Risparmio energetico" width={300} height={300} className="rounded shadow-md object-cover" />
+      <div className="text-gray-200 text-lg text-center font-medium">
         Vuoi risparmiare energia e prenderti cura dell’ambiente? Scopri le nostre soluzioni con impianti fotovoltaici e infissi ad alta efficienza.
       </div>
     </div>
 
     {/* Riparazione elettrodomestici */}
     <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/riparazione-elettrodomestici.png" alt="Riparazione piccoli elettrodomestici" width={200} height={200} className="rounded shadow-md object-cover" />
-      <div className="text-gray-400 text-lg text-center font-medium">
+      <Image src="/images/riparazione-elettrodomestici.png" alt="Riparazione piccoli elettrodomestici" width={300} height={300} className="rounded shadow-md object-cover" />
+      <div className="text-gray-200 text-lg text-center font-medium">
         Sei affezionato ai tuoi oggetti e preferisci ripararli piuttosto che buttarli? Ci occupiamo della riparazione di piccoli elettrodomestici con competenza e attenzione.
       </div>
     </div>
 
     {/* Piccole riparazioni domestiche */}
     <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/piccole-riparazioni.png" alt="Riparazioni domestiche" width={200} height={200} className="rounded shadow-md object-cover" />
-      <div className="text-gray-400 text-lg text-center font-medium">
+      <Image src="/images/piccole-riparazioni.png" alt="Riparazioni domestiche" width={300} height={300} className="rounded shadow-md object-cover" />
+      <div className="text-gray-200 text-lg text-center font-medium">
         Cerchi qualcuno per piccole riparazioni in casa, ma nessuno è disponibile? Con <strong>faccio-tutto.it</strong> trovi anche chi si occupa degli interventi più semplici ma importanti.
       </div>
     </div>
   </div>
 
-  <div className="mt-8 text-center">
-    <div className="text-xl font-bold text-gray-200 mb-2">Un solo riferimento per ogni esigenza</div>
+  <div className="mt-16 text-center">
+    <div className="text-xl font-bold text-green-400 mb-2">UN SOLO RIFERIMENTO PER OGNI TUA ESIGENZA</div>
     <div className="text-xl text-gray-300 mb-4">
-      Progettazione, installazioni, riparazioni e risparmio energetico: <strong>faccio-tutto.it</strong> è il tuo punto di riferimento per servizi affidabili e su misura.
+      Progettazione, installazioni, riparazioni e risparmio energetico: <br/><strong>faccio-tutto.it</strong> è il tuo punto di riferimento per servizi affidabili e su misura.
     </div>
   </div>
   
 </section>
                             {/* New Cards Section */}
-                            <div className="text-3xl text-blue-600">Come funziona faccio-tutto.it?</div>
-                            <div className="grid grid-cols-1 gap-4 mt-8">
+                            <div className="text-3xl text-red-500">COME FUNZIONA faccio-tutto.it?</div>
+                            <div className="grid grid-cols-1 gap-4 mt-16">
                                 <CustomCard className="border-gray-200 bg-transparent">
                                     <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
                                         <Image src="/images/richiesta.png" alt="Fai la tua richiesta" width={200} height={200} className="rounded-full shadow-md" />
@@ -218,7 +213,7 @@ const MainContent = () => {
                                     <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
                                         <Image src="/images/fine lavori.png" alt="Lascia un feedback" width={200} height={200} className="rounded-full shadow-md" />
 
-                                        <p className="text-xs text-gray-600 mt-8">A lavori completi lascia un feedback e condividi la tua esperienza.</p>
+                                        <p className="text-xs text-gray-600 mt-8">A lavori completi lascia un feedback e condividi la tua esperienza</p>
                                     </CustomCardContent>
                                 </CustomCard>
                             </div>
@@ -234,7 +229,7 @@ const MainContent = () => {
                 </div>
     
                 {/* Colonna di destra (Post recenti) */}
-                <div className="w-full md:w-4/4 bg-red-500 p-4 rounded-xl shadow-lg space-y-2 mt-8 md:mt-0">
+                <div className="w-full lg:w-1/4 bg-red-500 p-4 rounded-xl shadow-lg space-y-2 mt-8 md:mt-0">
                     <h3 className="text-lg font-bold text-white text-center">Post recenti</h3>
                     <div className="grid grid-cols-1 gap-4">
                         {[
@@ -326,15 +321,39 @@ const MainContent = () => {
     </nav>
         
                 {/* Hero Image */}
-                <div className="w-full relative h-[300px] md:h-[660px]">
-                    <Image
-                        src="/architect-multitasking.jpg"
-                        alt="Architetto multitasking"
-                        fill
-                        style={{ objectFit: "contain" }}
-                        priority
-                    />
-                </div>
+                <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
+                  // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
+                  backgroundImage: 'url("/sfondo nuovo.png")',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundColor: "#000000", /* Colore di fallback */
+                  minHeight: '800px' /* Altezza minima per visualizzare l'immagine */
+                }}>
+                  {/* Overlay per migliorare la leggibilità del testo */}
+                  <div className="absolute inset-0 bg-black opacity-50"></div>
+                  <motion.h2
+                    initial={{ y: -50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6 }}
+                    className="relative mt-70 z-10 text-8xl font-bold"
+                    style={{ fontSize: "3rem", color: "#9C27B0" }} // Giallo
+                  >
+                    P R O G E T T A Z I O N E
+                    <br/>
+                    <span style={{ fontSize: "3.5rem", color: "#FFA500" }}>I N S T A L L A Z I O N I</span>
+                    <br/>
+                    <span style={{ fontSize: "3rem", color: "#FF6000" }}>R I P A R A Z I O N I</span>
+                  </motion.h2>
+                  <motion.p
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="relative z-10 text-lg mt-10 max-w-2xl mx-auto"
+                    style={{ fontSize: "2rem", color: "#E5E7EB" }} // Grigio chiaro
+                  >
+                    Tanti servizi con un solo contatto!
+                  </motion.p>
+                </header>
         
                 {/* Contenuto principale con flex-grow */}
                 <div className="flex-grow z-0 py-20" style={{ paddingTop: '20px' }}>
