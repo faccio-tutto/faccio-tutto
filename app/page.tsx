@@ -331,25 +331,33 @@ const MainContent = () => {
                 }}>
                   {/* Overlay per migliorare la leggibilità del testo */}
                   <div className="absolute inset-0 bg-black opacity-50"></div>
-                  <motion.h2
-                    initial={{ y: -50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.6 }}
-                    className="relative mt-70 z-10 text-8xl font-bold"
-                    style={{ fontSize: "3rem", color: "#9C27B0" }} // Giallo
-                  >
-                    P R O G E T T A Z I O N E
-                    <br/>
-                    <span style={{ fontSize: "3.5rem", color: "#FFA500" }}>I N S T A L L A Z I O N I</span>
-                    <br/>
-                    <span style={{ fontSize: "3rem", color: "#FF6000" }}>R I P A R A Z I O N I</span>
-                  </motion.h2>
+                 <motion.h2
+  initial={{ y: -50, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  transition={{ duration: 0.6 }}
+  className="relative mt-66 z-10 text-8xl font-bold leading-[5rem] tracking-[0.15em]"
+  style={{
+    fontSize: "3.5rem",
+    color: "#9C27B0",
+    textShadow: "2px 2px 4px rgba(0,0,0,0.8)"
+  }}
+>
+  P R O G E T T A Z I O N E
+  <br/>
+  <span style={{ fontSize: "3.5rem", color: "#FFA500", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
+    I N S T A L L A Z I O N I
+  </span>
+  <br/>
+  <span style={{ fontSize: "3.5rem", color: "#FF6000", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
+    R I P A R A Z I O N I
+  </span>
+</motion.h2>
                   <motion.p
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="relative z-10 text-lg mt-10 max-w-2xl mx-auto"
-                    style={{ fontSize: "2rem", color: "#E5E7EB" }} // Grigio chiaro
+                    style={{ fontSize: "2rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
                   >
                     Tanti servizi con un solo contatto!
                   </motion.p>
