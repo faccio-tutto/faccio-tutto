@@ -84,7 +84,7 @@ const MainContent = () => {
         return (
              <div className="flex flex-col lg:flex-row justify-between gap-8 w-full px-4 pb-48">
                 {/* Servizi - NUOVI PULSANTI */}
-                <aside className="sticky top-4 h-fit w-full md:w-1/4 lg:w-2/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
+                <aside className="top-4 h-fit w-full md:w-1/4 lg:w-2/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
           <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
             {[{
               id: "progettazione",
