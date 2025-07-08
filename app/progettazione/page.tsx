@@ -133,9 +133,35 @@ const App: React.FC = () => {
   </ul>
 </nav>
 
-      <header style={{ backgroundColor: "black", padding: "20px", textAlign: "center" }}>
-        <h1 style={{ fontSize: "2.0rem", fontWeight: "bold", color: "#6B46C1" }}>Progettazione Architettonica e Direzione Lavori</h1>
-        <p style={{ fontSize: "1.5rem", color: "grey" }}>Innovazione e qualità per il tuo edificio ed il tuo spazio</p>
+      {/* Header */}
+      <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
+        // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
+        backgroundImage: 'url("/images/architetto.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundColor: "#000000", /* Colore di fallback */
+        minHeight: '700px' /* Altezza minima per visualizzare l'immagine */
+      }}>
+        {/* Overlay per migliorare la leggibilità del testo */}
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <motion.h2
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="relative mt-70 z-10 text-8xl font-bold"
+          style={{ fontSize: "2.0rem", color: "#6B46C1", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Viola
+        >
+          Progettazione Architettonica e Direzione Lavori
+        </motion.h2>
+        <motion.p
+                            initial={{ y: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="relative z-10 text-lg mt-10 max-w-2xl mx-auto"
+                            style={{ fontSize: "1.7rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
+                          >
+                            Innovazione e qualità per il tuo edificio ed il tuo spazio
+                          </motion.p>
       </header>
 
       <main className="flex flex-col md:flex-row p-4 md:p-8 gap-8">
