@@ -140,7 +140,7 @@ const App: React.FC = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundColor: "#000000", /* Colore di fallback */
-        minHeight: '700px' /* Altezza minima per visualizzare l'immagine */
+        minHeight: '800px' /* Altezza minima per visualizzare l'immagine */
       }}>
         {/* Overlay per migliorare la leggibilità del testo */}
         <div className="absolute inset-0 bg-black opacity-50"></div>

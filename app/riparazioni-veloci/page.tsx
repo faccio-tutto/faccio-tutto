@@ -87,7 +87,7 @@ export default function Home() {
     animate={{ y: 0, opacity: 1 }}
     transition={{ duration: 0.6 }}
     className="relative z-10 mt-70 text-8xl font-bold"
-    style={{ fontSize: "1.7rem", color: "#2196F3" }} // Blue scuro
+    style={{ fontSize: "2rem", color: "#2196F3", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Blue scuro
   >
     RIPARAZIONI VELOCI
   </motion.h2>
@@ -96,7 +96,7 @@ export default function Home() {
     animate={{ y: 0, opacity: 1 }}
     transition={{ duration: 0.6, delay: 0.2 }}
     className="relative z-10 mt-10 text-lg text-justify mt-4 max-w-5xl mx-auto"
-    style={{ fontSize: "1.2rem", color: "#E5E7EB" }} // Grigio chiaro
+    style={{ fontSize: "1.7rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
   >
     Interventi rapidi per ogni riparazione domestica. Vogliamo creare una rete di professionisti indipendenti che offrono servizi di riparazione, configurazione e installazione per la casa e la tecnologia.
     I nostri artigiani sono persone comuni che hanno sviluppato competenze specializzate attraverso l'interesse personale e l'esperienza pratica.

@@ -128,7 +128,7 @@ const RepairPage = () => {
     animate={{ y: 0, opacity: 1 }}
     transition={{ duration: 0.6 }}
     className="relative mt-70 z-10 text-8xl font-bold"
-    style={{ fontSize: "1.7rem", color: "#FFA500" }} // Giallo
+    style={{ fontSize: "2rem", color: "#FFA500", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Giallo
   >
     Ripariamo i tuoi piccoli elettrodomestici
   </motion.h2>
@@ -137,7 +137,7 @@ const RepairPage = () => {
     animate={{ y: 0, opacity: 1 }}
     transition={{ duration: 0.6, delay: 0.2 }}
     className="relative z-10 text-lg mt-10 max-w-2xl mx-auto"
-    style={{ fontSize: "1.2rem", color: "#E5E7EB" }} // Grigio chiaro
+    style={{ fontSize: "1.7rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
   >
     Risparmia denaro e aiuta l'ambiente con il nostro servizio di riparazione professionale e affidabile.
   </motion.p>
