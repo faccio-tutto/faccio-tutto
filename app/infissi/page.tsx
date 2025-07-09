@@ -139,7 +139,7 @@ const InfissiPage = () => {
         <div className="flex-1 min-w-0"> {/* This div will occupy the remaining space */}
 
  <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
-        // Immagine di sfondo
+        // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
         backgroundImage: 'url("/images/prodotti.png")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -152,8 +152,8 @@ const InfissiPage = () => {
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="relative mt-0 z-10 text-8xl font-bold"
-          style={{ fontSize: "2.3rem", color: "#8B4513", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Marrone scuro
+          className="relative mt-10 z-10 text-8xl font-bold"
+          style={{ fontSize: "2.3rem", color: "#8B4513", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Viola
         >
           Infissi di alta qualità
 <br />
@@ -179,7 +179,7 @@ Soluzioni su misura per la tua casa
           {/* Cosa Offriamo Section */}
           <section className="py-12 px-6 text-center">
             <h2 style={{ fontSize: "1.75rem", fontWeight: "bold", marginBottom: "0.5rem", color: "#8B4513" }}>Cosa Offriamo</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 gap-y-12 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 gap-y-12 max-w-6xl mx-auto">
               {/* Card Infissi Alluminio */}
               <div className="flex flex-col items-center bg-gray-800 rounded-lg shadow-lg overflow-hidden" style={{ backgroundColor: '#A18D65' }}>
                 <div className="relative w-full h-48 md:h-64 overflow-hidden">
