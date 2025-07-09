@@ -415,35 +415,38 @@ const FotovoltaicoPage: React.FC = () => {
         {/* Colonna principale: Contenuto della pagina, compreso il modulo */}
         <main className="flex-1 min-w-0"> {/* This div will occupy the remaining space */}
 
-          {/* Hero Section */}
-          <section className="relative text-white py-8 text-center md:py-20">
-            <motion.h1
-              className="text-3xl font-bold text-yellow-400 mt-8 sm:mt-12 md:mt-20"
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              Impianto Fotovoltaico
-              <br/> investi nel tuo futuro rispettando l'ambiente
-            </motion.h1>
-            <motion.p
-              className="mt-4 text-lg text-justify p-4 rounded-lg text-3xl px-4 md:px-20 text-yellow-400"
-              style={{ fontSize: "1.2rem" }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              Scegliere un impianto fotovoltaico significa abbracciare un futuro di energia pulita, indipendenza economica e responsabilità ambientale. 
-              Immagina di ridurre drasticamente le tue bollette elettriche fino al 90%, producendo energia direttamente dal sole. Un investimento 
-              intelligente che si ripaga in pochi anni, grazie alla detrazione fiscale in 10 anni del 50% dell'importo. Se abiti in un comune con meno di 50.000 abitanti, 
-              potrai inoltre installare un impianto fotovoltaico con un contributo a fondo perduto del 40% delle spese ammissibili, grazie al PNRR. Per accedere a 
-              questo incentivo, è necessario far parte di una Comunità Energetica Rinnovabile (CER). Noi facciamo parte di "Semplicemente Comunità" 
-              che è un’associazione no profit di Comunità Energetiche Rinnovabili che operano su tutto il territorio nazionale. Unisciti anche tu alla rivoluzione energetica e ricevi un incentivo 
-              per l'energia prodotta dal tuo impianto fotovoltaico o per l'energia consumata all'interno della comunità. 
-            </motion.p>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-10">
-              <a href="#modulo-contatti">
-                <Button className="bg-blue-500 text-white text-l font-semibold hover:bg-blue-600">Contattaci subito</Button>
-              </a>
-            </motion.div>
+ <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
+        // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
+        backgroundImage: 'url("/images/villa + fotovoltaico.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundColor: "#000000", /* Colore di fallback */
+        minHeight: '700px' /* Altezza minima per visualizzare l'immagine */
+      }}>
+        {/* Overlay per migliorare la leggibilità del testo */}
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <motion.h2
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="relative mt-70 z-10 text-8xl font-bold"
+          style={{ fontSize: "2.3rem", color: "#FBC02D", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Viola
+        >
+          Installa un impianto fotovoltaico,
+<br />
+investi nel tuo futuro rispettando l'ambiente
+        </motion.h2>
+        <motion.p
+                            initial={{ y: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="relative z-10 text-justify text-lg mt-10 px-8 md:px-16"
+                            style={{ fontSize: "1.7rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
+                          >
+                            Scegliere un impianto fotovoltaico significa abbracciare un futuro di energia pulita, indipendenza economica e responsabilità ambientale. Immagina di ridurre drasticamente le tue bollette elettriche fino al 90%, producendo energia direttamente dal sole. Un investimento intelligente che si ripaga in pochi anni, grazie alla detrazione fiscale in 10 anni del 50% dell'importo. Se abiti in un comune con meno di 50.000 abitanti, potrai inoltre installare un impianto fotovoltaico con un contributo a fondo perduto del 40% delle spese ammissibili, grazie al PNRR. Per accedere a questo incentivo, è necessario far parte di una Comunità Energetica Rinnovabile (CER). Noi facciamo parte di "Semplicemente Comunità" che è un’associazione no profit di Comunità Energetiche Rinnovabili che operano su tutto il territorio nazionale. Unisciti anche tu alla rivoluzione energetica e ricevi un incentivo per l'energia prodotta dal tuo impianto fotovoltaico o per l'energia consumata all'interno della comunità.
+                          </motion.p>
+      </header>
+          
 
             {/* Sezione Vantaggi */}
             <div className="grid md:grid-cols-1 gap-6 items-center max-w-6xl mx-auto mt-6"></div>
@@ -467,7 +470,7 @@ const FotovoltaicoPage: React.FC = () => {
                 </Card>
               ))}
             </div>
-          </section>
+         
 
           {/* Sezione Video */}
           <section className="py-12 px-4 md:px-20 text-center">
