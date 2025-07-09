@@ -6,6 +6,7 @@ import { FaBuilding, FaDraftingCompass, FaDoorOpen, FaPlug, FaWrench, FaPhone, F
 import { TfiEmail } from "react-icons/tfi";
 import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
 const CustomCardContent: React.FC<CardContentProps> = ({ children, className, ...props }) => (
@@ -83,40 +84,11 @@ const InfissiPage = () => {
         </ul>
       </nav>
 
-      {/* Hero Section - SPOSTATA FUORI dal main per estendersi a tutta larghezza */}
-      <section className="relative flex items-center justify-center py-16 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 flex justify-center z-0">
-          <Image
-            src="/images/prodotti.webp"
-            alt="Sfondo infissi"
-            layout="fill"
-            objectFit="cover"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/30 z-10"></div>
-        <div className="relative z-20 px-4 sm:px-6 max-w-[1200px] w-full text-white mx-auto text-center">
-          <h2 style={{ fontSize: "1.75rem", fontWeight: "bold", marginBottom: "0.5rem", color: "#8B4513" }}>Infissi di alta qualità</h2>
-          <div className="text-base sm:text-lg font-medium mb-6 text-gray-400">
-            Soluzioni su misura per la tua casa
-          </div>
-          <div className="space-y-4 text-[1.125rem] sm:text-[1.25rem] leading-relaxed text-white text-justify">
-            <p>
-              Eleva il comfort e il valore della tua casa con i nostri infissi di alta qualità. Ogni soluzione è progettata su misura per integrarsi perfettamente con il tuo stile abitativo, garantendo un'estetica raffinata e prestazioni superiori nel tempo.
+{/* Contenitore principale della pagina con layout a colonne */}  
+      <div className="flex-col md:flex-row p-4 md:p-8 gap-8 flex"> {/* Added 'flex' here to enable flexbox layout */}
 
-              La nostra attenzione ai dettagli si traduce nella scelta di materiali di primissima qualità, selezionati per la loro durabilità, efficienza energetica e resistenza agli agenti atmosferici. Dagli eleganti profili ai meccanismi di apertura fluidi e affidabili, ogni accessorio è pensato per offrirti funzionalità ottimali e una lunga durata.
-
-              Affidati alla nostra posa in opera specializzata, eseguita da artigiani esperti che curano ogni dettaglio per assicurare una perfetta sigillatura e un'installazione impeccabile. La nostra manodopera qualificata garantisce non solo un risultato estetico eccellente, ma anche la massima performance in termini of isolamento termico e acustico, contribuendo a un significativo risparmio energetico e a un maggiore benessere abitativo.
-
-              Scegliere i nostri infissi significa investire in un comfort duraturo, in una maggiore sicurezza per la tua casa e in un design che valorizza ogni ambiente. Trasforma la tua abitazione in uno spazio accogliente, efficiente e bello da vivere, grazie alla qualità senza compromessi dei nostri prodotti e alla professionalità del nostro team.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Content Area: Flex container per sidebar e il resto del contenuto */}
-      <main className="flex flex-col md:flex-row gap-6 px-4 sm:px-6 mt-10">
-        {/* Colonna sinistra: pulsanti laterali (Sidebar) */}
-        <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
+  {/* Pulsanti laterali a sinistra */}
+ <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
           <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
             {[{
               id: "progettazione",
@@ -163,12 +135,51 @@ const InfissiPage = () => {
           </div>
         </aside>
 
-        {/* Colonna principale del contenuto (il resto della pagina) */}
-        <div className="flex-1">
+      {/* Colonna principale: Contenuto della pagina, compreso il modulo */}
+        <div className="flex-1 min-w-0"> {/* This div will occupy the remaining space */}
+
+ <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
+        // Immagine di sfondo
+        backgroundImage: 'url("/images/prodotti.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundColor: "#000000", /* Colore di fallback */
+        minHeight: '700px' /* Altezza minima per visualizzare l'immagine */
+      }}>
+        {/* Overlay per migliorare la leggibilità del testo */}
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <motion.h2
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="relative mt-0 z-10 text-8xl font-bold"
+          style={{ fontSize: "2.3rem", color: "#8B4513", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Marrone scuro
+        >
+          Infissi di alta qualità
+<br />
+Soluzioni su misura per la tua casa
+        </motion.h2>
+        <motion.p
+                            initial={{ y: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="relative z-10 text-justify text-lg mt-10 px-8 md:px-16"
+                            style={{ fontSize: "1.7rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
+                          >
+                            Eleva il comfort e il valore della tua casa con i nostri infissi di alta qualità. Ogni soluzione è progettata su misura per integrarsi perfettamente con il tuo stile abitativo, garantendo un'estetica raffinata e prestazioni superiori nel tempo.
+
+              La nostra attenzione ai dettagli si traduce nella scelta di materiali di primissima qualità, selezionati per la loro durabilità, efficienza energetica e resistenza agli agenti atmosferici. Dagli eleganti profili ai meccanismi di apertura fluidi e affidabili, ogni accessorio è pensato per offrirti funzionalità ottimali e una lunga durata.
+
+              Affidati alla nostra posa in opera specializzata, eseguita da artigiani esperti che curano ogni dettaglio per assicurare una perfetta sigillatura e un'installazione impeccabile. La nostra manodopera qualificata garantisce non solo un risultato estetico eccellente, ma anche la massima performance in termini of isolamento termico e acustico, contribuendo a un significativo risparmio energetico e a un maggiore benessere abitativo.
+
+              Scegliere i nostri infissi significa investire in un comfort duraturo, in una maggiore sicurezza per la tua casa e in un design che valorizza ogni ambiente. Trasforma la tua abitazione in uno spazio accogliente, efficiente e bello da vivere, grazie alla qualità senza compromessi dei nostri prodotti e alla professionalità del nostro team.
+                          </motion.p>
+      </header>
+
           {/* Cosa Offriamo Section */}
           <section className="py-12 px-6 text-center">
             <h2 style={{ fontSize: "1.75rem", fontWeight: "bold", marginBottom: "0.5rem", color: "#8B4513" }}>Cosa Offriamo</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 gap-y-12 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 gap-y-12 max-w-7xl mx-auto">
               {/* Card Infissi Alluminio */}
               <div className="flex flex-col items-center bg-gray-800 rounded-lg shadow-lg overflow-hidden" style={{ backgroundColor: '#A18D65' }}>
                 <div className="relative w-full h-48 md:h-64 overflow-hidden">
@@ -266,7 +277,7 @@ const InfissiPage = () => {
             </div>
           </section>
         </div>{/* Chiusura del div flex-1 del contenuto principale */}
-      </main>{/* Chiusura del main che contiene sidebar e contenuto */}
+      </div>{/* Chiusura del div che contiene sidebar e contenuto */}
 
       {/* Footer */}
       <footer className="bg-gray-900 py-8 text-center">
