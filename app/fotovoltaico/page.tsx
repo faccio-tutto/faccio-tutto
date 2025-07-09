@@ -417,7 +417,7 @@ const FotovoltaicoPage: React.FC = () => {
 
  <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
         // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
-        backgroundImage: 'url("/images/villa + fotovoltaico.png")',
+        backgroundImage: 'url("/images/villa e fotovoltaico.png")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundColor: "#000000", /* Colore di fallback */
