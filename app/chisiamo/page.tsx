@@ -66,64 +66,63 @@ const MainContent = () => {
         const isImageHovered = Object.values(hoveredImages).some(image => image);
     
         return (
-            <div className="container mx-auto px-4 flex flex-col md:flex-row items-start relative z-10 py-8">
+           <div className="flex-col md:flex-row p-4 md:p-8 gap-8 flex">
                 {/* Servizi - NUOVI PULSANTI */}
-                <div className="w-full md:w-4/4 space-y-4 mb-8 md:mb-0 bg-gray-200 p-4 rounded-lg shadow-lg">
-                    <div className="grid grid-cols-1 gap-4 bg-white bg-opacity-80 p-4 rounded-lg">
-                        {[{
-                            id: "progettazione",
-                            icon: <FaDraftingCompass className="text-3xl mb-0 text-purple-500" />,
-                            title: "Progettazione architettonica",
-                            link: "/progettazione"
-                        }, {
-                            id: "fotovoltaico",
-                            icon: <FaSolarPanel className="text-3xl mb-0 text-yellow-500" />,
-                            title: "Impianti fotovoltaici",
-                            link: "/fotovoltaico"
-                        }, {
-                            id: "infissi",
-                            icon: <FaDoorOpen className="text-3xl mb-0 text-orange-900" />,
-                            title: "Vendita e installazione infissi",
-                            link: "/infissi"
-                        }, {
-                            id: "riparazione-elettrodomestici",
-                            icon: <FaPlug className="text-3xl mb-0 text-orange-500" />,
-                            title: "Riparazione elettrodomestici",
-                            link: "/riparazione-elettrodomestici"
-                        }, {
-                            id: "riparazioni-veloci",
-                            icon: <FaWrench className="text-3xl mb-0 text-blue-500" />,
-                            title: "Riparazioni veloci",
-                            link: "/riparazioni-veloci"
-                        }, {
-                            id: "contatti",
-                            icon: <FaPhone className="text-3xl mb-0 text-green-500" />,
-                            title: "Prenota subito",
-                            link: "/prenota"
-                        }].map(service => (
-                            <Link href={service.link} key={service.id} className="block transform transition duration-300 hover:scale-105">
-                                <CustomCard className="border-gray-200 bg-transparent">
-                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                                        <div className="rounded-full p-3 shadow-md bg-white">
-                                            {service.icon}
-                                        </div>
-                                        <h3 className={`text-sm font-semibold mt-2 text-grey-800`}>{service.title}</h3>
-                                    </CustomCardContent>
-                                </CustomCard>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-    
+                <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
+          <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
+            {[{
+              id: "progettazione",
+              icon: <FaDraftingCompass className="text-3xl mb-0 text-purple-500" />,
+              title: "Progettazione architettonica",
+              link: "/progettazione"
+            }, {
+              id: "fotovoltaico",
+              icon: <FaSolarPanel className="text-3xl mb-0 text-yellow-500" />,
+              title: "Impianti fotovoltaici",
+              link: "/fotovoltaico"
+            }, {
+              id: "infissi",
+              icon: <FaDoorOpen className="text-3xl mb-0 text-orange-900" />,
+              title: "Vendita e installazione infissi",
+              link: "/infissi"
+            }, {
+              id: "riparazione-elettrodomestici",
+              icon: <FaPlug className="text-3xl mb-0 text-orange-500" />,
+              title: "Riparazione elettrodomestici",
+              link: "/riparazione-elettrodomestici"
+            }, {
+              id: "riparazioni-veloci",
+              icon: <FaWrench className="text-3xl mb-0 text-blue-500" />,
+              title: "Riparazioni veloci",
+              link: "/riparazioni-veloci"
+            }, {
+              id: "contatti",
+              icon: <FaPhone className="text-3xl mb-0 text-green-500" />,
+              title: "Prenota subito",
+              link: "/prenota"
+            }].map(service => (
+                <Link href={service.link} key={service.id} className="block transform transition duration-300 hover:scale-105 w-full">
+                    <CustomCard className="bg-white border border-gray-200 p-0"> {/* Aggiunto bg-white, border e p-0 qui */}
+                        <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
+                            <div className="rounded-full p-3 shadow-md bg-white">
+                                {service.icon}
+                            </div>
+                            <h3 className={`text-sm font-semibold mt-2 text-gray-800`}>{service.title}</h3>
+                        </CustomCardContent>
+                    </CustomCard>
+                </Link>
+            ))}
+          </div>
+        </aside>
+
                 {/* Colonna centrale (Hero Section e testo) */}
                 <div className="w-full md:w-2/2 flex flex-col items-center mt-8 md:mt-0">
-                    <section className="relative text-center w-full">
-                        <div className="bg-black bg-opacity-50 p-4 md:p-6 flex flex-col items-center">
-                            <h2 className="custom-title">Chi siamo</h2>
-                            <section className="bg-black bg-opacity-80 text-gray-600 rounded-lg shadow-lg p-0 mt-0">
-
-  <div className="mt-8 text-center">
-    <p className="text-base text-justify text-gray-400 mb-4">
+                    <section className="relative text-center w-full bg-gray-200 p-4 rounded-lg shadow-lg">
+                        <div className="bg-black bg-opacity-50 p-4 md:p- flex flex-col items-center">
+                            <h1 className="text-3xl text-white font-bold mb-6 text-center">La Nostra Vision</h1>
+                            <section className="bg-black bg-opacity-80 rounded-lg shadow-lg p-0 mt-0">
+                                <div className="max-w-3xl text-gray-500 text-justify mb-8 bg-black bg-opacity-70 p-0 rounded-lg">
+                                    <p className="text-lg text-white">
     Siamo un'azienda che crede nel valore delle persone, al di là delle competenze lavorative ognuno di noi ha delle capacità, delle abilità, delle attitudini che esprime magari solo a casa propria o le mette a disposizione di pochi conoscenti, adesso, invece, questo "talento" può essere espresso su larga scala e riconosciuto sempre da più persone grazie ai feedback ricevuti. 
           Ogni individuo possiede un bagaglio unico di capacità, passioni e attitudini che spesso rimangono inespresse nel contesto lavorativo tradizionale. 
           Noi crediamo nel valore delle persone e riconosciamo che il potenziale umano non si limita alle competenze tecniche richieste dal ruolo, infatti adottiamo una visione olistica, che abbraccia la totalità dell'individuo, con le sue peculiarità e i suoi talenti. 
@@ -140,7 +139,7 @@ const MainContent = () => {
                 </div>
 
                 {/* Colonna di destra (Post recenti) */}
-                <div className="w-full md:w-4/4 bg-red-500 p-4 rounded-xl shadow-lg space-y-2 mt-8 md:mt-0">
+                <div className="w-full md:w-1/4 bg-red-500 p-4 rounded-xl shadow-lg space-y-2 mt-8 md:mt-0">
                     <h3 className="text-lg font-bold text-white text-center"></h3>
                     <div className="grid grid-cols-1 gap-4">
                     {[
@@ -227,15 +226,47 @@ const MainContent = () => {
 </nav>
     
                 {/* Hero Image */}
-                <div className="w-full relative h-[300px] md:h-[660px]">
-                    <Image
-                        src="/images/chi siamo.png"
-                        alt="sfondo chi siamo"
-                        fill
-                        style={{ objectFit: "contain" }}
-                        priority
-                    />
-                </div>
+                <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
+                                                                 // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
+                                                                 backgroundImage: 'url("/images/chi siamo.png")',
+                                                                 backgroundSize: 'cover',
+                                                                 backgroundPosition: 'center',
+                                                                 backgroundColor: "#000000", /* Colore di fallback */
+                                                                 minHeight: '840px' /* Altezza minima per visualizzare l'immagine */
+                                                               }}>
+                                                                 {/* Overlay per migliorare la leggibilità del testo */}
+                                                                 <div className="absolute inset-0 bg-black opacity-50"></div>
+                                                                <motion.h2
+                                                 initial={{ y: -50, opacity: 0 }}
+                                                 animate={{ y: 0, opacity: 1 }}
+                                                 transition={{ duration: 0.6 }}
+                                                 className="relative mt-66 z-10 text-8xl font-bold leading-[5rem] tracking-[0.15em]"
+                                                 style={{
+                                                   fontSize: "3.5rem",
+                                                   color: "#9C27B0",
+                                                   textShadow: "2px 2px 4px rgba(0,0,0,0.8)"
+                                                 }}
+                                               >
+                                                 
+                                                 <br/>
+                                                 <span style={{ fontSize: "3.5rem", color: "#FFA500", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
+                                                
+                                                 </span>
+                                                 <br/>
+                                                 <span style={{ fontSize: "3.5rem", color: "#FF6000", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
+                                                   
+                                                 </span>
+                                               </motion.h2>
+                                                                 <motion.p
+                                                                   initial={{ y: 50, opacity: 0 }}
+                                                                   animate={{ y: 0, opacity: 1 }}
+                                                                   transition={{ duration: 0.6, delay: 0.2 }}
+                                                                   className="relative z-10 text-lg mt-10 max-w-2xl mx-auto"
+                                                                   style={{ fontSize: "2rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
+                                                                 >
+                                                                  
+                                                                 </motion.p>
+                                                               </header>
     
                 {/* Contenuto principale con flex-grow */}
                 <div className="flex-grow z-0 py-20" style={{ paddingTop: '20px' }}>

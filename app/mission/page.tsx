@@ -117,7 +117,7 @@ const MainContent = () => {
         </aside>
     
                 {/* Center Column (Hero Section e testo) */}
-                <div className="w-full lg:w-1/1 flex flex-col items-center mt-8 md:mt-0">
+                <div className="w-full lg:w-2/2 flex flex-col items-center mt-8 md:mt-0">
                     <section className="relative text-center w-full bg-gray-200 p-4 rounded-lg shadow-lg">
                         <div className="bg-black bg-opacity-50 p-4 md:p- flex flex-col items-center">
                             <h1 className="text-3xl text-white font-bold mb-6 text-center">La Nostra Mission</h1>
