@@ -67,8 +67,8 @@ const MainContent = () => {
     
         return (
            <div className="flex-col md:flex-row p-4 md:p-8 gap-8 flex">
-                {/* Servizi - NUOVI PULSANTI */}
-                <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
+               {/* Pulsanti laterali a sinistra */}
+ <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
           <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
             {[{
               id: "progettazione",
@@ -114,12 +114,12 @@ const MainContent = () => {
             ))}
           </div>
         </aside>
-
+    
                 {/* Colonna centrale (Hero Section e testo) */}
                 <div className="w-full md:w-2/2 flex flex-col items-center mt-8 md:mt-0">
                     <section className="relative text-center w-full bg-gray-200 p-4 rounded-lg shadow-lg">
                         <div className="bg-black bg-opacity-50 p-4 md:p- flex flex-col items-center">
-                            <h1 className="text-3xl text-white font-bold mb-6 text-center">La Nostra Vision</h1>
+                            <h1 className="text-3xl text-white font-bold mb-6 text-center">Chi siamo</h1>
                             <section className="bg-black bg-opacity-80 rounded-lg shadow-lg p-0 mt-0">
                                 <div className="max-w-3xl text-gray-500 text-justify mb-8 bg-black bg-opacity-70 p-0 rounded-lg">
                                     <p className="text-lg text-white">
