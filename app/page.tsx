@@ -252,6 +252,7 @@ const MainContent = () => {
                             "/images/post 14 luglio.png",
                             "/images/post 5 agosto.png",
                             "/images/post 21 agosto.png",
+                             "/images/post 25 agosto.png",
                         ].map((src, index) => (
                             <div
                                 key={index}
