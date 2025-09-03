@@ -9,6 +9,9 @@ import { CheckCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card"; // Assicurati di avere questi componenti per le card
 import { Button } from "@/components/ui/button"; // Assicurati di avere questo componente per i pulsanti
 import React, { useState } from 'react';
+import Head from "next/head";
+
+// (Removed duplicate FotovoltaicoPage function declaration)
 
 // Funzione helper per le classi, come nel codice del calcolatore
 const cn = (...args: (string | undefined | null | boolean)[]) => args.filter(Boolean).join(' ');
@@ -471,20 +474,47 @@ investi nel tuo futuro rispettando l'ambiente
               ))}
             </div>
          
+          {/* Dati strutturati VideoObject */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `
+        {
+          "@context": "https://schema.org",
+          "@type": "VideoObject",
+          "name": "Analisi risparmio energetico e finanziario impianto fotovoltaico in Sicilia",
+          "description": "Video esplicativo che mostra come ridurre i costi della bolletta grazie a un impianto fotovoltaico con accumulo in Sicilia.",
+          "thumbnailUrl": "https://www.faccio-tutto.it/images/thumbnail-fotovoltaico.jpg",
+          "uploadDate": "2025-09-01",
+          "contentUrl": "https://www.faccio-tutto.it/video/analisi-risparmio-energetico-fotovoltaico-sicilia.mp4",
+          "embedUrl": "https://www.faccio-tutto.it/fotovoltaico",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Faccio-Tutto.it",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.faccio-tutto.it/images/logo.png"
+            }
+          }
+        }
+        ` }} />
+{/* End Head section */}
 
-          {/* Sezione Video */}
-          <section className="py-12 px-4 md:px-20 text-center">
-  <div className="text-yellow-400 text-2xl font-semibold mb-8">Guarda il nostro video esplicativo</div>
+<section className="p-12 flex-col items-center">
+  <h1 className="text-2xl font-bold mb-8 text-center text-yellow-400">
+    Analisi risparmio energetico e finanziario in Sicilia
+  </h1>
+
   <video
-    className="w-full max-w-xl mx-auto rounded-lg shadow-lg"
     controls
-    preload="metadata"
+    className="w-2/5 w-2/5 mx-auto block"
+    poster="/logo faccio tutto 3.png"
   >
-    <source src="/video/Analisi risparmio energetico e finanziario impianto fotovoltaico Sicilia.mp4" type="video/mp4" />
-    Il tuo browser non supporta il video.
+    <source src="/video/analisi-risparmio-energetico-fotovoltaico-sicilia.mp4" type="video/mp4" />
+    Il tuo browser non supporta la riproduzione video.
   </video>
-</section>
 
+  <p className="mt-4 w-1/2 w-1/2 mx-auto block max-w-2xl">
+    Questo video illustra come un impianto fotovoltaico con accumulo possa ridurre i costi energetici e aumentare il valore della tua abitazione in Sicilia.
+  </p>
+</section>
           {/* Sezione Servizi */}
           <section className="py-10 px-8 max-w-6xl mx-auto">
             <div className="font-bold text-center text-yellow-400" style={{ fontSize: "1.7rem" }}>
