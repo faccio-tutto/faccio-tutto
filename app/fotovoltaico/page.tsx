@@ -782,9 +782,11 @@ investi nel tuo futuro rispettando l'ambiente
             </div>
        
       {/* Footer */}
-      <footer className="text-center mt-8 p-6 bg-gray-900 text-gray-300">
-        <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
-      </footer>
+     <footer className="mt-8 p-6 bg-gray-900 text-gray-300">
+  <p className="ml-60">
+    &copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.
+  </p>
+</footer>
     </div>
   );
 };
