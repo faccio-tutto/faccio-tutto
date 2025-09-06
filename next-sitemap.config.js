@@ -1,10 +1,10 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://www.faccio-tutto.it', // URL principale del sito
-  generateRobotsTxt: true, // Genera robots.txt automaticamente
-  changefreq: 'weekly', // Frequenza di aggiornamento suggerita ai motori di ricerca
-  priority: 0.7, // Priorità media per tutte le pagine
-  sitemapSize: 5000, // Numero massimo di URL per sitemap
+  siteUrl: 'https://www.faccio-tutto.it',
+  generateRobotsTxt: true,
+  changefreq: 'weekly',
+  priority: 0.7,
+  sitemapSize: 5000,
   exclude: [
     '/admin/*',
     '/private/*',
@@ -12,7 +12,7 @@ module.exports = {
     '/cart/*',
     '/checkout/*',
     '/login',
-    '/register'
+    '/register',
   ],
   robotsTxtOptions: {
     policies: [
@@ -27,19 +27,20 @@ module.exports = {
           '/tmp/',
           '/cart/',
           '/checkout/',
-          '/login/',
-          '/register/',
+          '/login',
+          '/register',
           '/*?sort=',
           '/*?filter=',
           '/*?search=',
           '/*&utm_source=',
           '/*&utm_medium=',
-          '/*&utm_campaign='
-        ]
-      }
+          '/*&utm_campaign=',
+        ],
+      },
     ],
     additionalSitemaps: [
-      'https://www.faccio-tutto.it/sitemap.xml' // Sitemap principale
-    ]
-  }
+      // qui inserisci SOLO altre sitemap esterne, non la sitemap generata da next-sitemap
+      // ad esempio: 'https://www.faccio-tutto.it/sitemap-blog.xml'
+    ],
+  },
 };
