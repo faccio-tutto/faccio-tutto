@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image"; // Assicurati che Image sia importato
+import Head from "next/head";
 import ModuloContatti from "./ModuloContatti";
 import { FaInstagramSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
@@ -7,7 +8,16 @@ import { FaLinkedin } from "react-icons/fa";
 
 const AffiliazionePrivati = () => {
     return (
-        <div className="min-h-screen bg-black text-white p-0">
+       <>
+      <Head>
+        <title>AffiliazionePrivati | faccio-tutto.it</title>
+        <meta
+          name="description"
+          content="Scopri come affiliarti a faccio-tutto.it: vantaggi, supporto tecnico e opportunità per aziende e privati."
+        />
+        <link rel="canonical" href="https://www.faccio-tutto.it/affiliazione/privato" />
+      </Head>
+      <div className="min-h-screen bg-black text-white p-0">
             {/* Navbar */}
                        <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
               <div className="flex items-center gap-1 min-w-[220px]">
@@ -67,6 +77,7 @@ const AffiliazionePrivati = () => {
                 </div>
             </div>
         </div>
+      </>
     );
 }
 export default AffiliazionePrivati;

@@ -14,7 +14,7 @@ export default function AffiliazioneAzienda() {
           name="description"
           content="Scopri come affiliarti a faccio-tutto.it: vantaggi, supporto tecnico e opportunità per aziende e privati."
         />
-        <link rel="canonical" href="https://www.faccio-tutto.it/affiliazione" />
+        <link rel="canonical" href="https://www.faccio-tutto.it/affiliazione/azienda" />
       </Head>
       <div className="min-h-screen bg-black text-white p-0">
         {/* Navbar */}
