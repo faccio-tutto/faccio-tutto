@@ -482,7 +482,7 @@ investi nel tuo futuro rispettando l'ambiente
           "name": "Analisi risparmio energetico e finanziario impianto fotovoltaico in Sicilia",
           "description": "Video esplicativo che mostra come ridurre i costi della bolletta grazie a un impianto fotovoltaico con accumulo in Sicilia.",
           "thumbnailUrl": "https://www.faccio-tutto.it/images/thumbnail-fotovoltaico.jpg",
-          "uploadDate": "2025-09-01",
+          "uploadDate": "2025-09-01T10:00:00+02:00",
           "contentUrl": "https://www.faccio-tutto.it/video/analisi-risparmio-energetico-fotovoltaico-sicilia.mp4",
           "embedUrl": "https://www.faccio-tutto.it/fotovoltaico",
           "publisher": {
