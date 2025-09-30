@@ -234,13 +234,11 @@ const MainContent = () => {
                     <div className="grid grid-cols-1 gap-4">
                         {[
                             "/images/Volantino fotovoltaico.png",
-                            "/images/40 fondi PNRR.png",
                             "/images/post 8 maggio architettura.png",
                             "/images/post 10 maggio.png",
                             "/images/post 14 maggio.png",
                             "/images/cer.png",
                             "/images/post 21 maggio.png",
-                            "/images/post 27 maggio.png",
                             "/images/post 29 maggio.png",
                             "/images/post 3 giugno.png",
                             "/images/post 5 giugno.png",
