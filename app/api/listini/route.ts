@@ -27,17 +27,17 @@ export async function GET() {
     // Prezzi medi netti (IVA esclusa) per batterie LFP, modulari
     batterie: [
       // Batteria 5 kWh - Huawei Luna2000-5-E0 + Modulo BMS
-      { id: "bat1", brand: "Huawei Luna", capacityKwh: 5, price: 2250.00 }, 
+      { id: "bat1", brand: "Huawei", modello: "Luna", capacityKwh: 5, price: 2250.00 }, 
       // Batteria 5 kWh
       { id: "bat1", brand: "BYD", capacityKwh: 5, price: 2500.00 }, 
       //BATTERIA V-TAC VT-48200B LVB LITIO 48V 9,6KW MONTAGGIO A RACK
       { id: "bat2", brand: "V-Tac", capacityKwh: 9.6, price: 2000.00 },
       // Batteria 10 kWh - Huawei Luna2000-10-S0 + Modulo BMS
-      { id: "bat3", brand: "Huawei Luna", capacityKwh: 10, price: 5050.00 }, 
+      { id: "bat3", brand: "Huawei", modello: "Luna", capacityKwh: 10, price: 5050.00 }, 
       // Batteria 10 kWh
       { id: "bat4", brand: "LG Chem", capacityKwh: 10, price: 4600.00 }, 
       // Batteria 15 kWh
-      { id: "bat5", brand: "Huawei Luna", capacityKwh: 15, price: 6500.00 }, 
+      { id: "bat5", brand: "Huawei", modello: "Luna", capacityKwh: 15, price: 6500.00 }, 
      
     ],
     // Prezzi netti stimati per il sistema di fissaggio (variabili in base al tipo)
