@@ -1,437 +1,435 @@
 "use client";
-import React, { useState, useEffect } from 'react';
 
+import React, { useMemo, useState, useEffect, FC } from "react";
 
-// --- Dati di Irraggiamento Solare e Mappatura Province ---
-// NOTA: Questi dati di irraggiamento sono basati su stime e medie.
-// Per la massima accuratezza, dovrebbero essere sostituiti con dati PVGIS o simili.
-// Sono espressi in kWh/m²/giorno per un piano orientato a SUD con inclinazione ottimale.
+// --- INTERFACCE TYPESCRIPT ---
+interface Inverter {
+  id: string;
+  brand: string;
+  powerKw: number;
+  price: number;
+}
 
-const dailyIrradiance_kWh_per_sqm_per_day: { [provinceName: string]: { [month: string]: number } } = {
-    'Agrigento': { Gennaio: 2.44, Febbraio: 3.47, Marzo: 4.69, Aprile: 6.17, Maggio: 7.47, Giugno: 8.19, Luglio: 8.22, Agosto: 7.50, Settembre: 5.81, Ottobre: 4.06, Novembre: 2.81, Dicembre: 2.28 },
-    'Alessandria': { Gennaio: 1.31, Febbraio: 2.08, Marzo: 3.22, Aprile: 4.39, Maggio: 5.14, Giugno: 5.69, Luglio: 6.28, Agosto: 5.00, Settembre: 3.72, Ottobre: 2.36, Novembre: 1.50, Dicembre: 1.17 },
-    'Ancona': { Gennaio: 1.19, Febbraio: 2.11, Marzo: 3.36, Aprile: 5.08, Maggio: 6.42, Giugno: 6.69, Luglio: 7.22, Agosto: 6.11, Settembre: 4.44, Ottobre: 2.92, Novembre: 1.53, Dicembre: 1.14 },
-    'Aosta': { Gennaio: 1.47, Febbraio: 2.22, Marzo: 3.36, Aprile: 4.36, Maggio: 5.06, Giugno: 5.53, Luglio: 5.83, Agosto: 4.86, Settembre: 3.67, Ottobre: 2.42, Novembre: 1.69, Dicembre: 1.33 },
-    'Arezzo': { Gennaio: 1.42, Febbraio: 2.11, Marzo: 3.11, Aprile: 4.19, Maggio: 5.33, Giugno: 6.17, Luglio: 6.42, Agosto: 5.33, Settembre: 4.14, Ottobre: 2.61, Novembre: 1.61, Dicembre: 1.14 },
-    'Ascoli Piceno': { Gennaio: 1.50, Febbraio: 2.28, Marzo: 3.50, Aprile: 4.78, Maggio: 5.78, Giugno: 6.58, Luglio: 7.11, Agosto: 6.19, Settembre: 4.53, Ottobre: 2.89, Novembre: 1.78, Dicembre: 1.33 },
-    'Asti': { Gennaio: 1.44, Febbraio: 2.19, Marzo: 3.33, Aprile: 4.53, Maggio: 5.17, Giugno: 5.72, Luglio: 6.25, Agosto: 4.94, Settembre: 3.64, Ottobre: 2.53, Novembre: 1.56, Dicembre: 1.33 },
-    'Avellino': { Gennaio: 1.50, Febbraio: 2.33, Marzo: 3.53, Aprile: 5.03, Maggio: 6.19, Giugno: 6.86, Luglio: 7.47, Agosto: 6.64, Settembre: 4.92, Ottobre: 3.33, Novembre: 1.94, Dicembre: 1.36 },
-    'Bari': { Gennaio: 1.83, Febbraio: 2.81, Marzo: 4.03, Aprile: 5.72, Maggio: 7.03, Giugno: 7.78, Luglio: 7.94, Agosto: 7.00, Settembre: 5.28, Ottobre: 3.67, Novembre: 2.22, Dicembre: 1.58 },
-    'Barletta-Andria-Trani': { Gennaio: 1.83, Febbraio: 2.81, Marzo: 4.03, Aprile: 5.72, Maggio: 7.03, Giugno: 7.78, Luglio: 7.94, Agosto: 7.00, Settembre: 5.28, Ottobre: 3.67, Novembre: 2.22, Dicembre: 1.58 }, // Usa dati Bari
-    'Belluno': { Gennaio: 1.14, Febbraio: 2.03, Marzo: 3.25, Aprile: 4.67, Maggio: 5.69, Giugno: 6.36, Luglio: 6.94, Agosto: 5.61, Settembre: 4.08, Ottobre: 2.56, Novembre: 1.39, Dicembre: 1.06 }, // Usa dati Padova/Treviso
-    'Benevento': { Gennaio: 1.50, Febbraio: 2.33, Marzo: 3.53, Aprile: 5.03, Maggio: 6.19, Giugno: 6.86, Luglio: 7.47, Agosto: 6.64, Settembre: 4.92, Ottobre: 3.33, Novembre: 1.94, Dicembre: 1.36 }, // Usa dati Avellino/Caserta
-    'Bergamo': { Gennaio: 1.14, Febbraio: 1.86, Marzo: 3.08, Aprile: 4.39, Maggio: 5.28, Giugno: 5.89, Luglio: 6.44, Agosto: 5.14, Settembre: 3.78, Ottobre: 2.42, Novembre: 1.28, Dicembre: 1.00 }, // Usa dati Milano
-    'Biella': { Gennaio: 1.25, Febbraio: 1.97, Marzo: 3.19, Aprile: 4.42, Maggio: 5.17, Giugno: 5.78, Luglio: 6.28, Agosto: 5.08, Settembre: 3.72, Ottobre: 2.50, Novembre: 1.39, Dicembre: 1.14 }, // Usa dati Torino
-    'Bologna': { Gennaio: 1.25, Febbraio: 2.19, Marzo: 3.36, Aprile: 4.81, Maggio: 5.83, Giugno: 6.56, Luglio: 7.11, Agosto: 5.83, Settembre: 4.28, Ottobre: 2.75, Novembre: 1.47, Dicembre: 1.14 },
-    'Bolzano': { Gennaio: 1.25, Febbraio: 2.28, Marzo: 3.53, Aprile: 4.58, Maggio: 5.64, Giugno: 5.92, Luglio: 6.25, Agosto: 5.14, Settembre: 3.94, Ottobre: 2.58, Novembre: 1.42, Dicembre: 1.08 },
-    'Brescia': { Gennaio: 1.28, Febbraio: 2.17, Marzo: 3.44, Aprile: 4.47, Maggio: 5.67, Giugno: 6.25, Luglio: 6.78, Agosto: 5.61, Settembre: 4.08, Ottobre: 2.56, Novembre: 1.47, Dicembre: 1.19 },
-    'Brindisi': { Gennaio: 1.94, Febbraio: 2.58, Marzo: 3.92, Aprile: 5.44, Maggio: 6.53, Giugno: 7.50, Luglio: 7.61, Agosto: 6.64, Settembre: 5.11, Ottobre: 3.61, Novembre: 2.19, Dicembre: 1.64 },
-    'Cagliari': { Gennaio: 2.03, Febbraio: 2.72, Marzo: 4.00, Aprile: 5.14, Maggio: 6.25, Giugno: 6.94, Luglio: 7.58, Agosto: 6.64, Settembre: 4.89, Ottobre: 3.39, Novembre: 2.25, Dicembre: 1.78 },
-    'Caltanissetta': { Gennaio: 2.50, Febbraio: 3.32, Marzo: 4.44, Aprile: 5.78, Maggio: 7.08, Giugno: 7.83, Luglio: 7.83, Agosto: 7.06, Settembre: 5.42, Ottobre: 3.83, Novembre: 2.78, Dicembre: 2.22 },
-    'Campobasso': { Gennaio: 1.72, Febbraio: 2.64, Marzo: 3.75, Aprile: 5.19, Maggio: 6.53, Giugno: 7.03, Luglio: 7.36, Agosto: 6.42, Settembre: 4.83, Ottobre: 3.33, Novembre: 2.03, Dicembre: 1.56 },
-    'Carbonia-Iglesias': { Gennaio: 2.03, Febbraio: 2.72, Marzo: 4.00, Aprile: 5.14, Maggio: 6.25, Giugno: 6.94, Luglio: 7.58, Agosto: 6.64, Settembre: 4.89, Ottobre: 3.39, Novembre: 2.25, Dicembre: 1.78 }, // Usa dati Cagliari
-    'Caserta': { Gennaio: 1.89, Febbraio: 2.69, Marzo: 4.03, Aprile: 5.39, Maggio: 6.61, Giugno: 7.53, Luglio: 7.72, Agosto: 6.72, Settembre: 5.08, Ottobre: 3.58, Novembre: 2.17, Dicembre: 1.64 },
-    'Catania': { Gennaio: 2.50, Febbraio: 3.31, Marzo: 4.44, Aprile: 5.75, Maggio: 7.08, Giugno: 7.83, Luglio: 7.83, Agosto: 7.06, Settembre: 5.42, Ottobre: 3.81, Novembre: 2.78, Dicembre: 2.22 },
-    'Catanzaro': { Gennaio: 2.03, Febbraio: 3.11, Marzo: 3.56, Aprile: 5.25, Maggio: 6.24, Giugno: 7.47, Luglio: 7.61, Agosto: 7.00, Settembre: 4.67, Ottobre: 3.47, Novembre: 2.19, Dicembre: 1.81 },
-    'Chieti': { Gennaio: 1.64, Febbraio: 2.44, Marzo: 3.64, Aprile: 5.19, Maggio: 6.47, Giugno: 6.89, Luglio: 7.33, Agosto: 6.25, Settembre: 4.75, Ottobre: 3.28, Novembre: 1.89, Dicembre: 1.42 },
-    'Como': { Gennaio: 1.28, Febbraio: 1.89, Marzo: 3.08, Aprile: 4.33, Maggio: 5.03, Giugno: 5.69, Luglio: 6.14, Agosto: 5.00, Settembre: 3.64, Ottobre: 2.50, Novembre: 1.36, Dicembre: 1.11 },
-    'Cosenza': { Gennaio: 2.14, Febbraio: 3.28, Marzo: 4.81, Aprile: 6.06, Maggio: 7.14, Giugno: 8.22, Luglio: 8.03, Agosto: 7.22, Settembre: 5.56, Ottobre: 3.58, Novembre: 2.61, Dicembre: 2.14 },
-    'Crotone': { Gennaio: 2.06, Febbraio: 2.97, Marzo: 4.03, Aprile: 5.36, Maggio: 6.53, Giugno: 7.25, Luglio: 7.39, Agosto: 6.75, Settembre: 4.97, Ottobre: 3.61, Novembre: 2.39, Dicembre: 1.78 },
-    'Cremona': { Gennaio: 1.08, Febbraio: 1.89, Marzo: 3.19, Aprile: 4.67, Maggio: 5.69, Giugno: 6.61, Luglio: 6.94, Agosto: 5.61, Settembre: 3.97, Ottobre: 2.33, Novembre: 1.25, Dicembre: 0.92 },
-    'Cuneo': { Gennaio: 1.53, Febbraio: 2.25, Marzo: 3.19, Aprile: 4.06, Maggio: 4.56, Giugno: 5.17, Luglio: 5.64, Agosto: 4.44, Settembre: 3.44, Ottobre: 2.42, Novembre: 1.64, Dicembre: 1.39 },
-    'Enna': { Gennaio: 2.47, Febbraio: 3.31, Marzo: 4.47, Aprile: 5.86, Maggio: 7.14, Giugno: 7.94, Luglio: 7.94, Agosto: 7.19, Settembre: 5.50, Ottobre: 3.86, Novembre: 2.81, Dicembre: 2.19 },
-    'Fermo': { Gennaio: 1.19, Febbraio: 2.11, Marzo: 3.36, Aprile: 5.08, Maggio: 6.42, Giugno: 6.69, Luglio: 7.22, Agosto: 6.11, Settembre: 4.44, Ottobre: 2.92, Novembre: 1.53, Dicembre: 1.14 }, // Usa dati Ancona
-    'Ferrara': { Gennaio: 1.17, Febbraio: 2.06, Marzo: 3.22, Aprile: 4.67, Maggio: 5.75, Giugno: 6.47, Luglio: 7.00, Agosto: 5.72, Settembre: 4.19, Ottobre: 2.67, Novembre: 1.42, Dicembre: 1.08 },
-    'Firenze': { Gennaio: 1.36, Febbraio: 2.06, Marzo: 3.28, Aprile: 4.58, Maggio: 5.64, Giugno: 6.42, Luglio: 6.67, Agosto: 5.53, Settembre: 4.19, Ottobre: 2.78, Novembre: 1.58, Dicembre: 1.14 },
-    'Foggia': { Gennaio: 1.78, Febbraio: 2.75, Marzo: 3.97, Aprile: 5.64, Maggio: 6.97, Giugno: 7.72, Luglio: 7.89, Agosto: 6.94, Settembre: 5.22, Ottobre: 3.61, Novembre: 2.17, Dicembre: 1.53 },
-    'Forlì-Cesena': { Gennaio: 1.22, Febbraio: 2.14, Marzo: 3.31, Aprile: 4.75, Maggio: 5.78, Giugno: 6.50, Luglio: 7.06, Agosto: 5.78, Settembre: 4.22, Ottobre: 2.72, Novembre: 1.44, Dicembre: 1.11 },
-    'Frosinone': { Gennaio: 1.47, Febbraio: 2.22, Marzo: 3.42, Aprile: 4.86, Maggio: 5.92, Giugno: 6.64, Luglio: 7.19, Agosto: 6.22, Settembre: 4.67, Ottobre: 3.08, Novembre: 1.78, Dicembre: 1.28 },
-    'Genova': { Gennaio: 1.47, Febbraio: 2.22, Marzo: 3.36, Aprile: 4.64, Maggio: 5.47, Giugno: 6.11, Luglio: 6.53, Agosto: 5.36, Settembre: 3.97, Ottobre: 2.75, Novembre: 1.72, Dicembre: 1.36 },
-    'Gorizia': { Gennaio: 1.14, Febbraio: 2.03, Marzo: 3.25, Aprile: 4.58, Maggio: 5.58, Giugno: 6.22, Luglio: 6.78, Agosto: 5.50, Settembre: 4.03, Ottobre: 2.61, Novembre: 1.39, Dicembre: 1.06 },
-    'Grosseto': { Gennaio: 1.58, Febbraio: 2.39, Marzo: 3.61, Aprile: 5.06, Maggio: 6.19, Giugno: 6.94, Luglio: 7.39, Agosto: 6.36, Settembre: 4.75, Ottobre: 3.19, Novembre: 1.94, Dicembre: 1.47 },
-    'Imperia': { Gennaio: 1.53, Febbraio: 2.33, Marzo: 3.50, Aprile: 4.78, Maggio: 5.61, Giugno: 6.25, Luglio: 6.67, Agosto: 5.47, Settembre: 4.03, Ottobre: 2.81, Novembre: 1.78, Dicembre: 1.42 },
-    'Isernia': { Gennaio: 1.67, Febbraio: 2.50, Marzo: 3.72, Aprile: 5.17, Maggio: 6.42, Giugno: 6.89, Luglio: 7.33, Agosto: 6.25, Settembre: 4.75, Ottobre: 3.25, Novembre: 1.92, Dicembre: 1.44 },
-    'La Spezia': { Gennaio: 1.42, Febbraio: 2.14, Marzo: 3.28, Aprile: 4.58, Maggio: 5.42, Giugno: 6.06, Luglio: 6.50, Agosto: 5.31, Settembre: 3.92, Ottobre: 2.69, Novembre: 1.67, Dicembre: 1.28 },
-    'L\'Aquila': { Gennaio: 1.67, Febbraio: 2.33, Marzo: 3.33, Aprile: 4.11, Maggio: 5.36, Giugno: 5.86, Luglio: 6.56, Agosto: 5.58, Settembre: 4.36, Ottobre: 2.94, Novembre: 1.78, Dicembre: 1.42 },
-    'Latina': { Gennaio: 1.61, Febbraio: 2.47, Marzo: 3.72, Aprile: 5.25, Maggio: 6.42, Giugno: 7.14, Luglio: 7.69, Agosto: 6.67, Settembre: 4.97, Ottobre: 3.36, Novembre: 1.97, Dicembre: 1.47 },
-    'Lecce': { Gennaio: 1.94, Febbraio: 2.92, Marzo: 4.19, Aprile: 5.92, Maggio: 7.25, Giugno: 8.00, Luglio: 8.17, Agosto: 7.22, Settembre: 5.47, Ottobre: 3.78, Novembre: 2.31, Dicembre: 1.67 },
-    'Lecco': { Gennaio: 1.25, Febbraio: 1.97, Marzo: 3.19, Aprile: 4.42, Maggio: 5.17, Giugno: 5.78, Luglio: 6.28, Agosto: 5.08, Settembre: 3.72, Ottobre: 2.50, Novembre: 1.39, Dicembre: 1.14 }, // Usa dati Como/Bergamo
-    'Livorno': { Gennaio: 1.47, Febbraio: 2.25, Marzo: 3.42, Aprile: 4.75, Maggio: 5.72, Giugno: 6.42, Luglio: 6.83, Agosto: 5.69, Settembre: 4.25, Ottobre: 2.86, Novembre: 1.69, Dicembre: 1.25 },
-    'Lodi': { Gennaio: 1.14, Febbraio: 1.86, Marzo: 3.08, Aprile: 4.39, Maggio: 5.28, Giugno: 5.89, Luglio: 6.44, Agosto: 5.14, Settembre: 3.78, Ottobre: 2.42, Novembre: 1.28, Dicembre: 1.00 }, // Usa dati Milano
-    'Lucca': { Gennaio: 1.36, Febbraio: 2.06, Marzo: 3.25, Aprile: 4.53, Maggio: 5.56, Giugno: 6.31, Luglio: 6.56, Agosto: 5.47, Settembre: 4.14, Ottobre: 2.72, Novembre: 1.56, Dicembre: 1.11 },
-    'Macerata': { Gennaio: 1.31, Febbraio: 2.19, Marzo: 3.47, Aprile: 4.97, Maggio: 6.25, Giugno: 6.58, Luglio: 7.11, Agosto: 6.00, Settembre: 4.36, Ottobre: 2.89, Novembre: 1.58, Dicembre: 1.19 },
-    'Mantova': { Gennaio: 1.11, Febbraio: 1.94, Marzo: 3.19, Aprile: 4.58, Maggio: 5.58, Giugno: 6.28, Luglio: 6.83, Agosto: 5.50, Settembre: 3.97, Ottobre: 2.47, Novembre: 1.33, Dicembre: 1.00 },
-    'Massa-Carrara': { Gennaio: 1.39, Febbraio: 2.14, Marzo: 3.33, Aprile: 4.67, Maggio: 5.61, Giugno: 6.36, Luglio: 6.72, Agosto: 5.58, Settembre: 4.19, Ottobre: 2.78, Novembre: 1.64, Dicembre: 1.22 },
-    'Matera': { Gennaio: 1.89, Febbraio: 2.86, Marzo: 4.08, Aprile: 5.75, Maggio: 7.08, Giugno: 7.78, Luglio: 7.94, Agosto: 7.00, Settembre: 5.28, Ottobre: 3.67, Novembre: 2.25, Dicembre: 1.58 },
-    'Medio Campidano': { Gennaio: 2.03, Febbraio: 2.72, Marzo: 4.00, Aprile: 5.14, Maggio: 6.25, Giugno: 6.94, Luglio: 7.58, Agosto: 6.64, Settembre: 4.89, Ottobre: 3.39, Novembre: 2.25, Dicembre: 1.78 }, // Usa dati Cagliari
-    'Messina': { Gennaio: 2.39, Febbraio: 3.25, Marzo: 4.39, Aprile: 5.72, Maggio: 7.03, Giugno: 7.78, Luglio: 7.78, Agosto: 7.00, Settembre: 5.36, Ottobre: 3.78, Novembre: 2.72, Dicembre: 2.17 },
-    'Milano': { Gennaio: 1.14, Febbraio: 1.86, Marzo: 3.08, Aprile: 4.39, Maggio: 5.28, Giugno: 5.89, Luglio: 6.44, Agosto: 5.14, Settembre: 3.78, Ottobre: 2.42, Novembre: 1.28, Dicembre: 1.00 },
-    'Modena': { Gennaio: 1.22, Febbraio: 2.14, Marzo: 3.33, Aprile: 4.78, Maggio: 5.81, Giugno: 6.53, Luglio: 7.08, Agosto: 5.81, Settembre: 4.25, Ottobre: 2.75, Novembre: 1.47, Dicembre: 1.14 },
-    'Monza e della Brianza': { Gennaio: 1.14, Febbraio: 1.86, Marzo: 3.08, Aprile: 4.39, Maggio: 5.28, Giugno: 5.89, Luglio: 6.44, Agosto: 5.14, Settembre: 3.78, Ottobre: 2.42, Novembre: 1.28, Dicembre: 1.00 }, // Usa dati Milano
-    'Napoli': { Gennaio: 1.83, Febbraio: 2.64, Marzo: 3.97, Aprile: 5.36, Maggio: 6.58, Giugno: 7.47, Luglio: 7.67, Agosto: 6.69, Settembre: 5.03, Ottobre: 3.53, Novembre: 2.14, Dicembre: 1.61 },
-    'Novara': { Gennaio: 1.17, Febbraio: 1.94, Marzo: 3.14, Aprile: 4.36, Maggio: 5.11, Giugno: 5.69, Luglio: 6.22, Agosto: 4.97, Settembre: 3.67, Ottobre: 2.39, Novembre: 1.47, Dicembre: 1.08 },
-    'Nuoro': { Gennaio: 1.92, Febbraio: 2.64, Marzo: 3.92, Aprile: 5.06, Maggio: 6.17, Giugno: 6.89, Luglio: 7.53, Agosto: 6.58, Settembre: 4.83, Ottobre: 3.33, Novembre: 2.19, Dicembre: 1.72 },
-    'Ogliastra': { Gennaio: 1.92, Febbraio: 2.64, Marzo: 3.92, Aprile: 5.06, Maggio: 6.17, Giugno: 6.89, Luglio: 7.53, Agosto: 6.58, Settembre: 4.83, Ottobre: 3.33, Novembre: 2.19, Dicembre: 1.72 }, // Usa dati Nuoro
-    'Olbia-Tempio': { Gennaio: 2.00, Febbraio: 2.69, Marzo: 3.97, Aprile: 5.11, Maggio: 6.22, Giugno: 6.92, Luglio: 7.56, Agosto: 6.61, Settembre: 4.86, Ottobre: 3.36, Novembre: 2.22, Dicembre: 1.75 }, // Usa dati Sassari
-    'Oristano': { Gennaio: 2.00, Febbraio: 2.69, Marzo: 3.97, Aprile: 5.11, Maggio: 6.22, Giugno: 6.92, Luglio: 7.56, Agosto: 6.61, Settembre: 4.86, Ottobre: 3.36, Novembre: 2.22, Dicembre: 1.75 },
-    'Padova': { Gennaio: 1.14, Febbraio: 2.03, Marzo: 3.25, Aprile: 4.67, Maggio: 5.69, Giugno: 6.36, Luglio: 6.94, Agosto: 5.61, Settembre: 4.08, Ottobre: 2.56, Novembre: 1.39, Dicembre: 1.06 },
-    'Palermo': { Gennaio: 2.42, Febbraio: 3.31, Marzo: 4.44, Aprile: 5.75, Maggio: 7.08, Giugno: 7.83, Luglio: 7.83, Agosto: 7.06, Settembre: 5.42, Ottobre: 3.83, Novembre: 2.78, Dicembre: 2.22 },
-    'Parma': { Gennaio: 1.19, Febbraio: 2.06, Marzo: 3.28, Aprile: 4.69, Maggio: 5.69, Giugno: 6.42, Luglio: 6.94, Agosto: 5.61, Settembre: 4.08, Ottobre: 2.61, Novembre: 1.39, Dicembre: 1.08 },
-    'Pavia': { Gennaio: 1.11, Febbraio: 1.83, Marzo: 3.03, Aprile: 4.33, Maggio: 5.22, Giugno: 5.83, Luglio: 6.39, Agosto: 5.08, Settembre: 3.72, Ottobre: 2.39, Novembre: 1.25, Dicembre: 0.97 },
-    'Perugia': { Gennaio: 1.47, Febbraio: 2.25, Marzo: 3.42, Aprile: 4.81, Maggio: 5.86, Giugno: 6.58, Luglio: 7.03, Agosto: 6.00, Settembre: 4.47, Ottobre: 2.97, Novembre: 1.69, Dicembre: 1.28 },
-    'Pesaro Urbino': { Gennaio: 1.28, Febbraio: 2.19, Marzo: 3.42, Aprile: 4.92, Maggio: 6.17, Giugno: 6.47, Luglio: 7.00, Agosto: 5.89, Settembre: 4.28, Ottobre: 2.81, Novembre: 1.56, Dicembre: 1.17 },
-    'Pescara': { Gennaio: 1.69, Febbraio: 2.50, Marzo: 3.75, Aprile: 5.25, Maggio: 6.53, Giugno: 6.94, Luglio: 7.39, Agosto: 6.31, Settembre: 4.81, Ottobre: 3.31, Novembre: 1.94, Dicembre: 1.47 },
-    'Piacenza': { Gennaio: 1.17, Febbraio: 2.00, Marzo: 3.22, Aprile: 4.61, Maggio: 5.58, Giugno: 6.28, Luglio: 6.83, Agosto: 5.50, Settembre: 3.97, Ottobre: 2.50, Novembre: 1.36, Dicembre: 1.06 },
-    'Pisa': { Gennaio: 1.42, Febbraio: 2.14, Marzo: 3.36, Aprile: 4.67, Maggio: 5.67, Giugno: 6.39, Luglio: 6.78, Agosto: 5.64, Settembre: 4.19, Ottobre: 2.81, Novembre: 1.64, Dicembre: 1.22 },
-    'Pistoia': { Gennaio: 1.33, Febbraio: 2.03, Marzo: 3.22, Aprile: 4.47, Maggio: 5.50, Giugno: 6.25, Luglio: 6.50, Agosto: 5.39, Settembre: 4.08, Ottobre: 2.67, Novembre: 1.53, Dicembre: 1.08 },
-    'Pordenone': { Gennaio: 1.14, Febbraio: 2.03, Marzo: 3.25, Aprile: 4.58, Maggio: 5.58, Giugno: 6.22, Luglio: 6.78, Agosto: 5.50, Settembre: 4.03, Ottobre: 2.61, Novembre: 1.39, Dicembre: 1.06 }, // Usa dati Gorizia/Udine
-    'Potenza': { Gennaio: 1.78, Febbraio: 2.75, Marzo: 3.97, Aprile: 5.64, Maggio: 6.97, Giugno: 7.72, Luglio: 7.89, Agosto: 6.94, Settembre: 5.22, Ottobre: 3.61, Novembre: 2.17, Dicembre: 1.53 },
-    'Prato': { Gennaio: 1.33, Febbraio: 2.03, Marzo: 3.22, Aprile: 4.47, Maggio: 5.50, Giugno: 6.25, Luglio: 6.50, Agosto: 5.39, Settembre: 4.08, Ottobre: 2.67, Novembre: 1.53, Dicembre: 1.08 }, // Usa dati Firenze/Pistoia
-    'Ragusa': { Gennaio: 2.50, Febbraio: 3.32, Marzo: 4.47, Aprile: 5.81, Maggio: 7.11, Giugno: 7.86, Luglio: 7.86, Agosto: 7.08, Settembre: 5.44, Ottobre: 3.86, Novembre: 2.81, Dicembre: 2.22 },
-    'Ravenna': { Gennaio: 1.17, Febbraio: 2.06, Marzo: 3.22, Aprile: 4.67, Maggio: 5.75, Giugno: 6.47, Luglio: 7.00, Agosto: 5.72, Settembre: 4.19, Ottobre: 2.67, Novembre: 1.42, Dicembre: 1.08 },
-    'Reggio Calabria': { Gennaio: 2.25, Febbraio: 3.19, Marzo: 4.31, Aprile: 5.67, Maggio: 6.94, Giugno: 7.69, Luglio: 7.86, Agosto: 6.97, Settembre: 5.31, Ottobre: 3.75, Novembre: 2.67, Dicembre: 2.08 },
-    'Reggio Emilia': { Gennaio: 1.19, Febbraio: 2.08, Marzo: 3.28, Aprile: 4.72, Maggio: 5.75, Giugno: 6.47, Luglio: 7.00, Agosto: 5.72, Settembre: 4.19, Ottobre: 2.72, Novembre: 1.44, Dicembre: 1.11 },
-    'Rieti': { Gennaio: 1.53, Febbraio: 2.31, Marzo: 3.50, Aprile: 4.92, Maggio: 6.00, Giugno: 6.72, Luglio: 7.28, Agosto: 6.28, Settembre: 4.75, Ottobre: 3.14, Novembre: 1.83, Dicembre: 1.36 },
-    'Rimini': { Gennaio: 1.25, Febbraio: 2.17, Marzo: 3.39, Aprile: 4.83, Maggio: 5.86, Giugno: 6.58, Luglio: 7.14, Agosto: 5.86, Settembre: 4.31, Ottobre: 2.78, Novembre: 1.50, Dicembre: 1.14 },
-    'Roma': { Gennaio: 1.64, Febbraio: 2.50, Marzo: 3.75, Aprile: 5.28, Maggio: 6.47, Giugno: 7.22, Luglio: 7.78, Agosto: 6.78, Settembre: 5.08, Ottobre: 3.42, Novembre: 2.03, Dicembre: 1.50 },
-    'Rovigo': { Gennaio: 1.14, Febbraio: 2.03, Marzo: 3.25, Aprile: 4.67, Maggio: 5.69, Giugno: 6.36, Luglio: 6.94, Agosto: 5.61, Settembre: 4.08, Ottobre: 2.56, Novembre: 1.39, Dicembre: 1.06 },
-    'Salerno': { Gennaio: 1.89, Febbraio: 2.78, Marzo: 4.11, Aprile: 5.47, Maggio: 6.69, Giugno: 7.58, Luglio: 7.78, Agosto: 6.78, Settembre: 5.11, Ottobre: 3.61, Novembre: 2.22, Dicembre: 1.67 },
-    'Sassari': { Gennaio: 2.00, Febbraio: 2.69, Marzo: 3.97, Aprile: 5.11, Maggio: 6.22, Giugno: 6.92, Luglio: 7.56, Agosto: 6.61, Settembre: 4.86, Ottobre: 3.36, Novembre: 2.22, Dicembre: 1.75 },
-    'Savona': { Gennaio: 1.53, Febbraio: 2.33, Marzo: 3.50, Aprile: 4.78, Maggio: 5.61, Giugno: 6.25, Luglio: 6.67, Agosto: 5.47, Settembre: 4.03, Ottobre: 2.81, Novembre: 1.78, Dicembre: 1.42 },
-    'Siena': { Gennaio: 1.47, Febbraio: 2.22, Marzo: 3.42, Aprile: 4.75, Maggio: 5.78, Giugno: 6.53, Luglio: 6.83, Agosto: 5.69, Settembre: 4.25, Ottobre: 2.81, Novembre: 1.64, Dicembre: 1.22 },
-    'Siracusa': { Gennaio: 2.56, Febbraio: 3.42, Marzo: 4.56, Aprile: 5.92, Maggio: 7.22, Giugno: 7.97, Luglio: 7.97, Agosto: 7.19, Settembre: 5.56, Ottobre: 3.92, Novembre: 2.86, Dicembre: 2.28 },
-    'Sondrio': { Gennaio: 1.19, Febbraio: 1.97, Marzo: 3.19, Aprile: 4.42, Maggio: 5.17, Giugno: 5.78, Luglio: 6.28, Agosto: 5.08, Settembre: 3.72, Ottobre: 2.50, Novembre: 1.39, Dicembre: 1.14 }, // Usa dati Como/Bergamo
-    'Taranto': { Gennaio: 1.94, Febbraio: 2.92, Marzo: 4.19, Aprile: 5.92, Maggio: 7.25, Giugno: 8.00, Luglio: 8.17, Agosto: 7.22, Settembre: 5.47, Ottobre: 3.78, Novembre: 2.31, Dicembre: 1.67 },
-    'Teramo': { Gennaio: 1.58, Febbraio: 2.42, Marzo: 3.67, Aprile: 5.11, Maggio: 6.39, Giugno: 6.83, Luglio: 7.28, Agosto: 6.19, Settembre: 4.69, Ottobre: 3.22, Novembre: 1.86, Dicembre: 1.39 },
-    'Terni': { Gennaio: 1.53, Febbraio: 2.31, Marzo: 3.50, Aprile: 4.92, Maggio: 6.00, Giugno: 6.72, Luglio: 7.28, Agosto: 6.28, Settembre: 4.75, Ottobre: 3.14, Novembre: 1.83, Dicembre: 1.36 },
-    'Torino': { Gennaio: 1.25, Febbraio: 1.97, Marzo: 3.19, Aprile: 4.42, Maggio: 5.17, Giugno: 5.78, Luglio: 6.28, Agosto: 5.08, Settembre: 3.72, Ottobre: 2.50, Novembre: 1.39, Dicembre: 1.14 },
-    'Trapani': { Gennaio: 2.47, Febbraio: 3.39, Marzo: 4.50, Aprile: 5.86, Maggio: 7.14, Giugno: 7.92, Luglio: 7.92, Agosto: 7.14, Settembre: 5.47, Ottobre: 3.89, Novembre: 2.83, Dicembre: 2.25 },
-    'Trento': { Gennaio: 1.25, Febbraio: 2.28, Marzo: 3.53, Aprile: 4.58, Maggio: 5.64, Giugno: 5.92, Luglio: 6.25, Agosto: 5.14, Settembre: 3.94, Ottobre: 2.58, Novembre: 1.42, Dicembre: 1.08 },
-    'Treviso': { Gennaio: 1.17, Febbraio: 2.06, Marzo: 3.28, Aprile: 4.69, Maggio: 5.69, Giugno: 6.36, Luglio: 6.94, Agosto: 5.61, Settembre: 4.08, Ottobre: 2.56, Novembre: 1.39, Dicembre: 1.06 },
-    'Trieste': { Gennaio: 1.19, Febbraio: 2.08, Marzo: 3.31, Aprile: 4.72, Maggio: 5.75, Giugno: 6.42, Luglio: 6.97, Agosto: 5.64, Settembre: 4.14, Ottobre: 2.67, Novembre: 1.42, Dicembre: 1.08 },
-    'Udine': { Gennaio: 1.17, Febbraio: 2.06, Marzo: 3.28, Aprile: 4.69, Maggio: 5.69, Giugno: 6.36, Luglio: 6.94, Agosto: 5.61, Settembre: 4.08, Ottobre: 2.56, Novembre: 1.39, Dicembre: 1.06 },
-    'Varese': { Gennaio: 1.25, Febbraio: 1.97, Marzo: 3.19, Aprile: 4.42, Maggio: 5.17, Giugno: 5.78, Luglio: 6.28, Agosto: 5.08, Settembre: 3.72, Ottobre: 2.50, Novembre: 1.39, Dicembre: 1.14 },
-    'Venezia': { Gennaio: 1.14, Febbraio: 2.03, Marzo: 3.25, Aprile: 4.67, Maggio: 5.69, Giugno: 6.36, Luglio: 6.94, Agosto: 5.61, Settembre: 4.08, Ottobre: 2.56, Novembre: 1.39, Dicembre: 1.06 },
-    'Verbano-Cusio-Ossola': { Gennaio: 1.22, Febbraio: 1.97, Marzo: 3.17, Aprile: 4.39, Maggio: 5.14, Giugno: 5.75, Luglio: 6.25, Agosto: 5.03, Settembre: 3.69, Ottobre: 2.47, Novembre: 1.36, Dicembre: 1.11 },
-    'Vercelli': { Gennaio: 1.17, Febbraio: 1.94, Marzo: 3.14, Aprile: 4.36, Maggio: 5.11, Giugno: 5.69, Luglio: 6.22, Agosto: 4.97, Settembre: 3.67, Ottobre: 2.39, Novembre: 1.47, Dicembre: 1.08 },
-    'Verona': { Gennaio: 1.19, Febbraio: 2.08, Marzo: 3.31, Aprile: 4.72, Maggio: 5.75, Giugno: 6.42, Luglio: 6.97, Agosto: 5.64, Settembre: 4.14, Ottobre: 2.67, Novembre: 1.42, Dicembre: 1.08 },
-    'Vibo Valentia': { Gennaio: 2.08, Febbraio: 3.19, Marzo: 4.39, Aprile: 5.78, Maggio: 7.08, Giugno: 7.78, Luglio: 7.94, Agosto: 7.00, Settembre: 5.36, Ottobre: 3.75, Novembre: 2.67, Dicembre: 2.08 },
-    'Vicenza': { Gennaio: 1.17, Febbraio: 2.06, Marzo: 3.28, Aprile: 4.69, Maggio: 5.69, Giugno: 6.36, Luglio: 6.94, Agosto: 5.61, Settembre: 4.08, Ottobre: 2.56, Novembre: 1.39, Dicembre: 1.06 },
-    'Viterbo': { Gennaio: 1.58, Febbraio: 2.42, Marzo: 3.67, Aprile: 5.17, Maggio: 6.33, Giugno: 7.06, Luglio: 7.61, Agosto: 6.61, Settembre: 4.92, Ottobre: 3.28, Novembre: 1.92, Dicembre: 1.44 },
-    // Aggiungi qui tutte le altre province, duplicando i dati di una provincia vicina se non trovi dati specifici.
-    // Ho replicato alcuni dati per coprire i codici provincia.
-};
+interface Modulo {
+  id: string;
+  brand: string;
+  powerW: number; // Watt
+  price: number;
+}
 
-const provinceData = [
-    { value: "84", label: "Agrigento" }, { value: "6", label: "Alessandria" }, { value: "42", label: "Ancona" }, { value: "7", label: "Aosta" },
-    { value: "51", label: "Arezzo" }, { value: "44", label: "Ascoli Piceno" }, { value: "5", label: "Asti" }, { value: "64", label: "Avellino" },
-    { value: "72", label: "Bari" }, { value: "110", label: "Barletta-Andria-Trani" }, { value: "25", label: "Belluno" }, { value: "62", label: "Benevento" },
-    { value: "16", label: "Bergamo" }, { value: "96", label: "Biella" }, { value: "37", label: "Bologna" }, { value: "21", label: "Bolzano" },
-    { value: "17", label: "Brescia" }, { value: "74", label: "Brindisi" }, { value: "92", label: "Cagliari" }, { value: "85", label: "Caltanissetta" },
-    { value: "70", label: "Campobasso" }, { value: "107", label: "Carbonia-Iglesias" }, { value: "61", label: "Caserta" }, { value: "87", label: "Catania" },
-    { value: "79", label: "Catanzaro" }, { value: "69", label: "Chieti" }, { value: "13", label: "Como" }, { value: "78", label: "Cosenza" },
-    { value: "19", label: "Cremona" }, { value: "101", label: "Crotone" }, { value: "4", label: "Cuneo" }, { value: "86", label: "Enna" },
-    { value: "109", label: "Fermo" }, { value: "38", label: "Ferrara" }, { value: "48", label: "Firenze" }, { value: "71", label: "Foggia" },
-    { value: "40", label: "Forlì-Cesena" }, { value: "60", label: "Frosinone" }, { value: "10", label: "Genova" }, { value: "31", label: "Gorizia" },
-    { value: "53", label: "Grosseto" }, { value: "8", label: "Imperia" }, { value: "94", label: "Isernia" }, { value: "11", label: "La Spezia" },
-    { value: "66", label: "L'Aquila" }, { value: "59", label: "Latina" }, { value: "75", label: "Lecce" }, { value: "97", label: "Lecco" },
-    { value: "49", label: "Livorno" }, { value: "98", label: "Lodi" }, { value: "46", label: "Lucca" }, { value: "43", label: "Macerata" },
-    { value: "20", label: "Mantova" }, { value: "45", label: "Massa-Carrara" }, { value: "77", label: "Matera" }, { value: "106", label: "Medio Campidano" },
-    { value: "83", label: "Messina" }, { value: "15", label: "Milano" }, { value: "36", label: "Modena" }, { value: "108", label: "Monza e della Brianza" },
-    { value: "63", label: "Napoli" }, { value: "3", label: "Novara" }, { value: "91", label: "Nuoro" }, { value: "105", label: "Ogliastra" },
-    { value: "104", label: "Olbia-Tempio" }, { value: "95", label: "Oristano" }, { value: "28", label: "Padova" }, { value: "82", label: "Palermo" },
-    { value: "34", label: "Parma" }, { value: "18", label: "Pavia" }, { value: "54", label: "Perugia" }, { value: "41", label: "Pesaro Urbino" },
-    { value: "68", label: "Pescara" }, { value: "33", label: "Piacenza" }, { value: "50", label: "Pisa" }, { value: "47", label: "Pistoia" },
-    { value: "93", label: "Pordenone" }, { value: "76", label: "Potenza" }, { value: "100", label: "Prato" }, { value: "88", label: "Ragusa" },
-    { value: "39", label: "Ravenna" }, { value: "80", label: "Reggio Calabria" }, { value: "35", label: "Reggio Emilia" }, { value: "57", label: "Rieti" },
-    { value: "99", label: "Rimini" }, { value: "58", label: "Roma" }, { value: "29", label: "Rovigo" }, { value: "65", label: "Salerno" },
-    { value: "90", label: "Sassari" }, { value: "9", label: "Savona" }, { value: "52", label: "Siena" }, { value: "89", label: "Siracusa" },
-    { value: "14", label: "Sondrio" }, { value: "73", label: "Taranto" }, { value: "67", label: "Teramo" }, { value: "55", label: "Terni" },
-    { value: "1", label: "Torino" }, { value: "81", label: "Trapani" }, { value: "22", label: "Trento" }, { value: "26", label: "Treviso" },
-    { value: "32", label: "Trieste" }, { value: "30", label: "Udine" }, { value: "12", label: "Varese" }, { value: "27", label: "Venezia" },
-    { value: "103", label: "Verbano-Cusio-Ossola" }, { value: "2", label: "Vercelli" }, { value: "23", label: "Verona" }, { value: "102", label: "Vibo Valentia" },
-    { value: "24", label: "Vicenza" }, { value: "56", label: "Viterbo" },
-];
+interface Batteria {
+  id: string;
+  brand: string;
+  capacityKwh: number;
+  price: number;
+}
 
-const provinceCodeToName: { [key: string]: string } = provinceData.reduce((acc, curr) => {
-    acc[curr.value] = curr.label;
-    return acc;
-}, {} as { [key: string]: string });
+interface Struttura {
+  id: string;
+  type: string;
+  price: number; // Prezzo Totale per la struttura
+}
 
-// --- Funzioni di Calcolo ---
-const calculateMonthlyProducibility_1kWp = (dailyIrradianceData: { [month: string]: number }): { [month: string]: number } => {
-    const monthsOrder = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-                         'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-    const producibility: { [month: string]: number } = {};
-    const daysInMonth = {
-        Gennaio: 31, Febbraio: 28.25, Marzo: 31, Aprile: 30, Maggio: 31, Giugno: 30,
-        Luglio: 31, Agosto: 31, Settembre: 30, Ottobre: 31, Novembre: 30, Dicembre: 31,
+interface ListiniData {
+    inverter: Inverter[];
+    moduli: Modulo[];
+    batterie: Batteria[];
+    strutture: Struttura[];
+}
+
+// --- CONFIGURAZIONE COSTANTI ---
+const IVA_RATE = 0.22;
+const PNRR_MAX = 1500; // €/kW massimo incentivabile (Netto)
+// COSTO FISSO AGGIORNATO (200 €/kWp) per Manodopera, Cablaggio, Quadri, Pratiche, ecc.
+const LABOUR_AND_WIRING_COST_PER_KWP = 200; 
+
+const PvEstimator: FC = () => {
+  // --- STATI PER I DATI DEL CLIENTE (NUOVO) ---
+  const [cliente, setCliente] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  // --- STATI TIPIZZATI ---
+  const [inverterList, setInverterList] = useState<Inverter[]>([]);
+  const [moduloList, setModuloList] = useState<Modulo[]>([]);
+  const [batteriaList, setBatteriaList] = useState<Batteria[]>([]);
+  const [strutturaList, setStrutturaList] = useState<Struttura[]>([]);
+
+  const [selectedInverter, setSelectedInverter] = useState("");
+  const [selectedModulo, setSelectedModulo] = useState("");
+  const [moduleCount, setModuleCount] = useState<number>(14);
+  const [selectedBatteria, setSelectedBatteria] = useState("none"); 
+  const [selectedStruttura, setSelectedStruttura] = useState("");
+  const [applyVAT, setApplyVAT] = useState<boolean>(true);
+  
+  const [isLoading, setIsLoading] = useState(true);
+
+  // --- Caricamento Listini Fissi ---
+  useEffect(() => {
+    const fetchData = () => {
+      // Dati dei listini (prezzi medi netti IVA esclusa)
+      const data: ListiniData = {
+        inverter: [
+          { id: "inv1", brand: "Huawei", powerKw: 5, price: 650.00 },
+          { id: "inv2", brand: "Huawei", powerKw: 6, price: 850.00 }, 
+          { id: "inv3", brand: "Deye monofase", powerKw: 6, price: 1100.00 },  
+          { id: "inv4", brand: "Fronius", powerKw: 6, price: 2100.00 }, 
+          { id: "inv5", brand: "SMA", powerKw: 8, price: 2800.00 }, 
+        ],
+        moduli: [
+          { id: "mod1", brand: "JA Solar", powerW: 430, price: 99.00 }, 
+          { id: "mod2", brand: "Trina", powerW: 450, price: 108.00 }, 
+          { id: "mod3", brand: "Canadian Solar", powerW: 460, price: 115.00 }, 
+        ],
+        batterie: [
+          { id: "bat1", brand: "Huawei Luna", capacityKwh: 5, price: 2250.00 }, 
+          { id: "bat2", brand: "BYD", capacityKwh: 5, price: 2500.00 }, 
+          { id: "bat3", brand: "V-Tac", capacityKwh: 9.6, price: 2000.00 }, 
+          { id: "bat4", brand: "Huawei Luna", capacityKwh: 10, price: 5050.00 }, 
+          { id: "bat5", brand: "LG Chem", capacityKwh: 10, price: 4600.00 }, 
+          { id: "bat6", brand: "Huawei Luna", capacityKwh: 15, price: 6500.00 }, 
+        ],
+        strutture: [
+          { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 1013.25 }, 
+          { id: "str2", type: "Tetto piano (zavorrato)", price: 668.98 }, 
+          { id: "str3", type: "Pensilina / Pergolato", price: 849.31 }, 
+        ],
+      };
+      
+      setInverterList(data.inverter || []);
+      setModuloList(data.moduli || []);
+      setBatteriaList(data.batterie || []);
+      setStrutturaList(data.strutture || []);
+
+      // Imposta i valori di default
+      if (data.inverter?.length) setSelectedInverter(data.inverter[1].id); // inv2 (6kW)
+      if (data.moduli?.length) setSelectedModulo(data.moduli[1].id); // mod2 (Trina 450W)
+      if (data.strutture?.length) setSelectedStruttura(data.strutture[0].id);
+      
+      setIsLoading(false);
     };
-    const performanceRatio = 0.80; // Efficienza media dell'impianto (tipicamente tra 0.75 e 0.85)
+    fetchData();
+  }, []);
 
-    monthsOrder.forEach(month => {
-        const irradiance = dailyIrradianceData[month];
-        // Producibilità in kWh per 1 kWp di potenza installata, per il mese.
-        // Assumiamo che l'irraggiamento sia già sul piano ottimale.
-        producibility[month] = irradiance * daysInMonth[month as keyof typeof daysInMonth] * performanceRatio;
-    });
-    return producibility;
-};
+  // --- OGGETTI SELEZIONATI TIPIZZATI ---
+  const selectedModuloObj: Modulo | undefined = moduloList.find(m => m.id === selectedModulo);
+  const selectedInverterObj: Inverter | undefined = inverterList.find(i => i.id === selectedInverter);
+  const selectedBatteriaObj: Batteria | undefined | null = selectedBatteria === "none" ? null : batteriaList.find(b => b.id === selectedBatteria); 
+  const selectedStrutturaObj: Struttura | undefined = strutturaList.find(s => s.id === selectedStruttura);
 
-// Coefficienti di correzione semplificati per Azimuth (orientamento)
-// Questi sono molto generici e dovrebbero essere derivati da simulazioni più precise (e.g., PVGIS)
-// Si basano su una riduzione rispetto all'orientamento SUD (0°).
-const getAzimuthCorrectionFactor = (azimuth: string): number => {
-    switch (azimuth) {
-        case "0": return 1.0;   // SUD
-        case "15": return 0.99; // +/- 15°
-        case "30": return 0.97; // +/- 30°
-        case "45": return 0.93; // +/- 45°
-        case "90": return 0.85; // EST/OVEST
-        default: return 1.0;
+
+  // --- Calcoli Derivati ---
+
+  // Potenza moduli totale (in kWp)
+  const modulesTotalKw = useMemo(() => {
+    if (!selectedModuloObj || moduleCount <= 0) return 0;
+    // Calcolo kWp: (Potenza W * Conteggio Moduli) / 1000
+    return +(selectedModuloObj.powerW * moduleCount / 1000).toFixed(2); 
+  }, [selectedModuloObj, moduleCount]);
+
+
+  // Prezzi Netti (Subtotale)
+  const prices = useMemo(() => {
+    if (modulesTotalKw === 0 || !selectedModuloObj || !selectedInverterObj || !selectedStrutturaObj) {
+        return { 
+            modulesPrice: 0, inverterPrice: 0, batteryPrice: 0, structurePrice: 0, 
+            materialCost: 0, labourAndWiringPrice: 0, 
+            subtotal: 0, iva: 0, total: 0 
+        };
     }
-};
+    
+    // a) Componenti (Costi Materiali)
+    const modulesPrice = selectedModuloObj.price * moduleCount; 
+    const inverterPrice = selectedInverterObj.price;
+    const batteryPrice = selectedBatteriaObj ? selectedBatteriaObj.price : 0;
+    const structurePrice = selectedStrutturaObj.price; 
+    
+    // Costo Totale Materiali
+    const materialCost = modulesPrice + inverterPrice + batteryPrice + structurePrice;
 
-// Coefficienti di correzione semplificati per Tilt (inclinazione)
-// Questi sono molto generici e dovrebbero essere derivati da simulazioni più precise (e.g., PVGIS)
-// Si basano su una riduzione rispetto all'inclinazione ottimale (che varia con la latitudine, ma qui è fissa per semplicità).
-const getTiltCorrectionFactor = (tilt: string): number => {
-    switch (tilt) {
-        case "0": return 0.85;  // Orizzontale (meno efficiente)
-        case "10": return 0.95;
-        case "15": return 0.98;
-        case "20": return 0.99; // Spesso vicino all'ottimale per molte latitudini italiane
-        case "30": return 1.0;  // Assunto come ottimale per riferimento
-        case "90": return 0.60; // Verticale (molto meno efficiente)
-        default: return 1.0;
-    }
-};
+    // b) Manodopera & Cablaggio (Costo fisso per kWp)
+    // Calcolo: Potenza Totale Moduli (kWp) * 200 €/kWp 
+    const labourAndWiringPrice = modulesTotalKw * LABOUR_AND_WIRING_COST_PER_KWP; 
 
-// Genera i dati di producibilità per tutte le province, basandosi sull'irraggiamento
-const fullProducibilityDataByProvince: { [provinceCode: string]: { [month: string]: number } } = {};
-for (const provinceCode in provinceCodeToName) {
-    const provinceName = provinceCodeToName[provinceCode];
-    // Se non troviamo dati specifici per la provincia, cerchiamo un nome simile o usiamo un fallback generico
-    const irradianceData = dailyIrradiance_kWh_per_sqm_per_day[provinceName] || dailyIrradiance_kWh_per_sqm_per_day['Roma']; // Fallback su Roma
+    // Subtotale (Netto)
+    const subtotal = materialCost + labourAndWiringPrice;
+    
+    // IVA
+    const iva = subtotal * IVA_RATE;
+    
+    // Totale Lordo
+    const total = subtotal + iva;
 
-    if (irradianceData) {
-        fullProducibilityDataByProvince[provinceCode] = calculateMonthlyProducibility_1kWp(irradianceData);
-    } else {
-        // In caso eccezionale, se il fallback non funziona, assegna zero per evitare errori
-        console.warn(`Fallback for province ${provinceName} failed. Assigning zero producibility.`);
-        fullProducibilityDataByProvince[provinceCode] = { Gennaio: 0, Febbraio: 0, Marzo: 0, Aprile: 0, Maggio: 0, Giugno: 0, Luglio: 0, Agosto: 0, Settembre: 0, Ottobre: 0, Novembre: 0, Dicembre: 0 };
-    }
-}
-
-
-// --- Componente React ---
-interface ProducibilityRow {
-    periodo: string;
-    kwh: string;
-    backgroundColor?: string;
-}
-
-interface ResumeData {
-    location: string;
-    power: string;
-}
-
-const FotovoltaicoPage: React.FC = () => {
-    const [province, setProvince] = useState<string>('');
-    const [azimuth, setAzimuth] = useState<string>('0'); // Default SUD
-    const [tilt, setTilt] = useState<string>('30');     // Default 30°
-    const [potenza, setPotenza] = useState<string>('');
-    const [producibilityData, setProducibilityData] = useState<ProducibilityRow[] | null>(null);
-    const [resumeData, setResumeData] = useState<ResumeData | null>(null);
-    const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const errors: { [key: string]: string } = {};
-
-        if (!province) errors.province = 'Seleziona una provincia.';
-        const parsedPotenza = parseFloat(potenza);
-        if (isNaN(parsedPotenza) || parsedPotenza <= 0) {
-            errors.potenza = 'Inserisci una potenza valida (es. 3, 6.5).';
-        }
-
-        if (Object.keys(errors).length > 0) {
-            setValidationErrors(errors);
-            setProducibilityData(null);
-            setResumeData(null);
-            return;
-        }
-
-        setValidationErrors({});
-
-        const baseProducibilityForSelectedProvince = fullProducibilityDataByProvince[province];
-
-        if (!baseProducibilityForSelectedProvince || Object.values(baseProducibilityForSelectedProvince).every(val => val === 0)) {
-            setValidationErrors(prev => ({ ...prev, province: 'Dati di producibilità non disponibili o incompleti per questa provincia. Prova a selezionare un\'altra provincia.' }));
-            setProducibilityData(null);
-            setResumeData(null);
-            return;
-        }
-
-        const currentPower = parsedPotenza;
-        const azimuthFactor = getAzimuthCorrectionFactor(azimuth);
-        const tiltFactor = getTiltCorrectionFactor(tilt);
-
-        let totalAnnual = 0;
-        const monthsOrder = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-                             'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-
-        const calculatedData: ProducibilityRow[] = monthsOrder.map(month => {
-            const kwh_for_1kWp_optimal_orientation = baseProducibilityForSelectedProvince[month];
-
-            // Applica i fattori di correzione per l'orientamento e l'inclinazione
-            const finalMonthlyKwh = kwh_for_1kWp_optimal_orientation * currentPower * azimuthFactor * tiltFactor;
-
-            totalAnnual += finalMonthlyKwh;
-            return { periodo: month, kwh: finalMonthlyKwh.toFixed(2).replace('.', ',') };
-        });
-
-        // Aggiungi la riga del totale annuale
-        calculatedData.push({ periodo: 'Totale Anno', kwh: totalAnnual.toFixed(2).replace('.', ','), backgroundColor: '#e0e0e0' });
-
-        setProducibilityData(calculatedData);
-        setResumeData({
-            location: provinceCodeToName[province] || `Provincia (Codice: ${province})`,
-            power: `${potenza} kW`,
-        });
+    return { 
+        modulesPrice, inverterPrice, batteryPrice, structurePrice, 
+        materialCost, labourAndWiringPrice, 
+        subtotal, iva, total 
     };
+  }, [selectedModuloObj, moduleCount, selectedInverterObj, selectedBatteriaObj, selectedStrutturaObj, modulesTotalKw]);
 
-    return (
-        <div className="flex flex-col md:flex-row gap-8 items-start justify-center max-w-5xl mx-auto mt-10"> {/* Nuovo contenitore per il layout affiancato */}
-            {/* Calcolatore Form Section */}
-            <div className="w-full md:w-1/2"> {/* Occuperà metà larghezza su schermi medi e superiori */}
-                <div className="bg-white p-6 rounded-xl shadow-lg">
-                    <form onSubmit={handleSubmit} className="space-y-8">
-                        {/* Sezione 1: Luogo */}
-                        <fieldset>
-                            <legend className="text-xl font-semibold text-green-700 mb-4">
-                                1. Luogo di Installazione
-                            </legend>
-                            <div className="grid grid-cols-1">
-                                <div>
-                                    <label htmlFor="province" className="font-semibold text-gray-800 block mb-1">
-                                        Provincia
-                                    </label>
-                                    <select
-                                        id="province"
-                                        name="province"
-                                        value={province}
-                                        onChange={(e) => setProvince(e.target.value)}
-                                        className="w-full p-2 border border-gray-300 rounded-md text-gray-700 focus:ring-green-500 focus:border-green-500"
-                                    >
-                                        <option value="">Seleziona una provincia</option>
-                                        {provinceData.map((p) => (
-                                            <option key={p.value} value={p.value}>{p.label}</option>
-                                        ))}
-                                    </select>
-                                    {validationErrors.province && (<span className="text-red-600 text-sm mt-1 block">{validationErrors.province}</span>)}
-                                </div>
-                            </div>
-                        </fieldset>
 
-                        {/* Sezione 2: Orientamento Pannelli */}
-                        <fieldset>
-                            <legend className="text-xl font-semibold text-green-700 mb-4">2. Orientamento Pannelli</legend>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label htmlFor="azimuth" className="font-semibold text-gray-800 block mb-1">Azimuth (gradi)</label>
-                                    <select
-                                        id="azimuth"
-                                        name="azimuth"
-                                        value={azimuth}
-                                        onChange={(e) => setAzimuth(e.target.value)}
-                                        className="w-full p-2 border border-gray-300 rounded-md text-gray-700 focus:ring-green-500 focus:border-green-500"
-                                    >
-                                        <option value="0">0° SUD</option>
-                                        <option value="15">+/- 15°</option>
-                                        <option value="30">+/- 30°</option>
-                                        <option value="45">+/- 45°</option>
-                                        <option value="90">+/- 90° EST/OVEST</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label htmlFor="tilt" className="font-semibold text-gray-800 block mb-1">Tilt <br/>(gradi)</label>
-                                    <select
-                                        id="tilt"
-                                        name="tilt"
-                                        value={tilt}
-                                        onChange={(e) => setTilt(e.target.value)}
-                                        className="w-full p-2 border border-gray-300 rounded-md text-gray-700 focus:ring-green-500 focus:border-green-500"
-                                    >
-                                        <option value="0">0° (orizzontale)</option>
-                                        <option value="10">10°</option>
-                                        <option value="15">15°</option>
-                                        <option value="20">20°</option>
-                                        <option value="30">30°</option>
-                                        <option value="90">90° (verticale)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </fieldset>
+  // --- Validazioni ---
+  const errors = useMemo(() => {
+    const errs: string[] = [];
+    if (!selectedInverterObj || !selectedModuloObj) return errs;
+    
+    // Controllo obbligatorio per l'esportazione:
+    if (!cliente.trim() || !email.trim()) {
+        errs.push("⚠️ Inserisci nome cliente ed email per l'esportazione.");
+    }
 
-                        {/* Sezione 3: Potenza */}
-                        <fieldset>
-                            <legend className="text-xl font-semibold text-green-700 mb-4">3. Dimensionamento Impianto</legend>
-                            <div>
-                                <label htmlFor="potenza" className="font-semibold text-gray-800 block mb-1">Potenza (kW)</label>
-                                <input
-                                    type="text"
-                                    id="potenza"
-                                    name="potenza"
-                                    value={potenza}
-                                    onChange={(e) => setPotenza(e.target.value)}
-                                    className="w-full p-2 border border-gray-300 rounded-md text-gray-700 focus:ring-green-500 focus:border-green-500"
-                                    placeholder="Es. 3, 4.5, 6"
-                                />
-                                {validationErrors.potenza && (<p className="text-red-600 text-sm mt-1">{validationErrors.potenza}</p>)}
-                            </div>
-                        </fieldset>
+    // 1. Potenza Inverter/Moduli (30% max)
+    if (selectedInverterObj.powerKw > 0 && modulesTotalKw > selectedInverterObj.powerKw * 1.3) {
+      errs.push(`⚠️ La potenza dei moduli (${modulesTotalKw} kWp) supera del 30% la potenza nominale dell'inverter (${selectedInverterObj.powerKw} kW).`);
+    }
+    
+    // 2. Costo PNRR (€/kW)
+    if (modulesTotalKw > 0) {
+      const costoPerKwNetto = prices.subtotal / modulesTotalKw;
+      if (costoPerKwNetto > PNRR_MAX) {
+        errs.push(`⚠️ Il costo netto per kW (${costoPerKwNetto.toFixed(2)} €/kW) supera il massimale PNRR (${PNRR_MAX} €/kW).`);
+      }
+    }
+    return errs;
+  }, [selectedInverterObj, modulesTotalKw, prices.subtotal, selectedModuloObj, cliente, email]);
 
-                        <div className="text-center mt-6">
-                            <button type="submit" className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto transition-colors">
-                                Calcola Producibilità
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
 
-            {/* Sezione Risultati */}
-            {producibilityData && resumeData && (
-                <div id="results-section" className="w-full md:w-1/2 p-6 bg-gray-800 rounded-lg shadow-inner">
-                    <h3 className="text-2xl font-bold text-white mb-4 text-center">Risultati della Simulazione</h3>
-                    <div className="text-lg font-bold text-yellow-400 mb-2">Località: <span className="text-white">{resumeData.location}</span></div>
-                    <div className="text-lg font-bold text-yellow-400 mb-4">Potenza Impianto: <span className="text-white">{resumeData.power}</span></div>
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full bg-white border border-gray-300">
-                            <thead>
-                                <tr className="bg-gray-200 text-center text-gray-700 uppercase text-sm">
-                                    <th scope="col" className="py-2 px-4 border-b">Periodo</th>
-                                    <th scope="col" className="py-2 px-4 border-b">Producibilità (kWh)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {producibilityData.map((row, index) => (
-                                    <tr key={index} style={{ backgroundColor: row.backgroundColor || (index % 2 === 0 ? '#f9f9f9' : '#ffffff') }} className="text-right text-gray-800">
-                                        <td className="py-2 px-4 border-b border-gray-200 font-medium text-left">{row.periodo}</td>
-                                        <td className="py-2 px-4 border-b border-gray-200">{row.kwh}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                     <p className="text-sm text-gray-300 mt-4">
-                        *Nota: Questi dati sono stime basate su irraggiamento solare medio e fattori di correzione generici. La producibilità effettiva può variare in base a condizioni meteorologiche specifiche, ombreggiamenti, qualità dei materiali e altri fattori tecnici. Per una stima precisa, è consigliata una valutazione professionale.
-                    </p>
-                </div>
-            )}
+  // --- Helpers ---
+  const formatEuro = (v: number) => v.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
+
+  const exportPDF = async () => {
+    if (errors.length > 0) {
+        console.error("Impossibile esportare: sono presenti errori di conformità.");
+        return;
+    }
+    try {
+      // NOTE: Ho cambiato l'URL da /api/pdf a /api/preventivo-pdf per matchare la tua cartella
+      // Se hai spostato il file route.ts nella cartella /api/pdf/, ripristina a "/api/pdf"
+      const res = await fetch("/api/pdf", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          // AGGIUNTE: Cliente ed Email
+          cliente: cliente,
+          email: email,
+
+          // CORREZIONI: Allineamento dei nomi delle proprietà al Backend API
+          inverter: selectedInverterObj,
+          moduli: selectedModuloObj,       // CORRETTO: da 'modulo' a 'moduli'
+          numeroModuli: moduleCount,       // AGGIUNTO: Necessario per il backend
+          batteria: selectedBatteriaObj,
+          struttura: selectedStrutturaObj,
+          
+          // AGGIUNTO: Cablaggio (Manodopera e Cablaggio)
+          cablaggio: prices.labourAndWiringPrice,
+
+          // AGGIUNTO: Totale (seleziona Lordo o Netto in base alla checkbox)
+          totale: applyVAT ? prices.total : prices.subtotal,
+          
+          // I campi rimanenti non sono necessari per l'API, ma li lascio se li vuoi riattivare:
+          // modulesTotalKw,
+          // installationCostPerKw: LABOUR_AND_WIRING_COST_PER_KWP,
+          // materialCost: prices.materialCost,
+          // prices: { ...prices, isNetto: !applyVAT },
+        })
+      });
+      
+      if (!res.ok) throw new Error("PDF generation failed: " + (await res.json()).error); // Migliorato il messaggio d'errore
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "preventivo.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Errore esportazione PDF:", err);
+    }
+  };
+
+  if (isLoading) {
+    return <div className="max-w-4xl mx-auto p-6 text-center text-lg text-sky-600">Caricamento listini...</div>;
+  }
+  
+  return (
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-gray-50 min-h-screen font-sans">
+      <h1 className="text-3xl font-extrabold text-sky-700 mb-6 text-center">
+        Crea il preventivo per il tuo impianto
+      </h1>
+
+      <div className="p-6 space-y-6 border rounded-2xl shadow-xl bg-green-200">
+        <div className="text-2xl font-extrabold text-black border-b pb-3 mb-4">Selezione componenti</div>
+
+        {/* Messaggi di Errore / Validazione */}
+        {errors.length > 0 && (
+          <div className="p-4 bg-red-100 text-red-800 border border-red-300 rounded-lg shadow-sm">
+            <div className="font-semibold text-black mb-1">Problemi di conformità:</div>
+            {errors.map((e,i) => <div key={i} className="text-sm">{e}</div>)}
+          </div>
+        )}
+
+        {/* --- CAMPI CLIENTE (NUOVI) --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <label>
+            <span className="text-lm font-medium text-gray-700">Nome Cliente</span>
+            <input 
+              type="text" 
+              value={cliente} 
+              onChange={e=>setCliente(e.target.value)} 
+              className="w-full border border-gray-300 p-2 rounded-lg bg-white focus:ring-sky-500 focus:border-sky-500" 
+              placeholder="Es. Mario Rossi"
+            />
+          </label>
+          <label>
+            <span className="text-lm font-medium text-gray-700">Email Cliente</span>
+            <input 
+              type="email" 
+              value={email} 
+              onChange={e=>setEmail(e.target.value)} 
+              className="w-full border border-gray-300 p-2 rounded-lg bg-white focus:ring-sky-500 focus:border-sky-500" 
+              placeholder="Es. mario.rossi@mail.com"
+            />
+          </label>
         </div>
-    );
-};
+        {/* --- FINE CAMPI CLIENTE --- */}
 
-export default FotovoltaicoPage;
+        {/* Selectors */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          
+          {/* Inverter */}
+          <label>
+            <span className="text-lm font-medium text-gray-700">Inverter</span>
+            <select 
+              value={selectedInverter} 
+              onChange={e=>setSelectedInverter(e.target.value)} 
+              className="w-full border border-gray-300 p-2 rounded-lg bg-white focus:ring-sky-500 focus:border-sky-500"
+            >
+              {inverterList.map(i => <option key={i.id} value={i.id}>{i.brand} ({i.powerKw} kW) — {formatEuro(i.price)}</option>)}
+            </select>
+          </label>
+
+          {/* Modulo */}
+          <label>
+            <span className="text-lm font-medium text-gray-700">Modulo FV</span>
+            <select 
+              value={selectedModulo} 
+              onChange={e=>setSelectedModulo(e.target.value)} 
+              className="w-full border border-gray-300 p-2 rounded-lg bg-white focus:ring-sky-500 focus:border-sky-500"
+            >
+              {moduloList.map(m => <option key={m.id} value={m.id}>{m.brand} ({m.powerW} W) — {formatEuro(m.price)}</option>)}
+            </select>
+          </label>
+
+          {/* Numero Moduli */}
+          <label>
+            <span className="text-lm font-medium text-gray-700">Numero moduli</span>
+            <input 
+              type="number" 
+              value={moduleCount} 
+              min={1} 
+              onChange={e=>setModuleCount(Number(e.target.value))} 
+              className="w-full border border-gray-300 p-2 rounded-lg bg-white focus:ring-sky-500 focus:border-sky-500" 
+            />
+          </label>
+          
+          {/* Riepilogo Potenza Nominale Totale */}
+          <div className="lg:col-span-3 -mt-2 mb-4">
+            <div className="text-xl font-semibold text-sky-700 p-2 w-full border border-gray-300 bg-white rounded-lg">
+                Potenza nominale totale (kWp): **{modulesTotalKw.toFixed(2)} kWp**
+            </div>
+          </div>
+
+          {/* Batteria */}
+          <label className="sm:col-span-2">
+            <span className="text-lm font-medium text-gray-700">Batteria (Opzionale)</span>
+            <select 
+              value={selectedBatteria} 
+              onChange={e=>setSelectedBatteria(e.target.value)} 
+              className="w-full border border-gray-300 p-2 rounded-lg bg-white focus:ring-sky-500 focus:border-sky-500"
+            >
+              <option value="none">Nessuna</option>
+              {batteriaList.map(b => <option key={b.id} value={b.id}>{b.brand} ({b.capacityKwh} kWh) — {formatEuro(b.price)}</option>)}
+            </select>
+          </label>
+
+          {/* Struttura */}
+          <label>
+            <span className="text-lm font-medium text-gray-700">Struttura di Montaggio</span>
+            <select 
+              value={selectedStruttura} 
+              onChange={e=>setSelectedStruttura(e.target.value)} 
+              className="w-full border border-gray-300 p-2 rounded-lg bg-white focus:ring-sky-500 focus:border-sky-500"
+            >
+              {strutturaList.map(s => <option key={s.id} value={s.id}>{s.type} — {formatEuro(s.price)} Totale</option>)}
+            </select>
+          </label>
+        </div>
+
+        {/* Totali */}
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t">
+          <div className="p-4 rounded-lg bg-gray-50 border border-gray-200">
+            <h3 className="font-bold text-gray-700 mb-2">Dettaglio Costi Netti</h3>
+            <ul className="text-sm space-y-1">
+              <li className="flex justify-between"><span>Moduli ({moduleCount}x):</span> <b>{formatEuro(prices.modulesPrice)}</b></li>
+              <li className="flex justify-between"><span>Inverter:</span> <b>{formatEuro(prices.inverterPrice)}</b></li>
+              <li className="flex justify-between"><span>Batteria:</span> <b>{formatEuro(prices.batteryPrice)}</b></li>
+              <li className="flex justify-between border-b pb-2"><span>Struttura ({selectedStrutturaObj?.type || 'N/A'}):</span> <b>{formatEuro(prices.structurePrice)}</b></li>
+              
+              <li className="flex justify-between pt-2 font-semibold"><span>Costo Materiali (Netto):</span> <b>{formatEuro(prices.materialCost)}</b></li>
+              
+              {/* Voci calcolate su €/kWp fisso */}
+              <li className="flex justify-between border-b pb-2 text-black bg-white p-1 rounded">
+                {/* Visualizza la logica di calcolo per chiarezza */}
+                <span>Manodopera e cablaggio (kWp x €/kWp):</span> 
+                <b className="font-extrabold">{formatEuro(prices.labourAndWiringPrice)}</b>
+              </li>
+              
+              <li className="flex justify-between pt-2 font-extrabold text-base text-sky-800"><span>Subtotale (Netto Finale):</span> <b>{formatEuro(prices.subtotal)}</b></li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-white border border-sky-700 flex flex-col justify-between">
+            <div>
+              <h3 className="font-bold text-xl text-sky-700">Totale preventivo "chiavi in mano"</h3>
+              <div className="text-sm text-gray-700 mt-1">
+                {applyVAT && <span>IVA ({IVA_RATE*100}%): <b>{formatEuro(prices.iva)}</b></span>}
+              </div>
+              <div className="text-3xl font-extrabold text-sky-700 mt-2">
+                {formatEuro(applyVAT ? prices.total : prices.subtotal)}
+                <span className="text-sm font-normal text-gray-600 ml-2">{applyVAT ? "(Lordo)" : "(Netto)"}</span>
+              </div>
+            </div>
+            
+            <div className="mt-4">
+              <label className="flex items-center gap-2 mb-4 text-sm text-gray-700">
+                <input 
+                  type="checkbox" 
+                  checked={applyVAT} 
+                  onChange={e=>setApplyVAT(e.target.checked)} 
+                  className="form-checkbox h-4 w-4 text-sky-600 rounded-sm"
+                />
+                Includi IVA ({IVA_RATE*100}%)
+              </label>
+
+              <button 
+                onClick={exportPDF} 
+                className="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold transition shadow-md disabled:bg-gray-400"
+                disabled={errors.length > 0}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 0 003 3h10a3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              Esporta preventivo in pdf
+              </button>
+              {errors.length > 0 && <p className="text-xs text-center text-red-500 mt-1">Risolvi gli errori per esportare.</p>}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  );
+}
+
+export default PvEstimator;
