@@ -200,9 +200,14 @@ const PvEstimator: FC = () => {
   
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-slate-100 min-h-screen font-sans">
-      <h1 className="text-3xl font-extrabold text-slate-800 mb-6 text-center border-b pb-2">
-        Calcola il preventivo per il tuo impianto fotovoltaico ☀️
-      </h1>
+      <div className="mb-8 text-center border-b pb-4">
+        <h1 className="text-2xl font-extrabold text-slate-800">
+          Simulatore di preventivo fotovoltaico ☀️
+        </h1>
+        <div className="text-lg font-semibold text-slate-600 mt-1">
+          Configura il tuo impianto e genera un preventivo dettagliato
+        </div>
+      </div>
 
       <div className="p-6 space-y-8 bg-white rounded-xl shadow-2xl border border-slate-200">
         
