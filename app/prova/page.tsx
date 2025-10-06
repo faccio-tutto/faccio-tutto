@@ -65,10 +65,10 @@ const PvEstimator: FC = () => {
     const fetchData = () => {
       const data: ListiniData = {
         inverter: [
-          { id: "inv1", brand: "Huawei", powerKw: 5, price: 650.00 },
-          { id: "inv2", brand: "Huawei", powerKw: 6, price: 850.00 }, 
-          { id: "inv3", brand: "Deye monofase", powerKw: 6, price: 1100.00 },  
-          { id: "inv4", brand: "Fronius", powerKw: 6, price: 2100.00 }, 
+          { id: "inv1", brand: "Huawei", powerKw: 5, price: 535.00 },
+          { id: "inv2", brand: "Huawei", powerKw: 6, price: 700.00 }, 
+          { id: "inv3", brand: "Deye monofase", powerKw: 6, price: 900.00 },  
+          { id: "inv4", brand: "Fronius", powerKw: 6, price: 1480.00 }, 
           { id: "inv5", brand: "SMA", powerKw: 8, price: 2800.00 }, 
         ],
         moduli: [
@@ -79,15 +79,16 @@ const PvEstimator: FC = () => {
         batterie: [
           { id: "bat1", brand: "Huawei", modello: "Luna", capacityKwh: 5, price: 2250.00 }, 
           { id: "bat2", brand: "BYD", capacityKwh: 5, price: 2500.00 }, 
-          { id: "bat3", brand: "V-Tac", capacityKwh: 9.6, price: 2000.00 }, 
-          { id: "bat4", brand: "Huawei", modello: "Luna", capacityKwh: 10, price: 5050.00 }, 
-          { id: "bat5", brand: "LG Chem", capacityKwh: 10, price: 4600.00 }, 
-          { id: "bat6", brand: "Huawei", modello: "Luna", capacityKwh: 15, price: 6500.00 }, 
+          { id: "bat3", brand: "Fronius", modello: "Reserva", capacityKwh: 9.5, price: 4160.00 },
+          { id: "bat4", brand: "V-Tac", capacityKwh: 9.6, price: 2110.00 }, 
+          { id: "bat5", brand: "Huawei", modello: "Luna", capacityKwh: 10, price: 5050.00 }, 
+          { id: "bat6", brand: "LG Chem", capacityKwh: 10, price: 4600.00 }, 
+          { id: "bat7", brand: "Huawei", modello: "Luna", capacityKwh: 15, price: 6500.00 }, 
         ],
         strutture: [
-          { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 1013.25 }, 
-          { id: "str2", type: "Tetto piano (zavorrato)", price: 668.98 }, 
-          { id: "str3", type: "Pensilina / Pergolato", price: 849.31 }, 
+          { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 1103.25 }, 
+          { id: "str2", type: "Tetto piano (zavorrato)", price: 758.98 }, 
+          { id: "str3", type: "Pensilina / Pergolato", price: 939.31 }, 
         ],
       };
       setInverterList(data.inverter || []);

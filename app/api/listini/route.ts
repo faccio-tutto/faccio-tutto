@@ -5,13 +5,13 @@ export async function GET() {
     // Prezzi medi netti (IVA esclusa) per inverter ibridi di fascia alta
     inverter: [
       // Huawei SUN2000 5KTL-M1 (Ibrido, circa 5 kW)
-      { id: "inv1", brand: "Huawei", powerKw: 5, price: 650.00 }, 
+      { id: "inv1", brand: "Huawei", powerKw: 5, price: 535.00 }, 
       // Huawei SUN2000-6KTL-L1 (Ibrido, circa 6 kW)
-       { id: "inv2", brand: "Huawei", powerKw: 6, price: 850.00 }, 
+       { id: "inv2", brand: "Huawei", powerKw: 6, price: 700.00 }, 
       //V-Tac Deye Inverter Fotovoltaico Monofase Ibrido On-Grid / Off-Grid 6kW Display Touch LCD CEI 0-21 - SKU 11529
-      { id: "inv3", brand: "Deye", powerKw: 6, price: 1100.00 }, 
-      // Fronius Symo Gen24 6.0 Plus (Ibrido, circa 6 kW)
-      { id: "inv4", brand: "Fronius", powerKw: 6, price: 2100.00 }, 
+      { id: "inv3", brand: "Deye", powerKw: 6, price: 900.00 }, 
+      // Fronius GEN24 Plus (Ibrido monofase, 6 kW)
+      { id: "inv4", brand: "Fronius", powerKw: 6, price: 1480.00 }, 
       // SMA Sunny Tripower Smart Energy 8.0 (Ibrido, circa 8 kW)
       { id: "inv5", brand: "SMA", powerKw: 8, price: 2800.00 }, 
     ],
@@ -29,25 +29,27 @@ export async function GET() {
       // Batteria 5 kWh - Huawei Luna2000-5-E0 + Modulo BMS
       { id: "bat1", brand: "Huawei", modello: "Luna", capacityKwh: 5, price: 2250.00 }, 
       // Batteria 5 kWh
-      { id: "bat1", brand: "BYD", capacityKwh: 5, price: 2500.00 }, 
+      { id: "bat2", brand: "BYD", capacityKwh: 5, price: 2500.00 }, 
+      //FRONIUS RESERVA – BATTERIA AL LITIO PER ACCUMULO 9.5 KWH
+      { id: "bat3", brand: "Fronius", capacityKwh: 9.5, price: 4160.00 },
       //BATTERIA V-TAC VT-48200B LVB LITIO 48V 9,6KW MONTAGGIO A RACK
-      { id: "bat2", brand: "V-Tac", capacityKwh: 9.6, price: 2000.00 },
+      { id: "bat4", brand: "V-Tac", capacityKwh: 9.6, price: 2110.00 },
       // Batteria 10 kWh - Huawei Luna2000-10-S0 + Modulo BMS
-      { id: "bat3", brand: "Huawei", modello: "Luna", capacityKwh: 10, price: 5050.00 }, 
+      { id: "bat5", brand: "Huawei", modello: "Luna", capacityKwh: 10, price: 5050.00 }, 
       // Batteria 10 kWh
-      { id: "bat4", brand: "LG Chem", capacityKwh: 10, price: 4600.00 }, 
+      { id: "bat6", brand: "LG Chem", capacityKwh: 10, price: 4600.00 }, 
       // Batteria 15 kWh
-      { id: "bat5", brand: "Huawei", modello: "Luna", capacityKwh: 15, price: 6500.00 }, 
+      { id: "bat7", brand: "Huawei", modello: "Luna", capacityKwh: 15, price: 6500.00 }, 
      
     ],
     // Prezzi netti stimati per il sistema di fissaggio (variabili in base al tipo)
     strutture: [
       // Costo complessivo per un impianto standard
-      { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 1013.25 }, 
+      { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 1103.25 }, 
       // Richiede zavorre o fissaggi più complessi
-      { id: "str2", type: "Tetto piano (zavorrato)", price: 668.98 }, 
+      { id: "str2", type: "Tetto piano (zavorrato)", price: 758.98 }, 
       // La pensilina è una struttura portante più costosa
-      { id: "str3", type: "Pensilina / Pergolato", price: 849.31 }, 
+      { id: "str3", type: "Pensilina / Pergolato", price: 939.31 }, 
     ],
     // Costo medio per manodopera, cablaggi, quadri elettrici, pratiche (€/kW)
     cablaggio: {
