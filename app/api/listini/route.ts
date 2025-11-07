@@ -10,10 +10,12 @@ export async function GET() {
        { id: "inv2", brand: "Huawei", powerKw: 6, price: 700.00 }, 
       //V-Tac Deye Inverter Fotovoltaico Monofase Ibrido On-Grid / Off-Grid 6kW Display Touch LCD CEI 0-21 - SKU 11529
       { id: "inv3", brand: "Deye", powerKw: 6, price: 900.00 }, 
+      //Unical inverter ZOE 6000 monofase ibrido 6 kw n.2 mppt con wi-fi modulo buckup incluso
+      { id: "inv4", brand: "Unical", powerKw: 6, price: 1150.00 }, 
       // Fronius GEN24 Plus (Ibrido monofase, 6 kW)
-      { id: "inv4", brand: "Fronius", powerKw: 6, price: 1480.00 }, 
+      { id: "inv5", brand: "Fronius", powerKw: 6, price: 1480.00 }, 
       // SMA Sunny Tripower Smart Energy 8.0 (Ibrido, circa 8 kW)
-      { id: "inv5", brand: "SMA", powerKw: 8, price: 2800.00 }, 
+      { id: "inv6", brand: "SMA", powerKw: 8, price: 2800.00 }, 
     ],
     // Prezzi medi netti (IVA esclusa) per moduli di fascia media/alta
     moduli: [
@@ -34,12 +36,12 @@ export async function GET() {
       { id: "bat3", brand: "Fronius", capacityKwh: 9.5, price: 4160.00 },
       //BATTERIA V-TAC VT-48200B LVB LITIO 48V 9,6KW MONTAGGIO A RACK
       { id: "bat4", brand: "V-Tac", capacityKwh: 9.6, price: 2110.00 },
+      // Batteria BOX Unical 10,24 kWh
+      { id: "bat5", brand: "Unical", capacityKwh: 10.24, price: 3170.00 }, 
       // Batteria 10 kWh - Huawei Luna2000-10-S0 + Modulo BMS
-      { id: "bat5", brand: "Huawei", modello: "Luna", capacityKwh: 10, price: 5050.00 }, 
-      // Batteria 10 kWh
-      { id: "bat6", brand: "LG Chem", capacityKwh: 10, price: 4600.00 }, 
+      { id: "bat6", brand: "Huawei", modello: "Luna", capacityKwh: 10, price: 4140.00 }, 
       // Batteria 15 kWh
-      { id: "bat7", brand: "Huawei", modello: "Luna", capacityKwh: 15, price: 6500.00 }, 
+      { id: "bat7", brand: "Huawei", modello: "Luna", capacityKwh: 15, price: 5730.00 }, 
      
     ],
     // Prezzi netti stimati per il sistema di fissaggio (variabili in base al tipo)
