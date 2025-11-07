@@ -135,7 +135,7 @@ const MainContent = () => {
                 <div className="w-full lg:w-1/1 flex flex-col items-center mt-8 md:mt-0">
                     <section className="relative text-center w-full bg-gray-200 p-4 rounded-lg shadow-lg">
                         <div className="bg-black bg-opacity-50 p-4 md:p-6 flex flex-col items-center">
-                            <div className="text-green-400 text-xl md:text-xl font-bold mb-4">SCOPRI TUTTO QUELLO CHE POSSIAMO OFFRIRTI</div>
+                            <div className="text-green-400 text-xl md:text-xl font-bold mb-4"><strong>SCOPRI TUTTO QUELLO CHE POSSIAMO OFFRIRTI</strong></div>
                             <section className="bg-black bg-opacity-80 text-gray-600 rounded-lg shadow-lg p-6 mt-0">
   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
     
@@ -173,7 +173,7 @@ const MainContent = () => {
   </div>
 
   <div className="mt-16 text-center">
-    <div className="text-xl font-bold text-green-400 mb-2">UN SOLO RIFERIMENTO PER OGNI TUA ESIGENZA</div>
+    <div className="text-xl font-bold text-green-400 mb-2"><strong>UN SOLO RIFERIMENTO PER OGNI TUA ESIGENZA</strong></div>
     <div className="text-xl text-gray-300 mb-4">
       Progettazione, installazioni, riparazioni e risparmio energetico: <br/><strong>faccio-tutto.it</strong> è il tuo punto di riferimento per servizi affidabili e su misura.
     </div>
@@ -181,39 +181,40 @@ const MainContent = () => {
   
 </section>
                             {/* New Cards Section */}
-                            <div className="text-3xl text-red-500">COME FUNZIONA faccio-tutto.it?</div>
+                            <div className="text-3xl text-red-500">COME FUNZIONA</div>
+                            <div className="text-3xl text-white"><strong>faccio-tutto.it?</strong></div>
                             <div className="grid grid-cols-1 gap-4 mt-16">
                                 <CustomCard className="border-gray-200 bg-transparent">
                                     <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                                        <Image src="/images/richiesta.png" alt="Fai la tua richiesta" width={200} height={200} className="rounded-full shadow-md" />
-                                        <p className="text-xs text-gray-600 mt-8">Fai la tua richiesta</p>
+                                        <Image src="/images/richiesta.png" alt="Fai la tua richiesta" width={300} height={300} className="rounded-full shadow-md" />
+                                        <p className="text-xs text-gray-600 mt-8"><strong>Fai la tua richiesta</strong></p>
                                     </CustomCardContent>
                                 </CustomCard>
                                 <CustomCard className="border-gray-200 bg-transparent">
                                     <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
                                         <Image src="/images/selezione.png" alt="Selezioniamo i profili migliori" width={200} height={200} className="rounded-full shadow-md" />
-                                        <p className="text-xs text-gray-600 mt-8">Noi selezioniamo i profili migliori per te</p>
+                                        <p className="text-xs text-gray-600 mt-8"><strong>Noi selezioniamo i profili migliori per te</strong></p>
                                     </CustomCardContent>
                                 </CustomCard>
                                  <CustomCard className="border-gray-200 bg-transparent">
                                     <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                                        <Image src="/images/preventivi.png" alt="Ricevi il preventivo" width={200} height={200} className="rounded-full shadow-md" />
+                                        <Image src="/images/preventivi.png" alt="Ricevi il preventivo" width={300} height={300} className="rounded-full shadow-md" />
                               
-                                        <p className="text-xs text-gray-600 mt-8">Ricevi il preventivo</p>
+                                        <p className="text-xs text-gray-600 mt-8"><strong>Ricevi il preventivo</strong></p>
                                     </CustomCardContent>
                                 </CustomCard>
                                 <CustomCard className="border-gray-200 bg-transparent">
                                     <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
                                         <Image src="/images/esecuzione lavori.png" alt="Inizia i lavori" width={200} height={200} className="rounded-full shadow-md" />
                                         
-                                        <p className="text-xs text-gray-600 mt-8">Se accetti il preventivo, ti mettiamo in contatto con chi eseguirà i lavori</p>
+                                        <p className="text-xs text-gray-600 mt-8"><strong>Se accetti il preventivo, ti mettiamo in contatto con chi eseguirà i lavori</strong></p>
                                     </CustomCardContent>
                                 </CustomCard>
                                 <CustomCard className="border-gray-200 bg-transparent">
                                     <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                                        <Image src="/images/fine lavori.png" alt="Lascia un feedback" width={200} height={200} className="rounded-full shadow-md" />
+                                        <Image src="/images/fine lavori.png" alt="Lascia un feedback" width={300} height={300} className="rounded-full shadow-md" />
 
-                                        <p className="text-xs text-gray-600 mt-8">A lavori completi lascia un feedback e condividi la tua esperienza</p>
+                                        <p className="text-xs text-gray-600 mt-8"><strong>A lavori completi lascia un feedback e condividi la tua esperienza</strong></p>
                                     </CustomCardContent>
                                 </CustomCard>
                             </div>
@@ -377,5 +378,4 @@ const MainContent = () => {
             </div>
         );
     };
-    
     export default HomePage;
