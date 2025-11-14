@@ -9,7 +9,7 @@ import { motion } from 'framer-motion'; // Assicurati di aver installato framer-
 
 export const metadata: Metadata = {
   title: 'faccio-tutto.it',
-  description: 'Il tuo punto di riferimento per progettazione, riparazioni e installazioni',
+  description: 'Progettazione, installazioni, riparazioni e risparmio energetico: faccio-tutto.it è il tuo punto di riferimento per servizi affidabili e su misura',
   metadataBase: new URL('https://faccio-tutto.it'),
 };
 type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
