@@ -1,5 +1,5 @@
 "use client";
-
+import { Metadata } from 'next';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,6 +7,11 @@ import { FaWrench, FaPhone, FaEnvelope, FaDraftingCompass, FaSolarPanel, FaPlug,
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion'; // Assicurati di aver installato framer-motion
 
+export const metadata: Metadata = {
+  title: 'faccio-tutto.it',
+  description: 'Il tuo punto di riferimento per progettazione, riparazioni e installazioni',
+  metadataBase: new URL('https://faccio-tutto.it'),
+};
 type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
 
 const CustomCardContent: React.FC<CardContentProps> = ({ children, className, ...props }) => (
