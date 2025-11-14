@@ -1,5 +1,4 @@
 import './globals.css'
-import { Metadata } from 'next'
 
 export const metadata = {
   metadataBase: new URL('https://www.faccio-tutto.it'),
