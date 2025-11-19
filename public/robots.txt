@@ -17,8 +17,6 @@ Disallow: /*&utm_source=
 Disallow: /*&utm_medium=
 Disallow: /*&utm_campaign=
 
-# Host
-Host: https://www.faccio-tutto.it
 
 # Sitemaps
 Sitemap: https://www.faccio-tutto.it/sitemap.xml
