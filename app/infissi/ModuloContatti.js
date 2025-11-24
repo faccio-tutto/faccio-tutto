@@ -300,23 +300,25 @@ function ModuloContatti({ destinatarioEmail }) {
               ></textarea>
             </div>
             {/* Modifiche per la privacy e il pulsante, già implementate */}
-            <div className="items-start"> {/* Aggiunto 'flex' qui per allineare checkbox e label */}
-              <input
-                type="checkbox"
-                className="mr-2 mt-1"
-                checked={privacy}
-                onChange={(e) => setPrivacy(e.target.checked)}
-              />
-              <label className="text-sm text-gray-400 flex-1 leading-tight">
-                Accetto i{' '}
-                <a href="/termini-e-condizioni.pdf" className="text-blue-400 hover:underline">
-                  termini e condizioni
-                </a>{' '}
-                e acconsento al trattamento dei miei dati personali secondo la{' '}
-                <a href="/normativa-privacy.pdf" className="text-blue-400 hover:underline">
-                  normativa sulla privacy.
-                </a>
-              </label>
+           <div className="flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    type="checkbox"
+                    id="privacy"
+                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded mr-3"
+                    checked={privacy}
+                    onChange={(e) => setPrivacy(e.target.checked)}
+                  />
+                </div>
+                <div className="ml-3 text-xs">
+                  <label htmlFor="privacy" className="font-medium text-gray-700">
+                    Accetto i{' '}
+                    <a href="/termini e condizioni.pdf" className="text-blue-500 hover:underline">termini e condizioni</a>{' '}
+                    e acconsento al trattamento
+                    dei miei dati personali secondo la{' '}
+                    <a href="/normativa privacy.pdf" className="text-blue-500 hover:underline">normativa sulla privacy.</a>
+                  </label>
+                </div>
             </div>
             {/* Contenitore per centrare il pulsante */}
             <div className="flex justify-center">
