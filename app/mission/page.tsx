@@ -120,7 +120,7 @@ const MainContent = () => {
                 <div className="w-full lg:w-2/2 flex flex-col items-center mt-8 md:mt-0">
                     <section className="relative text-center w-full bg-gray-200 p-4 rounded-lg shadow-lg">
                         <div className="bg-black bg-opacity-50 p-4 md:p- flex flex-col items-center">
-                            <h1 className="text-3xl text-white font-bold mb-6 text-center">La Nostra Mission</h1>
+                            <h1 className="text-3xl text-white font-bold mb-6 text-center"></h1>
                             <section className="bg-black bg-opacity-80 rounded-lg shadow-lg p-0 mt-0">
                                 <div className="max-w-3xl text-gray-500 text-justify mb-8 bg-black bg-opacity-70 p-0 rounded-lg">
                                     <p className="text-lg text-white">
@@ -228,47 +228,41 @@ const MainContent = () => {
 </nav>
     
                    {/* Hero Image */}
-                               <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
-                                 // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
-                                 backgroundImage: 'url("/images/sfondo mission.png")',
-                                 backgroundSize: 'cover',
-                                 backgroundPosition: 'center',
-                                 backgroundColor: "#000000", /* Colore di fallback */
-                                 minHeight: '840px' /* Altezza minima per visualizzare l'immagine */
-                               }}>
-                                 {/* Overlay per migliorare la leggibilità del testo */}
-                                 <div className="absolute inset-0 bg-black opacity-50"></div>
-                                <motion.h2
-                 initial={{ y: -50, opacity: 0 }}
-                 animate={{ y: 0, opacity: 1 }}
-                 transition={{ duration: 0.6 }}
-                 className="relative mt-66 z-10 text-8xl font-bold leading-[5rem] tracking-[0.15em]"
-                 style={{
-                   fontSize: "3.5rem",
-                   color: "#9C27B0",
-                   textShadow: "2px 2px 4px rgba(0,0,0,0.8)"
-                 }}
-               >
-                 
-                 <br/>
-                 <span style={{ fontSize: "3.5rem", color: "#FFA500", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-                
-                 </span>
-                 <br/>
-                 <span style={{ fontSize: "3.5rem", color: "#FF6000", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-                   
-                 </span>
-               </motion.h2>
-                                 <motion.p
-                                   initial={{ y: 50, opacity: 0 }}
-                                   animate={{ y: 0, opacity: 1 }}
-                                   transition={{ duration: 0.6, delay: 0.2 }}
-                                   className="relative z-10 text-lg mt-10 max-w-2xl mx-auto"
-                                   style={{ fontSize: "2rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
-                                 >
-                                  
-                                 </motion.p>
-                               </header>
+                               {/* Header */}
+<header className="text-center py-20 bg-cover bg-center text-white relative" style={{
+  // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
+  backgroundImage: 'url("/images/sfondo mission.png")',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundColor: "#000000", /* Colore di fallback */
+  minHeight: '840px' /* Altezza minima per visualizzare l'immagine */
+}}>
+  {/* Overlay per migliorare la leggibilità del testo */}
+  <div className="absolute inset-0 bg-black opacity-50"></div>
+  <motion.h2
+    initial={{ y: -50, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    transition={{ duration: 0.6 }}
+    className="relative z-10 mt-70 text-8xl font-bold"
+    style={{ fontSize: "2rem", color: "#ffffffff", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Blue scuro
+  >
+    LA NOSTRA MISSION
+  </motion.h2>
+  <motion.p
+    initial={{ y: 50, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    transition={{ duration: 0.6, delay: 0.2 }}
+    className="relative z-10 mt-10 text-lg text-justify mt-4 max-w-5xl mx-auto"
+    style={{ fontSize: "1.7rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
+  >
+Ognuno di noi possiede talenti e capacità spesso inespressi, che utilizza solo per sé o per pochi amici e familiari.
+La nostra missione è trasformare questo potenziale nascosto in un’opportunità reale: offrire a chiunque la possibilità di far conoscere le proprie attitudini a un pubblico sempre più ampio, valorizzandole e mettendole davvero in gioco.
+Vogliamo creare le condizioni affinché una semplice passione possa diventare un vero lavoro, gratificante e ben retribuito.
+Perché il talento non deve restare nell’ombra: merita di emergere, crescere e fare la differenza.
+  </motion.p>
+</header>
+
+
     
                 {/* Contenuto principale con flex-grow */}
                 <div className="flex-grow z-0 py-20" style={{ paddingTop: '20px' }}>
