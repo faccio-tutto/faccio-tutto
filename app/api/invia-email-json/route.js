@@ -71,7 +71,7 @@ Documento Identità: ${documentoIdentita ? 'Si' : 'No'}
       port: parseInt(process.env.SMTP_PORT || '465', 10),
       secure: process.env.SMTP_PORT === '465',
       auth: {
-        user: process.env.MAIL_DESTINATARIO_FOTOVOLTAICO || process.env.SMTP_USER,
+        user: process.env.MAIL_DESTINATARIO_INFISSI || process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
       logger: false,
