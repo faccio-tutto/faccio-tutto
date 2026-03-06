@@ -426,28 +426,6 @@ Soluzioni per ridurre i consumi e aumentare il valore della tua casa.
                 <div className="flex-grow z-0 py-20" style={{ paddingTop: '20px' }}>
                     <MainContent />
                 </div>
-        
-<section className="bg-black text-white py-1 text-center">
-
-<h2 className="text-4xl font-bold mb-6">
-Hai bisogno di un tecnico?
-</h2>
-
-<p className="text-lg mb-10">
-Richiedi subito un preventivo gratuito.
-</p>
-
-<a href="/prenota">
-
-<button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-10 py-4 rounded-lg text-lg">
-
-Richiedi preventivo
-
-</button>
-
-</a>
-
-</section>
 
                 {/* Footer fisso in fondo */}
                 <footer className="text-center py-3 bg-gray-800">
