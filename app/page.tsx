@@ -7,6 +7,7 @@ import { FaWrench, FaPhone, FaEnvelope, FaDraftingCompass, FaSolarPanel, FaPlug,
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion'; // Assicurati di aver installato framer-motion
 
+
 type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
 
 const CustomCardContent: React.FC<CardContentProps> = ({ children, className, ...props }) => (
@@ -80,6 +81,14 @@ const MainContent = () => {
 
         const [hoveredImages, setHoveredImages] = React.useState<{ [key: number]: string | null }>({});
         const isImageHovered = Object.values(hoveredImages).some(image => image);
+        const immaginiGalleria = [
+  "/images/progettazione.png",
+  "/images/energia-verde.png",
+  "/images/riparazione-elettrodomestici.png",
+  "/images/piccole-riparazioni.png",
+  "/images/post 8 maggio architettura.png",
+  "/images/post 10 maggio.png",
+];
     
         return (
              <div className="flex flex-col lg:flex-row justify-between gap-8 w-full px-4 pb-48">
@@ -134,9 +143,9 @@ const MainContent = () => {
                 {/* Colonna centrale (Hero Section e testo) */}
                 <div className="w-full lg:w-1/1 flex flex-col items-center mt-8 md:mt-0">
                     <section className="relative text-center w-full bg-gray-200 p-4 rounded-lg shadow-lg">
-                        <div className="bg-black bg-opacity-50 p-4 md:p-6 flex flex-col items-center">
-                            <div className="text-green-400 text-xl md:text-xl font-bold mb-4"><strong>SCOPRI TUTTO QUELLO CHE POSSIAMO OFFRIRTI</strong></div>
-                            <section className="bg-black bg-opacity-80 text-gray-600 rounded-lg shadow-lg p-6 mt-0">
+            <div className="bg-black bg-opacity-50 p-4 md:p-6 flex flex-col items-center">
+                <div className="text-green-400 text-xl md:text-xl font-bold mb-4"><strong>SCOPRI TUTTO QUELLO CHE POSSIAMO OFFRIRTI</strong></div>
+                <section className="bg-black bg-opacity-80 text-gray-600 rounded-lg shadow-lg p-6 mt-0">
   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
     
     {/* Progettazione */}
@@ -180,51 +189,73 @@ const MainContent = () => {
   </div>
   
 </section>
-                            {/* New Cards Section */}
-                            <div className="text-3xl text-red-500">COME FUNZIONA</div>
-                            <div className="text-3xl text-white"><strong>faccio-tutto.it?</strong></div>
-                            <div className="grid grid-cols-1 gap-4 mt-16">
-                                <CustomCard className="border-gray-200 bg-transparent">
-                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                                        <Image src="/images/richiesta.png" alt="Fai la tua richiesta" width={300} height={300} className="rounded-full shadow-md" />
-                                        <p className="text-xs text-gray-600 mt-8"><strong>Fai la tua richiesta</strong></p>
-                                    </CustomCardContent>
-                                </CustomCard>
-                                <CustomCard className="border-gray-200 bg-transparent">
-                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                                        <Image src="/images/selezione.png" alt="Selezioniamo i profili migliori" width={200} height={200} className="rounded-full shadow-md" />
-                                        <p className="text-xs text-gray-600 mt-8"><strong>Noi selezioniamo i profili migliori per te</strong></p>
-                                    </CustomCardContent>
-                                </CustomCard>
-                                 <CustomCard className="border-gray-200 bg-transparent">
-                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                                        <Image src="/images/preventivi.png" alt="Ricevi il preventivo" width={300} height={300} className="rounded-full shadow-md" />
-                              
-                                        <p className="text-xs text-gray-600 mt-8"><strong>Ricevi il preventivo</strong></p>
-                                    </CustomCardContent>
-                                </CustomCard>
-                                <CustomCard className="border-gray-200 bg-transparent">
-                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                                        <Image src="/images/esecuzione lavori.png" alt="Inizia i lavori" width={200} height={200} className="rounded-full shadow-md" />
-                                        
-                                        <p className="text-xs text-gray-600 mt-8"><strong>Se accetti il preventivo, ti mettiamo in contatto con chi eseguirà i lavori</strong></p>
-                                    </CustomCardContent>
-                                </CustomCard>
-                                <CustomCard className="border-gray-200 bg-transparent">
-                                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                                        <Image src="/images/fine lavori.png" alt="Lascia un feedback" width={300} height={300} className="rounded-full shadow-md" />
+{/* New Cards Section */}
+<div className="grid md:grid-cols-5 gap-10 mt-20 text-center">
 
-                                        <p className="text-xs text-gray-600 mt-8"><strong>A lavori completi lascia un feedback e condividi la tua esperienza</strong></p>
-                                    </CustomCardContent>
-                                </CustomCard>
+{[
+{
+img:"/images/richiesta.png",
+title:"Fai la richiesta"
+},
+{
+img:"/images/selezione.png",
+title:"Selezioniamo i migliori tecnici"
+},
+{
+img:"/images/preventivi.png",
+title:"Ricevi il preventivo"
+},
+{
+img:"/images/esecuzione lavori.png",
+title:"Esegui i lavori"
+},
+{
+img:"/images/fine lavori.png",
+title:"Lascia il feedback"
+}
+
+].map((step,index)=>(
+<div key={index} className="group">
+
+<div className="rounded-full overflow-hidden shadow-lg group-hover:scale-110 transition">
+
+<Image
+src={step.img}
+alt={step.title}
+width={180}
+height={180}
+/>
+
+</div>
+
+<p className="mt-6 font-semibold text-gray-700">
+{step.title}
+</p>
+
+</div>
+))}
                             </div>
-                            {/* End of New Cards Section */}
-                            <a href="mailto:info@faccio-tutto.it">
-                            <Button className="bg-yellow-500 hover:bg-yellow-600 text-white w-full md:w-40 h-12 text-base rounded-lg flex items-center justify-center gap-6 mt-20">
-                                    Contattaci 
-                                    <FaEnvelope />
-                                </Button>
-                            </a>
+                            <section className="bg-black text-white py-24 text-center">
+
+<h2 className="text-4xl font-bold mb-6">
+Hai bisogno di un tecnico?
+</h2>
+
+<p className="text-lg mb-10">
+Richiedi subito un preventivo gratuito.
+</p>
+
+<a href="/prenota">
+
+<button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-10 py-4 rounded-lg text-lg">
+
+Richiedi preventivo
+
+</button>
+
+</a>
+
+</section>
                         </div>
                     </section>
                 </div>
@@ -234,23 +265,12 @@ const MainContent = () => {
                     <h3 className="text-lg font-bold text-white text-center">Post recenti</h3>
                     <div className="grid grid-cols-1 gap-4">
                         {[
-                            "/images/Volantino fotovoltaico.png",
                             "/images/post 8 maggio architettura.png",
                             "/images/post 10 maggio.png",
                             "/images/post 14 maggio.png",
-                            "/images/cer.png",
                             "/images/post 21 maggio.png",
                             "/images/post 29 maggio.png",
                             "/images/post 3 giugno.png",
-                            "/images/post 5 giugno.png",
-                            "/images/post 9 giugno.png",
-                            "/images/post 22 giugno.png",
-                            "/images/post 1 luglio.png",
-                            "/images/post 9 luglio.png",
-                            "/images/post 14 luglio.png",
-                            "/images/post 5 agosto.png",
-                            "/images/post 21 agosto.png",
-                             "/images/post 25 agosto.png",
                         ].map((src, index) => (
                             <div
                                 key={index}
@@ -365,15 +385,73 @@ const MainContent = () => {
                     Tanti servizi con un solo contatto!
                   </motion.p>
                 </header>
-        
+
+                <section className="py-10 bg-black">
+
+<div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12 text-center">
+
+<div>
+<div className="text-5xl mb-4">⚡</div>
+<h3 className="text-xl font-bold mb-2">
+Un solo contatto
+</h3>
+<p className="text-gray-600">
+Con faccio-tutto.it hai un unico riferimento per progettazione, installazioni e riparazioni.
+</p>
+</div>
+
+<div>
+<div className="text-5xl mb-4">🛠</div>
+<h3 className="text-xl font-bold mb-2">
+Professionisti selezionati
+</h3>
+<p className="text-gray-600">
+Collaboriamo solo con tecnici qualificati e verificati.
+</p>
+</div>
+
+<div>
+<div className="text-5xl mb-4">💰</div>
+<h3 className="text-xl font-bold mb-2">
+Risparmio energetico
+</h3>
+<p className="text-gray-600">
+Soluzioni per ridurre i consumi e aumentare il valore della tua casa.
+</p>
+</div>
+</div>
+</section>
+
                 {/* Contenuto principale con flex-grow */}
                 <div className="flex-grow z-0 py-20" style={{ paddingTop: '20px' }}>
                     <MainContent />
                 </div>
         
+<section className="bg-black text-white py-1 text-center">
+
+<h2 className="text-4xl font-bold mb-6">
+Hai bisogno di un tecnico?
+</h2>
+
+<p className="text-lg mb-10">
+Richiedi subito un preventivo gratuito.
+</p>
+
+<a href="/prenota">
+
+<button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-10 py-4 rounded-lg text-lg">
+
+Richiedi preventivo
+
+</button>
+
+</a>
+
+</section>
+
                 {/* Footer fisso in fondo */}
                 <footer className="text-center py-3 bg-gray-800">
-                    <p>&copy; 2025 faccio-tutto.it - Tutti i diritti riservati.</p>
+                    <p>&copy; 2026 faccio-tutto.it - Tutti i diritti riservati.</p>
                 </footer>
             </div>
         );

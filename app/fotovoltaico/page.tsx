@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card"; // Assicurati di avere
 import { Button } from "@/components/ui/button"; // Assicurati di avere questo componente per i pulsanti
 import React, { useState } from 'react';
 import Head from "next/head";
+import AppleStyleCarousel from "@/components/AppleStyleCarousel";
 
 // (Removed duplicate FotovoltaicoPage function declaration)
 
@@ -32,7 +33,15 @@ const CustomCard: React.FC<CardProps> = ({ children, className, ...props }) => {
         </div>
     );
 };
-
+const immaginiServizi = [
+  "/images/post Aidone 1.png",
+  "/images/post Aidone 2.png",
+  "/images/Giustra 1.png",
+  "/images/Giustra 2.png",
+  "/images/Campofelice 1.png",
+  "/images/Campofelice 2.png",
+  "/images/Campofelice 3.png",
+];
 const dailyIrradiance_kWh_per_sqm_per_day: { [provinceName: string]: { [month: string]: number } } = {
     'Agrigento': { Gennaio: 2.44, Febbraio: 3.47, Marzo: 4.69, Aprile: 6.17, Maggio: 7.47, Giugno: 8.19, Luglio: 8.22, Agosto: 7.50, Settembre: 5.81, Ottobre: 4.06, Novembre: 2.81, Dicembre: 2.28 },
     'Alessandria': { Gennaio: 1.31, Febbraio: 2.08, Marzo: 3.22, Aprile: 4.39, Maggio: 5.14, Giugno: 5.69, Luglio: 6.28, Agosto: 5.00, Settembre: 3.72, Ottobre: 2.36, Novembre: 1.50, Dicembre: 1.17 },
@@ -449,10 +458,31 @@ investi nel tuo futuro rispettando l'ambiente
                             Scegliere un impianto fotovoltaico significa abbracciare un futuro di energia pulita, indipendenza economica e responsabilità ambientale. Immagina di ridurre drasticamente le tue bollette elettriche fino al 90%, producendo energia direttamente dal sole. Un investimento intelligente che si ripaga in pochi anni, grazie alla detrazione fiscale in 10 anni del 50% dell'importo. Unisciti anche tu alla rivoluzione energetica e contribuisci a un mondo più verde per le generazioni future.
                           </motion.p>
       </header>
-          
+         {/* Galleria servizi */}
+        <section className="bg-black py-20">
+        
+          <div className="max-w-7xl mx-auto text-center mb-12">
+        
+            <div className="text-4xl font-bold text-yellow-400 mb-4">
+              Le nostre ultime installazioni
+            </div>
+        
+            <div className="text-white text-xl">
+              Impianti fotovoltaici residenziali
+            </div>
+        
+          </div>
+        
+          <AppleStyleCarousel
+            images={immaginiServizi}
+            height={320}
+            speed={2}
+          />
+        
+        </section>  
 
             {/* Sezione Vantaggi */}
-            <div className="grid md:grid-cols-1 gap-6 items-center max-w-6xl mx-auto mt-6"></div>
+            <div className="grid md:grid-cols-1 gap- items-center max-w-6xl mx-auto mt-0"></div>
             <div className="text-2xl text-yellow-400 font-bold flex justify-center gap-6 mt-14">Scopri tutti i vantaggi che ti offre un'impianto fotovoltaico</div>
             <div className="grid md:grid-cols-3 gap-6 mt-8 px-8 max-w-6xl mx-auto text-gray-500">
               {[{
