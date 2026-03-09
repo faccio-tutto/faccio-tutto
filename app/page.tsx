@@ -460,17 +460,17 @@ Scopri di più
 
 <div>
 <div className="text-5xl mb-4">⚡</div>
-<h3 className="text-xl font-bold mb-2">
+<div className="text-xl text-gray-400 font-bold mb-2">
 Un solo contatto
-</h3>
-<p className="text-gray-600">
+</div>
+<p className="text-gray-400">
 Con faccio-tutto.it hai un unico riferimento per progettazione, installazioni e riparazioni.
 </p>
 </div>
 
 <div>
 <div className="text-5xl mb-4">🛠</div>
-<h3 className="text-xl font-bold mb-2">
+<h3 className="text-xl text-gray-400 font-bold mb-2">
 Professionisti selezionati
 </h3>
 <p className="text-gray-600">
@@ -480,7 +480,7 @@ Collaboriamo solo con tecnici qualificati e verificati.
 
 <div>
 <div className="text-5xl mb-4">💰</div>
-<h3 className="text-xl font-bold mb-2">
+<h3 className="text-xl text-gray-400 font-bold mb-2">
 Risparmio energetico
 </h3>
 <p className="text-gray-600">
