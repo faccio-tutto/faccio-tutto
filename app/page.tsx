@@ -281,7 +281,7 @@ Richiedi subito un preventivo gratuito
 
 <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-10 py-4 rounded-xl text-lg">
 
-Richiedi Preventivo
+Contattaci ora
 
 </button>
 
@@ -431,7 +431,7 @@ className="mt-10 flex justify-center gap-6"
 
 <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-8 py-4 rounded-xl text-lg shadow-lg">
 
-Richiedi Preventivo
+Richiedi un preventivo
 
 </button>
 
