@@ -189,6 +189,34 @@ const MainContent = () => {
   </div>
   
 </section>
+
+<section className="bg-gray-400 py-20">
+
+<div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-10 text-center">
+
+<div>
+<div className="text-4xl font-bold text-yellow-500">24h</div>
+<p>Risposta rapida</p>
+</div>
+
+<div>
+<div className="text-4xl font-bold text-purple-500">100+</div>
+<p>Interventi realizzati</p>
+</div>
+
+<div>
+<div className="text-4xl font-bold text-green-500">97%</div>
+<p>Clienti soddisfatti</p>
+</div>
+
+<div>
+<div className="text-4xl font-bold text-orange-500">1</div>
+<p>Unico referente</p>
+</div>
+
+</div>
+
+</section>
 {/* New Cards Section */}
 <div className="grid md:grid-cols-5 gap-10 mt-20 text-center">
 
@@ -238,22 +266,26 @@ height={180}
                             <section className="bg-black text-white py-24 text-center">
 
 <h2 className="text-4xl font-bold mb-6">
+
 Hai bisogno di un tecnico?
+
 </h2>
 
 <p className="text-lg mb-10">
-Richiedi subito un preventivo gratuito.
+
+Richiedi subito un preventivo gratuito
+
 </p>
 
-<a href="/prenota">
+<Link href="/prenota">
 
-<button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-10 py-4 rounded-lg text-lg">
+<button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-10 py-4 rounded-xl text-lg">
 
-Richiedi preventivo
+Richiedi Preventivo
 
 </button>
 
-</a>
+</Link>
 
 </section>
                         </div>
@@ -344,47 +376,83 @@ Richiedi preventivo
     </nav>
         
                 {/* Hero Image */}
-                <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
-                  // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
-                  backgroundImage: 'url("/sfondo nuovo.png")',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundColor: "#000000", /* Colore di fallback */
-                  minHeight: '800px' /* Altezza minima per visualizzare l'immagine */
-                }}>
-                  {/* Overlay per migliorare la leggibilità del testo */}
-                  <div className="absolute inset-0 bg-black opacity-50"></div>
-                 <motion.h2
-  initial={{ y: -50, opacity: 0 }}
-  animate={{ y: 0, opacity: 1 }}
-  transition={{ duration: 0.6 }}
-  className="relative mt-66 z-10 text-8xl font-bold leading-[5rem] tracking-[0.15em]"
-  style={{
-    fontSize: "3.5rem",
-    color: "#9C27B0",
-    textShadow: "2px 2px 4px rgba(0,0,0,0.8)"
-  }}
+                <header className="relative min-h-[750px] flex items-center justify-center text-center overflow-hidden">
+
+{/* background */}
+<Image
+src="/sfondo nuovo.png"
+alt="hero"
+fill
+className="object-cover"
+/>
+
+{/* overlay */}
+<div className="absolute inset-0 bg-black/60" />
+
+{/* contenuto */}
+<div className="relative z-10 max-w-4xl px-6">
+
+<motion.h1
+initial={{opacity:0,y:-50}}
+animate={{opacity:1,y:0}}
+transition={{duration:0.8}}
+className="text-5xl md:text-7xl font-bold text-white leading-tight"
 >
-  P R O G E T T A Z I O N E
-  <br/>
-  <span style={{ fontSize: "3.5rem", color: "#FFA500", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-    I N S T A L L A Z I O N I
-  </span>
-  <br/>
-  <span style={{ fontSize: "3.5rem", color: "#FF6000", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-    R I P A R A Z I O N I
-  </span>
-</motion.h2>
-                  <motion.p
-                    initial={{ y: 50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="relative z-10 text-lg mt-10 max-w-2xl mx-auto"
-                    style={{ fontSize: "2rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
-                  >
-                    Tanti servizi con un solo contatto!
-                  </motion.p>
-                </header>
+
+<span className="text-purple-500">Progettazione</span>
+<br/>
+
+<span className="text-yellow-400">Installazioni</span>
+<br/>
+
+<span className="text-orange-500">Riparazioni</span>
+
+</motion.h1>
+
+<motion.p
+initial={{opacity:0,y:50}}
+animate={{opacity:1,y:0}}
+transition={{delay:0.3}}
+className="mt-8 text-xl text-gray-200"
+>
+
+Un unico riferimento per la tua casa
+
+</motion.p>
+
+<motion.div
+initial={{opacity:0}}
+animate={{opacity:1}}
+transition={{delay:0.6}}
+className="mt-10 flex justify-center gap-6"
+>
+
+<Link href="/prenota">
+
+<button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-8 py-4 rounded-xl text-lg shadow-lg">
+
+Richiedi Preventivo
+
+</button>
+
+</Link>
+
+<Link href="/chisiamo">
+
+<button className="border border-white px-8 py-4 rounded-xl text-white hover:bg-white hover:text-black transition">
+
+Scopri di più
+
+</button>
+
+</Link>
+
+</motion.div>
+
+</div>
+
+</header>
+
 
                 <section className="py-10 bg-black">
 
