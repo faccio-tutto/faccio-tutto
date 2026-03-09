@@ -273,7 +273,7 @@ Perché insieme si è più forti e insieme raggiungeremo il nostro obiettivo.
     
                 {/* Footer fisso in fondo */}
                 <footer className="text-center py-3 bg-gray-800">
-                    <p>&copy; 2025 faccio-tutto.it - Tutti i diritti riservati.</p>
+                    <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
                 </footer>
             </div>
         );

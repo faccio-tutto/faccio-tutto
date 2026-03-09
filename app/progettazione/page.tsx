@@ -326,9 +326,10 @@ const App: React.FC = () => {
         </motion.a>
       </div>
 
-      <footer className="bg-black text-white text-center py-3 mt-6">
-        <p>&copy; 2025 faccio-tutto.it - Tutti i diritti riservati.</p>
-      </footer>
+      {/* Footer fisso in fondo */}
+                <footer className="text-center py-3 bg-gray-800">
+                    <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
+                </footer>
     </div>
   );
 };

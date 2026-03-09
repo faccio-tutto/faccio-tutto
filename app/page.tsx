@@ -497,7 +497,7 @@ Soluzioni per ridurre i consumi e aumentare il valore della tua casa.
 
                 {/* Footer fisso in fondo */}
                 <footer className="text-center py-3 bg-gray-800">
-                    <p>&copy; 2026 faccio-tutto.it - Tutti i diritti riservati.</p>
+                    <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
                 </footer>
             </div>
         );

@@ -270,8 +270,9 @@ Un mondo dove ciò che sei e ciò che sai fare diventa finalmente il tuo vero va
                 </div>
     
                 {/* Footer fisso in fondo */}
+                {/* Footer fisso in fondo */}
                 <footer className="text-center py-3 bg-gray-800">
-                    <p>&copy; 2025 faccio-tutto.it - Tutti i diritti riservati.</p>
+                    <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
                 </footer>
             </div>
         );
