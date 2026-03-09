@@ -476,7 +476,7 @@ investi nel tuo futuro rispettando l'ambiente
           <AppleStyleCarousel
             images={immaginiServizi}
             height={320}
-            speed={2}
+            speed={1.5}
           />
         
         </section>  
