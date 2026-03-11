@@ -441,7 +441,7 @@ const FotovoltaicoPage: React.FC = () => {
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="relative mt-70 z-10 text-8xl font-bold"
+          className="relative mt-40 z-10 text-8xl font-bold"
           style={{ fontSize: "2.3rem", color: "#FBC02D", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Viola
         >
           Installa un impianto fotovoltaico,
@@ -457,6 +457,15 @@ investi nel tuo futuro rispettando l'ambiente
                           >
                             Scegliere un impianto fotovoltaico significa abbracciare un futuro di energia pulita, indipendenza economica e responsabilità ambientale. Immagina di ridurre drasticamente le tue bollette elettriche fino al 90%, producendo energia direttamente dal sole. Un investimento intelligente che si ripaga in pochi anni, grazie alla detrazione fiscale in 10 anni del 50% dell'importo. Unisciti anche tu alla rivoluzione energetica e contribuisci a un mondo più verde per le generazioni future.
                           </motion.p>
+                          <Link href="/preventivoFV" className="relative z-10 mt-8 inline-block">
+
+<button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-8 py-4 rounded-xl text-lg shadow-lg">
+
+Crea il tuo preventivo
+
+</button>
+
+</Link>
       </header>
          {/* Galleria servizi */}
         <section className="bg-black py-20">

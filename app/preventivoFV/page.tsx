@@ -6,6 +6,7 @@ import React, { useMemo, useState, useEffect, FC } from "react";
 interface Inverter {
   id: string;
   brand: string;
+  modello?: string;
   powerKw: number;
   price: number;
 }
@@ -13,7 +14,8 @@ interface Inverter {
 interface Modulo {
   id: string;
   brand: string;
-  powerW: number; // Watt
+  modello?: string;
+  powerW: number;
   price: number;
 }
 
@@ -41,7 +43,8 @@ interface ListiniData {
 // --- CONFIGURAZIONE COSTANTI (Nessuna modifica) ---
 const IVA_RATE = 0.22;
 const PNRR_MAX = 1500; 
-const LABOUR_AND_WIRING_COST_PER_KWP = 200; 
+const LABOUR_AND_WIRING_COST_PER_KWP = 286; 
+const DOCUMENTATION_COST = 250; // costo fisso pratiche e documentazione
 const DEFAULT_SELECTION_ID = "none"; 
 
 const PvEstimator: FC = () => {
@@ -55,6 +58,7 @@ const PvEstimator: FC = () => {
   const [selectedInverter, setSelectedInverter] = useState(DEFAULT_SELECTION_ID);
   const [selectedModulo, setSelectedModulo] = useState(DEFAULT_SELECTION_ID);
   const [moduleCount, setModuleCount] = useState<number>(0);
+  const [batteryQuantity, setBatteryQuantity] = useState<number>(1);
   const [selectedBatteria, setSelectedBatteria] = useState(DEFAULT_SELECTION_ID); 
   const [selectedStruttura, setSelectedStruttura] = useState(DEFAULT_SELECTION_ID);
   const [applyVAT, setApplyVAT] = useState<boolean>(true);
@@ -65,31 +69,46 @@ const PvEstimator: FC = () => {
     const fetchData = () => {
       const data: ListiniData = {
         inverter: [
-          { id: "inv1", brand: "Huawei", powerKw: 5, price: 535.00 },
-          { id: "inv2", brand: "Huawei", powerKw: 6, price: 700.00 }, 
-          { id: "inv3", brand: "Deye monofase", powerKw: 6, price: 900.00 }, 
-          { id: "inv4", brand: "Unical", powerKw: 6, price: 1150.00 },  
-          { id: "inv5", brand: "Fronius", powerKw: 6, price: 1480.00 }, 
-          { id: "inv6", brand: "SMA", powerKw: 8, price: 2800.00 }, 
+          { id: "inv1", brand: "Huawei", modello: "SUN2000-M5", powerKw: 5, price: 535.00 },
+          { id: "inv2", brand: "Huawei", modello: "SUN2000-M6", powerKw: 6, price: 700.00 }, 
+          { id: "inv3", brand: "Deye", modello: "SUN-6K-SG04LP1", powerKw: 6, price: 900.00 }, 
+          { id: "inv4", brand: "Unical", modello: "Hybrid 6K", powerKw: 6, price: 1280.00 },  
+          { id: "inv5", brand: "Fronius", modello: "Gen24 Plus", powerKw: 6, price: 1699.00 }, 
+          { id: "inv6", brand: "SMA", modello: "Sunny Boy Smart Energy", powerKw: 6, price: 1500.00 }, 
+          { id: "inv7", brand: "Solis", modello: "S6 Hybrid", powerKw: 6, price: 1180.00 },
+          { id: "inv8", brand: "Zucchetti Easy power - all in one", modello: "HYD 6000 ZP1", powerKw: 6, price: 1400.00 },
+          { id: "inv9", brand: "Zucchetti ZCS Azzurro", modello: "1PH HYD 6000-ZSS HP", powerKw: 6, price: 1300.00 },
+          { id: "inv10", brand: "WECO", modello: "5K0 SMART EU All in One", powerKw: 6, price: 1400.00 },
+          { id: "bat11", brand: "CanadianSolar", modello: "EP CUBE", powerKw: 6, price: 1500.00 },
         ],
         moduli: [
-          { id: "mod1", brand: "JA Solar", powerW: 430, price: 99.00 }, 
-          { id: "mod2", brand: "Trina", powerW: 450, price: 108.00 }, 
-          { id: "mod3", brand: "Canadian Solar", powerW: 460, price: 115.00 }, 
+          { id: "mod1", brand: "Trina", modello: "Vertex S+", powerW: 450, price: 70.00 }, 
+          { id: "mod2", brand: "Canadian Solar", modello:"TOPHiKu6 CS6.2-48TD",powerW: 460, price: 77.00 }, 
+          { id: "mod3", brand: "Peimar", modello:"OR10H500MNDB-FB",powerW: 500, price: 84.00 }, 
+          { id: "mod4", brand: "JA Solar", modello: "JAM60D40-500/LB", powerW: 500, price: 85.00 }, 
+          
+          
         ],
         batterie: [
           { id: "bat1", brand: "Huawei", modello: "Luna", capacityKwh: 5, price: 2250.00 }, 
           { id: "bat2", brand: "BYD", capacityKwh: 5, price: 2500.00 }, 
           { id: "bat3", brand: "Fronius", modello: "Reserva", capacityKwh: 9.5, price: 4160.00 },
-          { id: "bat4", brand: "V-Tac", capacityKwh: 9.6, price: 2110.00 }, 
+          { id: "bat4", brand: "V-Tac", capacityKwh: 9.6, price: 1800.00 }, 
           { id: "bat5", brand: "Unical", capacityKwh: 10.24, price: 3170.00 }, 
           { id: "bat6", brand: "Huawei", modello: "Luna", capacityKwh: 10, price: 4140.00 }, 
           { id: "bat7", brand: "Huawei", modello: "Luna", capacityKwh: 15, price: 5730.00 }, 
+          { id: "bat8", brand: "Dyness", modello: "Powerbox G2", capacityKwh: 10.24, price: 1700.00 }, 
+          { id: "bat9", brand: "SMA", modello: "Home storage", capacityKwh: 3.28, price: 1350.00 }, 
+          { id: "bat10", brand: "Deye", modello: "RW-F10.2", capacityKwh: 10.24, price: 2650.00 }, 
+          { id: "bat11", brand: "Zucchetti Easy power - all in one", modello: "HV ZBT 5K HTR", capacityKwh: 5.12, price: 1540.00 }, 
+          { id: "bat12", brand: "Zucchetti ZCS Azzurro", modello: "LV ZSX5000 S", capacityKwh: 5.12, price: 950.00 }, 
+          { id: "bat13", brand: "WECO", modello: "5K0 SMART HV PRO", capacityKwh: 5.12, price: 1550.00 }, 
+          { id: "bat14", brand: "CanadianSolar", modello: "EP CUBE", capacityKwh: 5.12, price: 1300.00 },
         ],
         strutture: [
-          { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 1103.25 }, 
-          { id: "str2", type: "Tetto piano (zavorrato)", price: 758.98 }, 
-          { id: "str3", type: "Pensilina / Pergolato", price: 939.31 }, 
+          { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 650.00 }, 
+          { id: "str2", type: "Tetto piano (zavorrato)", price: 750.00 }, 
+          { id: "str3", type: "Pensilina / Pergolato", price: 580.00 }, 
         ],
       };
       setInverterList(data.inverter || []);
@@ -108,14 +127,23 @@ const PvEstimator: FC = () => {
   const selectedStrutturaObj: Struttura | undefined | null = selectedStruttura === DEFAULT_SELECTION_ID ? null : strutturaList.find(b => b.id === selectedStruttura); 
 
   const filteredBatteriaList = useMemo(() => {
-    if (!selectedInverterObj) return []; 
-    const inverterBrand = selectedInverterObj.brand;
-    const compatibleBrands: string[] = [inverterBrand]; 
-    if (inverterBrand === "Deye monofase") {
-      compatibleBrands.push("V-Tac");
-    } 
-    return batteriaList.filter(b => compatibleBrands.includes(b.brand));
-  }, [selectedInverterObj, batteriaList]);
+  if (!selectedInverterObj) return [];
+
+  const inverterBrand = selectedInverterObj.brand;
+  const compatibleBrands: string[] = [inverterBrand];
+
+  if (inverterBrand === "Deye ibrido") {
+    compatibleBrands.push("V-Tac");
+    compatibleBrands.push("Deye");
+  }
+
+  if (inverterBrand === "Solis") {
+    compatibleBrands.push("Dyness");
+  }
+
+  return batteriaList.filter(b => compatibleBrands.includes(b.brand));
+
+}, [selectedInverterObj, batteriaList]);
 
   useEffect(() => {
     if (selectedBatteria === DEFAULT_SELECTION_ID || !selectedInverterObj) return; 
@@ -130,21 +158,22 @@ const PvEstimator: FC = () => {
     return +(selectedModuloObj.powerW * moduleCount / 1000).toFixed(2); 
   }, [selectedModuloObj, moduleCount]);
 
-  const prices = useMemo(() => {
-    if (!selectedModuloObj || !selectedInverterObj || !selectedStrutturaObj || modulesTotalKw === 0) {
-        return { modulesPrice: 0, inverterPrice: 0, batteryPrice: 0, structurePrice: 0, materialCost: 0, labourAndWiringPrice: 0, subtotal: 0, iva: 0, total: 0 };
-    }
-    const modulesPrice = selectedModuloObj.price * moduleCount; 
-    const inverterPrice = selectedInverterObj.price;
-    const batteryPrice = selectedBatteriaObj ? selectedBatteriaObj.price : 0;
-    const structurePrice = selectedStrutturaObj.price; 
-    const materialCost = modulesPrice + inverterPrice + batteryPrice + structurePrice;
-    const labourAndWiringPrice = modulesTotalKw * LABOUR_AND_WIRING_COST_PER_KWP; 
-    const subtotal = materialCost + labourAndWiringPrice;
-    const iva = subtotal * IVA_RATE;
-    const total = subtotal + iva;
-    return { modulesPrice, inverterPrice, batteryPrice, structurePrice, materialCost, labourAndWiringPrice, subtotal, iva, total };
-  }, [selectedModuloObj, moduleCount, selectedInverterObj, selectedBatteriaObj, selectedStrutturaObj, modulesTotalKw]);
+const prices = useMemo(() => {
+  if (!selectedModuloObj || !selectedInverterObj || !selectedStrutturaObj || modulesTotalKw === 0) {
+    return { modulesPrice: 0, inverterPrice: 0, batteryPrice: 0, structurePrice: 0, materialCost: 0, labourAndWiringPrice: 0, documentationCost: 0, subtotal: 0, iva: 0, total: 0 };
+  }
+  const modulesPrice = selectedModuloObj.price * moduleCount; 
+  const inverterPrice = selectedInverterObj.price;
+  const batteryPrice = selectedBatteriaObj ? selectedBatteriaObj.price * batteryQuantity : 0;
+  const structurePrice = selectedStrutturaObj.price; 
+  const materialCost = modulesPrice + inverterPrice + batteryPrice + structurePrice;
+  const labourAndWiringPrice = modulesTotalKw * LABOUR_AND_WIRING_COST_PER_KWP; 
+  const documentationCost = DOCUMENTATION_COST;
+  const subtotal = materialCost + labourAndWiringPrice + documentationCost;
+  const iva = subtotal * IVA_RATE;
+  const total = subtotal + iva;
+  return { modulesPrice, inverterPrice, batteryPrice, structurePrice, materialCost, labourAndWiringPrice, documentationCost, subtotal, iva, total };
+}, [selectedModuloObj, moduleCount, selectedInverterObj, selectedBatteriaObj, selectedStrutturaObj, modulesTotalKw, batteryQuantity]);
 
   const errors = useMemo(() => {
     const errs: string[] = [];
@@ -271,7 +300,11 @@ const PvEstimator: FC = () => {
                   className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150"
                 >
                   <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedInverter !== DEFAULT_SELECTION_ID}>Seleziona inverter</option>
-                  {inverterList.map(i => <option key={i.id} value={i.id}>{i.brand} ({i.powerKw} kW) — {formatEuro(i.price)}</option>)}
+                 {inverterList.map(i => 
+<option key={i.id} value={i.id}>
+{i.brand} {i.modello ? `- ${i.modello}` : ""} ({i.powerKw} kW) — {formatEuro(i.price)}
+</option>
+)}
                 </select>
               </label>
 
@@ -284,7 +317,11 @@ const PvEstimator: FC = () => {
                   className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150"
                 >
                   <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedModulo !== DEFAULT_SELECTION_ID}>Seleziona modulo</option>
-                  {moduloList.map(m => <option key={m.id} value={m.id}>{m.brand} ({m.powerW} W) — {formatEuro(m.price)}</option>)}
+                 {moduloList.map(m => 
+<option key={m.id} value={m.id}>
+{m.brand} {m.modello ? `- ${m.modello}` : ""} ({m.powerW} W) — {formatEuro(m.price)}
+</option>
+)}
                 </select>
               </label>
 
@@ -308,23 +345,70 @@ const PvEstimator: FC = () => {
                 </div>
               </div>
 
-              {/* Batteria */}
-              <label className="sm:col-span-2">
-                <span className="text-sm font-medium text-slate-700">Batteria di accumulo (Opzionale)</span>
-                <select 
-                  value={selectedBatteria} 
-                  onChange={e=>setSelectedBatteria(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150"
-                >
-                  <option value={DEFAULT_SELECTION_ID}>Nessuna batteria</option>
-                  {filteredBatteriaList.map(b => <option key={b.id} value={b.id}>{b.brand} ({b.capacityKwh} kWh) — {formatEuro(b.price)}</option>)}
-                </select>
-                {selectedInverterObj && (
-                    <p className="text-xs text-slate-500 mt-1">
-                        Mostra solo batterie compatibili con **{selectedInverterObj.brand}**.
-                    </p>
-                )}
-              </label>
+             {/* Batteria */}
+<div className="sm:col-span-2 grid grid-cols-2 gap-2 items-end">
+
+  <label className="lg:col-span-0">
+    <span className="text-sm font-medium text-slate-700">
+      Batteria di accumulo (Opzionale)
+    </span>
+
+    <select
+      value={selectedBatteria}
+      onChange={e => setSelectedBatteria(e.target.value)}
+      className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500"
+    >
+      <option value={DEFAULT_SELECTION_ID}>Nessuna batteria</option>
+
+      {filteredBatteriaList.map(b => (
+<option key={b.id} value={b.id}>
+{b.brand} {b.modello ? `- ${b.modello}` : ""} ({b.capacityKwh} kWh) — {formatEuro(b.price)}
+</option>
+))}
+
+    </select>
+
+  </label>
+
+  <div className="col-span-1 flex flex-col items-center">
+  <span className="text-sm font-medium text-slate-700">
+    Quantità batterie
+  </span>
+
+  <div className="flex items-center mt-1 border border-slate-300 rounded-md overflow-hidden w-28">
+
+    <button
+      type="button"
+      onClick={() => setBatteryQuantity(q => Math.max(1, q - 1))}
+      disabled={selectedBatteria === DEFAULT_SELECTION_ID}
+      className="w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 disabled:opacity-40"
+    >
+      −
+    </button>
+
+    <div className="flex-1 text-center text-slate-800">
+      {batteryQuantity}
+    </div>
+
+    <button
+      type="button"
+      onClick={() => setBatteryQuantity(q => Math.min(10, q + 1))}
+      disabled={selectedBatteria === DEFAULT_SELECTION_ID}
+      className="w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 disabled:opacity-40"
+    >
+      +
+    </button>
+
+  </div>
+</div>
+
+  {selectedInverterObj && (
+    <p className="text-xs text-slate-500 col-span-2">
+      Mostra solo batterie compatibili con <b>{selectedInverterObj.brand}</b>.
+    </p>
+  )}
+
+</div>
 
               {/* Struttura */}
               <label>
@@ -347,24 +431,49 @@ const PvEstimator: FC = () => {
           {/* Dettaglio Costi */}
           <div className="p-5 rounded-xl bg-slate-50 border border-slate-300 shadow-inner">
             <h3 className="font-bold text-xl text-slate-700 mb-3 border-b pb-2">Dettaglio costi netti (IVA esclusa)</h3>
-            <ul className="text-sm space-y-2">
-              <li className="flex justify-between"><span>Moduli FV ({moduleCount}x):</span> <b>{formatEuro(prices.modulesPrice)}</b></li>
-              <li className="flex justify-between"><span>Inverter:</span> <b>{formatEuro(prices.inverterPrice)}</b></li>
-              <li className="flex justify-between"><span>Batteria:</span> <b>{formatEuro(prices.batteryPrice)}</b></li>
-              <li className="flex justify-between border-b border-slate-200 pb-2"><span>Struttura ({selectedStrutturaObj?.type || 'N/A'}):</span> <b>{formatEuro(prices.structurePrice)}</b></li>
-              
-              <li className="flex justify-between pt-2 font-semibold text-slate-800"><span>Costo Materiali (Totale Netto):</span> <b>{formatEuro(prices.materialCost)}</b></li>
-              
-              <li className="flex justify-between pt-2 border-t border-slate-200 text-sky-700 bg-sky-50 p-2 rounded-md font-semibold">
-                <span>Manodopera/Cablaggio ({LABOUR_AND_WIRING_COST_PER_KWP} €/kWp):</span> 
-                <b className="font-extrabold">{formatEuro(prices.labourAndWiringPrice)}</b>
-              </li>
-              
-              <li className="flex justify-between pt-2 font-extrabold text-lg text-slate-800 border-t border-slate-300">
-                  <span>Subtotale preventivo (Netto):</span> 
-                  <b>{formatEuro(prices.subtotal)}</b>
-              </li>
-            </ul>
+           <ul className="text-sm space-y-2">
+
+  <li className="flex justify-between items-center">
+    <span>Moduli FV ({moduleCount}x)</span>
+    <b>{formatEuro(prices.modulesPrice)}</b>
+  </li>
+
+  <li className="flex justify-between items-center">
+    <span>Inverter</span>
+    <b>{formatEuro(prices.inverterPrice)}</b>
+  </li>
+
+  <li className="flex justify-between items-center">
+   <span>Batteria {selectedBatteriaObj ? `(${batteryQuantity}x)` : ""}</span>
+    <b>{formatEuro(prices.batteryPrice)}</b>
+  </li>
+
+  <li className="flex justify-between items-center border-b border-slate-200 pb-2">
+    <span>Struttura ({selectedStrutturaObj?.type || "N/A"})</span>
+    <b>{formatEuro(prices.structurePrice)}</b>
+  </li>
+
+  <li className="flex justify-between items-center pt-2 font-semibold text-slate-800">
+    <span>Costo materiali (totale)</span>
+    <b>{formatEuro(prices.materialCost)}</b>
+  </li>
+
+  <li className="flex justify-between items-center pt-2 border-t border-slate-200 text-sky-700 bg-sky-50 p-2 rounded-md font-semibold">
+    <span>Manodopera / Cablaggio ({LABOUR_AND_WIRING_COST_PER_KWP} €/kWp)</span>
+    <b>{formatEuro(prices.labourAndWiringPrice)}</b>
+  </li>
+
+  <li className="flex justify-between items-center pt-2 border-t border-slate-200 text-sky-700 bg-sky-50 p-2 rounded-md font-semibold">
+    <span>Pratiche e documentazione</span>
+    <b>{formatEuro(prices.documentationCost)}</b>
+  </li>
+
+  <li className="flex justify-between items-center pt-2 font-extrabold text-lg text-slate-800 border-t border-slate-300">
+    <span>Subtotale preventivo</span>
+    <b>{formatEuro(prices.subtotal)}</b>
+  </li>
+
+</ul>
           </div>
           
           {/* Totale Finale */}

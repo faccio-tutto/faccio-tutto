@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib"; // Rimosso PNG
 import path from 'path'; 
 import fs from 'fs/promises'; 
+import nodemailer from "nodemailer";
+
 
 export async function POST(req: NextRequest) {
   
@@ -72,7 +74,10 @@ export async function POST(req: NextRequest) {
 
     if (body.moduli) {
       const costoTotaleModuli = body.moduli.price * (body.numeroModuli || 0); 
-      page.drawText(`Moduli - ${body.moduli.brand}, ${body.moduli.powerW} W x ${body.numeroModuli} pz : ${formatEuro(costoTotaleModuli)}`, { x: 50, y: cursorY, size: 12, font });
+     page.drawText(
+`Moduli - ${body.moduli.brand} ${body.moduli.modello || ""}, ${body.moduli.powerW} W x ${body.numeroModuli} pz : ${formatEuro(costoTotaleModuli)}`,
+{ x: 50, y: cursorY, size: 12, font }
+);
       cursorY -= 20;
     }
 
@@ -117,6 +122,67 @@ export async function POST(req: NextRequest) {
     // ------------------------------------------
 
     const pdfBytes = await pdfDoc.save();
+    // --- INVIO EMAIL AUTOMATICO CON PREVENTIVO ---
+
+try {
+
+const transporter = nodemailer.createTransport({
+
+host: "smtps.aruba.it",
+port: 465,
+secure: true,
+
+auth: {
+user: process.env.SMTP_USER,
+pass: process.env.SMTP_PASS
+}
+
+});
+
+await transporter.sendMail({
+
+from: `"Configuratore FV" <${process.env.SMTP_USER}>`,
+
+to: "fotovoltaico@faccio-tutto.it",
+
+subject: "Nuovo preventivo generato dal sito",
+
+html: `
+<h2>Nuovo preventivo generato</h2>
+
+<b>Cliente:</b> ${body.cliente}<br>
+<b>Email:</b> ${body.email}<br>
+<b>Data:</b> ${new Date().toLocaleDateString("it-IT")}<br>
+
+<hr>
+
+<b>Inverter:</b> ${body.inverter?.brand || ""} ${body.inverter?.modello || ""}<br>
+<b>Moduli:</b> ${body.moduli?.brand || ""} ${body.moduli?.powerW || ""} W<br>
+<b>Numero moduli:</b> ${body.numeroModuli || 0}<br>
+<b>Batteria:</b> ${body.batteria ? body.batteria.brand + " " + (body.batteria.modello || "") : "Nessuna"}<br>
+<b>Struttura:</b> ${body.struttura?.type || ""}<br>
+
+<hr>
+
+<b>Totale impianto:</b> ${formatEuro(body.totale)}
+`,
+
+attachments: [
+{
+filename: "preventivo-fotovoltaico.pdf",
+content: Buffer.from(pdfBytes)
+}
+]
+
+});
+
+console.log("📧 Email preventivo inviata correttamente");
+
+} catch (mailError) {
+
+console.error("❌ Errore invio email:", mailError);
+
+}
 
     return new NextResponse(Buffer.from(pdfBytes), {
       status: 200,

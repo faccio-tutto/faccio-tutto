@@ -1,6 +1,6 @@
 /* Esempio di stile per un'immagine di sfondo */
 .bg-image {
-    background-image: url('/images/sfondo sito web.png');
+    background-image: url('/images/impianto-fotovoltaico.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
