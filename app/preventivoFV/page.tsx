@@ -325,18 +325,19 @@ const prices = useMemo(() => {
                 </select>
               </label>
 
-              {/* Numero Moduli */}
-              <label>
-                <span className="text-sm font-medium text-slate-700">Numero moduli</span>
-                <input 
-                  type="number" 
-                  value={moduleCount} 
-                  min={0} 
-                  onChange={e=>setModuleCount(Number(e.target.value))} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
-                  placeholder="0"
-                />
-              </label>
+  {/* Numero Moduli */}
+  <label>
+    <span className="text-sm font-medium text-slate-700">Numero moduli</span>
+    <input 
+      type="number"
+      inputMode="numeric"
+      value={moduleCount === 0 ? "" : moduleCount}
+      min={0} 
+      onChange={e => setModuleCount(e.target.value === "" ? 0 : Number(e.target.value))}
+      className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
+      placeholder="0"
+    />
+  </label>
               
               {/* Riepilogo Potenza Totale */}
               <div className="lg:col-span-3 mt-1">
