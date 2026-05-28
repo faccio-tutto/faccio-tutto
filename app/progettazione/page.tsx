@@ -92,7 +92,7 @@ export default function App() {
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8, delay: i * 0.15 }}
-              className="relative h-[60vh] overflow-hidden rounded-2xl"
+              className="relative h-[40vh] overflow-hidden rounded-2xl"
             >
               <Image
                 src={img}
