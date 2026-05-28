@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useMemo, useState, useEffect, FC } from "react";
+import Image from "next/image";
+import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 
 // --- INTERFACCE TYPESCRIPT (Nessuna modifica) ---
 interface Inverter {
@@ -41,7 +43,7 @@ interface ListiniData {
 }
 
 // --- CONFIGURAZIONE COSTANTI (Nessuna modifica) ---
-const IVA_RATE = 0.22;
+const IVA_RATE = 0.10;
 const PNRR_MAX = 1500; 
 const LABOUR_AND_WIRING_COST_PER_KWP = 286; 
 const DOCUMENTATION_COST = 250; // costo fisso pratiche e documentazione
@@ -75,18 +77,20 @@ const PvEstimator: FC = () => {
           { id: "inv4", brand: "Unical", modello: "Hybrid 6K", powerKw: 6, price: 1280.00 },  
           { id: "inv5", brand: "Fronius", modello: "Gen24 Plus", powerKw: 6, price: 1699.00 }, 
           { id: "inv6", brand: "SMA", modello: "Sunny Boy Smart Energy", powerKw: 6, price: 1500.00 }, 
-          { id: "inv7", brand: "Solis", modello: "S6 Hybrid", powerKw: 6, price: 1180.00 },
+          { id: "inv7", brand: "Solis", modello: "S6-EH1P6K-L-PLUS Hybrid", powerKw: 6, price: 1180.00 },
           { id: "inv8", brand: "Zucchetti Easy power - all in one", modello: "HYD 6000 ZP1", powerKw: 6, price: 1400.00 },
           { id: "inv9", brand: "Zucchetti ZCS Azzurro", modello: "1PH HYD 6000-ZSS HP", powerKw: 6, price: 1300.00 },
           { id: "inv10", brand: "WECO", modello: "5K0 SMART EU All in One", powerKw: 6, price: 1400.00 },
           { id: "inv11", brand: "CanadianSolar", modello: "EP CUBE", powerKw: 6, price: 1500.00 },
           { id: "inv12", brand: "Midea", modello: "MHELIOS FLEX-A EA-S6K", powerKw: 6, price: 1100.00 },
+          { id: "inv13", brand: "U can power", modello: "UHome 6K0L", powerKw: 6, price: 1600.00 },
         ],
         moduli: [
-          { id: "mod1", brand: "Trina", modello: "Vertex S+", powerW: 450, price: 70.00 }, 
-          { id: "mod2", brand: "Canadian Solar", modello:"TOPHiKu6 CS6.2-48TD",powerW: 460, price: 77.00 }, 
-          { id: "mod3", brand: "Peimar", modello:"OR10H500MNDB-FB",powerW: 500, price: 84.00 }, 
-          { id: "mod4", brand: "JA Solar", modello: "JAM60D40-500/LB", powerW: 500, price: 85.00 }, 
+          { id: "mod1", brand: "Peimar", modello: "OR10H450MNDB-BF bifacciale", powerW: 450, price: 70.00 }, 
+          { id: "mod2", brand: "Trina", modello: "Vertex S+", powerW: 450, price: 70.00 }, 
+          { id: "mod3", brand: "Canadian Solar", modello:"TOPHiKu6 CS6.2-48TD",powerW: 460, price: 77.00 }, 
+          { id: "mod4", brand: "Peimar", modello:"OR10H500MNDB-FB",powerW: 500, price: 84.00 }, 
+          { id: "mod5", brand: "JA Solar", modello: "JAM60D40-500/LB", powerW: 500, price: 85.00 }, 
           
           
         ],
@@ -106,6 +110,7 @@ const PvEstimator: FC = () => {
           { id: "bat13", brand: "WECO", modello: "5K0 SMART HV PRO", capacityKwh: 5.12, price: 1550.00 }, 
           { id: "bat14", brand: "CanadianSolar", modello: "EP CUBE", capacityKwh: 5.12, price: 1300.00 },
           { id: "bat16", brand: "Midea", modello: "MHELIOS FLEX-A AL10.2-Eo", capacityKwh: 10.24, price: 2720.00 },
+          { id: "bat17", brand: "U can power", modello: "ULB-5120MT", capacityKwh: 5.12, price: 1750.00 },
         ],
         strutture: [
           { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 650.00 }, 
@@ -232,17 +237,32 @@ const prices = useMemo(() => {
   }
   
   return (
-    <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-slate-100 min-h-screen font-sans">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-slate-1000 min-h-screen font-sans">
       <div className="mb-8 text-center border-b pb-4">
-        <h1 className="text-2xl font-extrabold text-slate-800">
+        <h1 className="text-2xl font-extrabold text-slate-100">
           Simulatore di preventivo fotovoltaico ☀️
         </h1>
-        <div className="text-lg font-semibold text-slate-600 mt-1">
+        <div className="text-lg font-semibold text-slate-400 mt-1">
           Configura il tuo impianto e genera un preventivo dettagliato
         </div>
       </div>
 
       <div className="p-6 space-y-8 bg-white rounded-xl shadow-2xl border border-slate-200">
+
+          {/* Navbar Minimal Tesla Style */}
+                <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
+                  <div className="flex items-center gap-6">
+                    <a href="/" className="transition hover:opacity-80">
+                      <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
+                    </a>
+                    <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+                      <span>faccio-tutto.it</span>
+                      <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
+                      <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
+                    </div>
+                  </div>
+                </nav>
+        
         
         {/* MESSAGGI DI ERRORE / VALIDAZIONE */}
         {errors.length > 0 && (
@@ -504,7 +524,7 @@ const prices = useMemo(() => {
                   onChange={e=>setApplyVAT(e.target.checked)} 
                   className="form-checkbox h-5 w-5 text-yellow-300 rounded-sm border-2 border-white bg-sky-700 checked:bg-yellow-400 checked:border-yellow-400 focus:ring-0"
                 />
-                Includi IVA standard ({IVA_RATE*100}%)
+                Includi IVA agevolata ({IVA_RATE*100}%)
               </label>
 
               <button 

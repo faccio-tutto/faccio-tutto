@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import Image from "next/image";
 import {
   BatteryCharging,
   Sun,
@@ -10,6 +11,7 @@ import {
   ArrowRight,
   Activity
 } from "lucide-react";
+import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 
 // --- Database Irraggiamento Giornaliero ---
 const dailyIrradiance_kWh_per_sqm_per_day: { [provinceName: string]: { [month: string]: number } } = {
@@ -273,6 +275,20 @@ export default function CalcolatoreFVPage() {
     return (
         <div className="min-h-screen bg-neutral-950 text-neutral-100 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
+
+                 {/* Navbar Minimal Tesla Style */}
+                            <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
+                              <div className="flex items-center gap-6">
+                                <a href="/" className="transition hover:opacity-80">
+                                  <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
+                                </a>
+                                <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+                                  <span>faccio-tutto.it</span>
+                                  <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
+                                  <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
+                                </div>
+                              </div>
+                            </nav>
                 
                 {/* Header Principale */}
                 <div className="text-center mb-12">

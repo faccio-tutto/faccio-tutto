@@ -74,7 +74,7 @@ export default function EnergyLandingPage() {
       <section className="min-h-screen grid md:grid-cols-2">
         <div className="relative h-[500px] md:h-auto">
           <img
-            src="https://images.unsplash.com/photo-1592833159155-c62df1b65634?q=80&w=2070"
+            src="/images/accumulo.png"
             alt="Accumulo"
             className="w-full h-full object-cover"
           />
@@ -89,9 +89,9 @@ export default function EnergyLandingPage() {
           >
             <BatteryCharging className="w-14 h-14 mb-6 text-blue-400" />
 
-            <h2 className="text-4xl md:text-6xl font-semibold mb-6">
+            <div className="text-4xl md:text-4xl font-semibold mb-6">
               Accumula la tua energia
-            </h2>
+            </div>
 
             <p className="text-gray-300 text-lg leading-relaxed mb-8">
               Sistemi di accumulo intelligenti progettati per ridurre
@@ -109,7 +109,7 @@ export default function EnergyLandingPage() {
       {/* SECTION SOLAR */}
       <section className="relative min-h-screen flex items-center">
         <img
-          src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?q=80&w=2070"
+          src="/images/fotovoltaicoaltaefficienza.png"
           alt="Solar"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -125,9 +125,9 @@ export default function EnergyLandingPage() {
           >
             <Sun className="w-14 h-14 mb-6 text-yellow-400" />
 
-            <h2 className="text-5xl md:text-7xl font-semibold leading-tight mb-8">
+            <div className="text-5xl md:text-4xl font-semibold leading-tight mb-8">
               Fotovoltaico ad alta efficienza
-            </h2>
+            </div>
 
             <p className="text-xl text-gray-200 max-w-2xl mb-10 leading-relaxed">
               Soluzioni avanzate per abitazioni e aziende con gestione
@@ -211,9 +211,9 @@ export default function EnergyLandingPage() {
           viewport={{ once: true }}
           className="relative z-10 px-6"
         >
-          <h2 className="text-5xl md:text-7xl font-semibold mb-8">
+          <div className="text-5xl md:text-4xl font-semibold mb-8">
             Inizia oggi
-          </h2>
+          </div>
 
           <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
             Richiedi una consulenza tecnica gratuita e scopri
@@ -227,12 +227,26 @@ export default function EnergyLandingPage() {
         </motion.div>
       </section>
 
-      {/* Footer */}
-      <footer className="mt-8 p-6 bg-gray-900 text-gray-300">
-        <p className="ml-0">
-          &copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.
-        </p>
-      </footer>
+      <footer
+  className="text-center py-8 bg-white border-t border-neutral-100 text-[11px] text-black font-bold tracking-wider uppercase space-y-2 md:space-y-0 md:space-x-6"
+  style={{ backgroundColor: '#ffffff', borderColor: '#f5f5f5', color: '#000000' }}
+>
+  <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
+
+  <Link
+    href="/privacy"
+    className="hover:opacity-70 transition"
+  >
+    Privacy e Note Legali
+  </Link>
+
+  <Link
+    href="/contatti"
+    className="hover:opacity-70 transition"
+  >
+    Contatti
+  </Link>
+</footer>
     </main>
   );
 }
