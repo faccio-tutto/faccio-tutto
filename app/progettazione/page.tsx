@@ -29,7 +29,7 @@ export default function App() {
       <section className="h-screen snap-start relative flex items-center justify-center overflow-hidden">
 
         <Image
-          src="/images/architetto.png"
+          src="/images/architettura1.png"
           alt="hero"
           fill
           priority
@@ -139,7 +139,7 @@ export default function App() {
       <section className="h-screen snap-start relative flex items-center justify-center">
 
         <Image
-          src="/images/piazza1.jpg"
+          src="/images/spazi1.png"
           alt="progetto"
           fill
           className="object-cover"
