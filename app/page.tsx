@@ -1,505 +1,324 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaWrench, FaPhone, FaEnvelope, FaDraftingCompass, FaSolarPanel, FaPlug, FaDoorOpen, FaInstagramSquare, FaLinkedin } from "react-icons/fa";
+import { FaWrench, FaPhone, FaDraftingCompass, FaSolarPanel, FaWind, FaDoorOpen, FaInstagramSquare, FaLinkedin, FaArrowRight } from "react-icons/fa";
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion'; // Assicurati di aver installato framer-motion
+import { motion, AnimatePresence } from 'framer-motion';
 
+// --- CONTENUTO PRINCIPALE ---
 
-type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
+const MainContent = () => {
+  const [hoveredImage, setHoveredImage] = useState<string | null>(null);
 
-const CustomCardContent: React.FC<CardContentProps> = ({ children, className, ...props }) => (
-    <div className={`card-content ${className}`} {...props}>
-        {children}
-    </div>
-);
+  const servizi = [
+    { id: "progettazione", icon: <FaDraftingCompass />, title: "Architettura", link: "/progettazione" },
+    { id: "fotovoltaico", icon: <FaSolarPanel />, title: "Fotovoltaico", link: "/fotovoltaico" },
+    { id: "infissi", icon: <FaDoorOpen />, title: "Infissi", link: "/infissi" },
+    { id: "climatizzazione", icon: <FaWind />, title: "Climatizzazione", link: "/climatizzazione" },
+    { id: "riparazioni-veloci", icon: <FaWrench />, title: "Riparazioni", link: "/riparazioni-veloci" },
+    { id: "contatti", icon: <FaPhone />, title: "Prenota", link: "/prenota" }
+  ];
 
-type CardProps = React.HTMLAttributes<HTMLDivElement>;
+  const workflow = [
+    { num: "01", title: "Richiesta", desc: "Inviaci la tua esigenza online" },
+    { num: "02", title: "Selezione", desc: "Scegliamo i tecnici migliori" },
+    { num: "03", title: "Preventivo", desc: "Ricevi una quotazione chiara" },
+    { num: "04", title: "Esecuzione", desc: "Lavori eseguiti a regola d'arte" },
+    { num: "05", title: "Feedback", desc: "Valuta il nostro professionista" }
+  ];
 
-const CustomCard: React.FC<CardProps> = ({ children, className, ...props }) => {
+  const postRecenti = [
+    "/images/post 8 maggio architettura.png",
+    "/images/post 10 maggio.png",
+    "/images/post 14 maggio.png",
+    "/images/post 21 maggio.png",
+    "/images/post 29 maggio.png",
+    "/images/post 3 giugno.png",
+  ];
+
   return (
-    <div className={`rounded-lg shadow-md ${className}`} {...props}>
-      {children}
+    <div className="w-full bg-white font-sans antialiased" style={{ backgroundColor: '#ffffff', color: '#171717' }}>
+      
+      {/* Sezione Quick Links */}
+      <div className="border-b border-neutral-100 bg-neutral-50/80 sticky top-0 z-30 backdrop-blur-md" style={{ backgroundColor: '#f9f9f9' }}>
+        <div className="max-w-6xl mx-auto px-6 py-4 overflow-x-auto flex justify-start md:justify-center gap-8 md:gap-12 no-scrollbar">
+          {servizi.map(service => (
+            <Link href={service.link} key={service.id} className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition flex-shrink-0">
+              <span className="text-sm opacity-70">{service.icon}</span>
+              {service.title}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Macro Sezione 1: Progettazione & Spazio */}
+      <section className="bg-white" style={{ backgroundColor: '#ffffff' }}>
+        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6 order-2 lg:order-1">
+            <span className="text-xs font-bold tracking-widest uppercase block" style={{ color: '#a3a3a3' }}>Design & Direzione Lavori</span>
+            <h2 className="text-3xl md:text-5xl font-light tracking-tight leading-tight" style={{ color: '#171717' }}>Progettazione Architettonica</h2>
+            <p className="text-base leading-relaxed max-w-lg" style={{ color: '#404040' }}>
+              Hai bisogno di un progetto per la tua nuova casa o per la tua attività? Affidati ai nostri esperti per ridefinire i tuoi spazi interni ed esterni con soluzioni su misura e cura dei dettagli.
+            </p>
+            <div className="pt-4">
+              <Link href="/progettazione" className="inline-flex items-center gap-2 text-sm font-bold border-b-2 pb-1 hover:opacity-70 transition" style={{ color: '#171717', borderColor: '#171717' }}>
+                Scopri i dettagli <FaArrowRight className="text-xs" />
+              </Link>
+            </div>
+          </div>
+          <div className="relative aspect-video lg:aspect-square w-full bg-neutral-100 rounded-2xl overflow-hidden order-1 lg:order-2 shadow-sm">
+            <Image src="/images/progettazione.png" alt="Progettazione" fill className="object-cover" />
+          </div>
+        </div>
+      </section>
+
+      {/* Macro Sezione 2: Efficienza & Futuro */}
+      <section className="border-y border-neutral-100" style={{ backgroundColor: '#f5f5f5' }}>
+        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="relative aspect-video lg:aspect-square w-full bg-neutral-100 rounded-2xl overflow-hidden shadow-sm">
+            <Image src="/images/energia-verde.png" alt="Risparmio energetico" fill className="object-cover" />
+          </div>
+          <div className="space-y-6">
+            <span className="text-xs font-bold tracking-widest uppercase block" style={{ color: '#a3a3a3' }}>Sostenibilità Energetica</span>
+            <h2 className="text-3xl md:text-5xl font-light tracking-tight leading-tight" style={{ color: '#171717' }}>Impianti Fotovoltaici e Infissi</h2>
+            <p className="text-base leading-relaxed max-w-lg" style={{ color: '#404040' }}>
+              Riduci l'impatto ambientale e abbatti i costi in bolletta. Progettiamo e installiamo impianti fotovoltaici di ultima generazione, impianti di climatizzazione invernale ed estiva uniti ad infissi ad alta efficienza termica per aumentare il valore della tua abitazione.
+            </p>
+            <div className="pt-4">
+              <Link href="/fotovoltaico" className="inline-flex items-center gap-2 text-sm font-bold border-b-2 pb-1 hover:opacity-70 transition" style={{ color: '#171717', borderColor: '#171717' }}>
+                Calcola il risparmio <FaArrowRight className="text-xs" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Macro Sezione 3: Comfort Clima & Aria */}
+      <section className="bg-white" style={{ backgroundColor: '#ffffff' }}>
+        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6 order-2 lg:order-1">
+            <span className="text-xs font-bold tracking-widest uppercase block" style={{ color: '#a3a3a3' }}>Comfort Termico</span>
+            <h2 className="text-3xl md:text-5xl font-light tracking-tight leading-tight" style={{ color: '#171717' }}>Impianti di Climatizzazione</h2>
+            <p className="text-base leading-relaxed max-w-lg" style={{ color: '#404040' }}>
+              Rinfresca d'estate e riscalda d'inverno con la massima efficienza. Ci occupiamo della fornitura, installazione e manutenzione di condizionatori e sistemi di climatizzazione avanzati adatti a ogni stanza della tua casa.
+            </p>
+            <div className="pt-4">
+              <Link href="/climatizzazione" className="inline-flex items-center gap-2 text-sm font-bold border-b-2 pb-1 hover:opacity-70 transition" style={{ color: '#171717', borderColor: '#171717' }}>
+                Richiedi un preventivo <FaArrowRight className="text-xs" />
+              </Link>
+            </div>
+          </div>
+          <div className="relative aspect-video lg:aspect-square w-full bg-neutral-100 rounded-2xl overflow-hidden order-1 lg:order-2 shadow-sm">
+            {/* Nota: Ricordati di aggiungere una foto adatta o lasciare quella generica se preferisci */}
+            <Image src="/images/climatizzazione.png" alt="Impianti di Climatizzazione" fill className="object-cover" />
+          </div>
+        </div>
+      </section>
+
+      {/* Sezione Statistiche */}
+      <section className="bg-neutral-950 text-white py-24 border-t border-neutral-900" style={{ backgroundColor: '#0a0a0a' }}>
+        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+          {[
+            { val: "24h", label: "Tempo di Risposta" },
+            { val: "100+", label: "Interventi Completati" },
+            { val: "97%", label: "Clienti Soddisfatti" },
+            { val: "1", label: "Unico Referente" }
+          ].map((stat, i) => (
+            <div key={i} className="space-y-2">
+              <div className="text-4xl md:text-6xl font-light tracking-tight text-white">{stat.val}</div>
+              <p className="text-xs text-neutral-400 font-bold tracking-wider uppercase">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Sezione Workflow Lineare */}
+      <section className="bg-white" style={{ backgroundColor: '#ffffff' }}>
+        <div className="max-w-5xl mx-auto px-6 py-24 md:py-32 space-y-16">
+          <div className="text-center space-y-3">
+            <h3 className="text-2xl md:text-4xl font-light tracking-tight" style={{ color: '#171717' }}>Efficienza dall'inizio alla fine</h3>
+            <p className="text-sm max-w-md mx-auto" style={{ color: '#737373' }}>Un ecosistema studiato per eliminare stress, attese e burocrazia.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-5 gap-8">
+            {workflow.map((step, index) => (
+              <div key={index} className="space-y-3 relative group">
+                <div className="text-3xl font-light text-neutral-300 group-hover:text-neutral-900 transition duration-300">{step.num}</div>
+                <div className="h-[2px] bg-neutral-100 w-full mb-4" />
+                <h4 className="text-sm font-bold" style={{ color: '#171717' }}>{step.title}</h4>
+                <p className="text-xs leading-relaxed" style={{ color: '#525252' }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Galleria Post Informativi */}
+      <section className="border-t border-neutral-100 py-24" style={{ backgroundColor: '#f5f5f5' }}>
+        <div className="max-w-6xl mx-auto px-6 space-y-12">
+          <div className="text-center">
+            <span className="text-xs font-bold tracking-widest uppercase block mb-2" style={{ color: '#a3a3a3' }}>Aggiornamenti</span>
+            <p className="text-2xl font-light" style={{ color: '#171717' }}>Ultimi approfondimenti dal network</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {postRecenti.map((src, index) => (
+              <div
+                key={index}
+                className="cursor-pointer overflow-hidden rounded-xl border border-neutral-200 shadow-sm bg-white aspect-square relative group"
+                onMouseEnter={() => setHoveredImage(src)}
+                onMouseLeave={() => setHoveredImage(null)}
+              >
+                <Image src={src} alt={`Approfondimento ${index + 1}`} fill className="object-cover group-hover:scale-105 transition duration-300" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Box */}
+      <section className="bg-white py-32 text-center space-y-6 border-t border-neutral-100">
+        <h3 className="text-3xl md:text-5xl font-light tracking-tight" style={{ color: '#171717' }}>Gestisci la tua casa in modo intelligente</h3>
+        <p className="text-sm max-w-sm mx-auto" style={{ color: '#525252' }}>Richiedi un preventivo gratuito per interventi tecnici, infissi, impianti fotovoltaici e di climatizzazione invernale ed estiva</p>
+        <div className="pt-4 flex justify-center gap-4">
+          <Link href="/prenota">
+            <button className="hover:bg-neutral-800 text-white font-bold px-10 py-3.5 rounded-full text-xs uppercase tracking-widest transition shadow-sm" style={{ backgroundColor: '#171717' }}>
+              Contattaci ora
+            </button>
+          </Link>
+        </div>
+      </section>
+
+      {/* Modal di Ingrandimento */}
+      <AnimatePresence>
+        {hoveredImage && (
+          <div className="fixed inset-0 bg-neutral-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              className="bg-white p-2 shadow-2xl rounded-2xl max-w-md w-full"
+            >
+              <Image src={hoveredImage} alt="Anteprima" width={500} height={500} className="rounded-xl object-contain w-full h-auto" />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
-type ButtonProps = {
-    children: React.ReactNode;
-    className?: string;
-    variant?: "ghost" | "default" | string;
-    size?: "icon" | string;
-    [key: string]: any;
-};
+// --- PAGINA APERTURA (HERO FULL-SCREEN STILE TESLA) ---
 
-const Button: React.FC<ButtonProps> = ({ children, className, variant, size, ...props }) => {
-    let baseClasses = "inline-flex items-center justify-start rounded-md text-sm font-bold transition-colors";
-
-    if (variant === "ghost") {
-        baseClasses += " hover:bg-gray-100";
-    } else if (variant === "default") {
-        baseClasses += " bg-yellow-500 text-black hover:bg-yellow-600";
-    } else {
-        baseClasses += " bg-white text-gray-900 hover:bg-gray-100";
-    }
-
-    if (size === "icon") {
-        baseClasses += " h-9 w-9 p-0";
-    } else {
-        baseClasses += " px-4 py-2"; // Ridotto il padding per contenere il testo
-    }
-
-    baseClasses = cn(baseClasses, className);
-
-    return (
-        <button className={baseClasses} {...props}>
-            {children}
-        </button>
-    );
-};
-
-const MainContent = () => {
-    const heroTitle = "Progettazione, Riparazioni, Installazioni";
-    const coloredTitle = heroTitle.split(', ').flatMap((phrase, index) => {
-        const words = phrase.split(' ');
-        return words.map((word, wordIndex) => (
-  <React.Fragment key={`${index}-${wordIndex}`}>
-    <span className={
-      index === 0 ? 'text-purple-500' :
-      index === 1 ? 'text-orange-500' :
-      index === 2 ? 'text-yellow-500' :
-      'text-white'
-    }>
-      {word}
-    </span>
-    {wordIndex < words.length - 1 && ' '}
-  </React.Fragment>
-));
-    });
-
-        const [hoveredImages, setHoveredImages] = React.useState<{ [key: number]: string | null }>({});
-        const isImageHovered = Object.values(hoveredImages).some(image => image);
-        const immaginiGalleria = [
-  "/images/progettazione.png",
-  "/images/energia-verde.png",
-  "/images/riparazione-elettrodomestici.png",
-  "/images/piccole-riparazioni.png",
-  "/images/post 8 maggio architettura.png",
-  "/images/post 10 maggio.png",
-];
-    
-        return (
-             <div className="flex flex-col lg:flex-row justify-between gap-8 w-full px-4 pb-48">
-                {/* Servizi - NUOVI PULSANTI */}
-                <aside className="h-fit w-full md:w-1/4 lg:w-2/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
-          <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
-            {[{
-              id: "progettazione",
-              icon: <FaDraftingCompass className="text-3xl mb-0 text-purple-500" />,
-              title: "Progettazione architettonica",
-              link: "/progettazione"
-            }, {
-              id: "fotovoltaico",
-              icon: <FaSolarPanel className="text-3xl mb-0 text-yellow-500" />,
-              title: "Impianti fotovoltaici",
-              link: "/fotovoltaico"
-            }, {
-              id: "infissi",
-              icon: <FaDoorOpen className="text-3xl mb-0 text-orange-900" />,
-              title: "Vendita e installazione infissi",
-              link: "/infissi"
-            }, {
-              id: "riparazione-elettrodomestici",
-              icon: <FaPlug className="text-3xl mb-0 text-orange-500" />,
-              title: "Riparazione elettrodomestici",
-              link: "/riparazione-elettrodomestici"
-            }, {
-              id: "riparazioni-veloci",
-              icon: <FaWrench className="text-3xl mb-0 text-blue-500" />,
-              title: "Riparazioni veloci",
-              link: "/riparazioni-veloci"
-            }, {
-              id: "contatti",
-              icon: <FaPhone className="text-3xl mb-0 text-green-500" />,
-              title: "Prenota subito",
-              link: "/prenota"
-            }].map(service => (
-                <Link href={service.link} key={service.id} className="block transform transition duration-300 hover:scale-105 w-full">
-                    <CustomCard className="bg-white border border-gray-200 p-0"> {/* Aggiunto bg-white, border e p-0 qui */}
-                        <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                            <div className="rounded-full p-3 shadow-md bg-white">
-                                {service.icon}
-                            </div>
-                            <h3 className={`text-sm font-semibold mt-2 text-gray-800`}>{service.title}</h3>
-                        </CustomCardContent>
-                    </CustomCard>
-                </Link>
-            ))}
+const HomePage = () => {
+  return (
+    <div className="min-h-screen flex flex-col bg-white antialiased font-sans" style={{ backgroundColor: '#ffffff' }}>
+      
+      {/* Navbar Minimal Tesla Style */}
+      <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
+        <div className="flex items-center gap-6">
+          <a href="/" className="transition hover:opacity-80">
+            <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
+          </a>
+          <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+            <span>faccio-tutto.it</span>
+            <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
+            <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
           </div>
-        </aside>
-    
-                {/* Colonna centrale (Hero Section e testo) */}
-                <div className="w-full lg:w-1/1 flex flex-col items-center mt-8 md:mt-0">
-                    <section className="relative text-center w-full bg-gray-200 p-4 rounded-lg shadow-lg">
-            <div className="bg-black bg-opacity-50 p-4 md:p-6 flex flex-col items-center">
-                <div className="text-green-400 text-xl md:text-xl font-bold mb-4"><strong>SCOPRI TUTTO QUELLO CHE POSSIAMO OFFRIRTI</strong></div>
-                <section className="bg-black bg-opacity-80 text-gray-600 rounded-lg shadow-lg p-6 mt-0">
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-    
-    {/* Progettazione */}
-    <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/progettazione.png" alt="Progettazione" width={300} height={300} className="rounded shadow-md object-cover" />
-      <div className="text-gray-200 text-lg text-center font-medium">
-        Hai bisogno di un progetto per la tua casa o per la tua nuova attività? Affidati ai nostri esperti in progettazione architettonica e direzione lavori.
-      </div>
-    </div>
+        </div>
 
-    {/* Risparmio energetico */}
-    <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/energia-verde.png" alt="Risparmio energetico" width={300} height={300} className="rounded shadow-md object-cover" />
-      <div className="text-gray-200 text-lg text-center font-medium">
-        Vuoi risparmiare energia e prenderti cura dell’ambiente? Scopri le nostre soluzioni con impianti fotovoltaici e infissi ad alta efficienza.
-      </div>
-    </div>
-
-    {/* Riparazione elettrodomestici */}
-    <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/riparazione-elettrodomestici.png" alt="Riparazione piccoli elettrodomestici" width={300} height={300} className="rounded shadow-md object-cover" />
-      <div className="text-gray-200 text-lg text-center font-medium">
-        Sei affezionato ai tuoi oggetti e preferisci ripararli piuttosto che buttarli? Ci occupiamo della riparazione di piccoli elettrodomestici con competenza e attenzione.
-      </div>
-    </div>
-
-    {/* Piccole riparazioni domestiche */}
-    <div className="flex flex-col items-center gap-4"> {/* Modificato in flex-col */}
-      <Image src="/images/piccole-riparazioni.png" alt="Riparazioni domestiche" width={300} height={300} className="rounded shadow-md object-cover" />
-      <div className="text-gray-200 text-lg text-center font-medium">
-        Cerchi qualcuno per piccole riparazioni in casa, ma nessuno è disponibile? Con <strong>faccio-tutto.it</strong> trovi anche chi si occupa degli interventi più semplici ma importanti.
-      </div>
-    </div>
-  </div>
-
-  <div className="mt-16 text-center">
-    <div className="text-xl font-bold text-green-400 mb-2"><strong>UN SOLO RIFERIMENTO PER OGNI TUA ESIGENZA</strong></div>
-    <div className="text-xl text-gray-300 mb-4">
-      Progettazione, installazioni, riparazioni e risparmio energetico: <br/><strong>faccio-tutto.it</strong> è il tuo punto di riferimento per servizi affidabili e su misura.
-    </div>
-  </div>
-  
-</section>
-
-<section className="bg-gray-400 py-20">
-
-<div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-10 text-center">
-
-<div>
-<div className="text-4xl font-bold text-yellow-500">24h</div>
-<p>Risposta rapida</p>
-</div>
-
-<div>
-<div className="text-4xl font-bold text-purple-500">100+</div>
-<p>Interventi realizzati</p>
-</div>
-
-<div>
-<div className="text-4xl font-bold text-green-500">97%</div>
-<p>Clienti soddisfatti</p>
-</div>
-
-<div>
-<div className="text-4xl font-bold text-orange-500">1</div>
-<p>Unico referente</p>
-</div>
-
-</div>
-
-</section>
-{/* New Cards Section */}
-<div className="grid md:grid-cols-5 gap-10 mt-20 text-center">
-
-{[
-{
-img:"/images/richiesta.png",
-title:"Fai la richiesta"
-},
-{
-img:"/images/selezione.png",
-title:"Selezioniamo i migliori tecnici"
-},
-{
-img:"/images/preventivi.png",
-title:"Ricevi il preventivo"
-},
-{
-img:"/images/esecuzione lavori.png",
-title:"Esegui i lavori"
-},
-{
-img:"/images/fine lavori.png",
-title:"Lascia il feedback"
-}
-
-].map((step,index)=>(
-<div key={index} className="group">
-
-<div className="rounded-full overflow-hidden shadow-lg group-hover:scale-110 transition">
-
-<Image
-src={step.img}
-alt={step.title}
-width={180}
-height={180}
-/>
-
-</div>
-
-<p className="mt-6 font-semibold text-gray-700">
-{step.title}
-</p>
-
-</div>
-))}
-                            </div>
-                            <section className="bg-black text-white py-24 text-center">
-
-<h2 className="text-4xl font-bold mb-6">
-
-Hai bisogno di un tecnico?
-
-</h2>
-
-<p className="text-lg mb-10">
-
-Richiedi subito un preventivo gratuito
-
-</p>
-
-<Link href="/prenota">
-
-<button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-10 py-4 rounded-xl text-lg">
-
-Contattaci ora
-
-</button>
-
-</Link>
-
-</section>
-                        </div>
-                    </section>
-                </div>
-    
-                {/* Colonna di destra (Post recenti) */}
-                <div className="w-full lg:w-1/4 bg-red-500 p-4 rounded-xl shadow-lg space-y-2 mt-8 md:mt-0">
-                    <h3 className="text-lg font-bold text-white text-center">Post recenti</h3>
-                    <div className="grid grid-cols-1 gap-4">
-                        {[
-                            "/images/post 8 maggio architettura.png",
-                            "/images/post 10 maggio.png",
-                            "/images/post 14 maggio.png",
-                            "/images/post 21 maggio.png",
-                            "/images/post 29 maggio.png",
-                            "/images/post 3 giugno.png",
-                        ].map((src, index) => (
-                            <div
-                                key={index}
-                                className="transform transition duration-300 hover:scale-105 cursor-pointer group relative overflow-hidden"
-                                onMouseEnter={() => setHoveredImages(prev => ({ ...prev, [index]: src }))}
-                                onMouseLeave={() => setHoveredImages(prev => ({ ...prev, [index]: null }))}
-                            >
-                                <Image src={src} alt={`Volantino ${index + 1}`} className="rounded-md w-full object-contain" width={500} height={500} layout="responsive" />
-                                {/* Non abbiamo più bisogno del div di ingrandimento qui */}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-    
-                {isImageHovered && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 shadow-2xl rounded-lg z-50"
-                    >
-                        <Image
-                            src={Object.values(hoveredImages).find(image => image) || ""}
-                            alt="Volantino Ingrandito"
-                            width={600}
-                            height={600}
-                            className="rounded-lg object-contain"
-                        />
-                    </motion.div>
-                )}
-            </div>
-        );
-    };
-    
-    const HomePage = () => {
-        const navPaddingX = 'px-6'; // Margine orizzontale del menu
-    
-        return (
-            <div className="min-h-screen flex flex-col">
-                <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
-      <div className="flex items-center gap-1 min-w-[220px]">
-        <a href="/">
-          <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={160} height={160} className="rounded" />
-        </a>
-        <h1 className="text-base sm:text-xl font-normal flex items-center gap-2">
-          faccio-tutto.it
-          <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
-            <FaInstagramSquare className="text-lg sm:text-xl" />
-          </a>
-          <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
-            <FaLinkedin className="text-lg sm:text-xl" />
-          </a>
-        </h1>
-      </div>
-
-      {/* Scrollable menu on small screens */}
-      <ul className="flex gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible w-full sm:w-auto mt-2 sm:mt-0 text-sm sm:text-base">
-        {[
-          { name: "Home", href: "/" },
-          { name: "Mission", href: "/mission" },
-          { name: "Vision", href: "/vision" },
-          { name: "Chi siamo", href: "/chisiamo" },
-          { name: "Affiliazione", href: "/affiliazione" },
-          { name: "Contatti", href: "/contatti" },
-        ].map((link) => (
-          <li key={link.href} className="whitespace-nowrap">
-            <a href={link.href} className="hover:underline">{link.name}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+        {/* Menu di Navigazione */}
+        <ul className="flex gap-6 text-xs font-bold uppercase tracking-widest text-neutral-200">
+          {[
+            { name: "Home", href: "/" },
+            { name: "Chi siamo", href: "/chisiamo" },
+            { name: "Contatti", href: "/contatti" },
+          ].map((link) => (
+            <li key={link.href}>
+              <a href={link.href} className="hover:text-white transition duration-150">{link.name}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
         
-                {/* Hero Image */}
-                <header className="relative min-h-[750px] flex items-center justify-center text-center overflow-hidden">
+      {/* Hero Section */}
+      <header className="relative h-screen w-full flex items-center justify-center text-center px-4 overflow-hidden">
+        <Image src="/sfondo nuovo.png" alt="Sfondo Casa Sostenibile" fill className="object-cover" priority />
+        <div className="absolute inset-0 bg-neutral-950/50" />
 
-{/* background */}
-<Image
-src="/sfondo nuovo.png"
-alt="hero"
-fill
-className="object-cover"
-/>
+        <div className="relative z-10 max-w-3xl space-y-4 pt-12">
+          <motion.h1
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="text-4xl sm:text-6xl font-light text-white tracking-tight leading-tight"
+          >
+            Casa Intelligente, <br /><span className="font-medium text-amber-400">Un Solo Riferimento</span>
+          </motion.h1>
 
-{/* overlay */}
-<div className="absolute inset-0 bg-black/60" />
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-sm sm:text-base text-neutral-200 max-w-md mx-auto tracking-wide font-light"
+          >
+            Progettazione, impianti fotovoltaici, infissi e soluzioni di climatizzazione.
+          </motion.p>
 
-{/* contenuto */}
-<div className="relative z-10 max-w-4xl px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="pt-8 flex flex-col sm:flex-row justify-center gap-4 w-full max-w-xs mx-auto sm:max-w-none"
+          >
+            <Link href="/prenota">
+              <button className="w-full sm:w-auto bg-white hover:bg-neutral-100 font-bold px-12 py-3.5 rounded-full text-xs uppercase tracking-widest transition shadow-md" style={{ color: '#171717' }}>
+                Richiedi Preventivo
+              </button>
+            </Link>
+            <Link href="/chisiamo">
+              <button className="w-full sm:w-auto border-2 border-white hover:bg-white hover:text-black px-12 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest text-white transition duration-200">
+                Scopri di più
+              </button>
+            </Link>
+          </motion.div>
+        </div>
 
-<motion.h1
-initial={{opacity:0,y:-50}}
-animate={{opacity:1,y:0}}
-transition={{duration:0.8}}
-className="text-5xl md:text-7xl font-bold text-white leading-tight"
->
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 text-xs tracking-widest uppercase animate-pulse hidden md:block font-bold">
+          Scorri per esplorare
+        </div>
+      </header>
 
-<span className="text-purple-500">Progettazione</span>
-<br/>
-
-<span className="text-yellow-400">Installazioni</span>
-<br/>
-
-<span className="text-orange-500">Riparazioni</span>
-
-</motion.h1>
-
-<motion.p
-initial={{opacity:0,y:50}}
-animate={{opacity:1,y:0}}
-transition={{delay:0.3}}
-className="mt-8 text-xl text-gray-200"
->
-
-Un unico riferimento per la tua casa
-
-</motion.p>
-
-<motion.div
-initial={{opacity:0}}
-animate={{opacity:1}}
-transition={{delay:0.6}}
-className="mt-10 flex justify-center gap-6"
->
-
-<Link href="/prenota">
-
-<button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-8 py-4 rounded-xl text-lg shadow-lg">
-
-Richiedi un preventivo
-
-</button>
-
-</Link>
-
-<Link href="/chisiamo">
-
-<button className="border border-white px-8 py-4 rounded-xl text-white hover:bg-white hover:text-black transition">
-
-Scopri di più
-
-</button>
-
-</Link>
-
-</motion.div>
-
-</div>
-
-</header>
-
-
-                <section className="py-10 bg-black">
-
-<div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12 text-center">
-
-<div>
-<div className="text-5xl mb-4">⚡</div>
-<div className="text-xl text-gray-400 font-bold mb-2">
-Un solo contatto
-</div>
-<p className="text-gray-400">
-Con faccio-tutto.it hai un unico riferimento per progettazione, installazioni e riparazioni.
-</p>
-</div>
-
-<div>
-<div className="text-5xl mb-4">🛠</div>
-<h3 className="text-xl text-gray-400 font-bold mb-2">
-Professionisti selezionati
-</h3>
-<p className="text-gray-600">
-Collaboriamo solo con tecnici qualificati e verificati.
-</p>
-</div>
-
-<div>
-<div className="text-5xl mb-4">💰</div>
-<h3 className="text-xl text-gray-400 font-bold mb-2">
-Risparmio energetico
-</h3>
-<p className="text-gray-600">
-Soluzioni per ridurre i consumi e aumentare il valore della tua casa.
-</p>
-</div>
-</div>
-</section>
-
-                {/* Contenuto principale con flex-grow */}
-                <div className="flex-grow z-0 py-20" style={{ paddingTop: '20px' }}>
-                    <MainContent />
-                </div>
-
-                {/* Footer fisso in fondo */}
-                <footer className="text-center py-3 bg-gray-800">
-                    <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
-                </footer>
+      {/* Intro Iconica dei Tre Pilastri Fondamentali */}
+      <section className="py-24 text-neutral-300 border-t border-neutral-900" style={{ backgroundColor: '#0a0a0a' }}>
+        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16 text-center">
+          {[
+            { title: "Gestione Unificata", desc: "Un unico manager tecnico dedicato per eliminare l'incomprensione tra professionisti diversi." },
+            { title: "Standard Qualitativi", desc: "Selezioniamo rigorosamente solo artigiani esperti e ingegneri abilitati nel territorio." },
+            { title: "Zero Sprechi", desc: "Ottimizziamo l'efficienza energetica del tuo stabile abbattendo definitivamente i consumi." }
+          ].map((item, i) => (
+            <div key={i} className="space-y-3">
+              <h3 className="text-base font-bold uppercase tracking-wider text-white">{item.title}</h3>
+              <p className="text-sm text-neutral-400 leading-relaxed font-light">{item.desc}</p>
             </div>
-        );
-    };
-    export default HomePage;
+          ))}
+        </div>
+      </section>
+
+      {/* Main Content Render */}
+      <main className="flex-grow bg-white" style={{ backgroundColor: '#ffffff' }}>
+        <MainContent />
+      </main>
+
+      {/* Footer Tesla Style */}
+      <footer className="text-center py-8 bg-white border-t border-neutral-100 text-[11px] text-neutral-400 font-bold tracking-wider uppercase space-y-2 md:space-y-0 md:space-x-6" style={{ backgroundColor: '#ffffff', borderColor: '#f5f5f5' }}>
+        <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
+        <Link href="/privacy" className="hover:text-black transition">Privacy e Note Legali</Link>
+        <Link href="/contatti" className="hover:text-black transition">Contatti</Link>
+      </footer>
+    </div>
+  );
+};
+
+export default HomePage;
