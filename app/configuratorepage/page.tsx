@@ -11,28 +11,25 @@ import {
   Instagram,
   Linkedin,
 } from "lucide-react";
+import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 
 export default function EnergyLandingPage() {
   return (
     <main className="bg-black text-white overflow-hidden">
 
-   {/* Navbar */}
-     <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
-  <div className="flex items-center gap-1 min-w-[220px]">
-    <a href="/">
-      <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={160} height={160} className="rounded" />
-    </a>
-    <h1 className="text-base sm:text-xl font-normal flex items-center gap-2">
-      faccio-tutto.it
-      <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
-        <Instagram className="text-lg sm:text-xl" />
-      </a>
-      <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
-        <Linkedin className="text-lg sm:text-xl" />
-      </a>
-    </h1>
-  </div>
-    </nav>
+    {/* Navbar Minimal Tesla Style */}
+        <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
+          <div className="flex items-center gap-6">
+            <a href="/" className="transition hover:opacity-80">
+              <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
+            </a>
+            <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+              <span>faccio-tutto.it</span>
+              <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
+              <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
+            </div>
+          </div>
+        </nav>
 
       {/* HERO */}
       <section className="relative h-screen flex items-center justify-center">

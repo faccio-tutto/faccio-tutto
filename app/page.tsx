@@ -311,12 +311,27 @@ const HomePage = () => {
         <MainContent />
       </main>
 
-      {/* Footer Tesla Style */}
-      <footer className="text-center py-8 bg-white border-t border-neutral-100 text-[11px] text-neutral-400 font-bold tracking-wider uppercase space-y-2 md:space-y-0 md:space-x-6" style={{ backgroundColor: '#ffffff', borderColor: '#f5f5f5' }}>
-        <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
-        <Link href="/privacy" className="hover:text-black transition">Privacy e Note Legali</Link>
-        <Link href="/contatti" className="hover:text-black transition">Contatti</Link>
-      </footer>
+     {/* Footer Tesla Style */}
+<footer
+  className="text-center py-8 bg-white border-t border-neutral-100 text-[11px] text-black font-bold tracking-wider uppercase space-y-2 md:space-y-0 md:space-x-6"
+  style={{ backgroundColor: '#ffffff', borderColor: '#f5f5f5', color: '#000000' }}
+>
+  <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
+
+  <Link
+    href="/privacy"
+    className="hover:opacity-70 transition"
+  >
+    Privacy e Note Legali
+  </Link>
+
+  <Link
+    href="/contatti"
+    className="hover:opacity-70 transition"
+  >
+    Contatti
+  </Link>
+</footer>
     </div>
   );
 };
