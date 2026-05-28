@@ -1,337 +1,210 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { FaBuilding, FaDraftingCompass, FaDoorOpen, FaPlug, FaWrench, FaPhone, FaSolarPanel } from "react-icons/fa";
-import { TfiEmail } from "react-icons/tfi";
-import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
+import React, { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FaWrench, FaPhone, FaDraftingCompass, FaSolarPanel, FaWind, FaDoorOpen, FaInstagramSquare, FaLinkedin, FaArrowRight } from "react-icons/fa";
+import { cn } from '@/lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
-// Importa cn, CustomCard e CustomCardContent se sono definiti altrove, ad es. in un file di componenti riutilizzabili.
-// Per questo esempio, li definirò qui per completezza, ma idealmente dovrebbero essere importati.
-import { cn } from '@/lib/utils'; // Assicurati che questo percorso sia corretto
-
-// Definizione di CustomCardContent (copiato dalla HomePage, per consistenza)
-type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
-const CustomCardContent: React.FC<CardContentProps> = ({ children, className, ...props }) => (
-    // Ho rimosso il padding diretto qui per gestirlo sulla CustomCard se necessario,
-    // o per lasciarlo ereditare dal contenitore.
-    <div className={`card-content ${className}`} {...props}>
-        {children}
-    </div>
-);
-
-// Definizione di CustomCard (copiato dalla HomePage, per consistenza)
-type CardProps = React.HTMLAttributes<HTMLDivElement>;
-const CustomCard: React.FC<CardProps> = ({ children, className, ...props }) => {
-    return (
-        // Ho aggiunto bg-white e border border-gray-300 qui
-        <div className={`rounded-lg shadow-md ${className}`} {...props}>
-            {children}
-        </div>
-    );
-};
-
-const App: React.FC = () => {
-  type HoveredImages = { [key: number]: string | null };
-  const [hoveredImages, setHoveredImages] = useState<HoveredImages>({});
-
-  const projects = [
-    {
-      images: [
-        "/images/obbiettivamente.jpg",
-        "/images/obbiettivamente2.jpg",
-        "/images/obbiettivamente3.jpg"
-      ],
-      title: "Ristrutturazione e interior design",
-      description: "Progetto di ristrutturazione di uno studio fotografico",
-    },
-    {
-      images: [
-        "/images/drago1.jpg",
-        "/images/drago4.jpg",
-        "/images/drago5.jpg"
-      ],
-      title: "Ristrutturazione e interior design",
-      description: "Progetto di ristrutturazione e arredo di un appartamento",
-    },
-    {
-      images: [
-        "/images/piazza1.jpg",
-        "/images/piazza2.jpg",
-        "/images/piazza3.jpg"
-      ],
-      title: "Progettazione",
-      description: "Progettazione di un moderno complesso residenziale",
-    },
-    {
-      images: [
-        "/images/frenk1.jpg",
-        "/images/frenk2.jpg",
-        "/images/frenk3.jpg"
-      ],
-      title: "Ristrutturazione e interior design",
-      description: "Progetto di ristrutturazione e arredo di un appartamento",
-    },
-    {
-      images: [
-        "/images/cri1.jpg",
-        "/images/cri2.jpg",
-        "/images/cri3.jpg"
-      ],
-      title: "Progettazione",
-      description: "Progettazione di una villa moderna",
-    },
-    {
-      images: [
-        "/images/ale1.jpg",
-        "/images/ale2.jpg",
-        "/images/ale3.jpg"
-      ],
-      title: "Ristrutturazione e interior design",
-      description: "Progetto di ristrutturazione di un attico a Palermo",
-    },
-  ];
-
-  const isImageHovered = Object.values(hoveredImages).some(image => image);
-
-
+export default function App() {
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Navbar */}
-            <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
-  <div className="flex items-center gap-1 min-w-[220px]">
-    <a href="/">
-      <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={160} height={160} className="rounded" />
-    </a>
-    <h1 className="text-base sm:text-xl font-normal flex items-center gap-2">
-      faccio-tutto.it
-      <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
-        <FaInstagramSquare className="text-lg sm:text-xl" />
-      </a>
-      <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
-        <FaLinkedin className="text-lg sm:text-xl" />
-      </a>
-    </h1>
-  </div>
+    <div className="h-screen overflow-y-scroll scroll-smooth snap-y snap-mandatory bg-black text-white">
 
-  {/* Scrollable menu on small screens */}
-  <ul className="flex gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible w-full sm:w-auto mt-2 sm:mt-0 text-sm sm:text-base">
-    {[
-      { name: "Home", href: "/" },
-      { name: "Mission", href: "/mission" },
-      { name: "Vision", href: "/vision" },
-      { name: "Chi siamo", href: "/chisiamo" },
-      { name: "Affiliazione", href: "/affiliazione" },
-      { name: "Contatti", href: "/contatti" },
-    ].map((link) => (
-      <li key={link.href} className="whitespace-nowrap">
-        <a href={link.href} className="hover:underline">{link.name}</a>
-      </li>
-    ))}
-  </ul>
-</nav>
-
-      {/* Header */}
-      <header className="text-center py-20 bg-cover bg-center text-white relative" style={{
-        // Immagine di sfondo dell'uomo che ripara elettrodomestici con passione
-        backgroundImage: 'url("/images/architetto.png")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundColor: "#000000", /* Colore di fallback */
-        minHeight: '800px' /* Altezza minima per visualizzare l'immagine */
-      }}>
-        {/* Overlay per migliorare la leggibilità del testo */}
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <motion.h2
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="relative mt-70 z-10 text-8xl font-bold"
-          style={{ fontSize: "2.0rem", color: "#6B46C1", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Viola
-        >
-          Progettazione Architettonica e Direzione Lavori
-        </motion.h2>
-        <motion.p
-                            initial={{ y: 50, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="relative z-10 text-lg mt-10 max-w-2xl mx-auto"
-                            style={{ fontSize: "1.7rem", color: "#E5E7EB", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }} // Grigio chiaro
-                          >
-                            Innovazione e qualità per il tuo edificio ed il tuo spazio
-                          </motion.p>
-      </header>
-
-      <main className="flex flex-col md:flex-row p-4 md:p-8 gap-8">
-
-        {/* Pulsanti laterali a sinistra (Stile corretto) */}
-        <aside className="hidden md:block sticky top-4 h-fit w-full md:w-1/4 lg:w-1/8 xl:w-1/8 z-10 bg-gray-200 p-4 rounded-lg shadow-lg">
-          <div className="bg-white bg-opacity-80 p-4 rounded-lg shadow-lg space-y-4 flex flex-col items-center">
-            {[{
-              id: "progettazione",
-              icon: <FaDraftingCompass className="text-3xl mb-0 text-purple-500" />,
-              title: "Progettazione architettonica",
-              link: "/progettazione"
-            }, {
-              id: "fotovoltaico",
-              icon: <FaSolarPanel className="text-3xl mb-0 text-yellow-500" />,
-              title: "Impianti fotovoltaici",
-              link: "/fotovoltaico"
-            }, {
-              id: "infissi",
-              icon: <FaDoorOpen className="text-3xl mb-0 text-orange-900" />,
-              title: "Vendita e installazione infissi",
-              link: "/infissi"
-            }, {
-              id: "riparazione-elettrodomestici",
-              icon: <FaPlug className="text-3xl mb-0 text-orange-500" />,
-              title: "Riparazione elettrodomestici",
-              link: "/riparazione-elettrodomestici"
-            }, {
-              id: "riparazioni-veloci",
-              icon: <FaWrench className="text-3xl mb-0 text-blue-500" />,
-              title: "Riparazioni veloci",
-              link: "/riparazioni-veloci"
-            }, {
-              id: "contatti",
-              icon: <FaPhone className="text-3xl mb-0 text-green-500" />,
-              title: "Prenota subito",
-              link: "/prenota"
-            }].map(service => (
-                <Link href={service.link} key={service.id} className="block transform transition duration-300 hover:scale-105 w-full">
-                    <CustomCard className="bg-white border border-gray-200 p-0"> {/* Aggiunto bg-white, border e p-0 qui */}
-                        <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                            <div className="rounded-full p-3 shadow-md bg-white">
-                                {service.icon}
-                            </div>
-                            <h3 className={`text-sm font-semibold mt-2 text-gray-800`}>{service.title}</h3>
-                        </CustomCardContent>
-                    </CustomCard>
-                </Link>
-            ))}
-          </div>
-        </aside>
-
-  {/* Contenuto principale che già hai */}
-  <section className="w-full md:w-3/4">
-          <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", color: "white", textAlign: "justify" }}>Progettazione Architettonica</h2>
-          <FaDraftingCompass size={30} className="text-purple-500 mb-2" />
-          <p style={{ fontSize: "1.2rem", color: "white", textAlign: "justify" }}>
-            La progettazione architettonica si configura come il processo creativo e tecnico fondamentale che dà forma all'ambiente costruito. Essa trascende la mera realizzazione di edifici, configurandosi come un'arte applicata che armonizza funzionalità, estetica e sostenibilità. Nel cuore di ogni progetto, l'architetto agisce come un interprete delle esigenze del committente, traducendo desideri e necessità in spazi vivibili e coerenti con il contesto.
-            <br/><br/>
-            Attraverso un approccio olistico, la progettazione architettonica integra molteplici discipline, dall'urbanistica all'ingegneria, dalla scienza dei materiali al design degli interni. L'obiettivo primario è la creazione di ambienti che migliorino la qualità della vita, promuovendo il benessere degli individui e la tutela del patrimonio culturale e ambientale.
-            <br/><br/>
-            Il processo progettuale si articola in diverse fasi, dall'analisi del sito e dello studio di fattibilità alla redazione del progetto esecutivo e alla direzione dei lavori. In ogni fase, l'architetto si avvale di strumenti avanzati, come il Building Information Modeling (BIM), per ottimizzare la progettazione e la gestione del ciclo di vita dell'edificio.
-            <br/><br/>
-            In un'epoca di crescente consapevolezza ambientale, la progettazione architettonica si pone come un'alleata nella lotta al cambiamento climatico. Attraverso l'adozione di principi di bioarchitettura e l'utilizzo di materiali sostenibili, si realizzano edifici a basso impatto ambientale, capaci di integrarsi armoniosamente con l'ecosistema circostante.
-            <br/><br/>
-            In definitiva, la progettazione architettonica è un atto di responsabilità sociale, un impegno a costruire un futuro migliore attraverso la creazione di spazi che ispirino, proteggano e durino nel tempo.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 mt-8">
-            {["/images/building-phase-0.png", "/images/building-phase-1.png", "/images/building-phase-2.png"].map((src, index) => (
-              <Image key={index} src={src} alt={`Phase ${index}`} width={280} height={280} className="rounded-lg shadow-lg" />
-            ))}
-          </div>
-          <div className="mt-12">
-          </div>
-          <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", color: "white", textAlign: "justify" }}>Direzione dei lavori</h2>
-          <FaBuilding size={30} className="text-purple-500 mb-2" />
-          <p style={{ fontSize: "1.2rem", color: "white", textAlign: "justify" }}>
-            La direzione dei lavori rappresenta una fase cruciale nella realizzazione di un progetto architettonico, un'attività che va ben oltre la semplice supervisione del cantiere. Il direttore dei lavori è un professionista che assume la responsabilità di garantire che l'opera sia eseguita in conformità al progetto approvato, nel rispetto delle normative vigenti e delle migliori pratiche costruttive.
-            <br/><br/>
-            Il suo ruolo si estende al controllo della qualità dei materiali e delle lavorazioni, alla verifica del rispetto dei tempi di esecuzione e alla gestione dei costi, prevenendo o mitigando eventuali imprevisti che potrebbero incidere sul budget. Inoltre, il direttore dei lavori funge da interfaccia tra il committente, le imprese esecutrici e gli altri professionisti coinvolti nel progetto, assicurando una comunicazione efficace e una collaborazione sinergica.
-            <br/><br/>
-            Egli è responsabile della redazione dei documenti contabili, della certificazione degli stati di avanzamento dei lavori e della gestione delle eventuali varianti al progetto, garantendo la trasparenza e la tracciabilità di tutte le attività svolte in cantiere. La sua competenza e la sua esperienza sono fondamentali per assicurare che l'opera sia realizzata a regola d'arte, nel rispetto delle aspettative del committente e dei più elevati standard di qualità e sicurezza.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 mt-8">
-            {["/images/direzione3.jpeg", "/images/direzione2.jpeg", "/images/direzione1.jpeg"].map((src, index) => (
-              <Image key={index} src={src} alt={`Phase ${index}`} width={280} height={280} className="rounded-lg shadow-lg" />
-            ))}
-          </div>
-        </section>
-
-        {/* Barra laterale con progetti recenti */}
-        <aside className="w-full md:w-1/4 flex flex-col gap-4 mt-8 md:mt-0">
-          <h3 className="text-lg font-semibold text-gray-300 mb-4">Progetti Recenti</h3>
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className="bg-purple-300 p-4 shadow-md rounded-lg relative group"
-              onMouseEnter={() => setHoveredImages(prev => ({ ...prev, [index]: project.images[0] }))}
-              onMouseLeave={() => setHoveredImages(prev => ({ ...prev, [index]: null }))}
-            >
-              <h3 className="text-lg text-gray-700 mt-2 font-semibold">{project.title}</h3>
-              <div className="flex gap-2 mt-4 overflow-x-auto">
-                {project.images.map((img, imgIndex) => (
-                  <Image
-                    key={imgIndex}
-                    src={img}
-                    alt={`${project.title} ${imgIndex + 1}`}
-                    width={100}
-                    height={75}
-                    className="rounded-lg shadow-lg cursor-pointer hover:scale-110 transition-transform flex-shrink-0"
-                    onMouseEnter={() => setHoveredImages(prev => ({ ...prev, [index]: img }))}
-                  />
-                ))}
+       {/* Navbar Minimal Tesla Style */}
+            <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
+              <div className="flex items-center gap-6">
+                <a href="/" className="transition hover:opacity-80">
+                  <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
+                </a>
+                <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+                  <span>faccio-tutto.it</span>
+                  <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
+                  <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
+                </div>
               </div>
-              <p className="text-sm text-gray-600 mt-2 text-center">{project.description}</p>
-            </div>
-          ))}
-          {isImageHovered && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 shadow-2xl rounded-lg z-50"
-            >
-              <Image src={Object.values(hoveredImages).find(image => image) || ""} alt="Preview" width={600} height={450} className="rounded-lg" />
-            </motion.div>
-          )}
-        </aside>
-      </main>
+            </nav>
 
-      {/* Immagini affiancate */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-8 px-4">
-        <Image
-          src="/images/post 10 maggio.png"
-          alt="Progettazione e direzione lavori"
-          width={550}
-          height={300}
-          className="rounded-xl shadow-xl max-w-full h-auto"
-          priority
-        />
-        <Image
-          src="/images/post 8 maggio architettura.png"
-          alt="Progettazione e direzione lavori"
-          width={550}
-          height={300}
-          className="rounded-xl shadow-xl max-w-full h-auto"
-          priority
-        />
-      </div>
+      {/* HERO */}
+      <section className="h-screen snap-start relative flex items-center justify-center overflow-hidden">
 
-      <div className="text-center my-12">
-        <motion.a
-          href="/contatti"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-xl shadow-xl transition-transform transform hover:scale-105"
+        <Image
+          src="/images/architetto.png"
+          alt="hero"
+          fill
+          priority
+          className="object-cover scale-110"
+        />
+
+        <div className="absolute inset-0 bg-black/60" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="relative z-10 text-center max-w-3xl px-6"
         >
-          <TfiEmail className="text-2xl" />
-          Contattaci
-        </motion.a>
-      </div>
+          <h1 className="text-5xl md:text-7xl font-light tracking-tight">
+            Architettura Essenziale
+          </h1>
 
-      {/* Footer fisso in fondo */}
-                <footer className="text-center py-3 bg-gray-800">
-                    <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
-                </footer>
+          <p className="mt-6 text-white/70 text-lg">
+            Progettazione · Direzione Lavori · Innovazione
+          </p>
+        </motion.div>
+      </section>
+
+      {/* PROGETTAZIONE */}
+      <section className="h-screen snap-start flex items-center justify-center px-6">
+
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 1 }}
+          className="max-w-4xl text-center"
+        >
+          <div className="text-4xl md:text-5xl font-light mb-6">
+            Progettazione Architettonica
+          </div>
+
+          <p className="text-white/60 leading-relaxed text-lg">
+            La progettazione architettonica non è solo disegno, ma la
+            trasformazione dello spazio in esperienza. Ogni progetto nasce
+            dall’equilibrio tra funzione, estetica e sostenibilità.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* GALLERY CINEMATICA */}
+      <section className="h-screen snap-start flex items-center justify-center">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-8xl px-6">
+
+          {[
+            "/images/building-phase-0.png",
+            "/images/building-phase-1.png",
+            "/images/building-phase-2.png",
+          ].map((img, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.9, y: 40 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: i * 0.15 }}
+              className="relative h-[60vh] overflow-hidden rounded-2xl"
+            >
+              <Image
+                src={img}
+                alt=""
+                fill
+                className="object-cover scale-110 hover:scale-125 transition duration-700"
+              />
+            </motion.div>
+          ))}
+
+        </div>
+      </section>
+
+      {/* DIREZIONE LAVORI */}
+      <section className="h-screen snap-start relative flex items-center justify-center">
+
+        <Image
+          src="/images/direzione10.png"
+          alt="direzione lavori"
+          fill
+          className="object-cover"
+        />
+
+        <div className="absolute inset-0 bg-black/70" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative z-10 text-center max-w-3xl px-6"
+        >
+          <div className="text-5xl font-light">
+            Direzione Lavori
+          </div>
+
+          <p className="mt-6 text-white/60 text-lg">
+            Controllo, precisione e responsabilità in ogni fase del cantiere.
+            Garantiamo qualità e rispetto del progetto.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* IMPATTO VISIVO */}
+      <section className="h-screen snap-start relative flex items-center justify-center">
+
+        <Image
+          src="/images/piazza1.jpg"
+          alt="progetto"
+          fill
+          className="object-cover"
+        />
+
+        <div className="absolute inset-0 bg-black/70" />
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="relative z-10 text-center max-w-3xl px-6"
+        >
+          <div className="text-5xl font-light">
+            Spazi che prendono forma
+          </div>
+
+          <p className="mt-6 text-white/60">
+            Ogni progetto è una trasformazione concreta dell’idea in realtà.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* CTA */}
+      <section className="h-screen snap-start flex items-center justify-center">
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
+        >
+          <div className="text-4xl md:text-5xl font-light mb-8">
+            Iniziamo il tuo progetto
+          </div>
+
+          <a
+            href="/contatti"
+            className="px-10 py-4 bg-white text-black rounded-full hover:scale-105 transition"
+          >
+            Contattaci
+          </a>
+        </motion.div>
+      </section>
+
+      <footer
+  className="text-center py-8 bg-white border-t border-neutral-100 text-[11px] text-black font-bold tracking-wider uppercase space-y-2 md:space-y-0 md:space-x-6"
+  style={{ backgroundColor: '#ffffff', borderColor: '#f5f5f5', color: '#000000' }}
+>
+  <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
+
+  <Link
+    href="/privacy"
+    className="hover:opacity-70 transition"
+  >
+    Privacy e Note Legali
+  </Link>
+
+  <Link
+    href="/contatti"
+    className="hover:opacity-70 transition"
+  >
+    Contatti
+  </Link>
+</footer>
+
     </div>
   );
-};
-
-export default App;
+}
