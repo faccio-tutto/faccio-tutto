@@ -1,131 +1,317 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { TfiEmail } from "react-icons/tfi";
 import Image from "next/image";
 import Link from "next/link";
-import { FaUserTie, FaBusinessTime, FaHandshake } from "react-icons/fa";
-import { FaInstagramSquare } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
 import Head from "next/head";
 
+import {
+  FaInstagramSquare,
+  FaLinkedin,
+  FaArrowRight,
+  FaUserTie,
+  FaBusinessTime,
+} from "react-icons/fa";
+
 export default function AffiliazionePage() {
-return (
-  <>
-    <Head>
-      <title>Affiliazione | faccio-tutto.it</title>
-      <meta
-        name="description"
-        content="Scopri come affiliarti a faccio-tutto.it: vantaggi, supporto tecnico e opportunità per aziende e privati."
-      />
-      <link rel="canonical" href="https://www.faccio-tutto.it/affiliazione" />
-    </Head>
-    <div className="min-h-screen bg-black text-white p-0">
-      {/* Navbar */}
-      <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
-        <div className="flex items-center gap-1 min-w-[220px]">
-          <a href="/">
-            <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={160} height={160} className="rounded" />
+  return (
+    <>
+      <Head>
+        <title>Affiliazione | faccio-tutto.it</title>
+
+        <meta
+          name="description"
+          content="Entra nella rete professionale di faccio-tutto.it."
+        />
+      </Head>
+
+      <main className="bg-black text-white overflow-hidden">
+
+        {/* Navbar Minimal Tesla Style */}
+      <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
+        <div className="flex items-center gap-6">
+          <a href="/" className="transition hover:opacity-80">
+            <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
           </a>
-          <h1 className="text-base sm:text-xl font-normal flex items-center gap-2">
-            faccio-tutto.it
-            <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
-              <FaInstagramSquare className="text-lg sm:text-xl" />
-            </a>
-            <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
-              <FaLinkedin className="text-lg sm:text-xl" />
-            </a>
-          </h1>
+          <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+            <span>faccio-tutto.it</span>
+            <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
+            <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
+          </div>
         </div>
 
-        {/* Scrollable menu on small screens */}
-        <ul className="flex gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible w-full sm:w-auto mt-2 sm:mt-0 text-sm sm:text-base">
-          {[
-            { name: "Home", href: "/" },
-            { name: "Mission", href: "/mission" },
-            { name: "Vision", href: "/vision" },
-            { name: "Chi siamo", href: "/chisiamo" },
-            { name: "Affiliazione", href: "/affiliazione" },
-            { name: "Contatti", href: "/contatti" },
-          ].map((link) => (
-            <li key={link.href} className="whitespace-nowrap">
-              <a href={link.href} className="hover:underline">{link.name}</a>
-            </li>
-          ))}
-        </ul>
+    {/* Menu Centrale */}
+
+    <ul className="hidden lg:flex items-center gap-8 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-200">
+
+      {[
+
+        { name: "Architettura", href: "/progettazione" },
+
+        { name: "Fotovoltaico", href: "/fotovoltaico" },
+
+        { name: "Infissi", href: "/infissi" },
+
+        { name: "Climatizzazione", href: "/climatizzazione" },
+
+        { name: "Riparazioni", href: "/riparazioni-veloci" },
+
+      ].map((item) => (
+
+        <li key={item.href}>
+
+          <Link
+
+            href={item.href}
+
+            className="hover:text-white transition duration-200"
+
+          >
+
+            {item.name}
+
+          </Link>
+
+        </li>
+
+      ))}
+
+    </ul>
       </nav>
 
-      {/* Affiliazione Section */}
-      <div className="p-6 flex flex-col items-center">
-        <h1 className="text-3xl font-bold mb-6 text-center text-red-500">Diventa parte della nostra rete di affiliazione</h1>
-        <p style={{ fontSize: '1.2rem', color: 'white', textAlign: 'justify' }} className="max-w-6xl mb-10">
-          Siamo alla ricerca di privati e aziende che vogliano entrare a far parte del nostro network di affiliazione. Offriamo opportunità vantaggiose e supporto completo per aiutarti a crescere nel mondo dei servizi pratici e occasionali.
-        </p>
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {/* Affiliazione per Privati */}
-          <div className="bg-gray-300 shadow-lg rounded-lg p-6 text-center">
-            <img
-              src="/images/affiliazione-privato.jpeg" // Assicurati che il file sia nella cartella /public/images
-              alt="Affiliazione Privato"
-              className="w-full h-100 object-cover rounded-md mb-4"
-            />
-            <FaUserTie className="text-4xl mb-4 text-yellow-500" />
-            <h2 className="text-2xl font-semibold mb-4">Affiliazione per Privati</h2>
-            <p style={{ fontSize: '1.0rem', color: 'black', textAlign: 'center' }} className="max-w-6xl mb-10">
-              Se sei un privato con competenze pratiche da offrire, questa è la tua occasione! Puoi diventare affiliato, ottenere feedback dai clienti e guadagnare offrendo i tuoi servizi.
-            </p>
-            <Link href="/affiliazione/privato">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
-                Scopri di più
-              </button>
-            </Link>
-          </div>
+        {/* HERO */}
+        <section className="relative h-screen flex items-center justify-center text-center">
 
-          {/* Affiliazione per Aziende */}
-          <div className="bg-gray-300 shadow-lg rounded-lg p-6 text-center">
-            <img
-              src="/images/affiliazione-azienda.jpeg" // Assicurati che il file sia nella cartella /public/images
-              alt="Affiliazione Azienda"
-              className="w-full h-100 object-cover rounded-md mb-4"
-            />
-            <FaBusinessTime className="text-4xl mb-4 text-red-500" />
-            <h2 className="text-2xl font-semibold mb-4">Affiliazione per Aziende</h2>
-            <p style={{ fontSize: '1.0rem', color: 'black', textAlign: 'center' }} className="max-w-6xl mb-10">
-              Se rappresenti un'azienda, entra a far parte del nostro programma di affiliazione e sfrutta le opportunità per ampliare il tuo raggio d'azione e attrarre nuovi clienti.
-            </p>
-            <Link href="/affiliazione/azienda">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
-                Scopri di più
-              </button>
-            </Link>
-          </div>
-        </div>
+          <Image
+            src="/images/network.png"
+            alt="Affiliazione"
+            fill
+            priority
+            className="object-cover"
+          />
 
-        <div className="text-center mt-8">
-          <h3 className="text-2xl font-semibold text-red-500 mb-4">Unisciti a noi oggi stesso!</h3>
-          <p style={{ fontSize: '1.2rem', color: 'white', textAlign: 'justify' }} className="max-w-6xl mb-10">
-            Sia che tu sia un privato in cerca di opportunità o un'azienda pronta a espandere il proprio business, la nostra piattaforma è il posto giusto per crescere e prosperare. Qui, individui e imprese convergono in un ambiente fertile per lo scambio di idee, la collaborazione e la scoperta di risorse preziose. Offriamo gli strumenti e le connessioni necessarie per trasformare le aspirazioni in risultati concreti, supportando ogni passo del tuo percorso verso il successo.
-          </p>
-          {/* Pulsante spostato più in basso con margine superiore */}
+          <div className="absolute inset-0 bg-black/55" />
+
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 80 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="relative z-10 max-w-5xl px-6"
           >
-            <Link
-              href="/contatti"
-              className="inline-flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-xl shadow-xl transition-transform transform hover:scale-105"
-            >
-              <TfiEmail className="text-2xl" />
-              Contattaci
-            </Link>
+
+            <h1 className="text-5xl md:text-8xl font-light tracking-tight leading-none">
+              Entra nella
+              <br />
+              nostra rete.
+            </h1>
+
+            <p className="mt-10 text-lg md:text-2xl text-neutral-300 max-w-3xl mx-auto leading-relaxed">
+              Privati e aziende connessi in un ecosistema
+              professionale moderno, dinamico e orientato alla crescita.
+            </p>
+
+            <div className="mt-12 flex flex-wrap justify-center gap-5">
+
+              <Link href="/affiliazione/privato">
+                <button className="bg-white text-black px-10 py-4 rounded-full font-semibold hover:bg-neutral-200 transition">
+                  Affiliazione Privati
+                </button>
+              </Link>
+
+              <Link href="/affiliazione/azienda">
+                <button className="border border-white/30 px-10 py-4 rounded-full hover:bg-white/10 transition">
+                  Affiliazione Aziende
+                </button>
+              </Link>
+
+            </div>
+
           </motion.div>
-        </div>
-      </div>
-      <footer className="text-center mt-6 p-4 bg-black text-white">
-        <p>&copy; {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
-      </footer>
-    </div>
-  </>
-);
+        </section>
+
+        {/* INTRO */}
+        <section className="py-32 bg-white text-black">
+          <div className="max-w-5xl mx-auto px-6 text-center">
+
+            <span className="text-xs uppercase tracking-[0.3em] text-neutral-800 font-semibold">
+              Network Professionale
+            </span>
+
+            <div className="mt-6 text-4xl md:text-6xl font-light tracking-tight leading-tight">
+              Talento,
+              opportunità
+              e crescita.
+            </div>
+
+            <div className="mt-10 text-xl text-neutral-600 leading-relaxed max-w-3xl mx-auto">
+              Creiamo connessioni tra competenze reali,
+              aziende e professionisti,
+              offrendo strumenti concreti per trasformare
+              capacità individuali in nuove opportunità.
+            </div>
+
+          </div>
+        </section>
+
+        {/* CARDS */}
+        <section className="bg-[#0a0a0a] py-32">
+          <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10">
+
+            {/* PRIVATI */}
+            <motion.div
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.4 }}
+              className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-xl"
+            >
+
+              <div className="relative h-[500px]">
+
+                <Image
+                  src="/images/affiliazione-privato2.jpeg"
+                  alt="Privati"
+                  fill
+                  className="object-cover"
+                />
+
+                <div className="absolute inset-0 bg-black/45" />
+
+                <div className="absolute bottom-0 p-10">
+
+                  <FaUserTie className="text-5xl text-white mb-6" />
+
+                  <h3 className="text-4xl font-light">
+                    Affiliazione
+                    <br />
+                    Privati
+                  </h3>
+
+                  <p className="mt-6 text-neutral-300 max-w-md leading-relaxed">
+                    Trasforma le tue competenze
+                    in opportunità concrete
+                    e ricevi nuovi clienti.
+                  </p>
+
+                  <Link href="/affiliazione/privato">
+                    <button className="mt-8 inline-flex items-center gap-3 bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-neutral-200 transition">
+
+                      Scopri di più
+
+                      <FaArrowRight />
+
+                    </button>
+                  </Link>
+
+                </div>
+              </div>
+            </motion.div>
+
+            {/* AZIENDE */}
+            <motion.div
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.4 }}
+              className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-xl"
+            >
+
+              <div className="relative h-[500px]">
+
+                <Image
+                  src="/images/affiliazione-azienda2.jpeg"
+                  alt="Aziende"
+                  fill
+                  className="object-cover"
+                />
+
+                <div className="absolute inset-0 bg-black/45" />
+
+                <div className="absolute bottom-0 p-10">
+
+                  <FaBusinessTime className="text-5xl text-white mb-6" />
+
+                  <h3 className="text-4xl font-light">
+                    Affiliazione
+                    <br />
+                    Aziende
+                  </h3>
+
+                  <p className="mt-6 text-neutral-300 max-w-md leading-relaxed">
+                    Espandi il tuo business,
+                    aumenta la visibilità
+                    e trova nuovi clienti.
+                  </p>
+
+                  <Link href="/affiliazione/azienda">
+                    <button className="mt-8 inline-flex items-center gap-3 bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-neutral-200 transition">
+
+                      Scopri di più
+
+                      <FaArrowRight />
+
+                    </button>
+                  </Link>
+
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="relative py-40 text-center overflow-hidden">
+
+          <Image
+            src="/images/community2.png"
+            alt="Community"
+            fill
+            className="object-cover"
+          />
+
+          <div className="absolute inset-0 bg-black/70" />
+
+          <div className="relative z-10 px-6">
+
+            <div className="text-5xl md:text-7xl font-light tracking-tight leading-tight">
+              Costruiamo insieme
+              <br />
+              il futuro del lavoro.
+            </div>
+
+            <p className="mt-10 text-xl text-neutral-300 max-w-2xl mx-auto leading-relaxed">
+              Unisciti a una piattaforma che valorizza
+              competenze, relazioni e crescita professionale.
+            </p>
+
+            <Link href="/contatti">
+              <button className="mt-12 bg-white text-black px-12 py-5 rounded-full text-sm uppercase tracking-[0.2em] font-bold hover:bg-neutral-200 transition">
+                Contattaci Ora
+              </button>
+            </Link>
+
+          </div>
+        </section>
+
+         <footer
+  className="text-center py-8 bg-white border-t border-neutral-100 text-[11px] text-black font-bold tracking-wider uppercase space-y-2 md:space-y-0 md:space-x-6"
+  style={{ backgroundColor: '#ffffff', borderColor: '#f5f5f5', color: '#000000' }}
+>
+  <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
+
+  <Link
+    href="/privacy"
+    className="hover:opacity-70 transition"
+  >
+    Privacy e Note Legali
+  </Link>
+
+  <Link
+    href="/contatti"
+    className="hover:opacity-70 transition"
+  >
+    Contatti
+  </Link>
+</footer>
+
+      </main>
+    </>
+  );
 }
