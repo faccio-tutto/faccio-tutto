@@ -1,201 +1,366 @@
 "use client";
-import React, { useState, useRef } from 'react';
+
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FaUpload,
+  FaCheckCircle,
+  FaArrowRight,
+} from "react-icons/fa";
 
 function ModuloContatti({ destinatarioEmail }) {
-  const [nome, setNome] = useState('');
-  const [cognome, setCognome] = useState('');
-  const [telefono, setTelefono] = useState('');
-  const [email, setEmail] = useState('');
-  const [via, setVia] = useState('');
-  const [citta, setCitta] = useState('');
-  const [messaggio, setMessaggio] = useState('');
+  const [nome, setNome] = useState("");
+  const [cognome, setCognome] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [email, setEmail] = useState("");
+  const [via, setVia] = useState("");
+  const [citta, setCitta] = useState("");
+  const [messaggio, setMessaggio] = useState("");
   const [privacy, setPrivacy] = useState(false);
+
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null); // Aggiungi uno stato per gestire gli errori
-  const [documentoIdentita, setDocumentoIdentita] = useState(null); // Inizializzato a null
+  const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState(null);
+
+  const [documentoIdentita, setDocumentoIdentita] = useState(null);
+
   const fileInputRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-    // Validazioni
-     if (!privacy) {
-      setError('Devi accettare i termini e le condizioni sulla privacy.');
+    if (!privacy) {
+      setError(
+        "Devi accettare i termini e condizioni sulla privacy."
+      );
       return;
     }
+
     if (!nome || !cognome || !email) {
-      setError('Nome, cognome ed email sono obbligatori.');
-      alert('Nome, cognome ed email sono obbligatori.');
+      setError("Nome, cognome ed email sono obbligatori.");
       return;
     }
+
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Email non valida.');
-      alert('Email non valida.');
+      setError("Inserisci un indirizzo email valido.");
       return;
     }
-     setError(null);
 
-     if (fileInputRef.current) fileInputRef.current.value = null;
+    setError(null);
+    setLoading(true);
 
-    // Costruisci il body della richiesta
-  const formData = new FormData();
-  formData.append('tipoUtente', 'privato');
-  formData.append('nome', nome);
-  formData.append('cognome', cognome);
-  formData.append('email', email);
-  formData.append('telefono', telefono);
-  formData.append('via', via);
-  formData.append('citta', citta);
-  formData.append('messaggio', messaggio);
-  formData.append('destinatarioEmail', destinatarioEmail); // lo passi dal componente
+    const formData = new FormData();
 
-if (documentoIdentita) formData.append('documentoIdentita', documentoIdentita);
+    formData.append("tipoUtente", "privato");
+    formData.append("nome", nome);
+    formData.append("cognome", cognome);
+    formData.append("email", email);
+    formData.append("telefono", telefono);
+    formData.append("via", via);
+    formData.append("citta", citta);
+    formData.append("messaggio", messaggio);
+    formData.append("destinatarioEmail", destinatarioEmail);
 
-
-
-try {
-  const res = await fetch('/api/invia-email-formidable', {
-    method: 'POST',
-    body: formData,
-  });
-
-  if (res.ok) {
-    setSuccess(true);
-    setNome('');
-setCognome('');
-setEmail('');
-setTelefono('');
-setVia('');
-setCitta('');
-setMessaggio('');
-setPrivacy(false);
-setDocumentoIdentita(null);
-  } else {
-    let errorMsg = 'Errore nell\'invio del modulo.';
-    try {
-      const err = await res.json();
-      errorMsg = err?.error || errorMsg;
-    } catch {
-      // Fallimento nel parsing JSON, uso messaggio generico
+    if (documentoIdentita) {
+      formData.append(
+        "documentoIdentita",
+        documentoIdentita
+      );
     }
-    console.error("Errore:", errorMsg);
-    alert(errorMsg);
-  }
-} catch (error) {
-  console.error("Errore di rete:", error);
-  alert("Errore di rete. Riprova.");
-}
-};
-const handleDocumentoChange = (e) => {
-  const file = e.target.files?.[0] || null;
-  setDocumentoIdentita(file);
-}
+
+    try {
+      const res = await fetch("/api/invia-email-formidable", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        setSuccess(true);
+
+        setNome("");
+        setCognome("");
+        setEmail("");
+        setTelefono("");
+        setVia("");
+        setCitta("");
+        setMessaggio("");
+        setPrivacy(false);
+        setDocumentoIdentita(null);
+
+        if (fileInputRef.current) {
+          fileInputRef.current.value = null;
+        }
+      } else {
+        const err = await res.json();
+        setError(
+          err?.error || "Errore durante l'invio."
+        );
+      }
+    } catch (error) {
+      setError("Errore di rete. Riprova.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDocumentoChange = (e) => {
+    const file = e.target.files?.[0] || null;
+    setDocumentoIdentita(file);
+  };
 
   return (
-    <div id="modulo-contatti" className="flex justify-center items-start px-4 py-12 bg-white min-h-screen w-full">
-      {success ? (
-        <div className="text-green-500 justify-center font-bold text-xl">Messaggio inviato con successo!</div>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md">
-          <div className="flex flex-col space-y-4 p-4 rounded-lg shadow-lg w-full max-w-md bg-white">
-            <h2 className="text-2xl font-bold text-center text-gray-800">Modulo di Contatto</h2>
-            <p className="text-sm text-gray-500 text-center"></p>
-            {error && <div className="text-red-500">{error}</div>}
-            <div>
-              <label htmlFor="nome" className="block text-sm text-left font-medium text-gray-600">Nome</label>
-              <input type="text" id="nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" required />
+    <div className="w-full">
+
+      <AnimatePresence mode="wait">
+
+        {success ? (
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="flex flex-col items-center justify-center text-center py-20 px-6 rounded-[2rem] border border-white/10 bg-white/[0.03]"
+          >
+
+            <FaCheckCircle className="text-5xl text-green-400 mb-6" />
+
+            <h3 className="text-3xl md:text-4xl font-light tracking-tight text-white">
+              Richiesta inviata.
+            </h3>
+
+            <p className="mt-4 text-neutral-400 max-w-md leading-relaxed">
+              Ti contatteremo al più presto per
+              fornirti tutte le informazioni necessarie.
+            </p>
+
+          </motion.div>
+        ) : (
+          <motion.form
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            onSubmit={handleSubmit}
+            className="space-y-8"
+          >
+
+            {/* HEADER */}
+            <div className="space-y-4">
+
+              <span className="text-xs uppercase tracking-[0.3em] text-neutral-500 font-semibold">
+                Affiliazione Privati
+              </span>
+
+              <div className="text-4xl md:text-5xl font-light tracking-tight text-white">
+                Inizia adesso.
+              </div>
+
+              <p className="text-neutral-400 leading-relaxed max-w-xl">
+                Compila il modulo per entrare
+                nel network professionale di
+                faccio-tutto.it.
+              </p>
+
             </div>
-            <div>
-              <label htmlFor="cognome" className="block text-sm text-left font-medium text-gray-600">Cognome</label>
-              <input type="text" id="cognome" name="cognome" value={cognome} onChange={(e) => setCognome(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" required />
+
+            {/* ERROR */}
+            {error && (
+              <div className="border border-red-500/20 bg-red-500/10 text-red-300 text-sm px-5 py-4 rounded-2xl">
+                {error}
+              </div>
+            )}
+
+            {/* GRID */}
+            <div className="grid md:grid-cols-2 gap-5">
+
+              <Input
+                label="Nome"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+              />
+
+              <Input
+                label="Cognome"
+                value={cognome}
+                onChange={(e) => setCognome(e.target.value)}
+              />
+
+              <Input
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+
+              <Input
+                label="Telefono"
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+              />
+
+              <Input
+                label="Via"
+                value={via}
+                onChange={(e) => setVia(e.target.value)}
+              />
+
+              <Input
+                label="Città"
+                value={citta}
+                onChange={(e) => setCitta(e.target.value)}
+              />
+
             </div>
-            <div>
-              <label htmlFor="email" className="block text-sm text-left font-medium text-gray-600">Indirizzo e-mail</label>
-              <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" required />
-            </div>
-            <div>
-              <label htmlFor="telefono" className="block text-sm text-left font-medium text-gray-600">Telefono</label>
-              <input type="tel" id="telefono" name="telefono" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" />
-            </div>
-            <div>
-              <label htmlFor="via" className="block text-sm text-left font-medium text-gray-600">Via</label>
-              <input type="text" id="via" name="via" value={via} onChange={(e) => setVia(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" />
-            </div>
-           <div>
-              <label htmlFor="citta" className="block text-sm text-left font-medium text-gray-600">Città</label>
-<input type="text" id="citta" name="citta" value={citta} onChange={(e) => setCitta(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" />
-            </div>
-            <div>
-              <label className="block text-sm text-left font-medium text-gray-600 mb-1 sm:mt-0">Documento d'identità</label>
-              <div className="flex flex-col items-start">
+
+            {/* FILE */}
+            <div className="space-y-4">
+
+              <label className="text-sm text-neutral-300 block">
+                Documento d'identità
+              </label>
+
               <input
-              ref={fileInputRef}
+                ref={fileInputRef}
                 type="file"
                 id="documentoIdentita"
-                name="documentoIdentita"
                 accept="image/*,.pdf"
                 onChange={handleDocumentoChange}
                 className="hidden"
               />
+
               <label
                 htmlFor="documentoIdentita"
-                className="inline-block bg-green-600 text-white font-semibold px-3 py-1 text-xs rounded cursor-pointer hover:bg-green-700 mb-4"
+                className="inline-flex items-center gap-3 border border-white/10 hover:border-white/30 bg-white/[0.03] hover:bg-white/[0.05] transition px-6 py-4 rounded-2xl cursor-pointer text-sm text-white"
               >
-                Carica Documento
+
+                <FaUpload />
+
+                Carica documento
+
               </label>
-             {documentoIdentita && (
-  <a
-    href={URL.createObjectURL(documentoIdentita)}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-sm text-blue-500 underline mt-1"
-  >
-    Documento identità caricato: {documentoIdentita.name}
-  </a>
-)}
-            </div>
+
+              {documentoIdentita && (
+                <div className="text-sm text-neutral-400">
+                  {documentoIdentita.name}
+                </div>
+              )}
+
             </div>
 
-            <div>
-              <label htmlFor="messaggio" className="block text-sm text-left font-medium text-gray-600 -mb-4">Messaggio</label>
-              <br/>
-              <span className="text-gray-500 text-sm text-left block -mb-1">
-                (descrivi brevemente cosa sai fare e per quale tipologia di lavori vorresti essere contattato)
-            </span>
-            <div className="text-black flex flex-col items-start"></div>
-            <textarea id="messaggio" name="messaggio" value={messaggio} onChange={(e) => setMessaggio(e.target.value)} rows={4} className="mt-1 p-3 border rounded-md w-full text-black"></textarea>
+            {/* TEXTAREA */}
+            <div className="space-y-3">
+
+              <label className="text-sm text-neutral-300">
+                Messaggio
+              </label>
+
+              <p className="text-xs text-neutral-500 leading-relaxed">
+                Descrivi brevemente le tue competenze
+                e la tipologia di lavori per cui
+                desideri essere contattato.
+              </p>
+
+              <textarea
+                value={messaggio}
+                onChange={(e) =>
+                  setMessaggio(e.target.value)
+                }
+                rows={6}
+                className="w-full rounded-3xl border border-white/10 bg-white/[0.03] px-6 py-5 text-white placeholder:text-neutral-500 focus:outline-none focus:border-white/30 transition resize-none"
+              />
+
             </div>
-            <div className="flex items-center">
-            <input
-                             type="checkbox"
-                             className="mr-3"
-                             checked={privacy}
-                             onChange={(e) => setPrivacy(e.target.checked)}
-                           />
-                           <label className="text-sm text-gray-500 whitespace-nowrap">
-                             Accetto i{' '}
-                             <a href="/termini e condizioni.pdf" className="text-blue-500">termini e condizioni</a>{' '}
-                             e acconsento al trattamento
-                             <br />
-                             dei miei dati personali secondo la{' '}
-                             <a href="/normativa privacy.pdf" className="text-blue-500">normativa sulla privacy.</a>
-                           </label>
-                         </div>
-             
-                         <button
-                           type="submit"
-                           className="bg-blue-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded w-full mt-4"
-                         >{error && <div className="text-red-500 text-sm mt-2">{error}</div>}
-                           Invia richiesta
-                         </button>
-                       </div>
-                     </form>
-                   )}
-                 </div>
-               );
-             }
-             
-             export default ModuloContatti;
-             export { ModuloContatti };
-             
+
+            {/* PRIVACY */}
+            <div className="flex items-start gap-0 pt-2">
+
+              <input
+                type="checkbox"
+                checked={privacy}
+                onChange={(e) =>
+                  setPrivacy(e.target.checked)
+                }
+                className="mt-1"
+              />
+
+              <div className="text-s text-neutral-500 leading-relaxed">
+
+                Accetto i{" "}
+
+                <a
+                  href="/termini e condizioni.pdf"
+                  className="text-white hover:opacity-70 transition"
+                >
+                  termini e condizioni
+                </a>
+
+                {" "}e acconsento al trattamento
+                dei dati personali secondo la{" "}
+
+                <a
+                  href="/normativa privacy.pdf"
+                  className="text-white hover:opacity-70 transition"
+                >
+                  normativa privacy
+                </a>
+
+              </div>
+
+            </div>
+
+            {/* BUTTON */}
+            <div className="pt-4">
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="group w-full bg-white hover:bg-neutral-200 disabled:opacity-50 text-black font-semibold py-5 rounded-full uppercase tracking-[0.2em] text-xs transition flex items-center justify-center gap-4"
+              >
+
+                {loading
+                  ? "Invio in corso..."
+                  : "Invia richiesta"}
+
+                {!loading && (
+                  <FaArrowRight className="group-hover:translate-x-1 transition" />
+                )}
+
+              </button>
+
+            </div>
+
+          </motion.form>
+        )}
+
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* COMPONENTE INPUT */
+
+function Input({
+  label,
+  type = "text",
+  value,
+  onChange,
+}) {
+  return (
+    <div className="space-y-3">
+
+      <label className="text-sm text-neutral-300">
+        {label}
+      </label>
+
+      <input
+        type={type}
+        value={value}
+        onChange={onChange}
+        className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-neutral-500 focus:outline-none focus:border-white/30 transition"
+      />
+
+    </div>
+  );
+}
+
+export default ModuloContatti;
+export { ModuloContatti };
