@@ -255,7 +255,7 @@ export default function AffiliazioneAzienda() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="bg-white rounded-[2rem] p-8 md:p-12 shadow-2xl"
+                className="bg-white rounded-[2rem] p-8 md:p-0 shadow-2xl"
               >
                 <ModuloContatti destinatarioEmail="affiliazione@faccio-tutto.it" />
               </motion.div>

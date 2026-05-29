@@ -1,271 +1,491 @@
 "use client";
-import React, { useState, useRef } from 'react';
+
+import React, { useState } from "react";
 
 function ModuloContatti({ destinatarioEmail }) {
-  const [nome, setNome] = useState('');
-    const [cognome, setCognome] = useState('');
-  const [telefono, setTelefono] = useState('');
-  const [email, setEmail] = useState('');
-  const [via, setVia] = useState('');
- const [citta, setCitta] = useState('');
-  const [documento, setDocumento] = useState('');
-  const [messaggio, setMessaggio] = useState('');
-  const [privacy, setPrivacy] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [step, setStep] = useState(1);
+
   const [error, setError] = useState(null);
-  // Nuovi stati per i campi aggiuntivi
-  const [nomeAzienda, setNomeAzienda] = useState('');
-  const [partitaIva, setPartitaIva] = useState('');
-  const [legaleRappresentante, setLegaleRappresentante] = useState('');
-  const [sitoWeb, setSitoWeb] = useState('');
-  const [visuraCamerale, setVisuraCamerale] = useState(null); // Inizializzato a null
-  const [documentoIdentita, setDocumentoIdentita] = useState(null); // Inizializzato a null
- const fileInputRefDocumento = useRef();
-const fileInputRefVisura = useRef();
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const [nomeAzienda, setNomeAzienda] = useState("");
+  const [partitaIva, setPartitaIva] = useState("");
+  const [legaleRappresentante, setLegaleRappresentante] = useState("");
 
-    // Validazioni
-    if (!privacy) {
-      setError('Devi accettare i termini e le condizioni sulla privacy.');
-      return;
-    }
-    if (!email) {
-      setError('L\'email è obbligatoria.');
-      return;
-    }
-    if (!nomeAzienda || !partitaIva || !legaleRappresentante) {
-      setError('Nome Azienda, Partita IVA, e Legale Rappresentante sono obbligatori.');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Email non valida.');
-      return;
-    }
+  const [via, setVia] = useState("");
+const [citta, setCitta] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [sitoWeb, setSitoWeb] = useState("");
+
+  const [messaggio, setMessaggio] = useState("");
+
+  const [privacy, setPrivacy] = useState(false);
+
+  const [visuraCamerale, setVisuraCamerale] = useState(null);
+  const [documentoIdentita, setDocumentoIdentita] = useState(null);
+
+  const next = () => {
     setError(null);
 
-      if (fileInputRefDocumento.current) fileInputRefDocumento.current.value = null;
-if (fileInputRefVisura.current) fileInputRefVisura.current.value = null;
+    if (step === 1) {
+      if (!nomeAzienda || !partitaIva || !legaleRappresentante)
+        return setError("Completa i dati aziendali");
 
-    // Costruisci il body della richiesta con FormData
-    const formData = new FormData();
-    formData.append('tipoUtente', 'azienda');
-    formData.append('nome', nome);
-    formData.append('cognome', cognome);
-    formData.append('nomeAzienda', nomeAzienda);
-    formData.append('partitaIva', partitaIva);
-    formData.append('legaleRappresentante', legaleRappresentante);
-    formData.append('email', email);
-    formData.append('telefono', telefono);
-    formData.append('sitoWeb', sitoWeb);
-    formData.append('via', via);
-    formData.append('citta', citta);
-    formData.append('messaggio', messaggio);
-    formData.append('documento', documento);
-    formData.append('destinatarioEmail', destinatarioEmail); // lo passi dal componente
-
-   if (!/^\d{11}$/.test(partitaIva)) {
-  setError('La Partita IVA deve contenere 11 cifre.');
-  return;
-}
-    if (visuraCamerale) formData.append('visuraCamerale', visuraCamerale);
-if (documentoIdentita) formData.append('documentoIdentita', documentoIdentita);
-
-  try {
-      const res = await fetch('/api/invia-email-formidable', {
-  method: 'POST',
-  body: formData,
-});
-
- if (res.ok) {
-    setSuccess(true);
-setNome('');
-setCognome('');
-setTelefono('');
-setEmail('');
-setVia('');
-setCitta('');
-setDocumento('');
-setMessaggio('');
-setPrivacy(false);
-setNomeAzienda('');
-setPartitaIva('');
-setLegaleRappresentante('');
-setSitoWeb('');
-setVisuraCamerale(null);
-setDocumentoIdentita(null);
-
- } else {
-       let errorMsg = 'Errore nell\'invio del modulo.';
- 
-      try {
-        const err = await res.json();
-        errorMsg = err?.error || errorMsg;
-      } catch {
-        // Fallimento nel parsing JSON, uso messaggio generico
-      }
-      console.error("Errore:", errorMsg);
-      alert(errorMsg);
+      if (!/^\d{11}$/.test(partitaIva))
+        return setError("Partita IVA non valida");
     }
-  } catch (error) {
-    console.error("Errore di rete:", error);
-    alert("Errore di rete. Riprova.");
-  }
-};
 
-  const handleVisuraChange = (e) => {
-    const file = e.target.files?.[0] || null;
-    setVisuraCamerale(file);
+    if (step === 2) {
+      if (!email) return setError("Email obbligatoria");
+    }
+
+    setStep(step + 1);
   };
 
-  const handleDocumentoChange = (e) => {
-      const file = e.target.files?.[0] || null;
-      setDocumentoIdentita(file);
+  const prev = () => {
+    setError(null);
+    setStep(step - 1);
+  };
+
+  const submit = async () => {
+    if (!privacy) return setError("Accetta privacy");
+
+    const formData = new FormData();
+
+    formData.append("tipoUtente", "azienda");
+    formData.append("nomeAzienda", nomeAzienda);
+    formData.append("partitaIva", partitaIva);
+    formData.append("legaleRappresentante", legaleRappresentante);
+    formData.append("via", via);
+    formData.append("citta", citta);
+    formData.append("email", email);
+    formData.append("telefono", telefono);
+    formData.append("sitoWeb", sitoWeb);
+    formData.append("messaggio", messaggio);
+    formData.append("destinatarioEmail", destinatarioEmail);
+
+    if (visuraCamerale)
+      formData.append("visuraCamerale", visuraCamerale);
+
+    if (documentoIdentita)
+      formData.append("documentoIdentita", documentoIdentita);
+
+    const res = await fetch("/api/invia-email-formidable", {
+      method: "POST",
+      body: formData,
+    });
+
+   if (res.ok) {
+  setSuccess(true);
+
+  setTimeout(() => {
+    setSuccess(false);
+
+    // 🔁 TORNA ALLO STEP 1
+    setStep(1);
+
+    // RESET CAMPI
+    setNomeAzienda("");
+    setPartitaIva("");
+    setLegaleRappresentante("");
+    setVia("");
+    setCitta("");
+    setEmail("");
+    setTelefono("");
+    setSitoWeb("");
+    setVia("");
+    setCitta("");
+    setMessaggio("");
+    setPrivacy(false);
+
+    setVisuraCamerale(null);
+    setDocumentoIdentita(null);
+  }, 3000);
+}
+    else setError("Errore invio");
+  };
+
+  if (success) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-[#0a0a0a] text-white">
+        <div className="text-center">
+          <h1 className="text-3xl font-light tracking-wide">
+            Richiesta inviata
+          </h1>
+          <p className="text-neutral-500 mt-3">
+            Ti contatteremo a breve
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div id="modulo-contatti" className="flex justify-center items-start px-4 py-12 w-full">
-      {success ? (
-        <div className="text-green-500 font-bold text-xl">Messaggio inviato con successo!</div>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md">
-          <div className="space-y-4 p-4 rounded-lg shadow-lg bg-white">
-            <h2 className="text-2xl font-bold text-center text-gray-800">Modulo di Contatto</h2>
-            <p className="text-sm text-gray-500 text-center"></p>
-            {error && <div className="text-red-500">{error}</div>}
+    <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center px-4">
 
-            {/* Campi aggiuntivi */}
-            <div>
-              <label htmlFor="nomeAzienda" className="block text-sm text-left font-medium text-gray-600">Nome Azienda</label>
-              <input type="text" id="nomeAzienda" value={nomeAzienda} onChange={(e) => setNomeAzienda(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" required />
-            </div>
-            <div>
-              <label htmlFor="partitaIva" className="block text-sm text-left font-medium text-gray-600">Partita IVA</label>
-              <input type="text" id="partitaIva" value={partitaIva} onChange={(e) => setPartitaIva(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" required />
-            </div>
-            <div>
-              <label htmlFor="legaleRappresentante" className="block text-sm text-left font-medium text-gray-600">Legale Rappresentante</label>
-              <input type="text" id="legaleRappresentante" value={legaleRappresentante} onChange={(e) => setLegaleRappresentante(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" required />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm text-left font-medium text-gray-600">Indirizzo e-mail</label>
-              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" required />
-            </div>
-            <div>
-              <label htmlFor="telefono" className="block text-sm text-left font-medium text-gray-600">Telefono</label>
-              <input type="tel" id="telefono" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" />
-            </div>
+      {/* CARD */}
+      <div className="w-full max-w-4xl">
 
-            <div>
-              <label htmlFor="sitoWeb" className="block text-sm text-left font-medium text-gray-600">Sito web (opzionale)</label>
-              <input type="text" id="sitoWeb" value={sitoWeb} onChange={(e) => setSitoWeb(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" />
+        {/* HEADER */}
+        <div className="mb-8 text-center">
+          <p className="text-xs tracking-[0.3em] text-neutral-500 uppercase">
+            Affiliazione
+          </p>
+
+          <h1 className="text-4xl font-light mt-2">
+            Configura la tua partnership
+          </h1>
+        </div>
+
+        {/* PROGRESS */}
+        <div className="mb-10">
+          <div className="h-[2px] bg-neutral-800 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-white transition-all duration-500"
+              style={{ width: `${(step / 4) * 100}%` }}
+            />
+          </div>
+
+          <p className="text-center text-xs text-neutral-500 mt-3">
+            Step {step} / 4
+          </p>
+        </div>
+
+        {/* MODAL CARD */}
+        <div className="bg-[#111] border border-neutral-800 rounded-3xl p-10 shadow-2xl">
+
+          {error && (
+            <div className="text-red-400 text-sm mb-6">
+              {error}
             </div>
-            <div>
-              <label className="block text-sm text-left font-medium text-gray-600">Visura camerale</label>
-              <div className="flex flex-col items-start">
+          )}
+
+          {/* STEP 1 */}
+          {step === 1 && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-light">
+                Dati aziendali
+              </h2>
+
+              <input
+                placeholder="Nome Azienda"
+                value={nomeAzienda}
+                onChange={(e) => setNomeAzienda(e.target.value)}
+                className="input"
+              />
+
+              <input
+                placeholder="Partita IVA"
+                value={partitaIva}
+                onChange={(e) => setPartitaIva(e.target.value)}
+                className="input"
+              />
+
+              <input
+                placeholder="Legale Rappresentante"
+                value={legaleRappresentante}
+                onChange={(e) => setLegaleRappresentante(e.target.value)}
+                className="input"
+              />
+            </div>
+          )}
+
+          {/* STEP 2 */}
+          {step === 2 && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-light">
+                Contatti
+              </h2>
+
+               <input
+                placeholder="Via"
+                value={via}
+                onChange={(e) => setVia(e.target.value)}
+                className="input"
+              />
+
                 <input
-                  type="file"
-                  id="visuraCamerale"
-                  accept=".pdf"
-                  onChange={handleVisuraChange}
-                  className="hidden"
+                  placeholder="Città"
+                  value={citta}
+                  onChange={(e) => setCitta(e.target.value)}
+                  className="input"
                 />
-                <label
-                  htmlFor="visuraCamerale"
-                  className="inline-block bg-green-600 text-white font-semibold px-3 py-1 rounded cursor-pointer hover:bg-green-700 text-xs"
-                >
-                  Carica Visura Camerale
-                </label>
-                {visuraCamerale && (
-  <a
-    href={URL.createObjectURL(visuraCamerale)}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-sm text-blue-500 underline mt-1"
-  >
-    Visura camerale: {visuraCamerale.name}
-  </a>
-)}
-              </div>
-            </div>
 
-            <div>
-              <label className="block text-sm text-left font-medium text-gray-600">Documento d'identità legale rappresentante</label>
-              <div className="flex flex-col items-start">
-                <input
-                  type="file"
-                  id="documentoIdentita"
-                  accept="image/*,.pdf"
-                  onChange={handleDocumentoChange}
-                  className="hidden"
-                />
-                <label
-                  htmlFor="documentoIdentita"
-                  className="inline-block bg-green-600 text-white font-semibold px-3 py-1 rounded cursor-pointer hover:bg-green-700 text-xs"
-                >
-                  Carica Documento
-                </label>
-                {documentoIdentita && (
-                  <a
-    href={URL.createObjectURL(documentoIdentita)}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-sm text-blue-500 underline mt-1"
-  >
-    Documento d'identità: {documentoIdentita.name}
-  </a>
-)}
-              </div>
-            </div>
 
-            {/* Fine campi aggiuntivi */}
-            <div>
-              <label htmlFor="via" className="block text-sm text-left font-medium text-gray-600">Via</label>
-              <input type="text" id="via" value={via} onChange={(e) => setVia(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" />
+              <input
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input"
+              />
+
+              <input
+                placeholder="Telefono"
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+                className="input"
+              />
+
+              <input
+                placeholder="Sito web"
+                value={sitoWeb}
+                onChange={(e) => setSitoWeb(e.target.value)}
+                className="input"
+              />
             </div>
-            <div>
-              <label htmlFor="citta" className="block text-sm text-left font-medium text-gray-600">Città</label>
-<input type="text" id="citta" value={citta} onChange={(e) => setCitta(e.target.value)} className="mt-1 p-3 border rounded-md w-full text-black" />
-            </div>
-            <div>
-              <label htmlFor="messaggio" className="block text-sm text-left font-medium text-gray-600 -mb-4">Messaggio</label>
-              <br />
-              <span className="text-gray-500 text-sm text-left block mb-1">
-                (descrivi brevemente di cosa si occupa la tua azienda e per quale tipologia di lavori vorresti essere contattato)
-              </span>
-              <div className="text-black flex flex-col items-start"></div>
-              <textarea id="messaggio" value={messaggio} onChange={(e) => setMessaggio(e.target.value)} rows={4} className="mt-1 p-3 border rounded-md w-full text-black"></textarea>
-            </div>
-            <div className="flex items-center">
+          )}
+
+          {/* STEP 3 */}
+
+{step === 3 && (
+
+  <div className="space-y-6">
+
+    <h2 className="text-xl font-light">
+
+      Documenti
+
+    </h2>
+
+    {/* VISURA */}
+
+    <div>
+
+      <p className="text-xs text-neutral-500 mb-2">
+
+        Visura camerale
+
+      </p>
+
+      <label className="block border border-neutral-700 bg-[#1a1a1a] hover:bg-[#222] transition cursor-pointer rounded-2xl p-6 text-center">
+
+        <input
+
+          type="file"
+
+          accept=".pdf"
+
+          className="hidden"
+
+          onChange={(e) =>
+
+            setVisuraCamerale(
+
+              e.target.files?.[0]
+
+            )
+
+          }
+
+        />
+
+        <div className="text-sm text-neutral-300">
+
+          {visuraCamerale
+
+            ? visuraCamerale.name
+
+            : "Carica visura camerale"}
+
+        </div>
+
+        <div className="text-xs text-neutral-500 mt-2">
+
+          PDF • clicca per selezionare
+
+        </div>
+
+      </label>
+
+    </div>
+
+    {/* DOCUMENTO */}
+
+    <div>
+
+      <p className="text-xs text-neutral-500 mb-2">
+
+        Documento identità
+
+      </p>
+
+      <label className="block border border-neutral-700 bg-[#1a1a1a] hover:bg-[#222] transition cursor-pointer rounded-2xl p-6 text-center">
+
+        <input
+
+          type="file"
+
+          accept="image/*,.pdf"
+
+          className="hidden"
+
+          onChange={(e) =>
+
+            setDocumentoIdentita(
+
+              e.target.files?.[0]
+
+            )
+
+          }
+
+        />
+
+        <div className="text-sm text-neutral-300">
+
+          {documentoIdentita
+
+            ? documentoIdentita.name
+
+            : "Carica documento d'identità"}
+
+        </div>
+
+        <div className="text-xs text-neutral-500 mt-2">
+
+          JPG / PDF • clicca per selezionare
+
+        </div>
+
+      </label>
+
+    </div>
+
+    {/* MESSAGGIO */}
+
+    <textarea
+
+      placeholder="Messaggio"
+
+      value={messaggio}
+
+      onChange={(e) =>
+
+        setMessaggio(e.target.value)
+
+      }
+
+      className="input h-28"
+
+    />
+
+  </div>
+
+)}
+
+          {/* STEP 4 */}
+          {step === 4 && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-light">
+                Conferma
+              </h2>
+
+              <div className="text-sm text-neutral-400 space-y-1">
+                <p>{nomeAzienda}</p>
+                <p>{partitaIva}</p>
+                <p>{legaleRappresentante}</p>
+                <p>{via}</p>
+                <p>{citta}</p>
+                <p>{email}</p>
+                <p>{telefono}</p>
+              </div>
+
+            <div className="flex items-start gap-0 pt-2">
+
               <input
                 type="checkbox"
-                className="mr-3"
                 checked={privacy}
-                onChange={(e) => setPrivacy(e.target.checked)}
+                onChange={(e) =>
+                  setPrivacy(e.target.checked)
+                }
+                className="mt-1"
               />
-              <label className="text-sm text-gray-500 whitespace-nowrap">
-                Accetto i{' '}
-                <a href="/termini e condizioni.pdf" className="text-blue-500">termini e condizioni</a>{' '}
-                e acconsento al trattamento
-                <br />
-                dei miei dati personali secondo la{' '}
-                <a href="/normativa privacy.pdf" className="text-blue-500">normativa sulla privacy.</a>
-              </label>
-            </div>
 
-            <button
-              type="submit"
-              className="bg-blue-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded w-full mt-4"
-            >
-              Invia richiesta
-            </button>
+              <div className="text-s text-neutral-500 leading-relaxed">
+
+                Accetto i{" "}
+
+                <a
+                  href="/termini e condizioni.pdf"
+                  className="text-white hover:opacity-70 transition"
+                >
+                  termini e condizioni
+                </a>
+
+                {" "}e acconsento al trattamento
+                dei dati personali secondo la{" "}
+
+                <a
+                  href="/normativa privacy.pdf"
+                  className="text-white hover:opacity-70 transition"
+                >
+                  normativa privacy
+                </a>
+
+              </div>
+
+            </div>
+            </div>
+          )}
+
+          {/* NAV */}
+          <div className="flex justify-between mt-10">
+            {step > 1 ? (
+              <button
+                onClick={prev}
+                className="text-neutral-400 text-sm"
+              >
+                Indietro
+              </button>
+            ) : (
+              <div />
+            )}
+
+            {step < 4 ? (
+              <button
+                onClick={next}
+                className="px-6 py-2 bg-white text-black rounded-full text-sm"
+              >
+                Avanti
+              </button>
+            ) : (
+              <button
+                onClick={submit}
+                className="px-6 py-2 bg-white text-black rounded-full text-sm"
+              >
+                Invia
+              </button>
+            )}
           </div>
-        </form>
-      )}
+        </div>
+      </div>
+
+      {/* STYLE */}
+      <style jsx>{`
+        .input {
+          width: 100%;
+          padding: 14px;
+          border-radius: 14px;
+          background: #1a1a1a;
+          border: 1px solid #2a2a2a;
+          color: white;
+          outline: none;
+          transition: 0.3s;
+        }
+
+        .input::placeholder {
+          color: #666;
+        }
+
+        .input:focus {
+          border-color: white;
+          background: #151515;
+        }
+      `}</style>
     </div>
   );
 }
 
 export default ModuloContatti;
-export { ModuloContatti };

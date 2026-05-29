@@ -239,7 +239,7 @@ export default function AffiliazionePage() {
                     e trova nuovi clienti.
                   </p>
 
-                  <Link href="/affiliazione/azienda">
+                  <Link href="/affiliazione/azienda#modulo-contatti">
                     <button className="mt-8 inline-flex items-center gap-3 bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-neutral-200 transition">
 
                       Scopri di più
