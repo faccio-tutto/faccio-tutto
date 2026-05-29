@@ -40,18 +40,6 @@ const MainContent = () => {
 
   return (
     <div className="w-full bg-white font-sans antialiased" style={{ backgroundColor: '#ffffff', color: '#171717' }}>
-      
-      {/* Sezione Quick Links */}
-      <div className="border-b border-neutral-100 bg-neutral-50/80 sticky top-0 z-30 backdrop-blur-md" style={{ backgroundColor: '#f9f9f9' }}>
-        <div className="max-w-6xl mx-auto px-6 py-4 overflow-x-auto flex justify-start md:justify-center gap-8 md:gap-12 no-scrollbar">
-          {servizi.map(service => (
-            <Link href={service.link} key={service.id} className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition flex-shrink-0">
-              <span className="text-sm opacity-70">{service.icon}</span>
-              {service.title}
-            </Link>
-          ))}
-        </div>
-      </div>
 
       {/* Macro Sezione 1: Progettazione & Spazio */}
       <section className="bg-white" style={{ backgroundColor: '#ffffff' }}>
@@ -200,7 +188,7 @@ const MainContent = () => {
               exit={{ opacity: 0, scale: 0.98 }}
               className="bg-white p-2 shadow-2xl rounded-2xl max-w-md w-full"
             >
-              <Image src={hoveredImage} alt="Anteprima" width={500} height={500} className="rounded-xl object-contain w-full h-auto" />
+              <Image src={hoveredImage} alt="Anteprima" width={300} height={300} className="rounded-xl object-contain w-full h-auto" />
             </motion.div>
           </div>
         )}
@@ -228,18 +216,43 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* Menu di Navigazione */}
-        <ul className="flex gap-6 text-xs font-bold uppercase tracking-widest text-neutral-200">
-          {[
-            { name: "Home", href: "/" },
-            { name: "Chi siamo", href: "/chisiamo" },
-            { name: "Contatti", href: "/contatti" },
-          ].map((link) => (
-            <li key={link.href}>
-              <a href={link.href} className="hover:text-white transition duration-150">{link.name}</a>
-            </li>
-          ))}
-        </ul>
+    {/* Menu Centrale */}
+
+    <ul className="hidden lg:flex items-center gap-8 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-200">
+
+      {[
+
+        { name: "Architettura", href: "/progettazione" },
+
+        { name: "Fotovoltaico", href: "/fotovoltaico" },
+
+        { name: "Infissi", href: "/infissi" },
+
+        { name: "Climatizzazione", href: "/climatizzazione" },
+
+        { name: "Riparazioni", href: "/riparazioni-veloci" },
+
+      ].map((item) => (
+
+        <li key={item.href}>
+
+          <Link
+
+            href={item.href}
+
+            className="hover:text-white transition duration-200"
+
+          >
+
+            {item.name}
+
+          </Link>
+
+        </li>
+
+      ))}
+
+    </ul>
       </nav>
         
       {/* Hero Section */}
@@ -295,7 +308,7 @@ const HomePage = () => {
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16 text-center">
           {[
             { title: "Gestione Unificata", desc: "Un unico manager tecnico dedicato per eliminare l'incomprensione tra professionisti diversi." },
-            { title: "Standard Qualitativi", desc: "Selezioniamo rigorosamente solo artigiani esperti e ingegneri abilitati nel territorio." },
+            { title: "Standard Qualitativi", desc: "Selezioniamo rigorosamente solo artigiani esperti e architetti ed ingegneri abilitati nel territorio." },
             { title: "Zero Sprechi", desc: "Ottimizziamo l'efficienza energetica del tuo stabile abbattendo definitivamente i consumi." }
           ].map((item, i) => (
             <div key={i} className="space-y-3">

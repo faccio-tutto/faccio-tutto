@@ -13,47 +13,56 @@ export default function HomePage() {
   return (
     <main className="bg-black text-white overflow-hidden">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-          <div className="flex items-center gap-4">
-            <Image
-              src="/logo faccio tutto 3.png"
-              alt="Logo"
-              width={140}
-              height={50}
-              className="object-contain"
-            />
-
-            <span className="text-lg tracking-wide font-light">
-              faccio-tutto.it
-            </span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest">
-            <Link href="/">Home</Link>
-            <Link href="/mission">Mission</Link>
-            <Link href="/vision">Vision</Link>
-            <Link href="/contatti">Contatti</Link>
-          </div>
-
-          <div className="flex items-center gap-4 text-xl">
-            <a
-              href="https://www.instagram.com/infofacciotutto/"
-              target="_blank"
-            >
-              <FaInstagram />
-            </a>
-
-            <a
-              href="https://www.linkedin.com/company/faccio-tutto/"
-              target="_blank"
-            >
-              <FaLinkedin />
-            </a>
+     {/* Navbar Minimal Tesla Style */}
+      <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
+        <div className="flex items-center gap-6">
+          <a href="/" className="transition hover:opacity-80">
+            <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
+          </a>
+          <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+            <span>faccio-tutto.it</span>
+            <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagram className="text-base" /></a>
+            <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
           </div>
         </div>
+
+    {/* Menu Centrale */}
+
+    <ul className="hidden lg:flex items-center gap-8 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-200">
+
+      {[
+
+        { name: "Architettura", href: "/progettazione" },
+
+        { name: "Fotovoltaico", href: "/fotovoltaico" },
+
+        { name: "Infissi", href: "/infissi" },
+
+        { name: "Climatizzazione", href: "/climatizzazione" },
+
+        { name: "Riparazioni", href: "/riparazioni-veloci" },
+
+      ].map((item) => (
+
+        <li key={item.href}>
+
+          <Link
+
+            href={item.href}
+
+            className="hover:text-white transition duration-200"
+
+          >
+
+            {item.name}
+
+          </Link>
+
+        </li>
+
+      ))}
+
+    </ul>
       </nav>
 
       {/* HERO SECTION */}
@@ -115,7 +124,7 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
           >
             <Image
-              src="/images/talento.jpg"
+              src="/images/talento.png"
               alt="Talento"
               width={900}
               height={700}
@@ -128,21 +137,21 @@ export default function HomePage() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-5xl font-semibold leading-tight">
+            <div className="text-5xl font-semibold leading-tight">
               Le persone
               <br />
               prima di tutto.
-            </h2>
+            </div>
 
-            <p className="mt-8 text-xl text-gray-600 leading-relaxed">
+            <div className="mt-8 text-xl text-gray-600 leading-relaxed">
               Crediamo che ogni individuo possieda capacità straordinarie
               spesso invisibili nel mondo del lavoro tradizionale.
-            </p>
+            </div>
 
-            <p className="mt-6 text-xl text-gray-600 leading-relaxed">
+            <div className="mt-6 text-xl text-gray-600 leading-relaxed">
               La nostra missione è trasformare queste capacità
               in opportunità concrete.
-            </p>
+            </div>
           </motion.div>
 
         </div>
@@ -197,7 +206,7 @@ export default function HomePage() {
       <section className="relative h-[80vh] flex items-center justify-center">
 
         <Image
-          src="/images/community.jpg"
+          src="/images/community.png"
           alt="Community"
           fill
           className="object-cover"
@@ -234,10 +243,26 @@ export default function HomePage() {
         </Link>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-white/10 py-10 text-center text-gray-500 text-sm">
-        © {new Date().getFullYear()} faccio-tutto.it
-      </footer>
+      <footer
+  className="text-center py-8 bg-white border-t border-neutral-100 text-[11px] text-black font-bold tracking-wider uppercase space-y-2 md:space-y-0 md:space-x-6"
+  style={{ backgroundColor: '#ffffff', borderColor: '#f5f5f5', color: '#000000' }}
+>
+  <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
+
+  <Link
+    href="/privacy"
+    className="hover:opacity-70 transition"
+  >
+    Privacy e Note Legali
+  </Link>
+
+  <Link
+    href="/contatti"
+    className="hover:opacity-70 transition"
+  >
+    Contatti
+  </Link>
+</footer>
 
     </main>
   );

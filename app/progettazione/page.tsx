@@ -11,19 +11,57 @@ export default function App() {
   return (
     <div className="h-screen overflow-y-scroll scroll-smooth snap-y snap-mandatory bg-black text-white">
 
-       {/* Navbar Minimal Tesla Style */}
-            <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
-              <div className="flex items-center gap-6">
-                <a href="/" className="transition hover:opacity-80">
-                  <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
-                </a>
-                <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
-                  <span>faccio-tutto.it</span>
-                  <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
-                  <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
-                </div>
-              </div>
-            </nav>
+      {/* Navbar Minimal Tesla Style */}
+      <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
+        <div className="flex items-center gap-6">
+          <a href="/" className="transition hover:opacity-80">
+            <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
+          </a>
+          <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+            <span>faccio-tutto.it</span>
+            <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
+            <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
+          </div>
+        </div>
+
+    {/* Menu Centrale */}
+
+    <ul className="hidden lg:flex items-center gap-8 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-200">
+
+      {[
+
+        { name: "Architettura", href: "/progettazione" },
+
+        { name: "Fotovoltaico", href: "/fotovoltaico" },
+
+        { name: "Infissi", href: "/infissi" },
+
+        { name: "Climatizzazione", href: "/climatizzazione" },
+
+        { name: "Riparazioni", href: "/riparazioni-veloci" },
+
+      ].map((item) => (
+
+        <li key={item.href}>
+
+          <Link
+
+            href={item.href}
+
+            className="hover:text-white transition duration-200"
+
+          >
+
+            {item.name}
+
+          </Link>
+
+        </li>
+
+      ))}
+
+    </ul>
+      </nav>
 
       {/* HERO */}
       <section className="h-screen snap-start relative flex items-center justify-center overflow-hidden">
