@@ -17,12 +17,19 @@ export default function EnergyLandingPage() {
   return (
     <main className="bg-black text-white overflow-hidden">
 
-    {/* Navbar Minimal Tesla Style */}
-      <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
+    {/* NAVBAR PREMIUM */}
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5 px-6 md:px-12 py-4 flex justify-between items-center">
+
         <div className="flex items-center gap-6">
-          <a href="/" className="transition hover:opacity-80">
-            <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
-          </a>
+          <Link href="/">
+            <Image
+              src="/logo faccio tutto 3.png"
+              alt="Logo"
+              width={100}
+              height={100}
+            />
+          </Link>
+
           <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
             <span>faccio-tutto.it</span>
             <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
@@ -30,11 +37,8 @@ export default function EnergyLandingPage() {
           </div>
         </div>
 
-    {/* Menu Centrale */}
-
-    <ul className="hidden lg:flex items-center gap-8 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-200">
-
-      {[
+        <ul className="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.25em] text-white/60">
+           {[
 
         { name: "Architettura", href: "/progettazione" },
 

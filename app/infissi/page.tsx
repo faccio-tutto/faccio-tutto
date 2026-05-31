@@ -8,9 +8,9 @@ import ModuloContatti from "./ModuloContatti";
 
 const InfissiPage = () => {
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+         <main className="bg-black text-white overflow-hidden">
 
-      {/* NAVBAR PREMIUM */}
+         {/* NAVBAR PREMIUM */}
       <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5 px-6 md:px-12 py-4 flex justify-between items-center">
 
         <div className="flex items-center gap-6">
@@ -23,30 +23,47 @@ const InfissiPage = () => {
             />
           </Link>
 
-          <div className="hidden md:flex items-center gap-4 text-[11px] text-white/60">
+          <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
             <span>faccio-tutto.it</span>
-            <a href="#" className="hover:text-white transition">
-              <FaInstagramSquare />
-            </a>
-            <a href="#" className="hover:text-white transition">
-              <FaLinkedin />
-            </a>
+            <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
+            <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
           </div>
         </div>
 
         <ul className="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.25em] text-white/60">
-          {[
-            "Architettura",
-            "Fotovoltaico",
-            "Infissi",
-            "Climatizzazione",
-            "Riparazioni",
-          ].map((item) => (
-            <li key={item} className="hover:text-white transition">
-              <Link href="#">{item}</Link>
-            </li>
-          ))}
-        </ul>
+           {[
+
+        { name: "Architettura", href: "/progettazione" },
+
+        { name: "Fotovoltaico", href: "/fotovoltaico" },
+
+        { name: "Infissi", href: "/infissi" },
+
+        { name: "Climatizzazione", href: "/climatizzazione" },
+
+        { name: "Riparazioni", href: "/riparazioni-veloci" },
+
+      ].map((item) => (
+
+        <li key={item.href}>
+
+          <Link
+
+            href={item.href}
+
+            className="hover:text-white transition duration-200"
+
+          >
+
+            {item.name}
+
+          </Link>
+
+        </li>
+
+      ))}
+
+    </ul>
       </nav>
 
       {/* HERO */}
@@ -210,7 +227,7 @@ const InfissiPage = () => {
 </div>
 
           {/* FORM (NO BOX PESANTE) */}
-          <div className="border border-white/5 p-8 md:p-">
+          <div className="border border-white/5 p-8 md:p-8">
 
             <ModuloContatti destinatarioEmail="infissi@faccio-tutto.it" />
 
@@ -240,7 +257,8 @@ const InfissiPage = () => {
   </Link>
 </footer>
 
-    </div>
+
+    </main>
   );
 };
 
