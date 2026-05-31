@@ -3,141 +3,146 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 import ModuloContatti from "./ModuloContatti";
 
 const InfissiPage = () => {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-black/60 backdrop-blur-md border-b border-white/10 px-6 py-4 flex justify-between items-center">
-        <Link href="/">
-          <Image
-            src="/logo faccio tutto 3.png"
-            alt="Logo"
-            width={120}
-            height={120}
-          />
-        </Link>
+      {/* NAVBAR PREMIUM */}
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5 px-6 md:px-12 py-4 flex justify-between items-center">
 
-        <div className="flex gap-6 items-center text-sm text-neutral-300">
-          <Link href="/infissi">Infissi</Link>
-          <Link href="/fotovoltaico">Fotovoltaico</Link>
-          <Link href="/progettazione">Architettura</Link>
+        <div className="flex items-center gap-6">
+          <Link href="/">
+            <Image
+              src="/logo faccio tutto 3.png"
+              alt="Logo"
+              width={100}
+              height={100}
+            />
+          </Link>
 
-          <a href="https://www.instagram.com/infofacciotutto/" target="_blank">
-            <FaInstagramSquare />
-          </a>
-
-          <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank">
-            <FaLinkedin />
-          </a>
+          <div className="hidden md:flex items-center gap-4 text-[11px] text-white/60">
+            <span>faccio-tutto.it</span>
+            <a href="#" className="hover:text-white transition">
+              <FaInstagramSquare />
+            </a>
+            <a href="#" className="hover:text-white transition">
+              <FaLinkedin />
+            </a>
+          </div>
         </div>
+
+        <ul className="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.25em] text-white/60">
+          {[
+            "Architettura",
+            "Fotovoltaico",
+            "Infissi",
+            "Climatizzazione",
+            "Riparazioni",
+          ].map((item) => (
+            <li key={item} className="hover:text-white transition">
+              <Link href="#">{item}</Link>
+            </li>
+          ))}
+        </ul>
       </nav>
 
       {/* HERO */}
-      <header className="relative min-h-screen flex items-center justify-center">
+      <header className="relative h-screen flex items-center justify-center text-center">
+
         <Image
-          src="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=2070&auto=format&fit=crop"
-          alt="Infissi moderni"
+          src="/images/infissi-hero.png"
+          alt="Infissi"
           fill
-          className="object-cover opacity-40"
           priority
+          className="object-cover"
         />
 
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative z-10 text-center max-w-4xl px-6">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-xs tracking-[0.4em] uppercase text-neutral-400"
-          >
-            Serramenti premium
-          </motion.p>
+        <div className="relative z-10 px-6 max-w-4xl">
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-light mt-6"
-          >
-            Infissi che migliorano
-            <br />
-            la tua casa
-          </motion.h1>
+          <p className="text-xs tracking-[0.6em] text-white/60 uppercase">
+            Infissi di nuova generazione
+          </p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-neutral-300 mt-8 text-lg"
-          >
-            Design minimale, prestazioni elevate e comfort abitativo superiore.
-          </motion.p>
+          <h1 className="text-5xl md:text-7xl font-light mt-6 leading-tight">
+            Luce, comfort<br />e silenzio.
+          </h1>
+
+          <p className="text-white/70 mt-8 text-lg md:text-xl">
+            Prestazioni termiche avanzate. Design minimale. Integrazione perfetta con la tua casa.
+          </p>
+
         </div>
       </header>
 
-      {/* SECTION INFO */}
-      <section className="bg-black py-28 px-6">
-        <div className="max-w-6xl mx-auto text-center mb-16">
-          <p className="text-xs tracking-[0.4em] uppercase text-neutral-500">
-            Soluzioni
-          </p>
-          <h2 className="text-4xl md:text-5xl font-light mt-4">
-            Infissi su misura
-          </h2>
-        </div>
+      {/* KPI SECTION */}
+      <section className="py-28 border-t border-white/5">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 text-center gap-16">
 
-        <div className="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+          {[
+            { value: "-45%", label: "dispersioni termiche" },
+            { value: "Uw 0.8", label: "trasmittanza media" },
+            { value: "40 dB", label: "isolamento acustico" },
+          ].map((item) => (
+            <div key={item.label}>
+              <div className="text-5xl font-extralight">{item.value}</div>
+              <div className="text-white/40 mt-3 text-sm tracking-wide uppercase">
+                {item.label}
+              </div>
+            </div>
+          ))}
 
-          {/* PVC */}
-          <div className="rounded-3xl overflow-hidden bg-[#111] border border-neutral-800">
-            <div className="relative h-72">
-              <Image
-                src="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=2070&auto=format&fit=crop"
-                alt="PVC"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="p-8">
-              <h3 className="text-2xl font-light">Infissi PVC</h3>
-              <p className="text-neutral-400 mt-3">
-                Isolamento termico avanzato e ottimo rapporto qualità/prezzo.
-              </p>
-            </div>
-          </div>
-
-          {/* ALLUMINIO */}
-          <div className="rounded-3xl overflow-hidden bg-[#111] border border-neutral-800">
-            <div className="relative h-72">
-              <Image
-                src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070&auto=format&fit=crop"
-                alt="Alluminio"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="p-8">
-              <h3 className="text-2xl font-light">
-                Alluminio a taglio termico
-              </h3>
-              <p className="text-neutral-400 mt-3">
-                Design moderno, durata e massima resistenza.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section className="bg-[#0a0a0a] py-28 px-6">
-        <div className="max-w-5xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-light">Servizi inclusi</h2>
+      {/* PRODUCTS */}
+      <section className="py-32 space-y-40 max-w-7xl mx-auto px-6">
+
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
+          <Image
+            src="/images/pvc1.png"
+            width={1200}
+            height={800}
+            className="rounded-2xl"
+            alt=""
+          />
+          <div>
+            <div className="text-5xl font-light">PVC premium</div>
+            <div className="text-white/50 mt-6 text-lg">
+              Massima efficienza energetica con manutenzione minima.
+            </div>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-0 max-w-4xl mx-auto text-neutral-400">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
+          <div>
+            <div className="text-5xl font-light">Alluminio minimal</div>
+            <div className="text-white/50 mt-6 text-lg">
+              Profili sottili per massima luce naturale.
+            </div>
+          </div>
+          <Image
+            src="/images/alluminio2.png"
+            width={1200}
+            height={800}
+            className="rounded-2xl"
+            alt=""
+          />
+        </div>
+
+      </section>
+
+      {/* SERVICES */}
+      <section className="py-28 border-t border-white/5">
+        <div className="max-w-5xl mx-auto text-center mb-16">
+          <div className="text-4xl font-light">Servizi inclusi</div>
+        </div>
+
+        <div className="max-w-4xl mx-auto grid md:grid-cols-2">
           {[
             "Sopralluogo tecnico",
             "Progettazione su misura",
@@ -145,10 +150,10 @@ const InfissiPage = () => {
             "Consulenza energetica",
             "Gestione pratiche",
             "Assistenza post-vendita",
-          ].map((item, i) => (
+          ].map((item) => (
             <div
-              key={i}
-              className="border-b border-neutral-800 py-5 text-lg font-light"
+              key={item}
+              className="border-b border-white/5 py-5 text-white/60 text-lg font-light"
             >
               {item}
             </div>
@@ -156,35 +161,84 @@ const InfissiPage = () => {
         </div>
       </section>
 
-      {/* CTA + FORM */}
-      <section className="bg-black py-28 px-6 border-t border-white/10">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+      {/* CTA + FORM (TESLA STYLE CLEAN) */}
+      <section className="py-32 border-t border-white/5 px-6">
 
-          <div>
-            <p className="text-xs tracking-[0.4em] text-neutral-500 uppercase">
-              Contatto
-            </p>
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20 items-start">
 
-            <h2 className="text-4xl font-light mt-4">
-              Richiedi un preventivo
-            </h2>
+         {/* TESTO + IMMAGINE */}
+<div className="flex flex-col h-full">
 
-            <p className="text-neutral-400 mt-6">
-              Ti risponderemo con una soluzione su misura per la tua casa.
-            </p>
-          </div>
+  <p className="text-xs tracking-[0.4em] text-white/40 uppercase">
+    Preventivo personalizzato
+  </p>
 
-          <div className="bg-[#111] border border-neutral-800 rounded-3xl p-6">
+  <div className="text-5xl font-light mt-6">
+    Progetta i tuoi infissi
+  </div>
+
+  <p className="text-white/50 mt-6 text-lg">
+    Inserisci le informazioni e ricevi una proposta tecnica dettagliata entro 24h.
+  </p>
+
+  <div className="relative mt-12 flex-1 min-h-[650px] overflow-hidden rounded-3xl">
+    <Image
+      src="/images/infissi-minimal.png"
+      alt="Infissi Design"
+      fill
+      className="object-cover"
+    />
+
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+
+    <div className="absolute bottom-8 left-8 right-8">
+      <p className="text-xs uppercase tracking-[0.3em] text-white/60">
+        Design minimale
+      </p>
+
+      <h3 className="text-3xl font-light mt-3">
+        Soluzioni su misura
+      </h3>
+
+      <p className="text-white/70 mt-3">
+        Profili sottili, massima luminosità e prestazioni elevate.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+          {/* FORM (NO BOX PESANTE) */}
+          <div className="border border-white/5 p-8 md:p-">
+
             <ModuloContatti destinatarioEmail="infissi@faccio-tutto.it" />
+
           </div>
 
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-white/10 py-10 text-center text-neutral-500 text-sm">
-        © {new Date().getFullYear()} faccio-tutto.it
-      </footer>
+     <footer
+  className="text-center py-8 bg-white border-t border-neutral-100 text-[11px] text-black font-bold tracking-wider uppercase space-y-2 md:space-y-0 md:space-x-6"
+  style={{ backgroundColor: '#ffffff', borderColor: '#f5f5f5', color: '#000000' }}
+>
+  <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
+
+  <Link
+    href="/privacy"
+    className="hover:opacity-70 transition"
+  >
+    Privacy e Note Legali
+  </Link>
+
+  <Link
+    href="/contatti"
+    className="hover:opacity-70 transition"
+  >
+    Contatti
+  </Link>
+</footer>
 
     </div>
   );
