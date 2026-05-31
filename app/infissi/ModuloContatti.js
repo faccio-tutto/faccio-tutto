@@ -13,8 +13,8 @@ function ModuloContatti({ destinatarioEmail }) {
   const [privacy, setPrivacy] = useState(false);
 
   const [dimensioni, setDimensioni] = useState(
-    Array(10).fill({ width: "", height: "" })
-  );
+  Array.from({ length: 10 }, () => ({ width: "", height: "" }))
+);
 
   const [materiale, setMateriale] = useState("Seleziona un materiale");
   const [colore, setColore] = useState("Seleziona un colore");
