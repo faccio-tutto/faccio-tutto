@@ -319,7 +319,7 @@ export default function ClimatizzazionePage() {
         </div>
 
         <ModuloContatti
-          destinatarioEmail="climatizzazione@faccio-tutto.it"
+          destinatarioEmail="info@faccio-tutto.it"
         />
       </section>
 

@@ -13,55 +13,57 @@ export default function ModuloContatti({
   const [messaggio, setMessaggio] = useState("");
 
   const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
 
-    setLoading(true);
-    setMessaggio("");
+  const form = e.currentTarget;
 
-    const formData = new FormData(e.currentTarget);
+  setLoading(true);
+  setMessaggio("");
 
-    const dati = {
-      nome: formData.get("nome"),
-      cognome: formData.get("cognome"),
-      telefono: formData.get("telefono"),
-      email: formData.get("email"),
-      comune: formData.get("comune"),
-      messaggio: formData.get("messaggio"),
-      destinatarioEmail,
-    };
+  const formData = new FormData(form);
 
-    try {
-      const response = await fetch("/api/invia-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dati),
-      });
+  const dati = {
+    nome: formData.get("nome"),
+    cognome: formData.get("cognome"),
+    telefono: formData.get("telefono"),
+    email: formData.get("email"),
+    comune: formData.get("comune"),
+    messaggio: formData.get("messaggio"),
+    destinatarioEmail,
+  };
 
-      if (response.ok) {
-        setMessaggio(
-          "Richiesta inviata correttamente. Ti contatteremo al più presto."
-        );
+  try {
+    const response = await fetch("/api/invia-email-json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dati),
+    });
 
-        e.currentTarget.reset();
-      } else {
-        setMessaggio(
-          "Si è verificato un errore durante l'invio."
-        );
-      }
-    } catch (error) {
-      console.error(error);
-
+    if (response.ok) {
       setMessaggio(
-        "Errore di connessione. Riprova più tardi."
+        "Richiesta inviata correttamente. Ti contatteremo al più presto."
+      );
+
+      form.reset();
+    } else {
+      setMessaggio(
+        "Si è verificato un errore durante l'invio."
       );
     }
+  } catch (error) {
+    console.error(error);
 
-    setLoading(false);
-  };
+    setMessaggio(
+      "Errore di connessione. Riprova più tardi."
+    );
+  }
+
+  setLoading(false);
+};
 
   return (
     <div className="max-w-4xl mx-auto">
