@@ -1,70 +1,169 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
+import {
+  FaWrench,
+  FaPhone,
+  FaDraftingCompass,
+  FaSolarPanel,
+  FaWind,
+  FaDoorOpen,
+  FaInstagramSquare,
+  FaLinkedin,
+  FaArrowRight,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
+import { AnimatePresence, motion } from "framer-motion";
 import ModuloContatti from "./ModuloContatti";
 
 const InfissiPage = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const menuItems = [
+    { name: "Architettura", href: "/progettazione" },
+    { name: "Fotovoltaico", href: "/fotovoltaico" },
+    { name: "Infissi", href: "/infissi" },
+    { name: "Climatizzazione", href: "/climatizzazione" },
+    { name: "Riparazioni", href: "/riparazioni-veloci" },
+    { name: "Contatti", href: "/prenota" },
+  ];
+
   return (
-         <main className="bg-black text-white overflow-hidden">
+    <main className="bg-black text-white overflow-hidden">
+      {/* NAVBAR PREMIUM */}
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
 
-         {/* NAVBAR PREMIUM */}
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5 px-6 md:px-12 py-4 flex justify-between items-center">
+  <div className="px-6 md:px-12 py-4 flex justify-between items-center">
 
-        <div className="flex items-center gap-6">
-          <Link href="/">
-            <Image
-              src="/logo faccio tutto 3.png"
-              alt="Logo"
-              width={100}
-              height={100}
-            />
-          </Link>
+    <div className="flex items-center gap-6">
 
-          <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
-            <span>faccio-tutto.it</span>
-            <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
-            <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
-          </div>
-        </div>
+      <Link href="/">
+        <Image
+          src="/logo faccio tutto 3.png"
+          alt="Logo"
+          width={100}
+          height={100}
+        />
+      </Link>
 
-        <ul className="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.25em] text-white/60">
-           {[
+      <div className="hidden md:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
 
-        { name: "Architettura", href: "/progettazione" },
+        <span>faccio-tutto.it</span>
 
-        { name: "Fotovoltaico", href: "/fotovoltaico" },
+        <a
+          href="https://www.instagram.com/infofacciotutto/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-white transition"
+        >
+          <FaInstagramSquare className="text-base" />
+        </a>
 
-        { name: "Infissi", href: "/infissi" },
+        <a
+          href="https://www.linkedin.com/company/faccio-tutto/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-white transition"
+        >
+          <FaLinkedin className="text-base" />
+        </a>
 
-        { name: "Climatizzazione", href: "/climatizzazione" },
+      </div>
 
-        { name: "Riparazioni", href: "/riparazioni-veloci" },
+    </div>
 
-      ].map((item) => (
+    {/* Desktop Menu */}
 
+    <ul className="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.25em] text-white/60">
+
+      {menuItems.map((item) => (
         <li key={item.href}>
-
           <Link
-
             href={item.href}
-
             className="hover:text-white transition duration-200"
-
           >
-
             {item.name}
-
           </Link>
-
         </li>
-
       ))}
 
     </ul>
-      </nav>
+
+    {/* Mobile Button */}
+
+    <button
+      onClick={() => setMenuOpen(!menuOpen)}
+      className="lg:hidden text-white text-2xl"
+      aria-label="Apri menu"
+    >
+      {menuOpen ? <FaTimes /> : <FaBars />}
+    </button>
+
+  </div>
+
+  {/* Mobile Menu */}
+
+  <AnimatePresence>
+
+    {menuOpen && (
+
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.25 }}
+        className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-white/10"
+      >
+
+        <div className="flex flex-col">
+
+          {menuItems.map((item) => (
+
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              className="px-8 py-5 text-white uppercase tracking-widest text-sm border-b border-white/10 hover:bg-white/5"
+            >
+              {item.name}
+            </Link>
+
+          ))}
+
+          <div className="flex justify-center gap-6 py-6">
+
+            <a
+              href="https://www.instagram.com/infofacciotutto/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white text-2xl"
+            >
+              <FaInstagramSquare />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/company/faccio-tutto/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white text-2xl"
+            >
+              <FaLinkedin />
+            </a>
+
+          </div>
+
+        </div>
+
+      </motion.div>
+
+    )}
+
+  </AnimatePresence>
+
+</nav>
 
       {/* HERO */}
       <header className="relative h-screen flex items-center justify-center text-center">
