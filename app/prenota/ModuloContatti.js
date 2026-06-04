@@ -1,5 +1,7 @@
 "use client";
+
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 function ModuloContatti({ destinatarioEmail }) {
   const [nome, setNome] = useState("");
@@ -7,118 +9,207 @@ function ModuloContatti({ destinatarioEmail }) {
   const [email, setEmail] = useState("");
   const [telefono, setTelefono] = useState("");
   const [via, setVia] = useState("");
-  const [città, setCittà] = useState("");
+  const [citta, setCitta] = useState("");
   const [messaggio, setMessaggio] = useState("");
   const [privacy, setPrivacy] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
-    if (!privacy) {
-      setInvioStato('errore');
-      alert('Devi accettare i termini e le condizioni sulla privacy.');
-      return;
-    }
-    if (!nome || !cognome || !email) {
-      setInvioStato('errore');
-      alert('Nome, cognome ed email sono obbligatori.');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setInvioStato('errore');
-      alert('Email non valida.');
-      return;
-    }
+    if (!privacy) return setError("Accetta la privacy per continuare.");
+    if (!nome || !cognome || !email)
+      return setError("Nome, cognome ed email sono obbligatori.");
 
-    // Costruisci il body della richiesta
-  const body = {
-    nome,
-    cognome,
-    email,
-    telefono,
-    via,
-    città,
-    messaggio,
-    destinatarioEmail // lo passi dal componente ModuloContatti
+    const body = {
+      nome,
+      cognome,
+      email,
+      telefono,
+      via,
+      citta,
+      messaggio,
+      destinatarioEmail,
+    };
+
+    try {
+      const res = await fetch("/api/invia-email-json", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (res.ok) setSuccess(true);
+      else {
+        const err = await res.json();
+        setError(err.error || "Errore durante l'invio.");
+      }
+    } catch {
+      setError("Errore di rete.");
+    }
   };
 
-  try {
-    const res = await fetch('/api/invia-email-json', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.12 },
+    },
+  };
 
-    if (res.ok) {
-      setSuccess(true);
-    } else {
-      const err = await res.json();
-      console.error("Errore:", err.error);
-      alert("Errore nell'invio del modulo: " + err.error);
-    }
-} catch (error) {
-  console.error("Errore di rete:", error);
-  alert("Errore di rete. Riprova.");
-}
-}; // Closing brace for handleSubmit
+  const item = {
+    hidden: { opacity: 0, y: 25 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
 
   return (
-    <div id="modulo-contatti" className="mx-auto max-w-7xl px-4">
-      {success ? (
-        <div className="text-green-500 font-bold text-xl">Messaggio inviato con successo!</div>
-      ) : (
-        <form onSubmit={handleSubmit} className="-mt-4">
-          <div className="grid gap-3">
-            <div>
-              <label htmlFor="nome" className="block text-sm font-medium text-gray-600">Nome</label>
-              <input type="text" id="nome" value={nome} onChange={(e) => setNome(e.target.value)} className="mt-1 p-3 border rounded-md w-full" required />
+    <div className="w-full bg-black text-white flex justify-center px-4 py-20">
+      <div className="w-full max-w-3xl">
+
+        {/* HEADER CINEMATIC */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-14"
+        >
+          <h2 className="text-4xl md:text-5xl font-light tracking-[0.25em] uppercase">
+            Contattaci
+          </h2>
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: 96 }}
+            transition={{ duration: 1 }}
+            className="h-px bg-red-600 mx-auto mt-6"
+          />
+          <p className="text-gray-500 mt-6 text-sm">
+            Progettazione, consulenza e soluzioni energetiche su misura
+          </p>
+        </motion.div>
+
+        {success ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center text-green-400 text-lg"
+          >
+            Richiesta inviata con successo.
+          </motion.div>
+        ) : (
+          <motion.form
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            onSubmit={handleSubmit}
+            className="space-y-8"
+          >
+            {error && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="border border-red-600 text-red-400 p-3 text-sm"
+              >
+                {error}
+              </motion.div>
+            )}
+
+            {/* GRID INPUT */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <AnimatedInput label="Nome" value={nome} setValue={setNome} />
+              <AnimatedInput label="Cognome" value={cognome} setValue={setCognome} />
             </div>
-            <div>
-              <label htmlFor="cognome" className="block text-sm font-medium text-gray-600">Cognome</label>
-              <input type="text" id="cognome" value={cognome} onChange={(e) => setCognome(e.target.value)} className="mt-1 p-3 border rounded-md w-full" required />
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <AnimatedInput label="Email" value={email} setValue={setEmail} type="email" />
+              <AnimatedInput label="Telefono" value={telefono} setValue={setTelefono} type="tel" />
             </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-600">Indirizzo e-mail</label>
-              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 p-3 border rounded-md w-full" required />
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <AnimatedInput label="Via" value={via} setValue={setVia} />
+              <AnimatedInput label="Città" value={citta} setValue={setCitta} />
             </div>
-            <div>
-              <label htmlFor="telefono" className="block text-sm font-medium text-gray-600">Telefono</label>
-              <input type="tel" id="telefono" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="mt-1 p-3 border rounded-md w-full" />
-            </div>
-            <div>
-              <label htmlFor="via" className="block text-sm font-medium text-gray-600">Via</label>
-              <input type="text" id="via" value={via} onChange={(e) => setVia(e.target.value)} className="mt-1 p-3 border rounded-md w-full" />
-            </div>
-            <div>
-              <label htmlFor="città" className="block text-sm font-medium text-gray-600">Città</label>
-              <input type="text" id="città" value={città} onChange={(e) => setCittà(e.target.value)} className="mt-1 p-3 border rounded-md w-full" />
-            </div>
-            <div>
-              <label htmlFor="messaggio" className="block text-sm font-medium text-gray-600">Messaggio</label>
-              <textarea id="messaggio" value={messaggio} onChange={(e) => setMessaggio(e.target.value)} rows={4} className="mt-1 p-3 border rounded-md w-full"></textarea>
-              </div>
-          <div className="flex items-center">
-  <input type="checkbox" className="mr-2" checked={privacy} onChange={(e) => setPrivacy(e.target.checked)} />
-  <label className="text-sm text-gray-400 whitespace-nowrap">
-  Accetto i <a href="/termini e condizioni.pdf" className="text-blue-500">termini e condizioni</a> e acconsento al trattamento 
-  <br/>dei miei dati personali secondo la <a href="/normativa privacy.pdf" className="text-blue-500">normativa sulla privacy.</a>
-  </label>
-</div>
-            <button
-              type="submit"
-              style={{ padding: "12px 16px" }}
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl"
+
+            {/* MESSAGGIO */}
+            <motion.div variants={item}>
+              <label className="text-xs tracking-[0.25em] uppercase text-gray-400">
+                Messaggio
+              </label>
+              <textarea
+                value={messaggio}
+                onChange={(e) => setMessaggio(e.target.value)}
+                rows={5}
+                className="w-full mt-2 bg-black border border-gray-800 p-4 text-white focus:border-red-600 outline-none transition"
+              />
+            </motion.div>
+
+            {/* PRIVACY */}
+            <motion.div
+              variants={item}
+              className="flex items-start gap-3 text-xs text-gray-500"
             >
-              Invia la richiesta
-            </button>
-          </div>
-        </form>
-      )}
+              <input
+                type="checkbox"
+                checked={privacy}
+                onChange={(e) => setPrivacy(e.target.checked)}
+                className="mt-1 accent-red-600"
+              />
+              <p>
+                Accetto i{" "}
+                <a className="text-white underline" href="/termini-e-condizioni.pdf">
+                  termini e condizioni
+                </a>{" "}
+                e la{" "}
+                <a className="text-white underline" href="/privacy.pdf">
+                  privacy policy
+                </a>
+              </p>
+            </motion.div>
+
+            {/* BUTTON CINEMATIC */}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              type="submit"
+              className="w-full border border-red-600 text-red-500 py-4 uppercase tracking-[0.3em] text-sm hover:bg-red-600 hover:text-white transition"
+            >
+              Invia richiesta
+            </motion.button>
+          </motion.form>
+        )}
+      </div>
     </div>
   );
-};
+}
+
+/* INPUT CINEMATIC COMPONENT */
+function AnimatedInput({ label, value, setValue, type = "text" }) {
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0 },
+      }}
+    >
+      <label className="text-xs tracking-[0.25em] uppercase text-gray-400">
+        {label}
+      </label>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className="w-full mt-2 bg-black border border-gray-800 p-3 text-white focus:border-red-600 outline-none transition"
+      />
+    </motion.div>
+  );
+}
 
 export default ModuloContatti;

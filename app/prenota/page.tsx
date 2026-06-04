@@ -1,204 +1,376 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import ModuloContatti from './ModuloContatti';
-import { FaWrench, FaPhone, FaEnvelope, FaDraftingCompass, FaSolarPanel, FaPlug, FaDoorOpen, FaInstagramSquare, FaLinkedin, FaHome } from "react-icons/fa";
-import { cn } from '@/lib/utils';
- // Assicurati di aver installato framer-motion
+import { AnimatePresence, motion } from "framer-motion";
+import ModuloContatti from "./ModuloContatti";
 
-type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
-
-const CustomCardContent: React.FC<CardContentProps> = ({ children, className, ...props }) => (
-    <div className={`card-content ${className}`} {...props}>
-        {children}
-    </div>
-);
-
-type CardProps = React.HTMLAttributes<HTMLDivElement>;
-
-const CustomCard: React.FC<CardProps> = ({ children, className, ...props }) => {
-    return (
-        <div className={`rounded-lg shadow-md ${className}`} {...props}>
-            {children}
-        </div>
-    );
-};
-
-type ButtonProps = {
-    children: React.ReactNode;
-    className?: string;
-    variant?: "ghost" | "default" | string;
-    size?: "icon" | string;
-    [key: string]: any;
-};
-
-const Button: React.FC<ButtonProps> = ({ children, className, variant, size, ...props }) => {
-    let baseClasses = "inline-flex items-center justify-start rounded-md text-sm font-bold transition-colors";
-
-    if (variant === "ghost") {
-        baseClasses += " hover:bg-gray-100";
-    } else if (variant === "default") {
-        baseClasses += " bg-yellow-500 text-black hover:bg-yellow-600";
-    } else {
-        baseClasses += " bg-white text-gray-900 hover:bg-gray-100";
-    }
-
-    if (size === "icon") {
-        baseClasses += " h-9 w-9 p-0";
-    } else {
-        baseClasses += " px-4 py-2"; // Ridotto il padding per contenere il testo
-    }
-
-    baseClasses = cn(baseClasses, className);
-
-    return (
-        <button className={baseClasses} {...props}>
-            {children}
-        </button>
-    );
-};
+import {
+  FaInstagramSquare,
+  FaLinkedin,
+  FaMapMarkerAlt,
+  FaPhone,
+  FaEnvelope,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 
 export default function ContattiPage() {
-  const contactItems = [
-    {
-      src: "/images/sede button 2.png",
-      text: "via J. F. Kennedy 67, 92024 Canicattì (AG)",
-      alt: "Indirizzo",
-    },
-    {
-      src: "/images/mail button 2.png",
-      text: "info@faccio-tutto.it",
-      alt: "Email",
-    },
-    {
-      src: "/images/phone button 2.png",
-      text: "+39 333 4491881",
-      alt: "Telefono",
-    },
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuItems = [
+    { name: "Architettura", href: "/progettazione" },
+    { name: "Fotovoltaico", href: "/fotovoltaico" },
+    { name: "Infissi", href: "/infissi" },
+    { name: "Climatizzazione", href: "/climatizzazione" },
+    { name: "Riparazioni", href: "/riparazioni-veloci" },
+    { name: "Contatti", href: "/prenota" },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white">
-       {/* Navbar */}
-                 <nav className="bg-black text-white py-1 px-4 sm:px-6 flex flex-wrap justify-between items-center shadow-lg">
-  <div className="flex items-center gap-1 min-w-[220px]">
-    <a href="/">
-      <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={160} height={160} className="rounded" />
-    </a>
-    <h1 className="text-base sm:text-xl font-normal flex items-center gap-2">
-      faccio-tutto.it
-      <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link">
-        <FaInstagramSquare className="text-lg sm:text-xl" />
-      </a>
-      <a href="https://www.linkedin.com/company/faccio-tutto/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link">
-        <FaLinkedin className="text-lg sm:text-xl" />
-      </a>
-    </h1>
+    <main>
+      
+       {/* NAVBAR PREMIUM */}
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
+
+  <div className="px-6 md:px-12 py-4 flex justify-between items-center">
+
+    <div className="flex items-center gap-6">
+
+      <Link href="/">
+        <Image
+          src="/logo faccio tutto 3.png"
+          alt="Logo"
+          width={100}
+          height={100}
+        />
+      </Link>
+
+      <div className="hidden md:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+
+        <span>faccio-tutto.it</span>
+
+        <a
+          href="https://www.instagram.com/infofacciotutto/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-white transition"
+        >
+          <FaInstagramSquare className="text-base" />
+        </a>
+
+        <a
+          href="https://www.linkedin.com/company/faccio-tutto/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-white transition"
+        >
+          <FaLinkedin className="text-base" />
+        </a>
+
+      </div>
+
+    </div>
+
+    {/* Desktop Menu */}
+
+    <ul className="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.25em] text-white/60">
+
+      {menuItems.map((item) => (
+        <li key={item.href}>
+          <Link
+            href={item.href}
+            className="hover:text-white transition duration-200"
+          >
+            {item.name}
+          </Link>
+        </li>
+      ))}
+
+    </ul>
+
+    {/* Mobile Button */}
+
+    <button
+      onClick={() => setMenuOpen(!menuOpen)}
+      className="lg:hidden text-white text-2xl"
+      aria-label="Apri menu"
+    >
+      {menuOpen ? <FaTimes /> : <FaBars />}
+    </button>
+
   </div>
 
-  {/* Scrollable menu on small screens */}
-  <ul className="flex gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible w-full sm:w-auto mt-2 sm:mt-0 text-sm sm:text-base">
-    {[
-      { name: "Home", href: "/" },
-      { name: "Mission", href: "/mission" },
-      { name: "Vision", href: "/vision" },
-      { name: "Chi siamo", href: "/chisiamo" },
-      { name: "Affiliazione", href: "/affiliazione" },
-      { name: "Contatti", href: "/contatti" },
-    ].map((link) => (
-      <li key={link.href} className="whitespace-nowrap">
-        <a href={link.href} className="hover:underline">{link.name}</a>
-      </li>
-    ))}
-  </ul>
-</nav>
-            
-      {/* Contatti Section */}
+  {/* Mobile Menu */}
+
+  <AnimatePresence>
+
+    {menuOpen && (
+
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
-  className="p-8 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]"
->
-  <h1 className="text-3xl font-bold mb-10 text-center text-green-400">Prenota subito un appuntamento!</h1>
-<p className="text-base sm:text-lg text-center mb-8 max-w-2xl">
-  Siamo qui per rispondere a tutte le tue domande.<br />
-  Non esitare a contattarci per qualsiasi informazione o richiesta.
-</p>
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.25 }}
+        className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-white/10"
+      >
 
-{/* Layout aggiornato */}
-<div className="container mx-auto px-4 flex flex-col md:flex-row items-start gap-8 relative z-10 py-8">
-    {/* Servizi - NUOVI PULSANTI */}
-    <div className="w-full md:w-4/4 space-y-4 mb-8 md:mb-0 bg-gray-200 p-4 rounded-lg shadow-lg">
-      <div className="grid grid-cols-1 gap-4 bg-white bg-opacity-80 p-4 rounded-lg">
-        {[
-          {
-                id: "home",
-                icon: <FaHome className="text-3xl mb-0 text-red-500" />,
-                title: "Indirizzo sede",
-                description: "Via J.F.Kennedy 67, Canicattì (AG)",
-                link: "https://www.google.com/maps/place/Via+John+Fitzgerald+Kennedy,+67,+92024+Canicatt%C3%AC+AG/@37.3547205,13.8486844,17z/data=!3m1!4b1!4m6!3m5!1s0x13109243e58decef:0x341491fc3493e451!8m2!3d37.3547163!4d13.8512593!16s%2Fg%2F11csmbjss5?entry=ttu&g_ep=EgoyMDI1MDUxNS4xIKXMDSoASAFQAw%3D%3D"
-            },
-            {
-                id: "mail",
-                icon: <FaEnvelope className="text-3xl mb-0 text-blue-500" />,
-                title: "Indirizzo e-mail",
-                description: "info@faccio-tutto.it",
-                link: "info@faccio-tutto.it"
-            },
-            {
-                id: "telefono",
-                icon: <FaPhone className="text-3xl mb-0 text-green-500" />,
-                title: "Numero di telefono",
-                description: "+39 333 4491881",
-                link: "+39 333 4491881"
-            }
-        ].map(service => (
+        <div className="flex flex-col">
+
+          {menuItems.map((item) => (
+
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              className="px-8 py-5 text-white uppercase tracking-widest text-sm border-b border-white/10 hover:bg-white/5"
+            >
+              {item.name}
+            </Link>
+
+          ))}
+
+          <div className="flex justify-center gap-6 py-6">
+
             <a
-    key={service.id}
-    href={
-        service.id === "mail"
-            ? `mailto:${service.link}`
-            : service.id === "telefono"
-            ? `tel:${service.link.replace(/\s+/g, '')}`
-            : service.link
-    }
-    target={service.id === "home" ? "_blank" : undefined}
-    rel={service.id === "home" ? "noopener noreferrer" : undefined}
-    className="block transform transition duration-300 hover:scale-105"
->
-                <CustomCard className="border-gray-200 bg-transparent">
-                    <CustomCardContent className="p-4 text-center flex flex-col justify-center items-center">
-                        <div className="rounded-full p-3 shadow-md bg-white">
-                            {service.icon}
-                        </div>
-                        <h3 className="text-sm font-semibold mt-2 text-gray-800">
-                            {service.title}
-                        </h3>
-                        {service.description && (
-                            <div style={{ fontSize: '13px' }} className="text-gray-600 mt-1">{service.description}</div>
-                        )}
-                    </CustomCardContent>
-                </CustomCard>
+              href="https://www.instagram.com/infofacciotutto/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white text-2xl"
+            >
+              <FaInstagramSquare />
             </a>
-        ))}
-    </div>
-</div>
 
-                  {/* Modulo contatti */}
-         <div className="w-full md:w-2/3 mx-auto">
-           <ModuloContatti destinatarioEmail="info@faccio-tutto.it" />
-           <div className="mt-0 text-left"></div>
-         </div>
-  </div>
-  </motion.div>
-  {/* Footer */}
+            <a
+              href="https://www.linkedin.com/company/faccio-tutto/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white text-2xl"
+            >
+              <FaLinkedin />
+            </a>
 
-      <footer className="text-center mt-8 p-6 bg-gray-900 text-gray-300">
-        <p>© {new Date().getFullYear()} faccio-tutto.it - Tutti i diritti riservati.</p>
-      </footer>
-    </div>
+          </div>
+
+        </div>
+
+      </motion.div>
+
+    )}
+
+  </AnimatePresence>
+
+</nav>
+
+      {/* HERO */}
+      <section className="relative h-screen flex items-center justify-center">
+        <Image
+          src="/images/hero-contatti.png"
+          alt="Contatti"
+          fill
+          priority
+          className="object-cover"
+        />
+
+        <div className="absolute inset-0 bg-black/50" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="relative z-10 text-center px-6 max-w-4xl"
+        >
+          <h1 className="text-5xl md:text-7xl font-light mb-6">
+            Contattaci
+          </h1>
+
+          <p className="text-lg md:text-2xl text-gray-200 max-w-3xl mx-auto">
+            Assistenza tecnica, manutenzione programmata e supporto
+            professionale per la tua abitazione e la tua attività.
+          </p>
+
+          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+            <a
+              href="tel:+393334491881"
+              className="bg-white text-black px-8 py-4 rounded-full font-medium hover:scale-105 transition"
+            >
+              Chiama ora
+            </a>
+
+            <a
+              href="#modulo"
+              className="border border-white px-8 py-4 rounded-full hover:bg-white hover:text-black transition"
+            >
+              Richiedi assistenza
+            </a>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* INTRO */}
+      <section className="py-24 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-light mb-8">
+            Sempre al tuo fianco
+          </h2>
+
+          <p className="text-gray-400 text-lg leading-relaxed">
+            Il nostro team è disponibile per consulenze tecniche,
+            manutenzione impianti, assistenza specializzata e supporto
+            nella scelta delle migliori soluzioni per la tua casa.
+          </p>
+        </div>
+      </section>
+
+      {/* CONTACT CARDS */}
+      <section className="max-w-6xl mx-auto px-6 pb-24">
+        <div className="grid md:grid-cols-3 gap-8">
+
+          <motion.div
+            whileHover={{ y: -8 }}
+            className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-10 text-center"
+          >
+            <FaMapMarkerAlt
+              size={40}
+              className="mx-auto mb-5 text-red-400"
+            />
+
+            <h3 className="text-xl mb-3">
+              Sede Operativa
+            </h3>
+
+            <p className="text-gray-400">
+              Via J.F. Kennedy 67
+              <br />
+              92024 Canicattì (AG)
+            </p>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ y: -8 }}
+            className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-10 text-center"
+          >
+            <FaEnvelope
+              size={40}
+              className="mx-auto mb-5 text-blue-400"
+            />
+
+            <h3 className="text-xl mb-3">
+              Email
+            </h3>
+
+            <a
+              href="mailto:info@faccio-tutto.it"
+              className="text-gray-400 hover:text-white"
+            >
+              info@faccio-tutto.it
+            </a>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ y: -8 }}
+            className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-10 text-center"
+          >
+            <FaPhone
+              size={40}
+              className="mx-auto mb-5 text-green-400"
+            />
+
+            <h3 className="text-xl mb-3">
+              Telefono
+            </h3>
+
+            <a
+              href="tel:+393334491881"
+              className="text-gray-400 hover:text-white"
+            >
+              +39 333 4491881
+            </a>
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* SEZIONE IMMERSIVA */}
+      <section className="relative h-[700px]">
+        <Image
+          src="/images/tecnico-assistenza.png"
+          alt="Tecnico"
+          fill
+          className="object-cover"
+        />
+
+        <div className="absolute inset-0 bg-black/40" />
+
+      </section>
+
+      {/* MODULO */}
+      <section
+        id="modulo"
+        className="py-28 px-6"
+      >
+        <div className="max-w-5xl mx-auto">
+
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-light mb-6">
+              Richiedi informazioni
+            </h2>
+
+            <p className="text-gray-400 text-lg">
+              Compila il modulo e sarai ricontattato
+              nel più breve tempo possibile.
+            </p>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[40px] p-6 md:p-14">
+            <ModuloContatti
+              destinatarioEmail="info@faccio-tutto.it"
+            />
+          </div>
+
+        </div>
+      </section>
+
+      {/* CTA FINALE */}
+      <section className="py-24 px-6 text-center border-t border-white/10">
+        <h2 className="text-4xl md:text-5xl font-light mb-6">
+          Hai bisogno di assistenza?
+        </h2>
+
+        <p className="text-gray-400 max-w-2xl mx-auto mb-10">
+          Contattaci oggi stesso per ricevere una consulenza
+          professionale e una soluzione su misura.
+        </p>
+
+        <a
+          href="tel:+393334491881"
+          className="inline-block bg-white text-black px-10 py-4 rounded-full font-medium hover:scale-105 transition"
+        >
+          Chiama +39 333 4491881
+        </a>
+      </section>
+
+      {/* FOOTER */}
+           <footer
+  className="text-center py-8 bg-white border-t border-neutral-100 text-[11px] text-black font-bold tracking-wider uppercase space-y-2 md:space-y-0 md:space-x-6"
+  style={{ backgroundColor: '#ffffff', borderColor: '#f5f5f5', color: '#000000' }}
+>
+  <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
+
+  <Link
+    href="/privacy"
+    className="hover:opacity-70 transition"
+  >
+    Privacy e Note Legali
+  </Link>
+
+  <Link
+    href="/contatti"
+    className="hover:opacity-70 transition"
+  >
+    Contatti
+  </Link>
+</footer>
+    </main>
   );
 }
