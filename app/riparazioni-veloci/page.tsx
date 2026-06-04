@@ -40,7 +40,7 @@ const menuItems = [
     const formData = new FormData(form);
 
     const dati = {
-      nome: formData.get("nome"),
+      nome: formData.get("nome e cognome"),
       telefono: formData.get("telefono"),
       email: formData.get("email"),
       comune: formData.get("comune"),
@@ -73,7 +73,7 @@ const menuItems = [
       title: "Caldaie e riscaldamento",
       desc: "Installazione, manutenzione e sostituzione caldaie ad alta efficienza.",
       icon: <FaFire />,
-      img: "/images/caldaie.jpg",
+      img: "/images/caldaie.png",
     },
     {
       title: "Pompe di calore",
@@ -108,7 +108,7 @@ const menuItems = [
   ];
 
   return (
-     <main className="bg-black text-white overflow-hidden">
+     <main className="bg-black text-black overflow-hidden">
       {/* NAVBAR PREMIUM */}
       <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
 
@@ -284,10 +284,10 @@ const menuItems = [
       </header>
 
       {/* INTRO */}
-      <section className="max-w-5xl mx-auto px-6 py-24 text-center space-y-6">
-        <h2 className="text-3xl font-light">
+      <section className="max-w-5xl text-white mx-auto px-6 py-24 text-center space-y-6">
+        <div className="text-3xl font-light">
           Comfort, efficienza e tecnologia per la tua casa
-        </h2>
+        </div>
         <p className="text-neutral-600">
           Interveniamo su impianti moderni ed evoluti per garantire efficienza energetica e massimo comfort abitativo.
         </p>
@@ -355,7 +355,7 @@ const menuItems = [
       </section>
 
       {/* CONTACT */}
-      <section id="contatti" className="max-w-4xl mx-auto px-6 py-24">
+      <section id="contatti" className="bg-black text-white max-w-4xl mx-auto px-6 py-24">
         <h2 className="text-3xl font-light text-center mb-10">
           Richiedi un preventivo
         </h2>
@@ -378,12 +378,16 @@ const menuItems = [
             required
           />
 
-          <button
+          <motion.button
+            type="submit"
             disabled={loading}
-            className="bg-black text-white w-full py-4 rounded-full text-xs uppercase tracking-widest"
+            whileHover={{ scale: 1.02, backgroundColor: "#262626" }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="w-full bg-black text-white py-4 rounded-full text-xs uppercase tracking-widest border border-white/20 disabled:opacity-50 disabled:pointer-events-none"
           >
             {loading ? "Invio..." : "Invia richiesta"}
-          </button>
+          </motion.button>
 
           {messaggio && (
             <p className="text-center text-sm text-neutral-600">{messaggio}</p>
