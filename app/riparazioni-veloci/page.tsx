@@ -244,7 +244,7 @@ const menuItems = [
       {/* HERO */}
       <header className="relative h-screen flex items-center justify-center text-center px-6">
         <Image
-          src="/images/hero-riparazioni.jpg"
+          src="/images/hero-riparazioni.png"
           alt="Impianti termici"
           fill
           className="object-cover"
