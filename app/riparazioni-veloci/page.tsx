@@ -77,25 +77,25 @@ const menuItems = [
     },
     {
       title: "Pompe di calore",
-      desc: "Sistemi ad alta efficienza per riscaldamento e raffrescamento.",
+      desc: "Interventi professionali per sistemi di riscaldamento e raffrescamentoad alta efficienza.",
       icon: <FaSnowflake />,
       img: "/images/pompe-calore.png",
     },
     {
       title: "Impianti a pavimento",
-      desc: "Comfort termico uniforme e risparmio energetico garantito.",
+      desc: "Progettazione, installazione e riparazioni per impianti a pavimento.",
       icon: <FaWater />,
       img: "/images/pavimento-radiante.png",
     },
     {
       title: "Solare termico",
-      desc: "Produzione di acqua calda sanitaria con energia solare.",
+      desc: "Installazione e riparazione di impianti di produzione di acqua calda sanitaria con energia solare.",
       icon: <FaSolarPanel />,
       img: "/images/solare-termico.png",
     },
     {
       title: "Climatizzazione",
-      desc: "Sistemi caldo/freddo per ambienti domestici e commerciali.",
+      desc: "Interventi su sistemi caldo/freddo per ambienti domestici e commerciali.",
       icon: <FaSnowflake />,
       img: "/images/climatizzazione.png",
     },
@@ -258,11 +258,12 @@ const menuItems = [
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-light"
           >
-            Impianti Termici e Climatizzazione
+            Interventi professionali per impianti termici e climatizzazione
+
           </motion.h1>
 
           <p className="text-neutral-200 text-sm md:text-base">
-            Soluzioni professionali per caldaie, pompe di calore, impianti a pavimento e solare termico.
+            Riparazioni e manutenzioni per caldaie, pompe di calore, impianti a pavimento e solare termico.
           </p>
 
           <div className="flex gap-4 justify-center">
