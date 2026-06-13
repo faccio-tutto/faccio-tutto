@@ -248,20 +248,6 @@ const prices = useMemo(() => {
       </div>
 
       <div className="p-6 space-y-8 bg-white rounded-xl shadow-2xl border border-slate-200">
-
-          {/* Navbar Minimal Tesla Style */}
-                <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
-                  <div className="flex items-center gap-6">
-                    <a href="/" className="transition hover:opacity-80">
-                      <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
-                    </a>
-                    <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
-                      <span>faccio-tutto.it</span>
-                      <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
-                      <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
-                    </div>
-                  </div>
-                </nav>
         
         
         {/* MESSAGGI DI ERRORE / VALIDAZIONE */}
@@ -288,7 +274,7 @@ const prices = useMemo(() => {
                   type="text" 
                   value={cliente} 
                   onChange={e=>setCliente(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
+                  className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
                   placeholder="Es. Mario Rossi"
                 />
               </label>
@@ -298,7 +284,7 @@ const prices = useMemo(() => {
                   type="email" 
                   value={email} 
                   onChange={e=>setEmail(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
+                  className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
                   placeholder="Es. mario.rossi@mail.com"
                 />
               </label>
@@ -319,11 +305,11 @@ const prices = useMemo(() => {
                 <select 
                   value={selectedInverter} 
                   onChange={e=>setSelectedInverter(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150"
+                  className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500 transition duration-150"
                 >
                   <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedInverter !== DEFAULT_SELECTION_ID}>Seleziona inverter</option>
                  {inverterList.map(i => 
-<option key={i.id} value={i.id}>
+<option key={i.id} value={i.id} className="text-black">
 {i.brand} {i.modello ? `- ${i.modello}` : ""} ({i.powerKw} kW) — {formatEuro(i.price)}
 </option>
 )}
@@ -336,11 +322,11 @@ const prices = useMemo(() => {
                 <select 
                   value={selectedModulo} 
                   onChange={e=>setSelectedModulo(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150"
+                  className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500 transition duration-150"
                 >
                   <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedModulo !== DEFAULT_SELECTION_ID}>Seleziona modulo</option>
                  {moduloList.map(m => 
-<option key={m.id} value={m.id}>
+<option key={m.id} value={m.id} className="text-black">
 {m.brand} {m.modello ? `- ${m.modello}` : ""} ({m.powerW} W) — {formatEuro(m.price)}
 </option>
 )}
@@ -356,7 +342,7 @@ const prices = useMemo(() => {
       value={moduleCount === 0 ? "" : moduleCount}
       min={0} 
       onChange={e => setModuleCount(e.target.value === "" ? 0 : Number(e.target.value))}
-      className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
+      className="w-full border border-slate-300 text-black p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
       placeholder="0"
     />
   </label>
@@ -379,12 +365,12 @@ const prices = useMemo(() => {
     <select
       value={selectedBatteria}
       onChange={e => setSelectedBatteria(e.target.value)}
-      className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500"
+      className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500"
     >
       <option value={DEFAULT_SELECTION_ID}>Nessuna batteria</option>
 
       {filteredBatteriaList.map(b => (
-<option key={b.id} value={b.id}>
+<option key={b.id} value={b.id} className="text-black">
 {b.brand} {b.modello ? `- ${b.modello}` : ""} ({b.capacityKwh} kWh) — {formatEuro(b.price)}
 </option>
 ))}
@@ -439,10 +425,10 @@ const prices = useMemo(() => {
                 <select 
                   value={selectedStruttura} 
                   onChange={e=>setSelectedStruttura(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150"
+                  className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500 transition duration-150"
                 >
                   <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedStruttura !== DEFAULT_SELECTION_ID}>Seleziona struttura</option>
-                  {strutturaList.map(s => <option key={s.id} value={s.id}>{s.type} — {formatEuro(s.price)} Totale</option>)}
+                  {strutturaList.map(s => <option key={s.id} value={s.id} className="text-black">{s.type} — {formatEuro(s.price)} Totale</option>)}
                 </select>
               </label>
             </div>
@@ -456,22 +442,22 @@ const prices = useMemo(() => {
             <h3 className="font-bold text-xl text-slate-700 mb-3 border-b pb-2">Dettaglio costi netti (IVA esclusa)</h3>
            <ul className="text-sm space-y-2">
 
-  <li className="flex justify-between items-center">
+  <li className="flex justify-between items-center text-black">
     <span>Moduli FV ({moduleCount}x)</span>
     <b>{formatEuro(prices.modulesPrice)}</b>
   </li>
 
-  <li className="flex justify-between items-center">
+  <li className="flex justify-between items-center text-black">
     <span>Inverter</span>
     <b>{formatEuro(prices.inverterPrice)}</b>
   </li>
 
-  <li className="flex justify-between items-center">
+  <li className="flex justify-between items-center text-black">
    <span>Batteria {selectedBatteriaObj ? `(${batteryQuantity}x)` : ""}</span>
     <b>{formatEuro(prices.batteryPrice)}</b>
   </li>
 
-  <li className="flex justify-between items-center border-b border-slate-200 pb-2">
+  <li className="flex justify-between items-center text-black border-b border-slate-200 pb-2">
     <span>Struttura ({selectedStrutturaObj?.type || "N/A"})</span>
     <b>{formatEuro(prices.structurePrice)}</b>
   </li>
