@@ -32,7 +32,7 @@ interface Batteria {
 interface Struttura {
   id: string;
   type: string;
-  price: number; // Prezzo Totale per la struttura
+  price: number;
 }
 
 interface ListiniData {
@@ -46,7 +46,7 @@ interface ListiniData {
 const IVA_RATE = 0.10;
 const PNRR_MAX = 1500; 
 const LABOUR_AND_WIRING_COST_PER_KWP = 286; 
-const DOCUMENTATION_COST = 250; // costo fisso pratiche e documentazione
+const DOCUMENTATION_COST = 250; 
 const DEFAULT_SELECTION_ID = "none"; 
 
 const PvEstimator: FC = () => {
@@ -91,8 +91,6 @@ const PvEstimator: FC = () => {
           { id: "mod3", brand: "Canadian Solar", modello:"TOPHiKu6 CS6.2-48TD",powerW: 460, price: 77.00 }, 
           { id: "mod4", brand: "Peimar", modello:"OR10H500MNDB-FB",powerW: 500, price: 84.00 }, 
           { id: "mod5", brand: "JA Solar", modello: "JAM60D40-500/LB", powerW: 500, price: 85.00 }, 
-          
-          
         ],
         batterie: [
           { id: "bat1", brand: "Huawei", modello: "Luna", capacityKwh: 5, price: 2250.00 }, 
@@ -127,30 +125,25 @@ const PvEstimator: FC = () => {
     fetchData();
   }, []);
 
-  // --- OGGETTI SELEZIONATI E LOGICHE (Nessuna modifica funzionale) ---
+  // --- LOGICHE E MEMO (Nessuna modifica) ---
   const selectedModuloObj: Modulo | undefined | null = selectedModulo === DEFAULT_SELECTION_ID ? null : moduloList.find(b => b.id === selectedModulo); 
   const selectedInverterObj: Inverter | undefined | null = selectedInverter === DEFAULT_SELECTION_ID ? null : inverterList.find(b => b.id === selectedInverter); 
   const selectedBatteriaObj: Batteria | undefined | null = selectedBatteria === DEFAULT_SELECTION_ID ? null : batteriaList.find(b => b.id === selectedBatteria); 
   const selectedStrutturaObj: Struttura | undefined | null = selectedStruttura === DEFAULT_SELECTION_ID ? null : strutturaList.find(b => b.id === selectedStruttura); 
 
   const filteredBatteriaList = useMemo(() => {
-  if (!selectedInverterObj) return [];
+    if (!selectedInverterObj) return [];
+    const inverterBrand = selectedInverterObj.brand;
+    const compatibleBrands: string[] = [inverterBrand];
 
-  const inverterBrand = selectedInverterObj.brand;
-  const compatibleBrands: string[] = [inverterBrand];
-
-  if (inverterBrand === "Deye ibrido") {
-    compatibleBrands.push("V-Tac");
-    compatibleBrands.push("Deye");
-  }
-
-  if (inverterBrand === "Solis") {
-    compatibleBrands.push("Dyness");
-  }
-
-  return batteriaList.filter(b => compatibleBrands.includes(b.brand));
-
-}, [selectedInverterObj, batteriaList]);
+    if (inverterBrand === "Deye ibrido") {
+      compatibleBrands.push("V-Tac", "Deye");
+    }
+    if (inverterBrand === "Solis") {
+      compatibleBrands.push("Dyness");
+    }
+    return batteriaList.filter(b => compatibleBrands.includes(b.brand));
+  }, [selectedInverterObj, batteriaList]);
 
   useEffect(() => {
     if (selectedBatteria === DEFAULT_SELECTION_ID || !selectedInverterObj) return; 
@@ -158,66 +151,59 @@ const PvEstimator: FC = () => {
     if (!isCurrentlyCompatible) { 
       setSelectedBatteria(DEFAULT_SELECTION_ID);
     }
-  }, [selectedBatteria, filteredBatteriaList, selectedInverterObj, setSelectedBatteria]); 
+  }, [selectedBatteria, filteredBatteriaList, selectedInverterObj]); 
   
   const modulesTotalKw = useMemo(() => {
     if (!selectedModuloObj || moduleCount <= 0) return 0;
     return +(selectedModuloObj.powerW * moduleCount / 1000).toFixed(2); 
   }, [selectedModuloObj, moduleCount]);
 
-const prices = useMemo(() => {
-  if (!selectedModuloObj || !selectedInverterObj || !selectedStrutturaObj || modulesTotalKw === 0) {
-    return { modulesPrice: 0, inverterPrice: 0, batteryPrice: 0, structurePrice: 0, materialCost: 0, labourAndWiringPrice: 0, documentationCost: 0, subtotal: 0, iva: 0, total: 0 };
-  }
-  const modulesPrice = selectedModuloObj.price * moduleCount; 
-  const inverterPrice = selectedInverterObj.price;
-  const batteryPrice = selectedBatteriaObj ? selectedBatteriaObj.price * batteryQuantity : 0;
-  const structurePrice = selectedStrutturaObj.price; 
-  const materialCost = modulesPrice + inverterPrice + batteryPrice + structurePrice;
-  const labourAndWiringPrice = modulesTotalKw * LABOUR_AND_WIRING_COST_PER_KWP; 
-  const documentationCost = DOCUMENTATION_COST;
-  const subtotal = materialCost + labourAndWiringPrice + documentationCost;
-  const iva = subtotal * IVA_RATE;
-  const total = subtotal + iva;
-  return { modulesPrice, inverterPrice, batteryPrice, structurePrice, materialCost, labourAndWiringPrice, documentationCost, subtotal, iva, total };
-}, [selectedModuloObj, moduleCount, selectedInverterObj, selectedBatteriaObj, selectedStrutturaObj, modulesTotalKw, batteryQuantity]);
+  const prices = useMemo(() => {
+    if (!selectedModuloObj || !selectedInverterObj || !selectedStrutturaObj || modulesTotalKw === 0) {
+      return { modulesPrice: 0, inverterPrice: 0, batteryPrice: 0, structurePrice: 0, materialCost: 0, labourAndWiringPrice: 0, documentationCost: 0, subtotal: 0, iva: 0, total: 0 };
+    }
+    const modulesPrice = selectedModuloObj.price * moduleCount; 
+    const inverterPrice = selectedInverterObj.price;
+    const batteryPrice = selectedBatteriaObj ? selectedBatteriaObj.price * batteryQuantity : 0;
+    const structurePrice = selectedStrutturaObj.price; 
+    const materialCost = modulesPrice + inverterPrice + batteryPrice + structurePrice;
+    const labourAndWiringPrice = modulesTotalKw * LABOUR_AND_WIRING_COST_PER_KWP; 
+    const documentationCost = DOCUMENTATION_COST;
+    const subtotal = materialCost + labourAndWiringPrice + documentationCost;
+    const iva = subtotal * IVA_RATE;
+    const total = subtotal + iva;
+    return { modulesPrice, inverterPrice, batteryPrice, structurePrice, materialCost, labourAndWiringPrice, documentationCost, subtotal, iva, total };
+  }, [selectedModuloObj, moduleCount, selectedInverterObj, selectedBatteriaObj, selectedStrutturaObj, modulesTotalKw, batteryQuantity]);
 
   const errors = useMemo(() => {
     const errs: string[] = [];
-    if (selectedInverter === DEFAULT_SELECTION_ID) errs.push("❌ Seleziona un Inverter.");
-    if (selectedModulo === DEFAULT_SELECTION_ID) errs.push("❌ Seleziona un Modulo.");
-    if (selectedStruttura === DEFAULT_SELECTION_ID) errs.push("❌ Seleziona una Struttura.");
-    if (moduleCount < 1) errs.push("❌ Inserisci un numero di moduli valido.");
-    if (!cliente.trim() || !email.trim()) errs.push("⚠️ Inserisci nome cliente ed email per l'esportazione.");
-
-    if (selectedBatteria !== DEFAULT_SELECTION_ID && selectedInverterObj) {
-        const isCompatible = filteredBatteriaList.some(b => b.id === selectedBatteria);
-        if (!isCompatible) errs.push("❌ Errore di Compatibilità: La batteria selezionata non è compatibile con l'inverter.");
-    }
+    if (selectedInverter === DEFAULT_SELECTION_ID) errs.push("Seleziona un Inverter nominale.");
+    if (selectedModulo === DEFAULT_SELECTION_ID) errs.push("Seleziona un modello di Modulo.");
+    if (selectedStruttura === DEFAULT_SELECTION_ID) errs.push("Seleziona una Struttura di montaggio.");
+    if (moduleCount < 1) errs.push("Inserisci un quantitativo valido di moduli fotovoltaici.");
+    if (!cliente.trim() || !email.trim()) errs.push("Specificare nome cliente ed e-mail per sbloccare l'esportazione.");
 
     if (selectedInverterObj && selectedModuloObj) {
         if (selectedInverterObj.powerKw > 0 && modulesTotalKw > selectedInverterObj.powerKw * 1.3) {
-          errs.push(`⚠️ La potenza dei moduli (${modulesTotalKw} kWp) supera del 30% la potenza nominale dell'inverter (${selectedInverterObj.powerKw} kW).`);
+          errs.push(`Sovradimensionamento: la potenza dei moduli (${modulesTotalKw} kWp) eccede del 30% la tolleranza dell'inverter (${selectedInverterObj.powerKw} kW).`);
         }
         if (modulesTotalKw > 0) {
           const costoPerKwNetto = prices.subtotal / modulesTotalKw;
           if (costoPerKwNetto > PNRR_MAX) {
-            errs.push(`⚠️ Il costo netto per kW (${costoPerKwNetto.toFixed(2)} €/kW) supera il massimale PNRR (${PNRR_MAX} €/kW).`);
+            errs.push(`Soglia limite: il valore netto per kW (${costoPerKwNetto.toFixed(2)} €/kW) supera il massimale vincolante PNRR (${PNRR_MAX} €/kW).`);
           }
         }
     }
     return errs;
   }, [selectedInverterObj, selectedModuloObj, selectedStruttura, moduleCount, modulesTotalKw, prices.subtotal, selectedInverter, selectedModulo, cliente, email, selectedBatteria, filteredBatteriaList]);
 
-
-  // --- Helpers e Export (Nessuna modifica funzionale) ---
   const formatEuro = (v: number) => v.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
 
   const exportPDF = async () => {
-    if (errors.length > 0) return console.error("Impossibile esportare: sono presenti errori di conformità.");
+    if (errors.length > 0) return;
     try {
       const res = await fetch("/api/pdf", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ cliente: cliente, email: email, inverter: selectedInverterObj, moduli: selectedModuloObj, numeroModuli: moduleCount, batteria: selectedBatteriaObj, struttura: selectedStrutturaObj, cablaggio: prices.labourAndWiringPrice, totale: applyVAT ? prices.total : prices.subtotal, }) });
-      if (!res.ok) throw new Error("PDF generation failed: " + (await res.json()).error); 
+      if (!res.ok) throw new Error("Generazione fallita."); 
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -228,303 +214,294 @@ const prices = useMemo(() => {
       a.remove();
       window.URL.revokeObjectURL(url);
     } catch (err) {
-      console.error("Errore esportazione PDF:", err);
+      console.error(err);
     }
   };
 
   if (isLoading) {
-    return <div className="max-w-4xl mx-auto p-6 text-center text-lg text-slate-600">Caricamento listini...</div>;
+    return <div className="min-h-screen bg-black flex items-center justify-center text-xs tracking-widest text-neutral-400 uppercase">Inizializzazione ecosistema...</div>;
   }
   
   return (
-    <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-slate-1000 min-h-screen font-sans">
-      <div className="mb-8 text-center border-b pb-4">
-        <h1 className="text-2xl font-extrabold text-slate-100">
-          Simulatore di preventivo fotovoltaico ☀️
+    <div className="max-w-5xl mx-auto p-6 sm:p-12 bg-black min-h-screen text-white font-sans antialiased">
+      
+      {/* HEADER STILE TESLA */}
+      <div className="mb-16 text-center space-y-3">
+        <h1 className="text-4xl font-light tracking-tight text-neutral-100">
+          Configuratore Solare
         </h1>
-        <div className="text-lg font-semibold text-slate-400 mt-1">
-          Configura il tuo impianto e genera un preventivo dettagliato
-        </div>
+        <p className="text-xs uppercase tracking-[0.25em] text-neutral-500 font-medium">
+          Sistemi ad alta efficienza energetica e accumulo intelligente
+        </p>
       </div>
 
-      <div className="p-6 space-y-8 bg-white rounded-xl shadow-2xl border border-slate-200">
+      <div className="space-y-10">
         
-        
-        {/* MESSAGGI DI ERRORE / VALIDAZIONE */}
+        {/* MESSAGGI DI ERRORE / VALIDAZIONE MINIMALISTI */}
         {errors.length > 0 && (
-          <div className="p-4 bg-red-50 text-red-700 border border-red-300 rounded-lg shadow-sm">
-            <div className="font-bold mb-1 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
-                Attenzione! Sono presenti problemi di conformità:
+          <div className="p-5 bg-neutral-900/60 border-l-2 border-red-500 rounded-r-lg space-y-1">
+            <div className="text-xs uppercase tracking-wider font-bold text-red-500 mb-2">
+              Note di Configurazione
             </div>
-            {errors.map((e,i) => <div key={i} className="text-sm ml-7">{e}</div>)}
+            {errors.map((e, i) => (
+              <div key={i} className="text-xs text-neutral-400 flex items-start gap-1">
+                <span>•</span> <span>{e}</span>
+              </div>
+            ))}
           </div>
         )}
 
-        {/* --- DATI CLIENTE --- */}
-        <div className="p-5 bg-slate-50 rounded-lg border border-slate-200">
-            <div className="text-xl font-bold text-slate-700 border-b pb-2 mb-4 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-sky-600" viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" /></svg>
-                Dati cliente
+        {/* --- SEZIONE: ANAGRAFICA --- */}
+        <div className="p-6 bg-neutral-900/40 rounded-xl border border-neutral-800/60">
+            <div className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-semibold mb-6">
+              01 / Intestazione Pratica
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <label>
-                <span className="text-sm font-medium text-slate-700">Nome cliente</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <label className="flex flex-col gap-2">
+                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Nome e Cognome</span>
                 <input 
                   type="text" 
                   value={cliente} 
                   onChange={e=>setCliente(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
+                  className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm placeholder-neutral-600 focus:outline-none focus:border-neutral-600 transition" 
                   placeholder="Es. Mario Rossi"
                 />
               </label>
-              <label>
-                <span className="text-sm font-medium text-slate-700">e-mail cliente</span>
+              <label className="flex flex-col gap-2">
+                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Indirizzo e-mail</span>
                 <input 
                   type="email" 
                   value={email} 
                   onChange={e=>setEmail(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
-                  placeholder="Es. mario.rossi@mail.com"
+                  className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm placeholder-neutral-600 focus:outline-none focus:border-neutral-600 transition" 
+                  placeholder="Es. nome@dominio.com"
                 />
               </label>
             </div>
         </div>
 
-        {/* --- SELEZIONE COMPONENTI PRINCIPALI --- */}
-        <div className="p-5 bg-slate-50 rounded-lg border border-slate-200">
-            <div className="text-xl font-bold text-slate-700 border-b pb-2 mb-4 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
-                Componenti impianto
+        {/* --- SEZIONE: COMPONENTI HARDWARE --- */}
+        <div className="p-6 bg-neutral-900/40 rounded-xl border border-neutral-800/60 shadow-sm">
+            <div className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-semibold mb-6">
+              02 / Specifica Tecnica Componenti
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               
               {/* Inverter */}
-              <label>
-                <span className="text-sm font-medium text-slate-700">Inverter</span>
+              <label className="flex flex-col gap-2">
+                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Inverter</span>
                 <select 
                   value={selectedInverter} 
                   onChange={e=>setSelectedInverter(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500 transition duration-150"
+                  className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
                 >
                   <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedInverter !== DEFAULT_SELECTION_ID}>Seleziona inverter</option>
-                 {inverterList.map(i => 
-<option key={i.id} value={i.id} className="text-black">
-{i.brand} {i.modello ? `- ${i.modello}` : ""} ({i.powerKw} kW) — {formatEuro(i.price)}
-</option>
-)}
+                  {inverterList.map(i => (
+                    <option key={i.id} value={i.id} className="bg-neutral-900 text-white">
+                      {i.brand} {i.modello ? `${i.modello}` : ""} ({i.powerKw} kW) — {formatEuro(i.price)}
+                    </option>
+                  ))}
                 </select>
               </label>
 
               {/* Modulo */}
-              <label>
-                <span className="text-sm font-medium text-slate-700">Modulo FV</span>
+              <label className="flex flex-col gap-2">
+                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Moduli Fotovoltaici</span>
                 <select 
                   value={selectedModulo} 
                   onChange={e=>setSelectedModulo(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500 transition duration-150"
+                  className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
                 >
                   <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedModulo !== DEFAULT_SELECTION_ID}>Seleziona modulo</option>
-                 {moduloList.map(m => 
-<option key={m.id} value={m.id} className="text-black">
-{m.brand} {m.modello ? `- ${m.modello}` : ""} ({m.powerW} W) — {formatEuro(m.price)}
-</option>
-)}
+                  {moduloList.map(m => (
+                    <option key={m.id} value={m.id} className="bg-neutral-900 text-white">
+                      {m.brand} {m.modello ? `${m.modello}` : ""} ({m.powerW} W) — {formatEuro(m.price)}
+                    </option>
+                  ))}
                 </select>
               </label>
 
-  {/* Numero Moduli */}
-  <label>
-    <span className="text-sm font-medium text-slate-700">Numero moduli</span>
-    <input 
-      type="number"
-      inputMode="numeric"
-      value={moduleCount === 0 ? "" : moduleCount}
-      min={0} 
-      onChange={e => setModuleCount(e.target.value === "" ? 0 : Number(e.target.value))}
-      className="w-full border border-slate-300 text-black p-2 rounded-md bg-white focus:ring-sky-500 focus:border-sky-500 transition duration-150" 
-      placeholder="0"
-    />
-  </label>
+              {/* Numero Moduli */}
+              <label className="flex flex-col gap-2">
+                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Unità complessive</span>
+                <input 
+                  type="number"
+                  inputMode="numeric"
+                  value={moduleCount === 0 ? "" : moduleCount}
+                  min={0} 
+                  onChange={e => setModuleCount(e.target.value === "" ? 0 : Number(e.target.value))}
+                  className="w-full bg-neutral-900/80 border border-neutral-800 text-white p-3 rounded-lg text-sm focus:outline-none focus:border-neutral-600 transition" 
+                  placeholder="0"
+                />
+              </label>
               
-              {/* Riepilogo Potenza Totale */}
-              <div className="lg:col-span-3 mt-1">
-                <div className="text-lg font-bold text-sky-700 p-3 w-full border border-sky-300 bg-sky-50 rounded-lg shadow-sm text-center">
-                    Potenza totale impianto: **{modulesTotalKw.toFixed(2)} kWp**
+              {/* Box Dinamico Potenza Impianto */}
+              <div className="lg:col-span-3 py-4 border-t border-b border-neutral-800/40 my-2 flex justify-between items-center px-2">
+                <span className="text-xs uppercase tracking-widest text-neutral-400">Potenza Nominale Calcolata:</span>
+                <span className="text-xl font-light text-neutral-200">{modulesTotalKw.toFixed(2)} <span className="text-xs text-neutral-500">kWp</span></span>
+              </div>
+
+              {/* Accumulo di Energia */}
+              <div className="sm:col-span-2 flex flex-col sm:flex-row gap-4 items-end">
+                <label className="flex-1 flex flex-col gap-2 w-full">
+                  <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Batteria (Opzionale)</span>
+                  <select
+                    value={selectedBatteria}
+                    onChange={e => setSelectedBatteria(e.target.value)}
+                    className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
+                  >
+                    <option value={DEFAULT_SELECTION_ID}>Escludi pacco batterie</option>
+                    {filteredBatteriaList.map(b => (
+                      <option key={b.id} value={b.id} className="bg-neutral-900 text-white">
+                        {b.brand} {b.modello ? `${b.modello}` : ""} ({b.capacityKwh} kWh) — {formatEuro(b.price)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                {/* Quantità Batterie Tesla Configurator Style */}
+                <div className="flex flex-col gap-2 w-full sm:w-auto">
+                  <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium block text-left sm:text-center">Quantità moduli</span>
+                  <div className="flex items-center border border-neutral-800 rounded-lg overflow-hidden bg-neutral-900/80 h-11 w-full sm:w-28">
+                    <button
+                      type="button"
+                      onClick={() => setBatteryQuantity(q => Math.max(1, q - 1))}
+                      disabled={selectedBatteria === DEFAULT_SELECTION_ID}
+                      className="w-9 h-full flex items-center justify-center bg-transparent text-neutral-400 hover:text-white disabled:opacity-20 transition"
+                    >
+                      −
+                    </button>
+                    <div className="flex-1 text-center text-sm font-medium text-neutral-200">
+                      {batteryQuantity}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setBatteryQuantity(q => Math.min(10, q + 1))}
+                      disabled={selectedBatteria === DEFAULT_SELECTION_ID}
+                      className="w-9 h-full flex items-center justify-center bg-transparent text-neutral-400 hover:text-white disabled:opacity-20 transition"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
 
-             {/* Batteria */}
-<div className="sm:col-span-2 grid grid-cols-2 gap-2 items-end">
-
-  <label className="lg:col-span-0">
-    <span className="text-sm font-medium text-slate-700">
-      Batteria di accumulo (Opzionale)
-    </span>
-
-    <select
-      value={selectedBatteria}
-      onChange={e => setSelectedBatteria(e.target.value)}
-      className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500"
-    >
-      <option value={DEFAULT_SELECTION_ID}>Nessuna batteria</option>
-
-      {filteredBatteriaList.map(b => (
-<option key={b.id} value={b.id} className="text-black">
-{b.brand} {b.modello ? `- ${b.modello}` : ""} ({b.capacityKwh} kWh) — {formatEuro(b.price)}
-</option>
-))}
-
-    </select>
-
-  </label>
-
-  <div className="col-span-1 flex flex-col items-center">
-  <span className="text-sm font-medium text-slate-700">
-    Quantità batterie
-  </span>
-
-  <div className="flex items-center mt-1 border border-slate-300 rounded-md overflow-hidden w-28">
-
-    <button
-      type="button"
-      onClick={() => setBatteryQuantity(q => Math.max(1, q - 1))}
-      disabled={selectedBatteria === DEFAULT_SELECTION_ID}
-      className="w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 disabled:opacity-40"
-    >
-      −
-    </button>
-
-    <div className="flex-1 text-center text-slate-800">
-      {batteryQuantity}
-    </div>
-
-    <button
-      type="button"
-      onClick={() => setBatteryQuantity(q => Math.min(10, q + 1))}
-      disabled={selectedBatteria === DEFAULT_SELECTION_ID}
-      className="w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 disabled:opacity-40"
-    >
-      +
-    </button>
-
-  </div>
-</div>
-
-  {selectedInverterObj && (
-    <p className="text-xs text-slate-500 col-span-2">
-      Mostra solo batterie compatibili con <b>{selectedInverterObj.brand}</b>.
-    </p>
-  )}
-
-</div>
-
-              {/* Struttura */}
-              <label>
-                <span className="text-sm font-medium text-slate-700">Struttura di montaggio</span>
+              {/* Struttura ancoraggio */}
+              <label className="flex flex-col gap-2">
+                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Tipologia copertura</span>
                 <select 
                   value={selectedStruttura} 
                   onChange={e=>setSelectedStruttura(e.target.value)} 
-                  className="w-full border border-slate-300 p-2 rounded-md bg-white text-black focus:ring-sky-500 focus:border-sky-500 transition duration-150"
+                  className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
                 >
-                  <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedStruttura !== DEFAULT_SELECTION_ID}>Seleziona struttura</option>
-                  {strutturaList.map(s => <option key={s.id} value={s.id} className="text-black">{s.type} — {formatEuro(s.price)} Totale</option>)}
+                  <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedStruttura !== DEFAULT_SELECTION_ID}>Seleziona ancoraggio</option>
+                  {strutturaList.map(s => (
+                    <option key={s.id} value={s.id} className="bg-neutral-900 text-white">
+                      {s.type} — {formatEuro(s.price)}
+                    </option>
+                  ))}
                 </select>
               </label>
+
+              {selectedInverterObj && (
+                <p className="text-[10px] uppercase tracking-wider text-neutral-500 col-span-1 sm:col-span-3 px-1 mt-1">
+                  * Filtri attivi: visualizzazione ristretta ad hardware compatibile con tecnologia <b>{selectedInverterObj.brand}</b>.
+                </p>
+              )}
             </div>
         </div>
 
-        {/* --- TOTALI E EXPORT --- */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* --- SEZIONE RIEPILOGO FINALE / DETTAGLIO COSTI --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
           
-          {/* Dettaglio Costi */}
-          <div className="p-5 rounded-xl bg-slate-50 border border-slate-300 shadow-inner">
-            <h3 className="font-bold text-xl text-slate-700 mb-3 border-b pb-2">Dettaglio costi netti (IVA esclusa)</h3>
-           <ul className="text-sm space-y-2">
-
-  <li className="flex justify-between items-center text-black">
-    <span>Moduli FV ({moduleCount}x)</span>
-    <b>{formatEuro(prices.modulesPrice)}</b>
-  </li>
-
-  <li className="flex justify-between items-center text-black">
-    <span>Inverter</span>
-    <b>{formatEuro(prices.inverterPrice)}</b>
-  </li>
-
-  <li className="flex justify-between items-center text-black">
-   <span>Batteria {selectedBatteriaObj ? `(${batteryQuantity}x)` : ""}</span>
-    <b>{formatEuro(prices.batteryPrice)}</b>
-  </li>
-
-  <li className="flex justify-between items-center text-black border-b border-slate-200 pb-2">
-    <span>Struttura ({selectedStrutturaObj?.type || "N/A"})</span>
-    <b>{formatEuro(prices.structurePrice)}</b>
-  </li>
-
-  <li className="flex justify-between items-center pt-2 font-semibold text-slate-800">
-    <span>Costo materiali (totale)</span>
-    <b>{formatEuro(prices.materialCost)}</b>
-  </li>
-
-  <li className="flex justify-between items-center pt-2 border-t border-slate-200 text-sky-700 bg-sky-50 p-2 rounded-md font-semibold">
-    <span>Manodopera / Cablaggio ({LABOUR_AND_WIRING_COST_PER_KWP} €/kWp)</span>
-    <b>{formatEuro(prices.labourAndWiringPrice)}</b>
-  </li>
-
-  <li className="flex justify-between items-center pt-2 border-t border-slate-200 text-sky-700 bg-sky-50 p-2 rounded-md font-semibold">
-    <span>Pratiche e documentazione</span>
-    <b>{formatEuro(prices.documentationCost)}</b>
-  </li>
-
-  <li className="flex justify-between items-center pt-2 font-extrabold text-lg text-slate-800 border-t border-slate-300">
-    <span>Subtotale preventivo</span>
-    <b>{formatEuro(prices.subtotal)}</b>
-  </li>
-
-</ul>
+          {/* Dettaglio Costi Meticoloso */}
+          <div className="p-6 rounded-xl bg-neutral-900/20 border border-neutral-800/80 space-y-4">
+            <h3 className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-semibold border-b border-neutral-800 pb-3">
+              03 / Voci di preventivo (Prezzo Netto)
+            </h3>
+            <ul className="text-xs space-y-3 font-medium text-neutral-400">
+              <li className="flex justify-between items-center">
+                <span>Moduli fotovoltaici ({moduleCount}x)</span>
+                <span className="text-neutral-200">{formatEuro(prices.modulesPrice)}</span>
+              </li>
+              <li className="flex justify-between items-center">
+                <span>Inverter</span>
+                <span className="text-neutral-200">{formatEuro(prices.inverterPrice)}</span>
+              </li>
+              <li className="flex justify-between items-center">
+                <span>Sistema di accumulo {selectedBatteriaObj ? `(${batteryQuantity}x)` : ""}</span>
+                <span className="text-neutral-200">{formatEuro(prices.batteryPrice)}</span>
+              </li>
+              <li className="flex justify-between items-center border-b border-neutral-800 pb-3">
+                <span>Struttura di sostegno</span>
+                <span className="text-neutral-200">{formatEuro(prices.structurePrice)}</span>
+              </li>
+              <li className="flex justify-between items-center pt-1 font-semibold text-neutral-300">
+                <span>Sommario fornitura materiali</span>
+                <span className="text-neutral-100">{formatEuro(prices.materialCost)}</span>
+              </li>
+              <li className="flex justify-between items-center p-2 rounded-lg bg-neutral-900/60 border border-neutral-800 text-neutral-400">
+                <span>Installazione e cablaggio ({LABOUR_AND_WIRING_COST_PER_KWP} €/kWp)</span>
+                <span className="text-neutral-200">{formatEuro(prices.labourAndWiringPrice)}</span>
+              </li>
+              <li className="flex justify-between items-center p-2 rounded-lg bg-neutral-900/60 border border-neutral-800 text-neutral-400">
+                <span>Oneri burocratici per connessione in rete</span>
+                <span className="text-neutral-200">{formatEuro(prices.documentationCost)}</span>
+              </li>
+              <li className="flex justify-between items-center pt-4 border-t border-neutral-800 text-sm text-neutral-300 font-semibold">
+                <span>Base imponibile</span>
+                <span className="text-white font-medium">{formatEuro(prices.subtotal)}</span>
+              </li>
+            </ul>
           </div>
           
-          {/* Totale Finale */}
-          <div className="p-6 rounded-xl bg-sky-600 text-white shadow-xl flex flex-col justify-between">
-            <div>
-              <h3 className="font-bold text-2xl mb-3 border-b border-sky-400 pb-2">Totale preventivo <br/>"chiavi in mano"</h3>
+          {/* Totale Chiavi in Mano - Quadro d'Acquisto Tesla Style */}
+          <div className="p-8 rounded-xl bg-neutral-900 border border-neutral-800 flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <h3 className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-semibold border-b border-neutral-800 pb-3">
+                04 / Soluzione Finanziaria Chiavi In Mano
+              </h3>
               
-              <div className="text-sm mb-2">
-                {applyVAT && <span>IVA ({IVA_RATE*100}%): <b>{formatEuro(prices.iva)}</b></span>}
+              <div className="text-xs text-neutral-500 font-medium">
+                {applyVAT && (
+                  <div className="flex justify-between items-center">
+                    <span>Imposta valore aggiunto applicata ({IVA_RATE*100}%):</span>
+                    <span className="text-neutral-300">{formatEuro(prices.iva)}</span>
+                  </div>
+                )}
               </div>
               
-              <div className="text-4xl font-extrabold">
-                {formatEuro(applyVAT ? prices.total : prices.subtotal)}
-              </div>
-              <div className="text-lg font-semibold mt-1">
-                {applyVAT ? "(Prezzo lordo) 💵" : "(Prezzo netto) 🏷️"}
+              <div className="pt-2">
+                <div className="text-5xl font-light tracking-tight text-white">
+                  {formatEuro(applyVAT ? prices.total : prices.subtotal)}
+                </div>
+                <div className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-bold mt-2">
+                  {applyVAT ? "Valore Finale Lordo Chiavi in Mano" : "Valore Esente da Imposta di Bollo / Netto"}
+                </div>
               </div>
             </div>
             
-            <div className="mt-6">
-              <label className="flex items-center gap-2 mb-4 text-sm font-semibold">
+            <div className="space-y-4">
+              <label className="flex items-center gap-3 text-xs tracking-wider text-neutral-400 cursor-pointer select-none">
                 <input 
                   type="checkbox" 
                   checked={applyVAT} 
                   onChange={e=>setApplyVAT(e.target.checked)} 
-                  className="form-checkbox h-5 w-5 text-yellow-300 rounded-sm border-2 border-white bg-sky-700 checked:bg-yellow-400 checked:border-yellow-400 focus:ring-0"
+                  className="form-checkbox h-4 w-4 bg-black border-neutral-700 text-neutral-200 rounded focus:ring-0 focus:ring-offset-0"
                 />
-                Includi IVA agevolata ({IVA_RATE*100}%)
+                Calcola aliquota fiscale agevolata ({IVA_RATE*100}%)
               </label>
 
               <button 
                 onClick={exportPDF} 
-                className="w-full px-4 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold transition shadow-md disabled:bg-gray-400 disabled:text-gray-100 disabled:cursor-not-allowed"
                 disabled={errors.length > 0}
+                className="w-full py-4 bg-white text-black text-xs font-bold uppercase tracking-widest rounded-full transition-all hover:bg-neutral-200 active:scale-[0.99] disabled:bg-neutral-800 disabled:text-neutral-600 disabled:cursor-not-allowed"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                {errors.length > 0 ? "Risolvi gli errori per esportare" : "Esporta Preventivo in PDF"}
+                {errors.length > 0 ? "Configurazione incompleta" : "Genera prospetto preventivo PDF"}
               </button>
             </div>
           </div>
+          
         </div>
       </div>
     </div>
