@@ -228,7 +228,7 @@ const PvEstimator: FC = () => {
       {/* HEADER STILE TESLA */}
       <div className="mb-16 text-center space-y-3">
         <h1 className="text-4xl font-light tracking-tight text-neutral-100">
-          Configuratore Solare
+          Configuratore impianto fotovoltaico
         </h1>
         <p className="text-xs uppercase tracking-[0.25em] text-neutral-500 font-medium">
           Sistemi ad alta efficienza energetica e accumulo intelligente
