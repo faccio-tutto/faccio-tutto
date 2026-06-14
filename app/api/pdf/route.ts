@@ -1,205 +1,235 @@
-import { NextRequest, NextResponse } from "next/server";
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib"; // Rimosso PNG
-import path from 'path'; 
-import fs from 'fs/promises'; 
-import nodemailer from "nodemailer";
+import { NextResponse } from "next/server";
+import puppeteer from "puppeteer"; // <--- Importiamo il motore di rendering
 
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const { cliente, email, inverter, moduli, numeroModuli, batteria, struttura, cablaggio, totale } = body;
 
-export async function POST(req: NextRequest) {
-  
-  const formatEuro = (value: number | string | undefined): string => {
-    const num = Number(value) || 0;
-    return num.toLocaleString('it-IT', { 
-      style: 'currency', 
-      currency: 'EUR',
-      minimumFractionDigits: 2, 
-      maximumFractionDigits: 2
-    }).replace('€', '€ '); 
-  };
+    const potenzaTotaleKw = moduli ? ((moduli.powerW * numeroModuli) / 1000).toFixed(2) : "0.00";
+    const prezzoModuli = moduli ? moduli.price * numeroModuli : 0;
+    const prezzoInverter = inverter ? inverter.price : 0;
+    const prezzoBatteria = batteria ? batteria.price : 0;
+    const prezzoStruttura = struttura ? struttura.price : 0;
+    const oneriBurocratici = 250; 
+    
+    const baseImponibile = prezzoModuli + prezzoInverter + prezzoBatteria + prezzoStruttura + cablaggio + oneriBurocratici;
+    const quotaIva = baseImponibile * 0.10;
 
-  try { 
-    const body = await req.json();
+    const formatEuro = (v: number) => v.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
 
-    const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([600, 750]);
-    const { width, height } = page.getSize(); 
+    // Il template HTML (Stile Tesla) fornito in precedenza
+    const htmlTemplate = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            * { box-sizing: border-box; }
+            @page {
+                size: A4;
+                margin: 25mm 20mm;
+                @bottom-left {
+                    content: "Ecosistema Energetico Residenziale";
+                    font-family: -apple-system, system-ui, sans-serif;
+                    font-size: 8pt;
+                    color: #a3a3a3;
+                }
+                @bottom-right {
+                    content: "Pagina " counter(page) " di " counter(pages);
+                    font-family: -apple-system, system-ui, sans-serif;
+                    font-size: 8pt;
+                    color: #a3a3a3;
+                }
+            }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                margin: 0; padding: 0; color: #171717; background-color: #ffffff;
+            }
+            .table-layout { width: 100%; border-collapse: collapse; }
+            .table-cell { vertical-align: top; padding: 0; }
+            .header-container { margin-bottom: 20mm; }
+            .logo-text { font-size: 16pt; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; color: #000000; margin: 0; }
+            .sub-logo { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 3px; color: #737373; margin: 0; }
+            .meta-box { text-align: right; font-size: 9pt; color: #404040; line-height: 1.5; }
+            .meta-title { font-weight: 600; color: #000000; text-transform: uppercase; letter-spacing: 1px; font-size: 8pt; }
+            .section-header {
+                font-size: 10pt; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+                color: #171717; border-bottom: 1px solid #e5e5e5; padding-bottom: 8px;
+                margin-top: 12mm; margin-bottom: 6mm; page-break-after: avoid;
+            }
+            .data-table { width: 100%; border-collapse: collapse; margin-bottom: 8mm; }
+            .data-table th {
+                font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+                color: #737373; text-align: left; padding-bottom: 8px; border-bottom: 1px solid #171717;
+            }
+            .data-table td { font-size: 9.5pt; padding: 12px 0; border-bottom: 1px solid #f5f5f5; color: #404040; }
+            .text-right { text-align: right; }
+            .font-mono { font-family: monospace; font-weight: 600; }
+            .total-card { background-color: #0a0a0a; color: #ffffff; padding: 24px 30px; margin-top: 10mm; page-break-inside: avoid; }
+            .total-label { font-size: 8pt; text-transform: uppercase; letter-spacing: 3px; color: #a3a3a3; margin-bottom: 4px; }
+            .total-amount { font-size: 34pt; font-weight: 200; letter-spacing: -1px; color: #ffffff; margin: 0; }
+            .total-subtext { font-size: 8pt; color: #737373; margin-top: 8px; }
+            .footer-disclaimer { font-size: 7.5pt; color: #737373; line-height: 1.6; margin-top: 15mm; page-break-inside: avoid; }
+        </style>
+    </head>
+    <body>
+        <table class="table-layout header-container">
+            <tr>
+                <td class="table-cell" style="width: 50%;">
+                    <h1 class="logo-text">FACCIO-TUTTO</h1>
+                    <p class="sub-logo">Ecosistema Residenziale Solare</p>
+                </td>
+                <td class="table-cell text-right" style="width: 50%;">
+                    <div class="meta-box">
+                        <span class="meta-title">Prospetto di Preventivo</span><br>
+                        ID pratica: <span class="font-mono">PRV-${Math.floor(100000 + Math.random() * 900000)}</span><br>
+                        Data valutazione: ${new Date().toLocaleDateString('it-IT')}<br>
+                        Validità parametri: 30 Giorni
+                    </div>
+                </td>
+            </tr>
+        </table>
 
-    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold); 
+        <div class="section-header">01 / Intestatario Pratica</div>
+        <table class="table-layout" style="margin-bottom: 5mm;">
+            <tr>
+                <td class="table-cell" style="width: 50%; line-height: 1.6; font-size: 10pt;">
+                    <span style="color: #737373; font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; display: block;">Cliente Contraente</span>
+                    <strong>${cliente}</strong><br>
+                    <span style="color: #404040;">${email}</span>
+                </td>
+                <td class="table-cell text-right" style="width: 50%; line-height: 1.6; font-size: 10pt;">
+                    <span style="color: #737373; font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; display: block;">Potenza Nominale Impianto</span>
+                    Potenza moduli: <strong>${potenzaTotaleKw} kWp</strong><br>
+                    Architettura elettrica: <strong>100% Compatibile</strong>
+                </td>
+            </tr>
+        </table>
 
-    let cursorY = height - 50; 
+        <div class="section-header">02 / Specifiche componenti selezionati</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Componenti impianto</th>
+                    <th style="width: 55%;">Descrizione Modello</th>
+                    <th class="text-right" style="width: 15%;">Quantità</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Moduli fotovoltaici</strong></td>
+                    <td>${moduli?.brand} ${moduli?.modello || ""} (${moduli?.powerW} W)</td>
+                    <td class="text-right font-mono">${numeroModuli}</td>
+                </tr>
+                <tr>
+                    <td><strong>Inverter</strong></td>
+                    <td>${inverter?.brand} ${inverter?.modello || ""} (${inverter?.powerKw} kW)</td>
+                    <td class="text-right font-mono">1</td>
+                </tr>
+                ${batteria ? `
+                <tr>
+                    <td><strong>Batteria d'accumulo</strong></td>
+                    <td>${batteria.brand} ${batteria.modello || ""} (${batteria.capacityKwh} kWh)</td>
+                    <td class="text-right font-mono">Incluso</td>
+                </tr>` : ""}
+                <tr>
+                    <td><strong>Installazione</strong></td>
+                    <td>Ancoraggio strutturale specifico per ${struttura?.type}</td>
+                    <td class="text-right font-mono">1 Kit</td>
+                </tr>
+            </tbody>
+        </table>
 
-    // --- AGGIUNTA LOGO AZIENDALE ---
-    const logoPath = path.join(process.cwd(), 'public', 'logo.png'); 
-    const logoImageBytes = await fs.readFile(logoPath); 
-    const logoImage = await pdfDoc.embedPng(logoImageBytes); // Usa embedPng
+        <div class="section-header">03 / Scomposizione Finanziaria</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 75%;">Voce di Capitolato</th>
+                    <th class="text-right" style="width: 25%;">Prezzo Netto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Fornitura moduli fotovoltaici (${numeroModuli} unità)</td>
+                    <td class="text-right font-mono">${formatEuro(prezzoModuli)}</td>
+                </tr>
+                <tr>
+                    <td>Fornitura inverter</td>
+                    <td class="text-right font-mono">${formatEuro(prezzoInverter)}</td>
+                </tr>
+                ${batteria ? `
+                <tr>
+                    <td>Fornitura pacco batterie di accumulo</td>
+                    <td class="text-right font-mono">${formatEuro(prezzoBatteria)}</td>
+                </tr>` : ""}
+                <tr>
+                    <td>Sistema di fissaggio</td>
+                    <td class="text-right font-mono">${formatEuro(prezzoStruttura)}</td>
+                </tr>
+                <tr>
+                    <td>Installazione hardware e cablaggio elettrico a regola d'arte</td>
+                    <td class="text-right font-mono">${formatEuro(cablaggio)}</td>
+                </tr>
+                <tr>
+                    <td>Oneri burocratici di connessione e pratiche e-distribuzione / GSE</td>
+                    <td class="text-right font-mono">${formatEuro(oneriBurocratici)}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; color: #000000; border-top: 1px solid #171717; padding-top: 12px;">Base imponibile netta</td>
+                    <td class="text-right font-mono" style="font-weight: 600; border-top: 1px solid #171717; padding-top: 12px;">${formatEuro(baseImponibile)}</td>
+                </tr>
+                <tr>
+                    <td style="color: #737373; border: none; padding-top: 6px;">Imposta sul valore aggiunto applicata (IVA 10%)</td>
+                    <td class="text-right font-mono" style="color: #737373; border: none; padding-top: 6px;">${formatEuro(quotaIva)}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    const logoDims = logoImage.scale(0.07); 
-    const logoX = 50; 
-    const logoY = height - 50 - logoDims.height; 
+        <div class="total-card">
+            <div class="total-label">Valore Totale chiavi in mano</div>
+            <h2 class="total-amount">${formatEuro(totale)}</h2>
+            <div class="total-subtext">* Importo finale omnicomprensivo di materiali, manodopera e oneri burocratici, IVA inclusa.</div>
+        </div>
 
-    page.drawImage(logoImage, {
-      x: logoX,
-      y: logoY,
-      width: logoDims.width,
-      height: logoDims.height,
+        <div class="footer-disclaimer">
+            <strong>Condizioni di fornitura tecnica e vincoli normativi:</strong><br>
+            Il presente documento viene generato sulla base delle tariffe correnti di mercato e dei vincoli massimali dettati dai decreti PNRR (pari a un tetto di € 1.500,00 per singolo kWp installato). Il dimensionamento finale e l'effettiva producibilità dell'architettura hardware rimangono vincolati all'esito del sopralluogo tecnico e strutturale obbligatorio da eseguirsi in loco prima dell'avvio dei lavori.
+        </div>
+    </body>
+    </html>
+    `;
+
+    // --- LOGICA DI COMPILAZIONE IN PDF REALE ---
+    // Avviamo un'istanza invisibile di Chrome (headless)
+   // --- LOGICA DI COMPILAZIONE IN PDF REALE ---
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+    
+    // FISSA ERRORE 1: Usiamo "domcontentloaded" invece di "networkidle0"
+    await page.setContent(htmlTemplate, { waitUntil: "domcontentloaded" });
+    
+    const pdfBuffer = await page.pdf({
+      format: "A4",
+      printBackground: true,
     });
     
-    cursorY = logoY - 30; 
-    // -------------------------------
-    
-    // --- Titolo ---
-    page.drawText("Preventivo Impianto Fotovoltaico", {
-      x: 50,
-      y: cursorY,
-      size: 18,
-      font: boldFont, 
-      color: rgb(0.1, 0.1, 0.1),
-    });
-    cursorY -= 40;
+    await browser.close();
 
-    // --- Dati cliente ---
-    page.drawText(`Cliente: ${body.cliente || "N/A"}`, { x: 50, y: cursorY, size: 12, font });
-    cursorY -= 20;
-    page.drawText(`Email: ${body.email || "N/A"}`, { x: 50, y: cursorY, size: 12, font });
-    cursorY -= 20;
-    page.drawText(`Data: ${new Date().toLocaleDateString("it-IT")}`, { x: 50, y: cursorY, size: 12, font });
-    cursorY -= 40;
+    // Forza il tipo dicendo a TypeScript che questo è un pezzo di Blob valido a tutti gli effetti
+    const pdfBlob = new Blob([pdfBuffer as unknown as BlobPart], { type: "application/pdf" });
 
-    // --- Dettagli componenti ---
-    if (body.inverter) {
-      page.drawText(`Inverter - ${body.inverter.brand}, ${body.inverter.powerKw} kW : ${formatEuro(body.inverter.price)}`, { x: 50, y: cursorY, size: 12, font });
-      cursorY -= 20;
-    }
-
-    if (body.moduli) {
-      const costoTotaleModuli = body.moduli.price * (body.numeroModuli || 0); 
-     page.drawText(
-`Moduli - ${body.moduli.brand} ${body.moduli.modello || ""}, ${body.moduli.powerW} W x ${body.numeroModuli} pz : ${formatEuro(costoTotaleModuli)}`,
-{ x: 50, y: cursorY, size: 12, font }
-);
-      cursorY -= 20;
-    }
-
-    if (body.batteria) {
-      page.drawText(`Batteria - ${body.batteria.brand}, ${body.batteria.capacityKwh} kWh : ${formatEuro(body.batteria.price)}`, { x: 50, y: cursorY, size: 12, font });
-      cursorY -= 20;
-    }
-
-    if (body.struttura) {
-      page.drawText(`Struttura - ${body.struttura.type} : ${formatEuro(body.struttura.price)}`, { x: 50, y: cursorY, size: 12, font });
-      cursorY -= 20;
-    }
-
-    if (body.cablaggio !== undefined && body.cablaggio !== null) {
-      page.drawText(`Manodopera e cablaggio: ${formatEuro(body.cablaggio)}`, { x: 50, y: cursorY, size: 12, font });
-      cursorY -= 40;
-    }
-
-    // --- Totale ---
-    page.drawText(`Totale: ${formatEuro(body.totale)}`, { 
-      x: 400,
-      y: cursorY,
-      size: 14,
-      font,
-      color: rgb(0.2, 0.4, 0.8),
-    });
-
-    // --- AGGIUNTA MAIL AZIENDALE IN FOOTER ---
-    const companyEmail = "fotovoltaico@faccio-tutto.it";
-    const footerY = 30; 
-    
-    // CORREZIONE: Usiamo widthOfTextAtSize per calcolare la larghezza del testo
-    const footerX = width - 50 - font.widthOfTextAtSize(companyEmail, 10); 
-    
-    page.drawText(companyEmail, {
-      x: footerX, 
-      y: footerY,
-      size: 10,
-      font,
-      color: rgb(0.5, 0.5, 0.5), 
-    });
-    // ------------------------------------------
-
-    const pdfBytes = await pdfDoc.save();
-    // --- INVIO EMAIL AUTOMATICO CON PREVENTIVO ---
-
-try {
-
-const transporter = nodemailer.createTransport({
-
-host: "smtps.aruba.it",
-port: 465,
-secure: true,
-
-auth: {
-user: process.env.SMTP_USER,
-pass: process.env.SMTP_PASS
-}
-
-});
-
-await transporter.sendMail({
-
-from: `"Configuratore FV" <${process.env.SMTP_USER}>`,
-
-to: "fotovoltaico@faccio-tutto.it",
-
-subject: "Nuovo preventivo generato dal sito",
-
-html: `
-<h2>Nuovo preventivo generato</h2>
-
-<b>Cliente:</b> ${body.cliente}<br>
-<b>Email:</b> ${body.email}<br>
-<b>Data:</b> ${new Date().toLocaleDateString("it-IT")}<br>
-
-<hr>
-
-<b>Inverter:</b> ${body.inverter?.brand || ""} ${body.inverter?.modello || ""}<br>
-<b>Moduli:</b> ${body.moduli?.brand || ""} ${body.moduli?.powerW || ""} W<br>
-<b>Numero moduli:</b> ${body.numeroModuli || 0}<br>
-<b>Batteria:</b> ${body.batteria ? body.batteria.brand + " " + (body.batteria.modello || "") : "Nessuna"}<br>
-<b>Struttura:</b> ${body.struttura?.type || ""}<br>
-
-<hr>
-
-<b>Totale impianto:</b> ${formatEuro(body.totale)}
-`,
-
-attachments: [
-{
-filename: "preventivo-fotovoltaico.pdf",
-content: Buffer.from(pdfBytes)
-}
-]
-
-});
-
-console.log("📧 Email preventivo inviata correttamente");
-
-} catch (mailError) {
-
-console.error("❌ Errore invio email:", mailError);
-
-}
-
-    return new NextResponse(Buffer.from(pdfBytes), {
+    return new NextResponse(pdfBlob, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": "attachment; filename=preventivo.pdf",
+        "Content-Disposition": 'attachment; filename="preventivo_tesla.pdf"',
+        "Content-Length": pdfBuffer.length.toString(),
       },
     });
-  } catch (err: any) {
-    console.error("❌ ERRORE FATALE API - ORIGINE:", err);
-    if (err.stack) {
-        console.error("Stack Trace:", err.stack);
-    }
-    
-    return NextResponse.json({ 
-        error: "Internal Server Error during PDF processing. Check server terminal for stack trace.",
-        originalMessage: err.message
-    }, { status: 500 });
+
+  } catch (error) {
+    console.error("Errore PDF:", error);
+    return new NextResponse(JSON.stringify({ error: "Generazione fallita" }), { status: 500 });
   }
 }
