@@ -18,28 +18,28 @@ const brandSistemi = [
     sistema: "UHome 3K0L~8K0L",
     tag: "Ecosistema Integrato",
     descrizione: "UHome è un sistema fotovoltaico domestico con stoccaggio dell'energia(ESS) all-in-one che integra l'inverter, il caricabatterie e le batterie in un unico sistema modulare precablato per un'installazione più semplice e veloce che riduce i tempi di installazione fino al 50%",
-    image: "/images/brands/u-can-power.png", // Sostituisci con le tue immagini nel folder public
+    image: "/images/u-can-power.png", // Sostituisci con le tue immagini nel folder public
   },
   {
     brand: "SMA",
     sistema: "Sunny Boy Smart Energy",
-    tag: "Ottimizzazione Singolo Modulo",
-    descrizione: "Architettura intelligente con ottimizzatori di potenza accoppiati in CC. Garantisce la massima produzione anche in caso di ombreggiamenti localizzati.",
-    image: "/images/brands/sma-system.png",
+    tag: "Soluzione 2 in 1 per la produzione e l'utilizzo di energia solare",
+    descrizione: "Inverter fotovoltaico ed un inverter per batteria racchiusi in un’unica soluzione, garantisce un approvvigionamento energetico sostenibile e sicuro.",
+    image: "/images/sma-system.png",
   },
   {
     brand: "ZCS Azzurro Zucchetti",
-    sistema: "Sistema integrato con Microinverter",
+    sistema: "EASY POWER – One And All",
     tag: "Tecnologia a Microinverter",
-    descrizione: "Sicurezza ai vertici della categoria grazie all'architettura totalmente in corrente alternata (AC). Espandibile nel tempo grazie alla modularità plug-and-play.",
-    image: "/images/brands/zcs-system.jpg",
+    descrizione: "ZCS Azzurro per accumulo ibrido costituisce la soluzione ideale per ottimizzare l’indipendenza energetica in ambito residenziale. Con una potenza nominale da 3 a 6kW ed una capacità in accumulo fino a 20,4kWh, si adatta ad ogni tipo di esigenza su impianti di nuova costruzione.",
+    image: "/images/zcs-system.png",
   },
   {
     brand: "Huawei",
-    sistema: "FusionSolar Luna2000",
+    sistema: "SUN2000 + FusionSolar Luna2000",
     tag: "Design Modulare Elegante",
     descrizione: "Estetica minimalista ed elettronica avanzata. Ogni blocco batteria è dotato di un ottimizzatore indipendente per sfruttare il 100% della capacità utile.",
-    image: "/images/brands/huawei-system.jpg",
+    image: "/images/huawei-system.png",
   },
   {
     brand: "Fronius",
@@ -184,7 +184,7 @@ export default function AccumuloPage() {
               <span className="h-2 w-2 rounded-full bg-red-500"></span> Senza accumulo
             </h3>
             <p className="text-gray-400 font-light text-sm leading-relaxed">
-              L'energia prodotta di giorno e non consumata all'istante viene immessa in rete e svenduta con il meccanismo del Ritiro Dedicato per pochi centesimi.
+              L'energia prodotta di giorno e non consumata all'istante viene immessa in rete e venduta con il meccanismo del Ritiro Dedicato per pochi centesimi.
             </p>
           </div>
         </div>
