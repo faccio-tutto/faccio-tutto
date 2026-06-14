@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"; // <-- FISSAATO: Importazione mancante
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
+import nodemailer from "nodemailer";
 
 export async function POST(request: Request) {
   try {
@@ -209,6 +210,70 @@ export async function POST(request: Request) {
     });
     
     await browser.close();
+
+    try {
+      const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: parseInt(process.env.SMTP_PORT || "465"),
+        secure: process.env.SMTP_PORT === "465", // true per porta 465, false per altre porte (es. 587)
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+      });
+
+      const nomeFileSenzaSpazi = cliente.replace(/\s+/g, "_").toLowerCase();
+
+      await transporter.sendMail({
+        from: `"Faccio Tutto - Fotovoltaico" <${process.env.SMTP_USER}>`,
+        to: "fotovoltaico@faccio-tutto.it", // Destinatario fisso richiesto
+        replyTo: email, // Comodo: se fai "Rispondi", risponderai direttamente al cliente
+        subject: `⚡ Nuovo Preventivo Generato: ${cliente} - ${potenzaTotaleKw} kWp`,
+        html: `
+          <div style="font-family: sans-serif; color: #171717; max-width: 600px; line-height: 1.6;">
+            <h2>Nuova richiesta preventivo dal sito</h2>
+            <p>Un utente ha appena configurato un impianto fotovoltaico. Ecco i dettagli principali:</p>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Cliente:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5;">${cliente}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Email cliente:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5;"><a href="mailto:${email}">${email}</a></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Potenza Impianto:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5;">${potenzaTotaleKw} kWp (${numeroModuli} moduli)</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Accumulo:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5;">${batteria ? `${batteria.brand} ${batteria.capacityKwh}kWh` : 'No'}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold; color: #000;">Prezzo Finale:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold; color: #000;">${formatEuro(totale)}</td>
+              </tr>
+            </table>
+            <p>Il riepilogo dettagliato in stile Tesla è stato generato ed è <strong>allegato a questa email</strong> in formato PDF.</p>
+            <hr style="border: 0; border-top: 1px solid #e5e5e5; margin: 30px 0;" />
+            <small style="color: #737373;">Sistema di notifica automatica Faccio-Tutto</small>
+          </div>
+        `,
+        attachments: [
+          {
+            filename: `preventivo_${nomeFileSenzaSpazi}.pdf`,
+            content: Buffer.from(pdfBuffer), // Iniettiamo direttamente i byte del PDF
+            contentType: "application/pdf"
+          }
+        ]
+      });
+      console.log(`Email inviata con successo a fotovoltaico@faccio-tutto.it per il cliente ${cliente}`);
+    } catch (emailError) {
+      // Logghiamo l'errore ma non blocchiamo l'API, l'utente riceverà comunque il suo PDF sul browser
+      console.error("Errore durante l'invio della notifica email:", emailError);
+    }
+    // ==========================================
 
     const pdfBlob = new Blob([pdfBuffer as unknown as BlobPart], { type: "application/pdf" });
 
