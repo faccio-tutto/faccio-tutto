@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -28,6 +29,7 @@ import {
 
 export default function EnergyLandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
   const menuItems = [
     { name: "Architettura", href: "/progettazione" },
@@ -198,14 +200,11 @@ export default function EnergyLandingPage() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/preventivoFV" className="relative z-10 mt-8 inline-block">
-              <button className="bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition">
+              <button className="border border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-black transition">
                 Crea il tuo preventivo
               </button>
             </Link>
     
-            <button className="border border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-black transition">
-              Scopri di più
-            </button>
           </div>
         </motion.div>
       </section>
@@ -234,14 +233,22 @@ export default function EnergyLandingPage() {
             </div>
 
             <p className="text-gray-300 text-lg leading-relaxed mb-8">
-              Sistemi di accumulo intelligenti progettati per ridurre
+              Impianti fotovoltaici con sistemi di accumulo intelligenti progettati per ridurre
               i consumi energetici e aumentare l’autonomia della tua casa.
             </p>
+         <button
 
-            <button className="flex items-center gap-2 bg-blue-600 px-6 py-3 rounded-full hover:bg-blue-500 transition">
-              Scopri il sistema
-              <ArrowRight size={18} />
-            </button>
+  onClick={() => router.push("/accumulo")}
+
+  className="border border-white flex items-center gap-2 px-6 py-3 rounded-full hover:bg-blue-500 transition"
+
+>
+<button className="border border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-black transition"></button>
+  Scopri i nostri sistemi
+
+  <ArrowRight size={18} />
+
+</button>
           </motion.div>
         </div>
       </section>
@@ -360,7 +367,7 @@ export default function EnergyLandingPage() {
             quanto puoi risparmiare con il tuo nuovo impianto.
           </p>
 <Link href="/contatti" className="relative z-10 mt-8 inline-block">
-              <button className="bg-blue-600 hover:bg-blue-500 transition px-10 py-4 rounded-full text-lg font-medium">
+              <button className="border border-white hover:bg-green-500 transition px-10 py-4 rounded-full text-lg font-medium">
                 Contattaci
               </button>
             </Link>
