@@ -297,7 +297,7 @@ export default function CalcolatoreFVPage() {
                         transition={{ delay: 0.1 }}
                         className="text-4xl sm:text-5xl font-light tracking-tight text-white"
                     >
-                        Calcolatore Producibilità Solare
+                        Calcolatore producibilità solare
                     </motion.h1>
                     <motion.div 
                         initial={{ width: 0 }}
