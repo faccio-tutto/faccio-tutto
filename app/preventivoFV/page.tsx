@@ -394,7 +394,7 @@ const PvEstimator: FC = () => {
                   onChange={e=>setSelectedStruttura(e.target.value)} 
                   className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
                 >
-                  <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedStruttura !== DEFAULT_SELECTION_ID}>Seleziona ancoraggio</option>
+                  <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedStruttura !== DEFAULT_SELECTION_ID}>Seleziona tipologia copertura</option>
                   {strutturaList.map(s => (
                     <option key={s.id} value={s.id} className="bg-neutral-900 text-white">
                       {s.type} — {formatEuro(s.price)}
@@ -433,7 +433,7 @@ const PvEstimator: FC = () => {
                 <span className="text-neutral-200">{formatEuro(prices.batteryPrice)}</span>
               </li>
               <li className="flex justify-between items-center border-b border-neutral-800 pb-3">
-                <span>Struttura di sostegno</span>
+                <span>Struttura di ancoraggio</span>
                 <span className="text-neutral-200">{formatEuro(prices.structurePrice)}</span>
               </li>
               <li className="flex justify-between items-center pt-1 font-semibold text-neutral-300">
