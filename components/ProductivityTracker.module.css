@@ -1,0 +1,86 @@
+/* Contenitore principale */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  max-width: 450px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Quando lo schermo è abbastanza grande (es. tablet/desktop), si allinea in riga */
+@media (min-width: 640px) {
+  .container {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Sezione che unisce Icona + Testo */
+.infoSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0; /* IMPEDISCE la sovrapposizione bloccando la larghezza di questa sezione */
+}
+
+/* L'icona SVG grafica */
+.icon {
+  width: 24px;
+  height: 24px;
+  color: #2563eb;
+  flex-shrink: 0; /* Impedisce all'icona di deformarsi o rimpicciolirsi */
+}
+
+/* Contenitore del testo */
+.textContainer {
+  display: flex;
+  gap: 6px;
+  white-space: nowrap; /* Impedisce al testo di andare a capo spezzandosi */
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Lo sfondo grigio della barra (il binario) */
+.progressTrack {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 12px;
+  overflow: hidden;
+}
+
+/* La barra interna colorata che si muove */
+.progressBar {
+  height: 100%;
+  border-radius: 9999px;
+  /* Transizione fluida quando il valore della producibilità cambia */
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease;
+}
+
+/* Classi di colore dinamiche */
+.high {
+  background-color: #10b981; /* Verde per alta producibilità */
+}
+
+.medium {
+  background-color: #f59e0b; /* Arancione per media producibilità */
+}
+
+.low {
+  background-color: #ef4444; /* Rosso per bassa producibilità */
+}
