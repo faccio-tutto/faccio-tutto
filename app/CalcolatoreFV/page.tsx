@@ -8,7 +8,8 @@ import {
   Compass,
   ArrowRight,
   Zap,
-  BarChart3
+  BarChart3,
+  Activity
 } from "lucide-react";
 
 // --- Database Irraggiamento Giornaliero ---
@@ -39,7 +40,7 @@ const dailyIrradiance_kWh_per_sqm_per_day: { [provinceName: string]: { [month: s
     'Catania': { Gennaio: 2.50, Febbraio: 3.31, Marzo: 4.44, Aprile: 5.75, Maggio: 7.08, Giugno: 7.83, Luglio: 7.83, Agosto: 7.06, Settembre: 5.42, Ottobre: 3.81, Novembre: 2.78, Dicembre: 2.22 },
     'Catanzaro': { Gennaio: 2.03, Febbraio: 3.11, Marzo: 3.56, Aprile: 5.25, Maggio: 6.24, Giugno: 7.47, Luglio: 7.61, Agosto: 7.00, Settembre: 4.67, Ottobre: 3.47, Novembre: 2.19, Dicembre: 1.81 },
     'Chieti': { Gennaio: 1.64, Febbraio: 2.44, Marzo: 3.64, Aprile: 5.19, Maggio: 6.47, Giugno: 6.89, Luglio: 7.33, Agosto: 6.25, Settembre: 4.75, Ottobre: 3.28, Novembre: 1.89, Dicembre: 1.42 },
-    'Como': { Gennaio: 1.28, Febbraio: 1.89, Marzo: 3.08, Aprile: 4.33, Maggio: 5.03, Giugno: 5.69, Luglio: 6.14, Agosto: 5.00, Settembre: 3.64, Ottobre: 2.50, Novembre: 1.36, Dicembre: 1.11 },
+    'Como': { Gennaio: 1.28, Febbraio: 1.89, Marzo: 3.08, Aprile: 4.33, Maggio: 5.03, Giugno: 5.69, Luglio: 6.14, Agosto: 5.00, September: 3.64, Ottobre: 2.50, Novembre: 1.36, Dicembre: 1.11 },
     'Cosenza': { Gennaio: 2.14, Febbraio: 3.28, Marzo: 4.81, Aprile: 6.06, Maggio: 7.14, Giugno: 8.22, Luglio: 8.03, Agosto: 7.22, Settembre: 5.56, Ottobre: 3.58, Novembre: 2.61, Dicembre: 2.14 },
     'Crotone': { Gennaio: 2.06, Febbraio: 2.97, Marzo: 4.03, Aprile: 5.36, Maggio: 6.53, Giugno: 7.25, Luglio: 7.39, Agosto: 6.75, Settembre: 4.97, Ottobre: 3.61, Novembre: 2.39, Dicembre: 1.78 },
     'Cremona': { Gennaio: 1.08, Febbraio: 1.89, Marzo: 3.19, Aprile: 4.67, Maggio: 5.69, Giugno: 6.61, Luglio: 6.94, Agosto: 5.61, Settembre: 3.97, Ottobre: 2.33, Novembre: 1.25, Dicembre: 0.92 },
@@ -62,7 +63,7 @@ const dailyIrradiance_kWh_per_sqm_per_day: { [provinceName: string]: { [month: s
     'Lecce': { Gennaio: 1.94, Febbraio: 2.92, Marzo: 4.19, Aprile: 5.92, Maggio: 7.25, Giugno: 8.00, Luglio: 8.17, Agosto: 7.22, Settembre: 5.47, Ottobre: 3.78, Novembre: 2.31, Dicembre: 1.67 },
     'Lecco': { Gennaio: 1.25, Febbraio: 1.97, Marzo: 3.19, Aprile: 4.42, Maggio: 5.17, Giugno: 5.78, Luglio: 6.28, Agosto: 5.08, Settembre: 3.72, Ottobre: 2.50, Novembre: 1.39, Dicembre: 1.14 },
     'Livorno': { Gennaio: 1.47, Febbraio: 2.25, Marzo: 3.42, Aprile: 4.75, Maggio: 5.72, Giugno: 6.42, Luglio: 6.83, Agosto: 5.69, Settembre: 4.25, Ottobre: 2.86, Novembre: 1.69, Dicembre: 1.25 },
-    'Lodi': { Gennaio: 1.14, Febbraio: 1.86, Marzo: 3.08, Aprile: 4.39, Maggio: 5.28, Giugno: 5.89, Luglio: 6.44, Agosto: 5.14, Settembre: 3.78, Ottobre: 2.42, Novembre: 1.28, Dicembre: 1.00 }, // Corretto 'September' in 'Settembre'
+    'Lodi': { Gennaio: 1.14, Febbraio: 1.86, Marzo: 3.08, Aprile: 4.39, Maggio: 5.28, Giugno: 5.89, Luglio: 6.44, Agosto: 5.14, Settembre: 3.78, Ottobre: 2.42, Novembre: 1.28, Dicembre: 1.00 },
     'Lucca': { Gennaio: 1.36, Febbraio: 2.06, Marzo: 3.25, Aprile: 4.53, Maggio: 5.56, Giugno: 6.31, Luglio: 6.56, Agosto: 5.47, Settembre: 4.14, Ottobre: 2.72, Novembre: 1.56, Dicembre: 1.11 },
     'Macerata': { Gennaio: 1.31, Febbraio: 2.19, Marzo: 3.47, Aprile: 4.97, Maggio: 6.25, Giugno: 6.58, Luglio: 7.11, Agosto: 6.00, Settembre: 4.36, Ottobre: 2.89, Novembre: 1.58, Dicembre: 1.19 },
     'Mantova': { Gennaio: 1.11, Febbraio: 1.94, Marzo: 3.19, Aprile: 4.58, Maggio: 5.58, Giugno: 6.28, Luglio: 6.83, Agosto: 5.50, Settembre: 3.97, Ottobre: 2.47, Novembre: 1.33, Dicembre: 1.00 },
@@ -161,7 +162,8 @@ const provinceCodeToName: { [key: string]: string } = provinceData.reduce((acc, 
     return acc;
 }, {} as { [key: string]: string });
 
-// --- Helper di Calcolo ---
+// NOTA: Manteniamo la struttura esistente del database pre-calcolato per non compromettere il tuo codice,
+// ma rimuoveremo l'influenza fissa dello 0.80 nell'algoritmo di calcolo finale.
 const calculateMonthlyProducibility_1kWp = (dailyIrradianceData: { [month: string]: number }): { [month: string]: number } => {
     const monthsOrder = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
     const producibility: { [month: string]: number } = {};
@@ -198,6 +200,32 @@ const getTiltCorrectionFactor = (tilt: string): number => {
     }
 };
 
+// --- ALGORITMO DI CALCOLO DINAMICO DEL RENDIMENTO (PR) ---
+const calculateDynamicPerformanceRatio = (provinceName: string, tiltDegrees: number): number => {
+    let prBase = 86; // Rendimento base ottimizzato (86%)
+    
+    // 1. Perdite termiche stimate per zone climatiche italiane (Sud soffre di più il calore sui moduli)
+    let temperatureLoss = 3.0;
+    const calda = ['Agrigento', 'Caltanissetta', 'Catania', 'Enna', 'Messina', 'Palermo', 'Ragusa', 'Siracusa', 'Trapani', 'Bari', 'Brindisi', 'Foggia', 'Lecce', 'Taranto', 'Barletta-Andria-Trani', 'Catanzaro', 'Cosenza', 'Crotone', 'Reggio Calabria', 'Vibo Valentia', 'Napoli', 'Salerno', 'Caserta', 'Cagliari', 'Sassari', 'Oristano', 'Nuoro'];
+    const fredda = ['Milano', 'Torino', 'Aosta', 'Bergamo', 'Brescia', 'Como', 'Cremona', 'Lecco', 'Lodi', 'Mantova', 'Monza e della Brianza', 'Novara', 'Sondrio', 'Varese', 'Vercelli', 'Belluno', 'Trento', 'Bolzano', 'Udine'];
+
+    if (calda.includes(provinceName)) {
+        temperatureLoss = 6.5; // Il calore riduce la conducibilità dei pannelli
+    } else if (fredda.includes(provinceName)) {
+        temperatureLoss = 1.5; // Il freddo mantiene alta l'efficienza elettrica
+    }
+
+    // 2. Perdite per accumulo sporco (Soiling) basate sulla pendenza
+    let soilingLoss = 0;
+    if (tiltDegrees < 15) {
+        soilingLoss = 4.5; // Sotto i 15° la pioggia non riesce a pulire la polvere
+    } else if (tiltDegrees > 50) {
+        soilingLoss = 2.0; // Angolo critico di riflessione ottica
+    }
+
+    return prBase - temperatureLoss - soilingLoss;
+};
+
 const fullProducibilityDataByProvince: { [provinceCode: string]: { [month: string]: number } } = {};
 for (const provinceCode in provinceCodeToName) {
     const provinceName = provinceCodeToName[provinceCode];
@@ -214,6 +242,7 @@ interface ResumeData {
     location: string;
     power: string;
     totalAnnual: number;
+    performanceRatio: number; // Aggiunto al report finale
 }
 
 export default function CalcolatoreFVPage() {
@@ -247,42 +276,57 @@ export default function CalcolatoreFVPage() {
         setValidationErrors({});
         setIsCalculating(true);
 
-        // Simulazione caricamento premium in stile configuratore auto
         setTimeout(() => {
             const baseProducibility = fullProducibilityDataByProvince[province];
             const azimuthFactor = getAzimuthCorrectionFactor(azimuth);
             const tiltFactor = getTiltCorrectionFactor(tilt);
+            const provinceName = provinceCodeToName[province];
+            const parsedTilt = parseFloat(tilt);
+
+            // Calcola il PR Dinamico in tempo reale
+            const dynamicPR = calculateDynamicPerformanceRatio(provinceName, parsedTilt);
+            const dynamicPRDecimal = dynamicPR / 100;
             
             const months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
             const results: ProducibilityRow[] = [];
             let total = 0;
 
             months.forEach(month => {
-                const val = baseProducibility[month] * parsedPotenza * azimuthFactor * tiltFactor;
+                // Neutralizziamo il vecchio 0.80 fisso e applichiamo il PR dinamico calcolato
+                const cleanIrradianceBase = baseProducibility[month] / 0.80; 
+                const val = cleanIrradianceBase * parsedPotenza * azimuthFactor * tiltFactor * dynamicPRDecimal;
+                
                 results.push({ periodo: month, kwh: val });
                 total += val;
             });
 
             setProducibilityData(results);
             setResumeData({
-                location: provinceCodeToName[province],
+                location: provinceName,
                 power: potenza,
-                totalAnnual: total
+                totalAnnual: total,
+                performanceRatio: dynamicPR
             });
             setIsCalculating(false);
         }, 600);
     };
 
-    // Trova il picco di produzione per scalare i grafici a barre mensili
     const maxMonthlyProduction = producibilityData 
         ? Math.max(...producibilityData.map(d => d.kwh)) 
         : 1;
+
+    // Colore condizionale Tesla-style per la barra di efficienza
+    const getPrColor = (pr: number) => {
+        if (pr >= 82) return "bg-emerald-500";
+        if (pr >= 78) return "bg-amber-500";
+        return "bg-rose-500";
+    };
 
     return (
         <div className="min-h-screen bg-[#0d0d0d] text-[#f2f2f2] font-sans antialiased selection:bg-white selection:text-black py-16 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
                 
-                {/* --- HEADER TESLA STYLE --- */}
+                {/* --- HEADER --- */}
                 <header className="text-center mb-16 space-y-4">
                     <motion.p 
                         initial={{ opacity: 0, y: -10 }}
@@ -295,215 +339,188 @@ export default function CalcolatoreFVPage() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.1 }}
-                        className="text-4xl sm:text-5xl font-light tracking-tight text-white"
+                        className="text-4xl sm:text-5xl font-light tracking-tight text-white animate-fade-in"
                     >
-                        Calcolatore producibilità solare
+                        Calcolatore fotovoltaico
                     </motion.h1>
-                    <motion.div 
-                        initial={{ width: 0 }}
-                        animate={{ width: "40px" }}
-                        className="h-[1px] bg-white mx-auto mt-6"
-                    />
                 </header>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
                     
-                    {/* --- CONFIGURATORE / FORM --- */}
-                    <div className="lg:col-span-5 bg-[#141414] border border-neutral-800 rounded-lg p-6 sm:p-8 space-y-8 shadow-2xl">
-                        <h2 className="text-xl font-normal tracking-tight text-white mb-2">Specifiche Impianto</h2>
+                    {/* --- CONFIGURATORE FORM (5 Colonne) --- */}
+                    <div className="lg:col-span-5 bg-neutral-900/40 border border-neutral-800 p-8 rounded-2xl backdrop-blur-md">
+                        <h2 className="text-xl font-light tracking-wide mb-6 text-white flex items-center gap-2">
+                            <Sun className="w-5 height-5 text-amber-500" /> Parametri impianto
+                        </h2>
                         
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            {/* Località */}
-                            <div className="space-y-2">
-                                <label className="text-xs uppercase tracking-wider text-neutral-400 block font-medium">Località</label>
-                                <div className="relative">
-                                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
-                                    <select
-                                        value={province}
-                                        onChange={(e) => setProvince(e.target.value)}
-                                        className="w-full bg-[#1c1c1c] border border-neutral-800 rounded-md py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-neutral-500 transition-colors appearance-none cursor-pointer"
-                                    >
-                                        <option value="">Seleziona Provincia...</option>
-                                        {provinceData.map((p) => (
-                                            <option key={p.value} value={p.value}>{p.label}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                                {validationErrors.province && (
-                                    <p className="text-xs text-red-400 mt-1">{validationErrors.province}</p>
-                                )}
+                            <div>
+                                <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2 flex items-center gap-1.5">
+                                    <MapPin className="w-3.5 h-3.5" /> Località (Provincia)
+                                </label>
+                                <select 
+                                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-3 text-sm focus:outline-none focus:border-neutral-500 text-white transition-colors"
+                                    value={province} 
+                                    onChange={(e) => setProvince(e.target.value)}
+                                >
+                                    <option value="">Seleziona...</option>
+                                    {provinceData.map((p) => (
+                                        <option key={p.value} value={p.value}>{p.label}</option>
+                                    ))}
+                                </select>
+                                {validationErrors.province && <p className="text-rose-500 text-xs mt-1">{validationErrors.province}</p>}
                             </div>
 
-                            {/* Potenza Impianto */}
-                            <div className="space-y-2">
-                                <label className="text-xs uppercase tracking-wider text-neutral-400 block font-medium">Potenza Nominale (kWp)</label>
-                                <div className="relative">
-                                    <Sun className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
-                                    <input
-                                        type="text"
-                                        inputMode="decimal"
-                                        placeholder="es. 6.0"
-                                        value={potenza}
-                                        onChange={(e) => setPotenza(e.target.value)}
-                                        className="w-full bg-[#1c1c1c] border border-neutral-800 rounded-md py-3 pl-10 pr-4 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition-colors"
-                                    />
-                                </div>
-                                {validationErrors.potenza && (
-                                    <p className="text-xs text-red-400 mt-1">{validationErrors.potenza}</p>
-                                )}
+                            <div>
+                                <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2 flex items-center gap-1.5">
+                                    <Zap className="w-3.5 h-3.5" /> Potenza Impianto (kWp)
+                                </label>
+                                <input 
+                                    type="text"
+                                    placeholder="Es: 4.5"
+                                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-3 text-sm focus:outline-none focus:border-neutral-500 text-white transition-colors"
+                                    value={potenza}
+                                    onChange={(e) => setPotenza(e.target.value)}
+                                />
+                                {validationErrors.potenza && <p className="text-rose-500 text-xs mt-1">{validationErrors.potenza}</p>}
                             </div>
 
-                            {/* Orientamento / Azimuth */}
-                            <div className="space-y-2">
-                                <label className="text-xs uppercase tracking-wider text-neutral-400 block font-medium">Orientamento (Azimuth)</label>
-                                <div className="relative">
-                                    <Compass className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
-                                    <select
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2 flex items-center gap-1.5">
+                                        <Compass className="w-3.5 h-3.5" /> Orientamento
+                                    </label>
+                                    <select 
+                                        className="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-3 text-sm focus:outline-none focus:border-neutral-500 text-white transition-colors"
                                         value={azimuth}
                                         onChange={(e) => setAzimuth(e.target.value)}
-                                        className="w-full bg-[#1c1c1c] border border-neutral-800 rounded-md py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-neutral-500 transition-colors appearance-none cursor-pointer"
                                     >
                                         <option value="0">Sud (0°)</option>
-                                        <option value="15">Sud-Est / Sud-Ovest (15°)</option>
-                                        <option value="30">Sud-Est / Sud-Ovest (30°)</option>
+                                        <option value="15">Sud-Est / Ovest (15°)</option>
+                                        <option value="30">Sud-Est / Ovest (30°)</option>
                                         <option value="45">Est / Ovest (45°)</option>
                                         <option value="90">Est / Ovest Netto (90°)</option>
                                     </select>
                                 </div>
-                            </div>
 
-                            {/* Inclinazione / Tilt */}
-                            <div className="space-y-2">
-                                <label className="text-xs uppercase tracking-wider text-neutral-400 block font-medium">Inclinazione Pannelli (Tilt)</label>
-                                <div className="relative">
-                                    <Zap className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
-                                    <select
+                                <div>
+                                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2 flex items-center gap-1.5">
+                                        <Compass className="w-3.5 h-3.5" /> Inclinazione (Tilt)
+                                    </label>
+                                    <select 
+                                        className="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-3 text-sm focus:outline-none focus:border-neutral-500 text-white transition-colors"
                                         value={tilt}
                                         onChange={(e) => setTilt(e.target.value)}
-                                        className="w-full bg-[#1c1c1c] border border-neutral-800 rounded-md py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-neutral-500 transition-colors appearance-none cursor-pointer"
                                     >
+                                        <option value="0">Piano (0°)</option>
+                                        <option value="10">Bassa (10°)</option>
+                                        <option value="15">Consigliata Sud (15°)</option>
+                                        <option value="20">Standard (20°)</option>
                                         <option value="30">Ottimale (30°)</option>
-                                        <option value="20">Inclinazione Standard (20°)</option>
-                                        <option value="15">Inclinazione Bassa (15°)</option>
-                                        <option value="10">Quasi Piano (10°)</option>
-                                        <option value="0">Tetto Piano (0°)</option>
-                                        <option value="90">Facciata Verticale (90°)</option>
+                                        <option value="90">Verticale (90°)</option>
                                     </select>
                                 </div>
                             </div>
 
-                            {/* Pulsante Calcola */}
-                            <button
-                                type="submit"
+                            <button 
+                                type="submit" 
                                 disabled={isCalculating}
-                                className="w-full mt-4 bg-white text-black font-medium text-sm py-3 px-4 rounded-md hover:bg-neutral-200 active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full mt-4 bg-white hover:bg-neutral-200 text-black font-medium p-3.5 rounded-lg text-sm transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
                             >
-                                {isCalculating ? (
-                                    <span className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                                ) : (
-                                    <>
-                                        Elabora Dati Producibilità
-                                        <ArrowRight className="w-4 h-4" />
-                                    </>
-                                )}
+                                {isCalculating ? "Elaborazione Dati Fisici..." : <>Calcola producibilità <ArrowRight className="w-4 h-4" /></>}
                             </button>
                         </form>
                     </div>
 
-                    {/* --- PANNELLO RISULTATI DINGAMICI --- */}
-                    <div className="lg:col-span-7 h-full min-h-[450px]">
+                    {/* --- SCHERMATA RISULTATI (7 Colonne) --- */}
+                    <div className="lg:col-span-7 space-y-6 min-h-[450px]">
                         <AnimatePresence mode="wait">
-                            {!resumeData ? (
+                            {resumeData && producibilityData ? (
+                                <motion.div 
+                                    key="risultati"
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -20 }}
+                                    className="space-y-6"
+                                >
+                                    {/* Scheda KPI Annuale */}
+                                    <div className="p-8 border border-neutral-800 bg-neutral-900/20 rounded-2xl flex justify-between items-center">
+                                        <div>
+                                            <p className="text-xs uppercase tracking-widest text-neutral-400 mb-1">Produzione Stimata Annuale</p>
+                                            <h3 className="text-4xl sm:text-5xl font-extralight tracking-tight text-white">
+                                                {Math.round(resumeData.totalAnnual).toLocaleString('it-IT')} <span className="text-lg font-light text-neutral-400">kWh</span>
+                                            </h3>
+                                        </div>
+                                        <div className="p-4 bg-white/5 rounded-full border border-neutral-800">
+                                            <BarChart3 className="w-8 h-8 text-white" />
+                                        </div>
+                                    </div>
+
+                                    {/* WIDGET DEL RENDIMENTO DI SISTEMA DINAMICO INTEGRATO */}
+                                    <div className="p-6 border border-neutral-800 bg-neutral-900/40 rounded-2xl space-y-4">
+                                        <div className="flex justify-between items-center">
+                                            <div className="flex items-center gap-2.5">
+                                                <Activity className="w-4 h-4 text-neutral-400" />
+                                                <span className="text-sm font-medium tracking-wide text-neutral-300">
+                                                    Rendimento reale del sistema (PR)
+                                                </span>
+                                            </div>
+                                            <span className="text-sm font-bold text-white tracking-wider">
+                                                {resumeData.performanceRatio.toFixed(1)}%
+                                            </span>
+                                        </div>
+                                        
+                                        <div className="w-full bg-neutral-950 rounded-full h-2.5 overflow-hidden border border-neutral-800/60">
+                                            <motion.div 
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${resumeData.performanceRatio}%` }}
+                                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                                className={`h-full rounded-full ${getPrColor(resumeData.performanceRatio)}`}
+                                            />
+                                        </div>
+                                        
+                                        <p className="text-neutral-500 text-xs font-light leading-relaxed">
+                                            Il fattore PR calcola le perdite per temperatura a <strong>{resumeData.location}</strong> combinate con il coefficiente di sporco causato dall'inclinazione a <strong>{tilt}°</strong>.
+                                        </p>
+                                    </div>
+
+                                    {/* Grafico Mensile */}
+                                    <div className="p-6 border border-neutral-800 bg-neutral-900/20 rounded-2xl space-y-4">
+                                        <h4 className="text-sm uppercase tracking-wider text-neutral-400 font-medium">Distribuzione Mensile</h4>
+                                        <div className="space-y-3.5">
+                                            {producibilityData.map((item) => (
+                                                <div key={item.periodo} className="flex items-center gap-4 text-xs">
+                                                    <span className="w-20 text-neutral-400 font-light">{item.periodo}</span>
+                                                    <div className="flex-1 bg-neutral-950 h-3 rounded-md overflow-hidden relative border border-neutral-800/40">
+                                                        <motion.div 
+                                                            initial={{ width: 0 }}
+                                                            animate={{ width: `${(item.kwh / maxMonthlyProduction) * 100}%` }}
+                                                            transition={{ duration: 0.5 }}
+                                                            className="bg-neutral-200 h-full rounded-md"
+                                                        />
+                                                    </div>
+                                                    <span className="w-16 text-right font-medium text-white">{Math.round(item.kwh)} kWh</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ) : (
                                 <motion.div 
                                     key="placeholder"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    className="h-full border border-dashed border-neutral-800 rounded-lg flex flex-col items-center justify-center p-8 text-center bg-[#0d0d0d]/50 min-h-[480px]"
+                                    className="h-full border border-dashed border-neutral-800 rounded-2xl flex flex-col items-center justify-center p-8 text-center text-neutral-500"
                                 >
-                                    <div className="w-12 h-12 rounded-full bg-[#141414] border border-neutral-800 flex items-center justify-center mb-4 shadow-inner">
-                                        <Sun className="w-5 h-5 text-neutral-500 animate-pulse" />
-                                    </div>
-                                    <h3 className="text-lg font-light text-neutral-300">In attesa dei parametri</h3>
-                                    <p className="text-sm text-neutral-500 max-w-xs mt-1">
-                                        Configura la potenza e l'esposizione del tuo impianto per calcolare la produzione energetica stimata.
-                                    </p>
-                                </motion.div>
-                            ) : (
-                                <motion.div
-                                    key="results"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    transition={{ duration: 0.4, ease: "easeOut" }}
-                                    className="space-y-6"
-                                >
-                                    {/* KPI Principale - Produzione Annua */}
-                                    <div className="bg-[#141414] border border-neutral-800 rounded-lg p-8 grid grid-cols-1 sm:grid-cols-2 gap-6 relative overflow-hidden shadow-xl">
-                                        <div className="absolute top-0 right-0 p-6 opacity-5">
-                                            <Zap className="w-32 h-32 text-white" />
-                                        </div>
-                                        <div>
-                                            <p className="text-xs uppercase tracking-widest text-neutral-400 font-medium mb-1">Produzione Annua Stimata</p>
-                                            <p className="text-4xl sm:text-5xl font-extralight text-white tracking-tight">
-                                                {Math.round(resumeData.totalAnnual).toLocaleString('it-IT')} <span className="text-xl font-light text-neutral-400">kWh</span>
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col justify-end space-y-1 sm:border-l sm:border-neutral-800 sm:pl-6 text-sm text-neutral-400">
-                                            <div>Località: <strong className="text-white font-normal">{resumeData.location}</strong></div>
-                                            <div>Taglia Impianto: <strong className="text-white font-normal">{resumeData.power} kWp</strong></div>
-                                            <div>Rendimento di Sistema: <strong className="text-white font-normal">80% (PR)</strong></div>
-                                        </div>
-                                    </div>
-
-                                    {/* Grafico a barre & Tabella Mensile */}
-                                    <div className="bg-[#141414] border border-neutral-800 rounded-lg p-6 sm:p-8 space-y-6 shadow-xl">
-                                        <div className="flex items-center gap-2 pb-4 border-b border-neutral-800">
-                                            <BarChart3 className="w-4 h-4 text-neutral-400" />
-                                            <h3 className="text-sm uppercase tracking-wider text-neutral-300 font-medium">Rendimento Mensile Dettagliato</h3>
-                                        </div>
-
-                                        <div className="space-y-3 pt-2">
-                                            {producibilityData?.map((item, idx) => {
-                                                const percentage = (item.kwh / maxMonthlyProduction) * 100;
-                                                return (
-                                                    <motion.div 
-                                                        key={item.periodo}
-                                                        initial={{ opacity: 0 }}
-                                                        animate={{ opacity: 1 }}
-                                                        transition={{ delay: idx * 0.03 }}
-                                                        className="grid grid-cols-12 gap-2 items-center text-xs sm:text-sm"
-                                                    >
-                                                        {/* Mese */}
-                                                        <span className="col-span-3 text-neutral-400 font-light truncate">{item.periodo}</span>
-                                                        
-                                                        {/* Barra Dinamica */}
-                                                        <div className="col-span-6 bg-neutral-900 h-2.5 rounded-full relative overflow-hidden">
-                                                            <motion.div 
-                                                                initial={{ width: 0 }}
-                                                                animate={{ width: `${percentage}%` }}
-                                                                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                                                                className="absolute top-0 left-0 h-full bg-white rounded-full opacity-90"
-                                                            />
-                                                        </div>
-
-                                                        {/* Valore kWh */}
-                                                        <span className="col-span-3 text-right text-white font-mono tracking-tight">
-                                                            {Math.round(item.kwh).toLocaleString('it-IT')} <span className="text-[10px] text-neutral-500 font-sans">kWh</span>
-                                                        </span>
-                                                    </motion.div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                    
+                                    <Sun className="w-8 h-8 mb-3 stroke-[1.2] text-neutral-600" />
+                                    <p className="text-sm font-light">Configura i parametri geometrici e di potenza a sinistra per calcolare il rendimento termico e la producibilità dell'impianto.</p>
                                 </motion.div>
                             )}
                         </AnimatePresence>
                     </div>
 
                 </div>
-
             </div>
         </div>
     );
