@@ -65,15 +65,15 @@ export async function POST(request: Request) {
         <table class="table-layout header-container">
             <tr>
                 <td class="table-cell" style="width: 50%;">
-                    <h1 class="logo-text">Tesla Energy</h1>
-                    <p class="sub-logo">Ecosistema Residenziale Solare</p>
+                    <h1 class="logo-text">FACCIO-TUTTO.IT</h1>
+                    <p class="sub-logo">Ecosistema residenziale solare</p>
                 </td>
                 <td class="table-cell text-right" style="width: 50%;">
                     <div class="meta-box">
-                        <span class="meta-title">Prospetto di Preventivo</span><br>
+                        <span class="meta-title">Preventivo</span><br>
                         ID Pratica: <span class="font-mono">PRV-${Math.floor(100000 + Math.random() * 900000)}</span><br>
                         Data Valutazione: ${new Date().toLocaleDateString('it-IT')}<br>
-                        Validità Parametri: 30 Giorni
+                        Validità: 15 Giorni
                     </div>
                 </td>
             </tr>
@@ -89,8 +89,8 @@ export async function POST(request: Request) {
                 </td>
                 <td class="table-cell text-right" style="width: 50%; line-height: 1.6; font-size: 10pt;">
                     <span style="color: #737373; font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; display: block;">Potenza Nominale Impianto</span>
-                    Dimensione Generatore: <strong>${potenzaTotaleKw} kWp</strong><br>
-                    Architettura Elettrica: <strong>100% Compatibile</strong>
+                    Potenza moduli: <strong>${potenzaTotaleKw} kWp</strong><br>
+                    Architettura elettrica: <strong>100% Compatibile</strong>
                 </td>
             </tr>
         </table>
@@ -99,30 +99,30 @@ export async function POST(request: Request) {
         <table class="data-table">
             <thead>
                 <tr>
-                    <th style="width: 30%;">Modulo Impianto</th>
+                    <th style="width: 30%;">Componenti Impianto</th>
                     <th style="width: 55%;">Descrizione Modello</th>
                     <th class="text-right" style="width: 15%;">Quantità</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Moduli Fotovoltaici</strong></td>
+                    <td><strong>Moduli fotovoltaici</strong></td>
                     <td>${moduli?.brand} ${moduli?.modello || ""} (${moduli?.powerW} W)</td>
                     <td class="text-right font-mono">${numeroModuli}</td>
                 </tr>
                 <tr>
-                    <td><strong>Inverter Centrale</strong></td>
+                    <td><strong>Inverter</strong></td>
                     <td>${inverter?.brand} ${inverter?.modello || ""} (${inverter?.powerKw} kW)</td>
                     <td class="text-right font-mono">1</td>
                 </tr>
                 ${batteria ? `
                 <tr>
-                    <td><strong>Accumulo Chimico</strong></td>
+                    <td><strong>Batteria di accumulo</strong></td>
                     <td>${batteria.brand} ${batteria.modello || ""} (${batteria.capacityKwh} kWh)</td>
                     <td class="text-right font-mono">Incluso</td>
                 </tr>` : ""}
                 <tr>
-                    <td><strong>Infrastruttura Meccanica</strong></td>
+                    <td><strong>Tipologia installazione</strong></td>
                     <td>Ancoraggio strutturale specifico per ${struttura?.type}</td>
                     <td class="text-right font-mono">1 Kit</td>
                 </tr>
@@ -139,24 +139,24 @@ export async function POST(request: Request) {
             </thead>
             <tbody>
                 <tr>
-                    <td>Fornitura moduli fotovoltaici certificati (${numeroModuli} unità)</td>
+                    <td>Fornitura moduli fotovoltaici(${numeroModuli} unità)</td>
                     <td class="text-right font-mono">${formatEuro(prezzoModuli)}</td>
                 </tr>
                 <tr>
-                    <td>Fornitura inverter di stringa a gestione intelligente</td>
+                    <td>Fornitura inverter</td>
                     <td class="text-right font-mono">${formatEuro(prezzoInverter)}</td>
                 </tr>
                 ${batteria ? `
                 <tr>
-                    <td>Fornitura pacco batterie di accumulo integrato</td>
+                    <td>Fornitura batterie di accumulo</td>
                     <td class="text-right font-mono">${formatEuro(prezzoBatteria)}</td>
                 </tr>` : ""}
                 <tr>
-                    <td>Infrastruttura di fissaggio meccanico su piano di posa</td>
+                    <td>Tipologia di fissaggio moduli fotovoltaici</td>
                     <td class="text-right font-mono">${formatEuro(prezzoStruttura)}</td>
                 </tr>
                 <tr>
-                    <td>Opere di posa hardware, cablaggio elettrico a regola d'arte e messa in sicurezza</td>
+                    <td>Installazione hardware e cablaggio elettrico a regola d'arte</td>
                     <td class="text-right font-mono">${formatEuro(cablaggio)}</td>
                 </tr>
                 <tr>
@@ -164,11 +164,11 @@ export async function POST(request: Request) {
                     <td class="text-right font-mono">${formatEuro(oneriBurocratici)}</td>
                 </tr>
                 <tr>
-                    <td style="font-weight: 600; color: #000000; border-top: 1px solid #171717; padding-top: 12px;">Base Imponibile Netta</td>
+                    <td style="font-weight: 600; color: #000000; border-top: 1px solid #171717; padding-top: 12px;">Base imponibile netta</td>
                     <td class="text-right font-mono" style="font-weight: 600; border-top: 1px solid #171717; padding-top: 12px;">${formatEuro(baseImponibile)}</td>
                 </tr>
                 <tr>
-                    <td style="color: #737373; border: none; padding-top: 6px;">Imposta Valore Aggiunto applicata (IVA 10%)</td>
+                    <td style="color: #737373; border: none; padding-top: 6px;">Imposta valore aggiunto applicata (IVA 10%)</td>
                     <td class="text-right font-mono" style="color: #737373; border: none; padding-top: 6px;">${formatEuro(quotaIva)}</td>
                 </tr>
             </tbody>
