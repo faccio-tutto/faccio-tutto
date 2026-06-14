@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
-import puppeteer from "puppeteer"; // <--- Importiamo il motore di rendering
+import { NextResponse } from "next/server"; // <-- FISSAATO: Importazione mancante
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 export async function POST(request: Request) {
   try {
@@ -18,7 +19,6 @@ export async function POST(request: Request) {
 
     const formatEuro = (v: number) => v.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
 
-    // Il template HTML (Stile Tesla) fornito in precedenza
     const htmlTemplate = `
     <!DOCTYPE html>
     <html>
@@ -29,18 +29,6 @@ export async function POST(request: Request) {
             @page {
                 size: A4;
                 margin: 25mm 20mm;
-                @bottom-left {
-                    content: "Ecosistema Energetico Residenziale";
-                    font-family: -apple-system, system-ui, sans-serif;
-                    font-size: 8pt;
-                    color: #a3a3a3;
-                }
-                @bottom-right {
-                    content: "Pagina " counter(page) " di " counter(pages);
-                    font-family: -apple-system, system-ui, sans-serif;
-                    font-size: 8pt;
-                    color: #a3a3a3;
-                }
             }
             body {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -77,15 +65,15 @@ export async function POST(request: Request) {
         <table class="table-layout header-container">
             <tr>
                 <td class="table-cell" style="width: 50%;">
-                    <h1 class="logo-text">FACCIO-TUTTO</h1>
+                    <h1 class="logo-text">Tesla Energy</h1>
                     <p class="sub-logo">Ecosistema Residenziale Solare</p>
                 </td>
                 <td class="table-cell text-right" style="width: 50%;">
                     <div class="meta-box">
                         <span class="meta-title">Prospetto di Preventivo</span><br>
-                        ID pratica: <span class="font-mono">PRV-${Math.floor(100000 + Math.random() * 900000)}</span><br>
-                        Data valutazione: ${new Date().toLocaleDateString('it-IT')}<br>
-                        Validità parametri: 30 Giorni
+                        ID Pratica: <span class="font-mono">PRV-${Math.floor(100000 + Math.random() * 900000)}</span><br>
+                        Data Valutazione: ${new Date().toLocaleDateString('it-IT')}<br>
+                        Validità Parametri: 30 Giorni
                     </div>
                 </td>
             </tr>
@@ -101,40 +89,40 @@ export async function POST(request: Request) {
                 </td>
                 <td class="table-cell text-right" style="width: 50%; line-height: 1.6; font-size: 10pt;">
                     <span style="color: #737373; font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; display: block;">Potenza Nominale Impianto</span>
-                    Potenza moduli: <strong>${potenzaTotaleKw} kWp</strong><br>
-                    Architettura elettrica: <strong>100% Compatibile</strong>
+                    Dimensione Generatore: <strong>${potenzaTotaleKw} kWp</strong><br>
+                    Architettura Elettrica: <strong>100% Compatibile</strong>
                 </td>
             </tr>
         </table>
 
-        <div class="section-header">02 / Specifiche componenti selezionati</div>
+        <div class="section-header">02 / Specifiche Componenti Selezionati</div>
         <table class="data-table">
             <thead>
                 <tr>
-                    <th style="width: 30%;">Componenti impianto</th>
+                    <th style="width: 30%;">Modulo Impianto</th>
                     <th style="width: 55%;">Descrizione Modello</th>
                     <th class="text-right" style="width: 15%;">Quantità</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Moduli fotovoltaici</strong></td>
+                    <td><strong>Moduli Fotovoltaici</strong></td>
                     <td>${moduli?.brand} ${moduli?.modello || ""} (${moduli?.powerW} W)</td>
                     <td class="text-right font-mono">${numeroModuli}</td>
                 </tr>
                 <tr>
-                    <td><strong>Inverter</strong></td>
+                    <td><strong>Inverter Centrale</strong></td>
                     <td>${inverter?.brand} ${inverter?.modello || ""} (${inverter?.powerKw} kW)</td>
                     <td class="text-right font-mono">1</td>
                 </tr>
                 ${batteria ? `
                 <tr>
-                    <td><strong>Batteria d'accumulo</strong></td>
+                    <td><strong>Accumulo Chimico</strong></td>
                     <td>${batteria.brand} ${batteria.modello || ""} (${batteria.capacityKwh} kWh)</td>
                     <td class="text-right font-mono">Incluso</td>
                 </tr>` : ""}
                 <tr>
-                    <td><strong>Installazione</strong></td>
+                    <td><strong>Infrastruttura Meccanica</strong></td>
                     <td>Ancoraggio strutturale specifico per ${struttura?.type}</td>
                     <td class="text-right font-mono">1 Kit</td>
                 </tr>
@@ -151,24 +139,24 @@ export async function POST(request: Request) {
             </thead>
             <tbody>
                 <tr>
-                    <td>Fornitura moduli fotovoltaici (${numeroModuli} unità)</td>
+                    <td>Fornitura moduli fotovoltaici certificati (${numeroModuli} unità)</td>
                     <td class="text-right font-mono">${formatEuro(prezzoModuli)}</td>
                 </tr>
                 <tr>
-                    <td>Fornitura inverter</td>
+                    <td>Fornitura inverter di stringa a gestione intelligente</td>
                     <td class="text-right font-mono">${formatEuro(prezzoInverter)}</td>
                 </tr>
                 ${batteria ? `
                 <tr>
-                    <td>Fornitura pacco batterie di accumulo</td>
+                    <td>Fornitura pacco batterie di accumulo integrato</td>
                     <td class="text-right font-mono">${formatEuro(prezzoBatteria)}</td>
                 </tr>` : ""}
                 <tr>
-                    <td>Sistema di fissaggio</td>
+                    <td>Infrastruttura di fissaggio meccanico su piano di posa</td>
                     <td class="text-right font-mono">${formatEuro(prezzoStruttura)}</td>
                 </tr>
                 <tr>
-                    <td>Installazione hardware e cablaggio elettrico a regola d'arte</td>
+                    <td>Opere di posa hardware, cablaggio elettrico a regola d'arte e messa in sicurezza</td>
                     <td class="text-right font-mono">${formatEuro(cablaggio)}</td>
                 </tr>
                 <tr>
@@ -176,18 +164,18 @@ export async function POST(request: Request) {
                     <td class="text-right font-mono">${formatEuro(oneriBurocratici)}</td>
                 </tr>
                 <tr>
-                    <td style="font-weight: 600; color: #000000; border-top: 1px solid #171717; padding-top: 12px;">Base imponibile netta</td>
+                    <td style="font-weight: 600; color: #000000; border-top: 1px solid #171717; padding-top: 12px;">Base Imponibile Netta</td>
                     <td class="text-right font-mono" style="font-weight: 600; border-top: 1px solid #171717; padding-top: 12px;">${formatEuro(baseImponibile)}</td>
                 </tr>
                 <tr>
-                    <td style="color: #737373; border: none; padding-top: 6px;">Imposta sul valore aggiunto applicata (IVA 10%)</td>
+                    <td style="color: #737373; border: none; padding-top: 6px;">Imposta Valore Aggiunto applicata (IVA 10%)</td>
                     <td class="text-right font-mono" style="color: #737373; border: none; padding-top: 6px;">${formatEuro(quotaIva)}</td>
                 </tr>
             </tbody>
         </table>
 
         <div class="total-card">
-            <div class="total-label">Valore Totale chiavi in mano</div>
+            <div class="total-label">Valore Totale Chiavi in Mano</div>
             <h2 class="total-amount">${formatEuro(totale)}</h2>
             <div class="total-subtext">* Importo finale omnicomprensivo di materiali, manodopera e oneri burocratici, IVA inclusa.</div>
         </div>
@@ -200,13 +188,19 @@ export async function POST(request: Request) {
     </html>
     `;
 
-    // --- LOGICA DI COMPILAZIONE IN PDF REALE ---
-    // Avviamo un'istanza invisibile di Chrome (headless)
-   // --- LOGICA DI COMPILAZIONE IN PDF REALE ---
-    const browser = await puppeteer.launch({ headless: true });
+    const isProd = process.env.NODE_ENV === "production";
+
+    // FISSAATO: Rimossi defaultViewport e headless legati a chromium.
+    // Usiamo le impostazioni standard che non fanno arrabbiare TypeScript.
+    const browser = await puppeteer.launch({
+      args: isProd ? chromium.args : ["--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath: isProd 
+        ? await chromium.executablePath() 
+        : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      headless: true, 
+    });
+
     const page = await browser.newPage();
-    
-    // FISSA ERRORE 1: Usiamo "domcontentloaded" invece di "networkidle0"
     await page.setContent(htmlTemplate, { waitUntil: "domcontentloaded" });
     
     const pdfBuffer = await page.pdf({
@@ -216,7 +210,6 @@ export async function POST(request: Request) {
     
     await browser.close();
 
-    // Forza il tipo dicendo a TypeScript che questo è un pezzo di Blob valido a tutti gli effetti
     const pdfBlob = new Blob([pdfBuffer as unknown as BlobPart], { type: "application/pdf" });
 
     return new NextResponse(pdfBlob, {
@@ -229,7 +222,7 @@ export async function POST(request: Request) {
     });
 
   } catch (error) {
-    console.error("Errore PDF:", error);
+    console.error("Errore crash browser online:", error);
     return new NextResponse(JSON.stringify({ error: "Generazione fallita" }), { status: 500 });
   }
 }
