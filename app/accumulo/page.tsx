@@ -43,10 +43,10 @@ const brandSistemi = [
   },
   {
     brand: "Fronius",
-    sistema: "Symo Gen24 Plus",
+    sistema: "Primo Gen24 6.0 Plus + Reserva",
     tag: "Affidabilità Europea",
-    descrizione: "Inverter ibrido trifase pluripremiato, ingegnerizzato in Austria. Offre funzioni di backup d'emergenza integrate uniche per la massima continuità di esercizio.",
-    image: "/images/brands/fronius-system.jpg",
+    descrizione: "Inverter ibrido monofase, ingegnerizzato in Austria. Offre funzioni di backup d'emergenza integrate uniche per la massima continuità di esercizio.",
+    image: "/images/fronius-system.png",
   },
   {
     brand: "Deye",
