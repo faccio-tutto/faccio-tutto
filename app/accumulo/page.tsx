@@ -50,10 +50,10 @@ const brandSistemi = [
   },
   {
     brand: "Deye",
-    sistema: "Symo Gen24 Plus",
-    tag: "Sistema Ibrido Avanzato",
-    descrizione: "Inverter ibrido trifase pluripremiato, ingegnerizzato in Austria. Offre funzioni di backup d'emergenza integrate uniche per la massima continuità di esercizio.",
-    image: "/images/brands/deye-system.jpg",
+    sistema: "SUN-6K-SG05LP1-EU + Batteria V-TAC VT-48200B LVB litio 48V 9,6KW",
+    tag: "Sistema Ibrido",
+    descrizione: "Efficienza di conversione al 96,6%, elevata capacità del campo fotovoltaico. Tecnologia di raffreddamento avanzata, design compatto e interfaccia con display LCD per un monitoraggio semplice e intuitivo.",
+    image: "/images/deye-system.png",
   },
 ];
 
