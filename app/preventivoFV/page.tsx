@@ -199,24 +199,42 @@ const PvEstimator: FC = () => {
 
   const formatEuro = (v: number) => v.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
 
-  const exportPDF = async () => {
-    if (errors.length > 0) return;
-    try {
-      const res = await fetch("/api/pdf", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ cliente: cliente, email: email, inverter: selectedInverterObj, moduli: selectedModuloObj, numeroModuli: moduleCount, batteria: selectedBatteriaObj, struttura: selectedStrutturaObj, cablaggio: prices.labourAndWiringPrice, totale: applyVAT ? prices.total : prices.subtotal, }) });
-      if (!res.ok) throw new Error("Generazione fallita."); 
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "preventivo.pdf";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+ const exportPDF = async () => {
+  if (errors.length > 0) return;
+  try {
+    const res = await fetch("/api/pdf", { 
+      method: "POST", 
+      headers: { "Content-Type": "application/json" }, 
+      body: JSON.stringify({ 
+        cliente: cliente, 
+        email: email, 
+        inverter: selectedInverterObj, 
+        moduli: selectedModuloObj, 
+        numeroModuli: moduleCount, 
+        batteria: selectedBatteriaObj, 
+        
+        // AGGIUNGI QUESTA RIGA: serve a passare la quantità delle batterie al file di backend
+        batteryQuantity: batteryQuantity, 
+        
+        struttura: selectedStrutturaObj, 
+        cablaggio: prices.labourAndWiringPrice, 
+        totale: applyVAT ? prices.total : prices.subtotal, 
+      }) 
+    });
+    if (!res.ok) throw new Error("Generazione fallita."); 
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "preventivo.pdf";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   if (isLoading) {
     return <div className="min-h-screen bg-black flex items-center justify-center text-xs tracking-widest text-neutral-400 uppercase">Inizializzazione ecosistema...</div>;

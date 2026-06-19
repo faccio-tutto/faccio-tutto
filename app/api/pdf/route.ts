@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"; // <-- FISSAATO: Importazione mancante
+import { NextResponse } from "next/server";
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 import nodemailer from "nodemailer";
@@ -6,12 +6,29 @@ import nodemailer from "nodemailer";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { cliente, email, inverter, moduli, numeroModuli, batteria, struttura, cablaggio, totale } = body;
+    
+    // Destrutturazione corretta: leggiamo 'batteryQuantity' esattamente come lo passa il frontend
+    const { 
+      cliente, 
+      email, 
+      inverter, 
+      moduli, 
+      numeroModuli, 
+      batteria, 
+      batteryQuantity, 
+      struttura, 
+      cablaggio, 
+      totale 
+    } = body;
 
     const potenzaTotaleKw = moduli ? ((moduli.powerW * numeroModuli) / 1000).toFixed(2) : "0.00";
     const prezzoModuli = moduli ? moduli.price * numeroModuli : 0;
     const prezzoInverter = inverter ? inverter.price : 0;
-    const prezzoBatteria = batteria ? batteria.price : 0;
+    
+    // Gestione dinamica delle quantità della batteria usando la chiave corretta
+    const qtaBatterie = batteryQuantity ? parseInt(batteryQuantity) : 1; 
+    const prezzoBatteria = batteria ? (batteria.price * qtaBatterie) : 0;
+    
     const prezzoStruttura = struttura ? struttura.price : 0;
     const oneriBurocratici = 250; 
     
@@ -20,6 +37,7 @@ export async function POST(request: Request) {
 
     const formatEuro = (v: number) => v.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
 
+    // HTML pulito e corretto per evitare sovrapposizioni o testi tagliati nelle tabelle
     const htmlTemplate = `
     <!DOCTYPE html>
     <html>
@@ -27,14 +45,8 @@ export async function POST(request: Request) {
         <meta charset="utf-8">
         <style>
             * { box-sizing: border-box; }
-            @page {
-                size: A4;
-                margin: 25mm 20mm;
-            }
-            body {
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-                margin: 0; padding: 0; color: #171717; background-color: #ffffff;
-            }
+            @page { size: A4; margin: 25mm 20mm; }
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; color: #171717; background-color: #ffffff; }
             .table-layout { width: 100%; border-collapse: collapse; }
             .table-cell { vertical-align: top; padding: 0; }
             .header-container { margin-bottom: 20mm; }
@@ -42,16 +54,9 @@ export async function POST(request: Request) {
             .sub-logo { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 3px; color: #737373; margin: 0; }
             .meta-box { text-align: right; font-size: 9pt; color: #404040; line-height: 1.5; }
             .meta-title { font-weight: 600; color: #000000; text-transform: uppercase; letter-spacing: 1px; font-size: 8pt; }
-            .section-header {
-                font-size: 10pt; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
-                color: #171717; border-bottom: 1px solid #e5e5e5; padding-bottom: 8px;
-                margin-top: 12mm; margin-bottom: 6mm; page-break-after: avoid;
-            }
+            .section-header { font-size: 10pt; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #171717; border-bottom: 1px solid #e5e5e5; padding-bottom: 8px; margin-top: 12mm; margin-bottom: 6mm; page-break-after: avoid; }
             .data-table { width: 100%; border-collapse: collapse; margin-bottom: 8mm; }
-            .data-table th {
-                font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-                color: #737373; text-align: left; padding-bottom: 8px; border-bottom: 1px solid #171717;
-            }
+            .data-table th { font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #737373; text-align: left; padding-bottom: 8px; border-bottom: 1px solid #171717; }
             .data-table td { font-size: 9.5pt; padding: 12px 0; border-bottom: 1px solid #f5f5f5; color: #404040; }
             .text-right { text-align: right; }
             .font-mono { font-family: monospace; font-weight: 600; }
@@ -100,8 +105,8 @@ export async function POST(request: Request) {
         <table class="data-table">
             <thead>
                 <tr>
-                    <th style="width: 30%;">Componenti Impianto</th>
-                    <th style="width: 55%;">Descrizione Modello</th>
+                    <th style="width: 35%;">Componenti Impianto</th>
+                    <th style="width: 50%;">Descrizione Modello</th>
                     <th class="text-right" style="width: 15%;">Quantità</th>
                 </tr>
             </thead>
@@ -120,7 +125,7 @@ export async function POST(request: Request) {
                 <tr>
                     <td><strong>Batteria di accumulo</strong></td>
                     <td>${batteria.brand} ${batteria.modello || ""} (${batteria.capacityKwh} kWh)</td>
-                    <td class="text-right font-mono">Incluso</td>
+                    <td class="text-right font-mono">${qtaBatterie}</td>
                 </tr>` : ""}
                 <tr>
                     <td><strong>Tipologia installazione</strong></td>
@@ -140,7 +145,7 @@ export async function POST(request: Request) {
             </thead>
             <tbody>
                 <tr>
-                    <td>Fornitura moduli fotovoltaici(${numeroModuli} unità)</td>
+                    <td>Fornitura moduli fotovoltaici (${numeroModuli} unità)</td>
                     <td class="text-right font-mono">${formatEuro(prezzoModuli)}</td>
                 </tr>
                 <tr>
@@ -149,7 +154,7 @@ export async function POST(request: Request) {
                 </tr>
                 ${batteria ? `
                 <tr>
-                    <td>Fornitura batterie di accumulo</td>
+                    <td>Fornitura batterie di accumulo (${qtaBatterie} unità)</td>
                     <td class="text-right font-mono">${formatEuro(prezzoBatteria)}</td>
                 </tr>` : ""}
                 <tr>
@@ -191,8 +196,6 @@ export async function POST(request: Request) {
 
     const isProd = process.env.NODE_ENV === "production";
 
-    // FISSAATO: Rimossi defaultViewport e headless legati a chromium.
-    // Usiamo le impostazioni standard che non fanno arrabbiare TypeScript.
     const browser = await puppeteer.launch({
       args: isProd ? chromium.args : ["--no-sandbox", "--disable-setuid-sandbox"],
       executablePath: isProd 
@@ -215,7 +218,7 @@ export async function POST(request: Request) {
       const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: parseInt(process.env.SMTP_PORT || "465"),
-        secure: process.env.SMTP_PORT === "465", // true per porta 465, false per altre porte (es. 587)
+        secure: process.env.SMTP_PORT === "465",
         auth: {
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASS,
@@ -226,57 +229,33 @@ export async function POST(request: Request) {
 
       await transporter.sendMail({
         from: `"Faccio Tutto - Fotovoltaico" <${process.env.SMTP_USER}>`,
-        to: "fotovoltaico@faccio-tutto.it", // Destinatario fisso richiesto
-        replyTo: email, // Comodo: se fai "Rispondi", risponderai direttamente al cliente
+        to: "fotovoltaico@faccio-tutto.it",
+        replyTo: email,
         subject: `⚡ Nuovo Preventivo Generato: ${cliente} - ${potenzaTotaleKw} kWp`,
         html: `
           <div style="font-family: sans-serif; color: #171717; max-width: 600px; line-height: 1.6;">
             <h2>Nuova richiesta preventivo dal sito</h2>
-            <p>Un utente ha appena configurato un impianto fotovoltaico. Ecco i dettagli principali:</p>
             <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-              <tr>
-                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Cliente:</td>
-                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5;">${cliente}</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Email cliente:</td>
-                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5;"><a href="mailto:${email}">${email}</a></td>
-              </tr>
-              <tr>
-                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Potenza Impianto:</td>
-                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5;">${potenzaTotaleKw} kWp (${numeroModuli} moduli)</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Accumulo:</td>
-                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5;">${batteria ? `${batteria.brand} ${batteria.capacityKwh}kWh` : 'No'}</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold; color: #000;">Prezzo Finale:</td>
-                <td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold; color: #000;">${formatEuro(totale)}</td>
-              </tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Cliente:</td><td>${cliente}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Potenza:</td><td>${potenzaTotaleKw} kWp</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Accumulo:</td><td>${batteria ? `${qtaBatterie}x ${batteria.brand}` : 'No'}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #e5e5e5; font-weight: bold;">Prezzo Finale:</td><td>${formatEuro(totale)}</td></tr>
             </table>
-            <p>Il riepilogo dettagliato in stile Tesla è stato generato ed è <strong>allegato a questa email</strong> in formato PDF.</p>
-            <hr style="border: 0; border-top: 1px solid #e5e5e5; margin: 30px 0;" />
-            <small style="color: #737373;">Sistema di notifica automatica Faccio-Tutto</small>
           </div>
         `,
         attachments: [
           {
             filename: `preventivo_${nomeFileSenzaSpazi}.pdf`,
-            content: Buffer.from(pdfBuffer), // Iniettiamo direttamente i byte del PDF
+            content: Buffer.from(pdfBuffer),
             contentType: "application/pdf"
           }
         ]
       });
-      console.log(`Email inviata con successo a fotovoltaico@faccio-tutto.it per il cliente ${cliente}`);
     } catch (emailError) {
-      // Logghiamo l'errore ma non blocchiamo l'API, l'utente riceverà comunque il suo PDF sul browser
-      console.error("Errore durante l'invio della notifica email:", emailError);
+      console.error("Errore notifica email:", emailError);
     }
-    // ==========================================
 
     const pdfBlob = new Blob([pdfBuffer as unknown as BlobPart], { type: "application/pdf" });
-
     return new NextResponse(pdfBlob, {
       status: 200,
       headers: {
@@ -287,7 +266,7 @@ export async function POST(request: Request) {
     });
 
   } catch (error) {
-    console.error("Errore crash browser online:", error);
+    console.error("Errore:", error);
     return new NextResponse(JSON.stringify({ error: "Generazione fallita" }), { status: 500 });
   }
 }
