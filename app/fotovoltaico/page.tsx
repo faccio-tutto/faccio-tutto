@@ -236,19 +236,13 @@ export default function EnergyLandingPage() {
               Impianti fotovoltaici con sistemi di accumulo intelligenti progettati per ridurre
               i consumi energetici e aumentare l’autonomia della tua casa.
             </p>
-         <button
-
-  onClick={() => router.push("/accumulo")}
-
-  className="border border-white flex items-center gap-2 px-6 py-3 rounded-full hover:bg-blue-500 transition"
-
->
-<button className="border border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-black transition"></button>
-  Scopri i nostri sistemi
-
-  <ArrowRight size={18} />
-
-</button>
+            <button
+              onClick={() => router.push("/accumulo")}
+              className="border border-white flex items-center gap-2 px-8 py-3 rounded-full font-medium hover:bg-white hover:text-black transition"
+            >
+              Scopri i nostri sistemi
+              <ArrowRight size={18} />
+            </button>
           </motion.div>
         </div>
       </section>

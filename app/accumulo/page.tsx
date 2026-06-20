@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import Link from "next/link";
+import { useState } from "react";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import {
   Battery,
   Zap,
@@ -10,6 +12,7 @@ import {
 } from "lucide-react";
 
 import ModuloContatti from "./ModuloContatti";
+import { FaInstagramSquare, FaLinkedin, FaBars, FaTimes } from "react-icons/fa";
 
 // Dati dei produttori e sistemi premium
 const brandSistemi = [
@@ -57,15 +60,155 @@ const brandSistemi = [
   },
 ];
 
+const menuItems = [
+    { name: "Architettura", href: "/progettazione" },
+    { name: "Fotovoltaico", href: "/fotovoltaico" },
+    { name: "Infissi", href: "/infissi" },
+    { name: "Climatizzazione", href: "/climatizzazione" },
+    { name: "Riparazioni", href: "/riparazioni-veloci" },
+    { name: "Contatti", href: "/prenota" },
+  ];
+
 export default function AccumuloPage() {
   const { scrollY } = useScroll();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const yHero = useTransform(scrollY, [0, 500], [0, 150]);
   const opacityHero = useTransform(scrollY, [0, 300], [1, 0.6]);
 
   return (
     <main className="bg-black text-white overflow-x-hidden">
+  {/* NAVBAR PREMIUM */}
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
 
+  <div className="px-6 md:px-12 py-4 flex justify-between items-center">
+
+    <div className="flex items-center gap-6">
+
+      <Link href="/">
+        <Image
+          src="/logo faccio tutto 3.png"
+          alt="Logo"
+          width={100}
+          height={100}
+        />
+      </Link>
+
+      <div className="hidden md:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+
+        <span>faccio-tutto.it</span>
+
+        <a
+          href="https://www.instagram.com/infofacciotutto/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-white transition"
+        >
+          <FaInstagramSquare className="text-base" />
+        </a>
+
+        <a
+          href="https://www.linkedin.com/company/faccio-tutto/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-white transition"
+        >
+          <FaLinkedin className="text-base" />
+        </a>
+
+      </div>
+
+    </div>
+
+    {/* Desktop Menu */}
+
+    <ul className="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.25em] text-white/60">
+
+      {menuItems.map((item) => (
+        <li key={item.href}>
+          <Link
+            href={item.href}
+            className="hover:text-white transition duration-200"
+          >
+            {item.name}
+          </Link>
+        </li>
+      ))}
+
+    </ul>
+
+    {/* Mobile Button */}
+
+    <button
+      onClick={() => setMenuOpen(!menuOpen)}
+      className="lg:hidden text-white text-2xl"
+      aria-label="Apri menu"
+    >
+      {menuOpen ? <FaTimes /> : <FaBars />}
+    </button>
+
+  </div>
+
+  {/* Mobile Menu */}
+
+  <AnimatePresence>
+
+    {menuOpen && (
+
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.25 }}
+        className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-white/10"
+      >
+
+        <div className="flex flex-col">
+
+          {menuItems.map((item) => (
+
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              className="px-8 py-5 text-white uppercase tracking-widest text-sm border-b border-white/10 hover:bg-white/5"
+            >
+              {item.name}
+            </Link>
+
+          ))}
+
+          <div className="flex justify-center gap-6 py-6">
+
+            <a
+              href="https://www.instagram.com/infofacciotutto/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white text-2xl"
+            >
+              <FaInstagramSquare />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/company/faccio-tutto/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white text-2xl"
+            >
+              <FaLinkedin />
+            </a>
+
+          </div>
+
+        </div>
+
+      </motion.div>
+
+    )}
+
+  </AnimatePresence>
+
+</nav>
       {/* HERO PARALLAX */}
       <section className="relative h-screen flex items-center justify-center text-center px-6 overflow-hidden">
         <motion.div style={{ y: yHero, opacity: opacityHero }} className="absolute inset-0">
