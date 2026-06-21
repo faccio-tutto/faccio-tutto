@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState } from "react";
 
 interface ModuloContattiProps {
@@ -171,15 +172,16 @@ export default function ModuloContatti({
           </p>
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-black text-white py-4 rounded-full text-lg hover:bg-neutral-800 transition disabled:opacity-50"
-        >
-          {loading
-            ? "Invio in corso..."
-            : "Richiedi Preventivo Gratuito"}
-        </button>
+       <motion.button
+            type="submit"
+            disabled={loading}
+            whileHover={{ scale: 1.02, backgroundColor: "#262626" }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="w-full bg-black text-white py-4 rounded-full text-xs uppercase tracking-widest border border-white/20 disabled:opacity-50 disabled:pointer-events-none"
+          >
+            {loading ? "Invio..." : "Richiedi preventivo gratuito"}
+          </motion.button>
 
         {messaggio && (
           <div

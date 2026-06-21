@@ -390,9 +390,17 @@ const menuItems = [
             {loading ? "Invio..." : "Invia richiesta"}
           </motion.button>
 
-          {messaggio && (
-            <p className="text-center text-sm text-neutral-600">{messaggio}</p>
-          )}
+         {messaggio && (
+          <div
+            className={`text-center p-4 rounded-xl ${
+              messaggio.includes("correttamente")
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {messaggio}
+          </div>
+         )}
 
         </form>
       </section>
