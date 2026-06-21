@@ -335,26 +335,17 @@ const InfissiPage = () => {
         </div>
       </section>
 
-     <footer
-  className="text-center py-8 bg-white border-t border-neutral-100 text-[11px] text-black font-bold tracking-wider uppercase space-y-2 md:space-y-0 md:space-x-6"
-  style={{ backgroundColor: '#ffffff', borderColor: '#f5f5f5', color: '#000000' }}
->
-  <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
+    <footer className="w-full text-center py-8 bg-black border-t border-neutral-900 text-[10px] text-neutral-500 font-medium tracking-[0.15em] uppercase flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8">
+        <span className="text-neutral-600">faccio-tutto.it © {new Date().getFullYear()}</span>
+        <Link href="/privacy" className="hover:text-neutral-300 transition underline-offset-2 hover:underline">
+          Privacy e Note Legali
+        </Link>
+        <Link href="/contatti" className="hover:text-neutral-300 transition underline-offset-2 hover:underline">
+          Contatti
+        </Link>
+      </footer>
 
-  <Link
-    href="/privacy"
-    className="hover:opacity-70 transition"
-  >
-    Privacy e Note Legali
-  </Link>
 
-  <Link
-    href="/contatti"
-    className="hover:opacity-70 transition"
-  >
-    Contatti
-  </Link>
-</footer>
 
 
     </main>

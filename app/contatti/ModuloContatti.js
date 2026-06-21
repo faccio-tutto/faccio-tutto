@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-function ModuloContatti({ destinatarioEmail }) {
+const ModuloContatti = ({ destinatarioEmail }) => {
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
   const [email, setEmail] = useState("");
@@ -11,111 +11,209 @@ function ModuloContatti({ destinatarioEmail }) {
   const [messaggio, setMessaggio] = useState("");
   const [privacy, setPrivacy] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!privacy) {
-      setInvioStato('errore');
-      alert('Devi accettare i termini e le condizioni sulla privacy.');
+      alert("È necessario accettare l'informativa sulla privacy per procedere.");
       return;
     }
-    if (!nome || !cognome || !email) {
-      setInvioStato('errore');
-      alert('Nome, cognome ed email sono obbligatori.');
+    if (!nome.trim() || !cognome.trim() || !email.trim()) {
+      alert("I campi Nome, Cognome e Indirizzo e-mail sono obbligatori.");
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setInvioStato('errore');
-      alert('Email non valida.');
+      alert("Inserisci un indirizzo e-mail valido.");
       return;
     }
 
-    // Costruisci il body della richiesta
-  const body = {
-    nome,
-    cognome,
-    email,
-    telefono,
-    via,
-    città,
-    messaggio,
-    destinatarioEmail // lo passi dal componente ModuloContatti
+    setIsSubmitting(true);
+
+    const body = {
+      nome,
+      cognome,
+      email,
+      telefono,
+      via,
+      città,
+      messaggio,
+      destinatarioEmail,
+    };
+
+    try {
+      const res = await fetch("/api/invia-email-json", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (res.ok) {
+        setSuccess(true);
+      } else {
+        const err = await res.json();
+        console.error("Errore:", err.error);
+        alert("Errore nell'invio del modulo: " + err.error);
+      }
+    } catch (error) {
+      console.error("Errore di rete:", error);
+      alert("Errore di rete. Si prega di riprovare.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  try {
-    const res = await fetch('/api/invia-email-json', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-
-    if (res.ok) {
-      setSuccess(true);
-    } else {
-      const err = await res.json();
-      console.error("Errore:", err.error);
-      alert("Errore nell'invio del modulo: " + err.error);
-    }
-} catch (error) {
-  console.error("Errore di rete:", error);
-  alert("Errore di rete. Riprova.");
-}
-}; // Closing brace for handleSubmit
-
   return (
-    <div id="modulo-contatti" className="mx-auto max-w-7xl px-4">
+    <div className="max-w-xl mx-auto p-6 sm:p-10 bg-black min-h-screen text-white font-sans antialiased">
       {success ? (
-        <div className="text-green-500 font-bold text-xl">Messaggio inviato con successo!</div>
+        <div className="text-center py-12 space-y-3">
+          <h2 className="text-2xl font-light text-neutral-100">Richiesta Ricevuta</h2>
+          <p className="text-xs uppercase tracking-widest text-neutral-500">
+            Il nostro team ti contatterà al più presto.
+          </p>
+        </div>
       ) : (
-        <form onSubmit={handleSubmit} className="-mt-4">
-          <div className="grid gap-3">
-            <div>
-              <label htmlFor="nome" className="block text-sm font-medium text-gray-600">Nome</label>
-              <input type="text" id="nome" value={nome} onChange={(e) => setNome(e.target.value)} className="mt-1 p-3 border rounded-md w-full" required />
-            </div>
-            <div>
-              <label htmlFor="cognome" className="block text-sm font-medium text-gray-600">Cognome</label>
-              <input type="text" id="cognome" value={cognome} onChange={(e) => setCognome(e.target.value)} className="mt-1 p-3 border rounded-md w-full" required />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-600">Indirizzo e-mail</label>
-              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 p-3 border rounded-md w-full" required />
-            </div>
-            <div>
-              <label htmlFor="telefono" className="block text-sm font-medium text-gray-600">Telefono</label>
-              <input type="tel" id="telefono" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="mt-1 p-3 border rounded-md w-full" />
-            </div>
-            <div>
-              <label htmlFor="via" className="block text-sm font-medium text-gray-600">Via</label>
-              <input type="text" id="via" value={via} onChange={(e) => setVia(e.target.value)} className="mt-1 p-3 border rounded-md w-full" />
-            </div>
-            <div>
-              <label htmlFor="città" className="block text-sm font-medium text-gray-600">Città</label>
-              <input type="text" id="città" value={città} onChange={(e) => setCittà(e.target.value)} className="mt-1 p-3 border rounded-md w-full" />
-            </div>
-            <div>
-              <label htmlFor="messaggio" className="block text-sm font-medium text-gray-600">Messaggio</label>
-              <textarea id="messaggio" value={messaggio} onChange={(e) => setMessaggio(e.target.value)} rows={4} className="mt-1 p-3 border rounded-md w-full"></textarea>
-              </div>
-          <div className="flex items-center">
-  <input type="checkbox" className="mr-2" checked={privacy} onChange={(e) => setPrivacy(e.target.checked)} />
-  <label className="text-sm text-gray-400 whitespace-nowrap">
-  Accetto i <a href="/termini e condizioni.pdf" className="text-blue-500">termini e condizioni</a> e acconsento al trattamento 
-  <br/>dei miei dati personali secondo la <a href="/normativa privacy.pdf" className="text-blue-500">normativa sulla privacy.</a>
-  </label>
-</div>
-            <button
-              type="submit"
-              style={{ padding: "12px 16px" }}
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl"
-            >
-              Invia la richiesta
-            </button>
+        <div className="space-y-8">
+          {/* Intestazione minimale */}
+          <div className="space-y-2">
+            <h2 className="text-xl font-light tracking-tight text-neutral-100">
+              Richiedi informazioni sul sistema
+            </h2>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-medium">
+              Inserisci i dati per una consulenza personalizzata
+            </p>
           </div>
-        </form>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Nome */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-semibold px-1">Nome</span>
+                <input
+                  type="text"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  className="w-full bg-neutral-900/40 border border-neutral-800/80 focus:border-neutral-600 p-3 rounded-lg text-white text-sm focus:outline-none transition placeholder-neutral-700"
+                  placeholder="Mario"
+                  required
+                />
+              </label>
+
+              {/* Cognome */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-semibold px-1">Cognome</span>
+                <input
+                  type="text"
+                  value={cognome}
+                  onChange={(e) => setCognome(e.target.value)}
+                  className="w-full bg-neutral-900/40 border border-neutral-800/80 focus:border-neutral-600 p-3 rounded-lg text-white text-sm focus:outline-none transition placeholder-neutral-700"
+                  placeholder="Rossi"
+                  required
+                />
+              </label>
+            </div>
+
+            {/* Email */}
+            <label className="flex flex-col gap-1.5">
+              <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-semibold px-1">Indirizzo e-mail</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-neutral-900/40 border border-neutral-800/80 focus:border-neutral-600 p-3 rounded-lg text-white text-sm focus:outline-none transition placeholder-neutral-700"
+                placeholder="nome@esempio.com"
+                required
+              />
+            </label>
+
+            {/* Telefono */}
+            <label className="flex flex-col gap-1.5">
+              <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-semibold px-1">Telefono</span>
+              <input
+                type="tel"
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+                className="w-full bg-neutral-900/40 border border-neutral-800/80 focus:border-neutral-600 p-3 rounded-lg text-white text-sm focus:outline-none transition placeholder-neutral-700"
+                placeholder="+39 333 1234567"
+              />
+            </label>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {/* Via */}
+              <label className="sm:col-span-2 flex flex-col gap-1.5">
+                <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-semibold px-1">Via / Piazza</span>
+                <input
+                  type="text"
+                  value={via}
+                  onChange={(e) => setVia(e.target.value)}
+                  className="w-full bg-neutral-900/40 border border-neutral-800/80 focus:border-neutral-600 p-3 rounded-lg text-white text-sm focus:outline-none transition placeholder-neutral-700"
+                  placeholder="Via Roma, 10"
+                />
+              </label>
+
+              {/* Città */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-semibold px-1">Città</span>
+                <input
+                  type="text"
+                  value={città}
+                  onChange={(e) => setCittà(e.target.value)}
+                  className="w-full bg-neutral-900/40 border border-neutral-800/80 focus:border-neutral-600 p-3 rounded-lg text-white text-sm focus:outline-none transition placeholder-neutral-700"
+                  placeholder="Milano"
+                />
+              </label>
+            </div>
+
+            {/* Messaggio */}
+            <label className="flex flex-col gap-1.5">
+              <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-semibold px-1">Note aggiuntive (Opzionale)</span>
+              <textarea
+                value={messaggio}
+                onChange={(e) => setMessaggio(e.target.value)}
+                rows={4}
+                className="w-full bg-neutral-900/40 border border-neutral-800/80 focus:border-neutral-600 p-3 rounded-lg text-white text-sm focus:outline-none transition placeholder-neutral-700 resize-none"
+                placeholder="Dettagli sull'immobile, vincoli o orari per il ricontatto..."
+              />
+            </label>
+
+            {/* Privacy Checkbox */}
+            <div className="pt-2">
+              <label className="flex items-start gap-3 text-neutral-400 cursor-pointer select-none group">
+                <input
+                  type="checkbox"
+                  checked={privacy}
+                  onChange={(e) => setPrivacy(e.target.checked)}
+                  className="mt-0.5 form-checkbox h-4 w-4 bg-neutral-900 border-neutral-800 text-neutral-200 rounded focus:ring-0 focus:ring-offset-0 transition checked:bg-neutral-200 checked:border-neutral-200"
+                />
+                <span className="text-[11px] leading-normal font-medium tracking-wide text-neutral-500 group-hover:text-neutral-400 transition">
+                  Accetto i{" "}
+                  <a href="/termini e condizioni.pdf" target="_blank" className="text-neutral-300 underline underline-offset-2 hover:text-white transition">
+                    termini e condizioni
+                  </a>{" "}
+                  e acconsento al trattamento dei dati secondo la{" "}
+                  <a href="/normativa privacy.pdf" target="_blank" className="text-neutral-300 underline underline-offset-2 hover:text-white transition">
+                    normativa sulla privacy
+                  </a>
+                  .
+                </span>
+              </label>
+            </div>
+
+            {/* Pulsante Tesla Style */}
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-3.5 bg-neutral-100 text-black text-xs font-bold uppercase tracking-widest rounded-lg transition-all hover:bg-white active:scale-[0.99] disabled:bg-neutral-800 disabled:text-neutral-600 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? "Invio in corso..." : "Invia la richiesta"}
+              </button>
+            </div>
+          </form>
+        </div>
       )}
     </div>
   );

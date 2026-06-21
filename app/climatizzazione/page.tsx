@@ -420,7 +420,15 @@ export default function ClimatizzazionePage() {
           destinatarioEmail="info@faccio-tutto.it"
         />
       </section>
-
+ <footer className="w-full text-center py-8 bg-black border-t border-neutral-900 text-[10px] text-neutral-500 font-medium tracking-[0.15em] uppercase flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8">
+        <span className="text-neutral-600">faccio-tutto.it © {new Date().getFullYear()}</span>
+        <Link href="/privacy" className="hover:text-neutral-300 transition underline-offset-2 hover:underline">
+          Privacy e Note Legali
+        </Link>
+        <Link href="/contatti" className="hover:text-neutral-300 transition underline-offset-2 hover:underline">
+          Contatti
+        </Link>
+      </footer>
     </main>
   );
 }

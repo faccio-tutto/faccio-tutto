@@ -2,7 +2,9 @@
 
 import React, { useMemo, useState, useEffect, FC } from "react";
 import Image from "next/image";
-import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
+import { FaInstagramSquare, FaLinkedin, FaBars, FaTimes } from "react-icons/fa";
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/dist/client/link";
 
 // --- INTERFACCE TYPESCRIPT (Nessuna modifica) ---
 interface Inverter {
@@ -49,6 +51,15 @@ const LABOUR_AND_WIRING_COST_PER_KWP = 286;
 const DOCUMENTATION_COST = 250; 
 const DEFAULT_SELECTION_ID = "none"; 
 
+  const menuItems = [
+    { name: "Architettura", href: "/progettazione" },
+    { name: "Fotovoltaico", href: "/fotovoltaico" },
+    { name: "Infissi", href: "/infissi" },
+    { name: "Climatizzazione", href: "/climatizzazione" },
+    { name: "Riparazioni", href: "/riparazioni-veloci" },
+    { name: "Contatti", href: "/prenota" },
+];
+
 const PvEstimator: FC = () => {
   // --- STATI ---
   const [cliente, setCliente] = useState<string>("");
@@ -64,6 +75,7 @@ const PvEstimator: FC = () => {
   const [selectedBatteria, setSelectedBatteria] = useState(DEFAULT_SELECTION_ID); 
   const [selectedStruttura, setSelectedStruttura] = useState(DEFAULT_SELECTION_ID);
   const [applyVAT, setApplyVAT] = useState<boolean>(true);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
 
   // --- Caricamento Listini Fissi (Nessuna modifica) ---
@@ -241,10 +253,138 @@ const PvEstimator: FC = () => {
   }
   
   return (
-    <div className="max-w-5xl mx-auto p-6 sm:p-12 bg-black min-h-screen text-white font-sans antialiased">
-      
+         <><nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-black/30 border-b border-white/5">
+
+      <div className="px-6 md:px-12 py-4 flex justify-between items-center">
+
+        <div className="flex items-center gap-6">
+
+          <Link href="/">
+            <Image
+              src="/logo faccio tutto 3.png"
+              alt="Logo"
+              width={100}
+              height={100} />
+          </Link>
+
+          <div className="hidden md:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
+
+            <span>faccio-tutto.it</span>
+
+            <a
+              href="https://www.instagram.com/infofacciotutto/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition"
+            >
+              <FaInstagramSquare className="text-base" />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/company/faccio-tutto/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition"
+            >
+              <FaLinkedin className="text-base" />
+            </a>
+
+          </div>
+
+        </div>
+
+        {/* Desktop Menu */}
+
+        <ul className="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.25em] text-white/60">
+
+          {menuItems.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className="hover:text-white transition duration-200"
+              >
+                {item.name}
+              </Link>
+            </li>
+          ))}
+
+        </ul>
+
+        {/* Mobile Button */}
+
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="lg:hidden text-white text-2xl"
+          aria-label="Apri menu"
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+
+      </div>
+
+      {/* Mobile Menu */}
+
+      <AnimatePresence>
+
+        {menuOpen && (
+
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25 }}
+            className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-white/10"
+          >
+
+            <div className="flex flex-col">
+
+              {menuItems.map((item) => (
+
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="px-8 py-5 text-white uppercase tracking-widest text-sm border-b border-white/10 hover:bg-white/5"
+                >
+                  {item.name}
+                </Link>
+
+              ))}
+
+              <div className="flex justify-center gap-6 py-6">
+
+                <a
+                  href="https://www.instagram.com/infofacciotutto/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white text-2xl"
+                >
+                  <FaInstagramSquare />
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/company/faccio-tutto/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white text-2xl"
+                >
+                  <FaLinkedin />
+                </a>
+
+              </div>
+
+            </div>
+
+          </motion.div>
+
+        )}
+
+      </AnimatePresence>
+
+    </nav><><div className="max-w-5xl mx-auto p-6 sm:p-12 bg-black min-h-screen text-white font-sans antialiased">
+
       {/* HEADER STILE TESLA */}
-      <div className="mb-16 text-center space-y-3">
+      <div className="mb-16 py-25 text-center space-y-3">
         <h1 className="text-4xl font-light tracking-tight text-neutral-100">
           Configuratore impianto fotovoltaico
         </h1>
@@ -254,7 +394,7 @@ const PvEstimator: FC = () => {
       </div>
 
       <div className="space-y-10">
-        
+
         {/* MESSAGGI DI ERRORE / VALIDAZIONE MINIMALISTI */}
         {errors.length > 0 && (
           <div className="p-5 bg-neutral-900/60 border-l-2 border-red-500 rounded-r-lg space-y-1">
@@ -271,167 +411,164 @@ const PvEstimator: FC = () => {
 
         {/* --- SEZIONE: ANAGRAFICA --- */}
         <div className="p-6 bg-neutral-900/40 rounded-xl border border-neutral-800/60">
-            <div className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-semibold mb-6">
-              01 / Intestazione Pratica
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <label className="flex flex-col gap-2">
-                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Nome e Cognome</span>
-                <input 
-                  type="text" 
-                  value={cliente} 
-                  onChange={e=>setCliente(e.target.value)} 
-                  className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm placeholder-neutral-600 focus:outline-none focus:border-neutral-600 transition" 
-                  placeholder="Es. Mario Rossi"
-                />
-              </label>
-              <label className="flex flex-col gap-2">
-                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Indirizzo e-mail</span>
-                <input 
-                  type="email" 
-                  value={email} 
-                  onChange={e=>setEmail(e.target.value)} 
-                  className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm placeholder-neutral-600 focus:outline-none focus:border-neutral-600 transition" 
-                  placeholder="Es. nome@dominio.com"
-                />
-              </label>
-            </div>
+          <div className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-semibold mb-6">
+            01 / Intestazione Pratica
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <label className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Nome e Cognome</span>
+              <input
+                type="text"
+                value={cliente}
+                onChange={e => setCliente(e.target.value)}
+                className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm placeholder-neutral-600 focus:outline-none focus:border-neutral-600 transition"
+                placeholder="Es. Mario Rossi" />
+            </label>
+            <label className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Indirizzo e-mail</span>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm placeholder-neutral-600 focus:outline-none focus:border-neutral-600 transition"
+                placeholder="Es. nome@dominio.com" />
+            </label>
+          </div>
         </div>
 
         {/* --- SEZIONE: COMPONENTI HARDWARE --- */}
         <div className="p-6 bg-neutral-900/40 rounded-xl border border-neutral-800/60 shadow-sm">
-            <div className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-semibold mb-6">
-              02 / Specifica Tecnica Componenti
+          <div className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-semibold mb-6">
+            02 / Specifica Tecnica Componenti
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {/* Inverter */}
+            <label className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Inverter</span>
+              <select
+                value={selectedInverter}
+                onChange={e => setSelectedInverter(e.target.value)}
+                className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
+              >
+                <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedInverter !== DEFAULT_SELECTION_ID}>Seleziona inverter</option>
+                {inverterList.map(i => (
+                  <option key={i.id} value={i.id} className="bg-neutral-900 text-white">
+                    {i.brand} {i.modello ? `${i.modello}` : ""} ({i.powerKw} kW) — {formatEuro(i.price)}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            {/* Modulo */}
+            <label className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Moduli Fotovoltaici</span>
+              <select
+                value={selectedModulo}
+                onChange={e => setSelectedModulo(e.target.value)}
+                className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
+              >
+                <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedModulo !== DEFAULT_SELECTION_ID}>Seleziona modulo</option>
+                {moduloList.map(m => (
+                  <option key={m.id} value={m.id} className="bg-neutral-900 text-white">
+                    {m.brand} {m.modello ? `${m.modello}` : ""} ({m.powerW} W) — {formatEuro(m.price)}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            {/* Numero Moduli */}
+            <label className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Unità complessive</span>
+              <input
+                type="number"
+                inputMode="numeric"
+                value={moduleCount === 0 ? "" : moduleCount}
+                min={0}
+                onChange={e => setModuleCount(e.target.value === "" ? 0 : Number(e.target.value))}
+                className="w-full bg-neutral-900/80 border border-neutral-800 text-white p-3 rounded-lg text-sm focus:outline-none focus:border-neutral-600 transition"
+                placeholder="0" />
+            </label>
+
+            {/* Box Dinamico Potenza Impianto */}
+            <div className="lg:col-span-3 py-4 border-t border-b border-neutral-800/40 my-2 flex justify-between items-center px-2">
+              <span className="text-xs uppercase tracking-widest text-neutral-400">Potenza Nominale Calcolata:</span>
+              <span className="text-xl font-light text-neutral-200">{modulesTotalKw.toFixed(2)} <span className="text-xs text-neutral-500">kWp</span></span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              
-              {/* Inverter */}
-              <label className="flex flex-col gap-2">
-                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Inverter</span>
-                <select 
-                  value={selectedInverter} 
-                  onChange={e=>setSelectedInverter(e.target.value)} 
+
+            {/* Accumulo di Energia */}
+            <div className="sm:col-span-2 flex flex-col sm:flex-row gap-4 items-end">
+              <label className="flex-1 flex flex-col gap-2 w-full">
+                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Batteria (Opzionale)</span>
+                <select
+                  value={selectedBatteria}
+                  onChange={e => setSelectedBatteria(e.target.value)}
                   className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
                 >
-                  <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedInverter !== DEFAULT_SELECTION_ID}>Seleziona inverter</option>
-                  {inverterList.map(i => (
-                    <option key={i.id} value={i.id} className="bg-neutral-900 text-white">
-                      {i.brand} {i.modello ? `${i.modello}` : ""} ({i.powerKw} kW) — {formatEuro(i.price)}
+                  <option value={DEFAULT_SELECTION_ID}>Escludi pacco batterie</option>
+                  {filteredBatteriaList.map(b => (
+                    <option key={b.id} value={b.id} className="bg-neutral-900 text-white">
+                      {b.brand} {b.modello ? `${b.modello}` : ""} ({b.capacityKwh} kWh) — {formatEuro(b.price)}
                     </option>
                   ))}
                 </select>
               </label>
 
-              {/* Modulo */}
-              <label className="flex flex-col gap-2">
-                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Moduli Fotovoltaici</span>
-                <select 
-                  value={selectedModulo} 
-                  onChange={e=>setSelectedModulo(e.target.value)} 
-                  className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
-                >
-                  <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedModulo !== DEFAULT_SELECTION_ID}>Seleziona modulo</option>
-                  {moduloList.map(m => (
-                    <option key={m.id} value={m.id} className="bg-neutral-900 text-white">
-                      {m.brand} {m.modello ? `${m.modello}` : ""} ({m.powerW} W) — {formatEuro(m.price)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              {/* Numero Moduli */}
-              <label className="flex flex-col gap-2">
-                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Unità complessive</span>
-                <input 
-                  type="number"
-                  inputMode="numeric"
-                  value={moduleCount === 0 ? "" : moduleCount}
-                  min={0} 
-                  onChange={e => setModuleCount(e.target.value === "" ? 0 : Number(e.target.value))}
-                  className="w-full bg-neutral-900/80 border border-neutral-800 text-white p-3 rounded-lg text-sm focus:outline-none focus:border-neutral-600 transition" 
-                  placeholder="0"
-                />
-              </label>
-              
-              {/* Box Dinamico Potenza Impianto */}
-              <div className="lg:col-span-3 py-4 border-t border-b border-neutral-800/40 my-2 flex justify-between items-center px-2">
-                <span className="text-xs uppercase tracking-widest text-neutral-400">Potenza Nominale Calcolata:</span>
-                <span className="text-xl font-light text-neutral-200">{modulesTotalKw.toFixed(2)} <span className="text-xs text-neutral-500">kWp</span></span>
-              </div>
-
-              {/* Accumulo di Energia */}
-              <div className="sm:col-span-2 flex flex-col sm:flex-row gap-4 items-end">
-                <label className="flex-1 flex flex-col gap-2 w-full">
-                  <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Batteria (Opzionale)</span>
-                  <select
-                    value={selectedBatteria}
-                    onChange={e => setSelectedBatteria(e.target.value)}
-                    className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
+              {/* Quantità Batterie Tesla Configurator Style */}
+              <div className="flex flex-col gap-2 w-full sm:w-auto">
+                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium block text-left sm:text-center">Quantità moduli</span>
+                <div className="flex items-center border border-neutral-800 rounded-lg overflow-hidden bg-neutral-900/80 h-11 w-full sm:w-28">
+                  <button
+                    type="button"
+                    onClick={() => setBatteryQuantity(q => Math.max(1, q - 1))}
+                    disabled={selectedBatteria === DEFAULT_SELECTION_ID}
+                    className="w-9 h-full flex items-center justify-center bg-transparent text-neutral-400 hover:text-white disabled:opacity-20 transition"
                   >
-                    <option value={DEFAULT_SELECTION_ID}>Escludi pacco batterie</option>
-                    {filteredBatteriaList.map(b => (
-                      <option key={b.id} value={b.id} className="bg-neutral-900 text-white">
-                        {b.brand} {b.modello ? `${b.modello}` : ""} ({b.capacityKwh} kWh) — {formatEuro(b.price)}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-
-                {/* Quantità Batterie Tesla Configurator Style */}
-                <div className="flex flex-col gap-2 w-full sm:w-auto">
-                  <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium block text-left sm:text-center">Quantità moduli</span>
-                  <div className="flex items-center border border-neutral-800 rounded-lg overflow-hidden bg-neutral-900/80 h-11 w-full sm:w-28">
-                    <button
-                      type="button"
-                      onClick={() => setBatteryQuantity(q => Math.max(1, q - 1))}
-                      disabled={selectedBatteria === DEFAULT_SELECTION_ID}
-                      className="w-9 h-full flex items-center justify-center bg-transparent text-neutral-400 hover:text-white disabled:opacity-20 transition"
-                    >
-                      −
-                    </button>
-                    <div className="flex-1 text-center text-sm font-medium text-neutral-200">
-                      {batteryQuantity}
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setBatteryQuantity(q => Math.min(10, q + 1))}
-                      disabled={selectedBatteria === DEFAULT_SELECTION_ID}
-                      className="w-9 h-full flex items-center justify-center bg-transparent text-neutral-400 hover:text-white disabled:opacity-20 transition"
-                    >
-                      +
-                    </button>
+                    −
+                  </button>
+                  <div className="flex-1 text-center text-sm font-medium text-neutral-200">
+                    {batteryQuantity}
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => setBatteryQuantity(q => Math.min(10, q + 1))}
+                    disabled={selectedBatteria === DEFAULT_SELECTION_ID}
+                    className="w-9 h-full flex items-center justify-center bg-transparent text-neutral-400 hover:text-white disabled:opacity-20 transition"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
-
-              {/* Struttura ancoraggio */}
-              <label className="flex flex-col gap-2">
-                <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Tipologia copertura</span>
-                <select 
-                  value={selectedStruttura} 
-                  onChange={e=>setSelectedStruttura(e.target.value)} 
-                  className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
-                >
-                  <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedStruttura !== DEFAULT_SELECTION_ID}>Seleziona tipologia copertura</option>
-                  {strutturaList.map(s => (
-                    <option key={s.id} value={s.id} className="bg-neutral-900 text-white">
-                      {s.type} — {formatEuro(s.price)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              {selectedInverterObj && (
-                <p className="text-[10px] uppercase tracking-wider text-neutral-500 col-span-1 sm:col-span-3 px-1 mt-1">
-                  * Filtri attivi: visualizzazione ristretta ad hardware compatibile con tecnologia <b>{selectedInverterObj.brand}</b>.
-                </p>
-              )}
             </div>
+
+            {/* Struttura ancoraggio */}
+            <label className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-widest text-neutral-500 font-medium">Tipologia copertura</span>
+              <select
+                value={selectedStruttura}
+                onChange={e => setSelectedStruttura(e.target.value)}
+                className="w-full bg-neutral-900/80 border border-neutral-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-neutral-600 transition appearance-none"
+              >
+                <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedStruttura !== DEFAULT_SELECTION_ID}>Seleziona tipologia copertura</option>
+                {strutturaList.map(s => (
+                  <option key={s.id} value={s.id} className="bg-neutral-900 text-white">
+                    {s.type} — {formatEuro(s.price)}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            {selectedInverterObj && (
+              <p className="text-[10px] uppercase tracking-wider text-neutral-500 col-span-1 sm:col-span-3 px-1 mt-1">
+                * Filtri attivi: visualizzazione ristretta ad hardware compatibile con tecnologia <b>{selectedInverterObj.brand}</b>.
+              </p>
+            )}
+          </div>
         </div>
 
         {/* --- SEZIONE RIEPILOGO FINALE / DETTAGLIO COSTI --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-          
+
           {/* Dettaglio Costi Meticoloso */}
           <div className="p-6 rounded-xl bg-neutral-900/20 border border-neutral-800/80 space-y-4">
             <h3 className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-semibold border-b border-neutral-800 pb-3">
@@ -472,23 +609,23 @@ const PvEstimator: FC = () => {
               </li>
             </ul>
           </div>
-          
+
           {/* Totale Chiavi in Mano - Quadro d'Acquisto Tesla Style */}
           <div className="p-8 rounded-xl bg-neutral-900 border border-neutral-800 flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <h3 className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-semibold border-b border-neutral-800 pb-3">
                 04 / Soluzione Finanziaria Chiavi In Mano
               </h3>
-              
+
               <div className="text-xs text-neutral-500 font-medium">
                 {applyVAT && (
                   <div className="flex justify-between items-center">
-                    <span>Imposta valore aggiunto applicata ({IVA_RATE*100}%):</span>
+                    <span>Imposta valore aggiunto applicata ({IVA_RATE * 100}%):</span>
                     <span className="text-neutral-300">{formatEuro(prices.iva)}</span>
                   </div>
                 )}
               </div>
-              
+
               <div className="pt-2">
                 <div className="text-5xl font-light tracking-tight text-white">
                   {formatEuro(applyVAT ? prices.total : prices.subtotal)}
@@ -498,20 +635,19 @@ const PvEstimator: FC = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <label className="flex items-center gap-3 text-xs tracking-wider text-neutral-400 cursor-pointer select-none">
-                <input 
-                  type="checkbox" 
-                  checked={applyVAT} 
-                  onChange={e=>setApplyVAT(e.target.checked)} 
-                  className="form-checkbox h-4 w-4 bg-black border-neutral-700 text-neutral-200 rounded focus:ring-0 focus:ring-offset-0"
-                />
-                Calcola aliquota fiscale agevolata ({IVA_RATE*100}%)
+                <input
+                  type="checkbox"
+                  checked={applyVAT}
+                  onChange={e => setApplyVAT(e.target.checked)}
+                  className="form-checkbox h-4 w-4 bg-black border-neutral-700 text-neutral-200 rounded focus:ring-0 focus:ring-offset-0" />
+                Calcola aliquota fiscale agevolata ({IVA_RATE * 100}%)
               </label>
 
-              <button 
-                onClick={exportPDF} 
+              <button
+                onClick={exportPDF}
                 disabled={errors.length > 0}
                 className="w-full py-4 bg-white text-black text-xs font-bold uppercase tracking-widest rounded-full transition-all hover:bg-neutral-200 active:scale-[0.99] disabled:bg-neutral-800 disabled:text-neutral-600 disabled:cursor-not-allowed"
               >
@@ -519,10 +655,20 @@ const PvEstimator: FC = () => {
               </button>
             </div>
           </div>
-          
+
+
         </div>
       </div>
-    </div>
+    </div><footer className="w-full text-center py-8 bg-black border-t border-neutral-900 text-[10px] text-neutral-500 font-medium tracking-[0.15em] uppercase flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8">
+          <span className="text-neutral-600">faccio-tutto.it © {new Date().getFullYear()}</span>
+          <Link href="/privacy" className="hover:text-neutral-300 transition underline-offset-2 hover:underline">
+            Privacy e Note Legali
+          </Link>
+          <Link href="/contatti" className="hover:text-neutral-300 transition underline-offset-2 hover:underline">
+            Contatti
+          </Link>
+        </footer></></>
+    
   );
 }
 
