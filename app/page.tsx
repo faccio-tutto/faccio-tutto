@@ -155,27 +155,32 @@ const [menuOpen, setMenuOpen] = useState(false);
         </div>
       </section>
 
-      {/* Galleria Post Informativi */}
-      <section className="border-t border-neutral-100 py-24" style={{ backgroundColor: '#f5f5f5' }}>
-        <div className="max-w-6xl mx-auto px-6 space-y-12">
-          <div className="text-center">
-            <span className="text-xs font-bold tracking-widest uppercase block mb-2" style={{ color: '#a3a3a3' }}>Aggiornamenti</span>
-            <p className="text-2xl font-light" style={{ color: '#171717' }}>Ultimi approfondimenti dal network</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {postRecenti.map((src, index) => (
-              <div
-                key={index}
-                className="cursor-pointer overflow-hidden rounded-xl border border-neutral-200 shadow-sm bg-white aspect-square relative group"
-                onMouseEnter={() => setHoveredImage(src)}
-                onMouseLeave={() => setHoveredImage(null)}
-              >
-                <Image src={src} alt={`Approfondimento ${index + 1}`} fill className="object-cover group-hover:scale-105 transition duration-300" />
-              </div>
-            ))}
-          </div>
+     {/* Galleria Post Informativi */}
+<section className="border-t border-neutral-100 py-24" style={{ backgroundColor: '#f5f5f5' }}>
+  <div className="max-w-6xl mx-auto px-6 space-y-12">
+    <div className="text-center">
+      <span className="text-xs font-bold tracking-widest uppercase block mb-2" style={{ color: '#a3a3a3' }}>Aggiornamenti</span>
+      <p className="text-2xl font-light" style={{ color: '#171717' }}>Ultimi approfondimenti dal network</p>
+    </div>
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      {postRecenti.map((src, index) => (
+        <div
+          key={index}
+          onClick={() => setHoveredImage(src)} 
+          className="cursor-pointer overflow-hidden rounded-xl border border-neutral-200 shadow-sm bg-white aspect-square relative group"
+          style={{ transform: 'translateZ(0)' }} 
+        >
+          <Image 
+            src={src} 
+            alt={`Approfondimento ${index + 1}`} 
+            fill 
+            className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110" 
+          />
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* CTA Box */}
       <section className="bg-white py-32 text-center space-y-6 border-t border-neutral-100">
@@ -191,20 +196,26 @@ const [menuOpen, setMenuOpen] = useState(false);
       </section>
 
       {/* Modal di Ingrandimento */}
-      <AnimatePresence>
-        {hoveredImage && (
-          <div className="fixed inset-0 bg-neutral-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              className="bg-white p-2 shadow-2xl rounded-2xl max-w-md w-full"
-            >
-              <Image src={hoveredImage} alt="Anteprima" width={300} height={300} className="rounded-xl object-contain w-full h-auto" />
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+<AnimatePresence>
+  {hoveredImage && (
+    <div 
+      className="fixed inset-0 bg-neutral-950/60 backdrop-blur-md z-50 flex items-center justify-center p-4 cursor-zoom-out"
+      onClick={() => setHoveredImage(null)}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="bg-white p-2 shadow-2xl rounded-2xl max-w-md w-full"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Impedisce la chiusura se si clicca sulla foto stessa */}
+        <Image src={hoveredImage} alt="Anteprima" width={400} height={400} className="rounded-xl object-contain w-full h-auto" />
+      </motion.div>
+    </div>
+  )}
+</AnimatePresence>
     </div>
   );
 };
