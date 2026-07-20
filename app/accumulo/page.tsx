@@ -58,6 +58,27 @@ const brandSistemi = [
     descrizione: "Efficienza di conversione al 96,6%, elevata capacità del campo fotovoltaico. Tecnologia di raffreddamento avanzata, design compatto e interfaccia con display LCD per un monitoraggio semplice e intuitivo.",
     image: "/images/deye-system.png",
   },
+   {
+    brand: "Unical",
+    sistema: "STH-LS-6K + Batteria STE-OS da 5,12 a 40,96 kWh",
+    tag: "Doppio inseguitore MPP",
+    descrizione: "Gestione di un sistema Backup di serie, continuità operativa (Anti-Blackout), progettato per evitare spegnimenti improvvisi con autolimitazione della potenza, in caso sbalzi di tensione nella rete elettrica. Gestione intelligente delle ombre, analisi costante e continua per rincorrere in ogni momento il punto di massima potenza assoluta, +15% di resa in condizioni di ombra parziale. Oversizing straordinario, con input DC fino a 12 kWp oltre i limiti termici dei prodotti simili, ideale per una casa FULL ELETTRIC.",
+    image: "/images/unical-system.png",
+  },
+   {
+    brand: "Solis",
+    sistema: "S6-EH1P6K-L-PLUS 6kW + Batteria al litio POWERBOX G2 Dyness 10.24kWh",
+    tag: "160% della potenza DC nominale dell’inverter",
+    descrizione: "Offre funzioni evolute come il supporto dei generatori, l’accoppiamento con inverter già connessi alla rete, il funzionamento in parallelo e la gestione intelligente dei carichi, risultando una soluzione completa e scalabile per l’accumulo energetico in ambito residenziale.",
+    image: "/images/solis-system.png",
+  },
+   {
+    brand: "Weco",
+    sistema: "6kW 5K0 SMART EU + batteria al litio da 5,12 kwh",
+    tag: "Plug & Play",
+    descrizione: "Sistema Soppressione incendi integrato, batteria LFP con grado di protezione IP66, modulare impilabile, autoconfigurazione plug & play adattiva, scalabile fino a 12 moduli, sfruttabile fino al 100% DoD, ottimizzazione energetica a livello di modulo, espansione della capacità in ogni momento, modulo di ricarica dc per veicoli elettrici, display LCD.",
+    image: "/images/weco-system.png",
+  },
 ];
 
 const menuItems = [
