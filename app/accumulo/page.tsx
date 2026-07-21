@@ -38,6 +38,13 @@ const brandSistemi = [
     image: "/images/zcs-system.png",
   },
   {
+    brand: "ZCS Azzurro Zucchetti",
+    sistema: "ZCS AZZURRO 6kW - 1PH HYD 6000 ZSS HP + Batteria litio LV ZSX5000 S 5.12kWh",
+    tag: "Inverter ibrido monofase",
+    descrizione: "Gestione automatica dei flussi di energia da fotovoltaico, batteria e rete, energy meter integrato a bordo macchina, parallelabile con possibilità di funzionamento in modalità zero immissione in rete, unità compatibile con batterie al Litio a 48V, modalità di supporto Stand Alone, garantisce la continuità di esercizio ed il funzionamento in isola, sia da fonte fotovoltaica che da batteria, in caso di black-out elettrico, massima potenza di carica/scarica 5000W.",
+    image: "/images/zcs2-system.png",
+  },
+  {
     brand: "Huawei",
     sistema: "SUN2000 + FusionSolar Luna2000",
     tag: "Design Modulare Elegante",
@@ -78,6 +85,20 @@ const brandSistemi = [
     tag: "Plug & Play",
     descrizione: "Sistema Soppressione incendi integrato, batteria LFP con grado di protezione IP66, modulare impilabile, autoconfigurazione plug & play adattiva, scalabile fino a 12 moduli, sfruttabile fino al 100% DoD, ottimizzazione energetica a livello di modulo, espansione della capacità in ogni momento, modulo di ricarica dc per veicoli elettrici, display LCD.",
     image: "/images/weco-system.png",
+  },
+  {
+    brand: "Canadian Solar",
+    sistema: "EP Cube/PCS-EU-1P-7.6kW-1PHM1 + batteria al litio da 5,12 kwh EP Cube B2-5G",
+    tag: "Flessibile e conveniente",
+    descrizione: "Batterie modulari impilabili facili da trasportare e installare, capacità dell’accumulo personalizzabile da 5 kWh a 20 kWh, design all-in-one, alimentazione automatica garantita durante l'interruzione della rete elettrica, elevata potenza di uscita, sia in modalità di funzionamento normale che in modalità di backup.Batterie al litio-ferro-fosfato con i più elevati standard di sicurezza, protezione IP67. Compatibile con impianti FV pre-esistenti (AC-Retrofit) e nuovi, consente un ingresso FV fino a 16 ADC per MPPT. Compatibile con EV Charger fino a 7,4 kW, monitora la produzione, lo stato di carica e il consumo di energia elettrica in tempo reale. Aggiornamenti firmware automatici OTA (via internet).",
+    image: "/images/canadian-solar-system.png",
+  },
+  {
+    brand: "Haier",
+    sistema: "Smart Cube inverter ibrido monofase 6kw - MB01D6M00 + batteria al litio da 8,00 kwh - MB01E0M00",
+    tag: "Sistema integrato",
+    descrizione: "Inverter ibrido monofase con una potenza di uscita di 6kW, è dotato di due inseguitori MPP e gestisce una potenza fotovoltaica massima di 12kW. Funziona convertendo la corrente continua dei pannelli solari in corrente alternata, permettendo di immettere l'energia nella rete o accumularla nelle batterie. Grazie al montaggio wireless e al sistema di gestione integrato delle batterie, offre alta efficienza e facilità di installazione, rappresentando una soluzione avanzata per impianti fotovoltaici residenziali e commerciali.",
+    image: "/images/haier-system.png",
   },
 ];
 
