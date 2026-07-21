@@ -9,6 +9,7 @@ import {
   Zap,
   Sun,
   ArrowRight,
+  Download,
 } from "lucide-react";
 
 import ModuloContatti from "./ModuloContatti";
@@ -22,13 +23,16 @@ const brandSistemi = [
     tag: "Ecosistema Integrato",
     descrizione: "UHome è un sistema fotovoltaico domestico con stoccaggio dell'energia(ESS) all-in-one che integra l'inverter, il caricabatterie e le batterie in un unico sistema modulare precablato per un'installazione più semplice e veloce che riduce i tempi di installazione fino al 50%",
     image: "/images/u-can-power.png", // Sostituisci con le tue immagini nel folder public
+    pdf: "/schede-tecniche/uhome-3k0l-8k0l.pdf",
   },
   {
     brand: "SMA",
     sistema: "Sunny Boy Smart Energy",
-    tag: "Soluzione 2 in 1 per la produzione e l'utilizzo di energia solare",
+    tag: "Soluzione 2 in 1",
     descrizione: "Inverter fotovoltaico ed un inverter per batteria racchiusi in un’unica soluzione, garantisce un approvvigionamento energetico sostenibile e sicuro.",
     image: "/images/sma-system.png",
+    pdf: "/schede-tecniche/sunny-boy-smart-energy.pdf",
+    pdf2: "/schede-tecniche/HS-BM-10-DS-en-12.pdf",
   },
   {
     brand: "ZCS Azzurro Zucchetti",
@@ -36,6 +40,8 @@ const brandSistemi = [
     tag: "Tecnologia a Microinverter",
     descrizione: "ZCS Azzurro per accumulo ibrido costituisce la soluzione ideale per ottimizzare l’indipendenza energetica in ambito residenziale. Con una potenza nominale da 3 a 6kW ed una capacità in accumulo fino a 20,4kWh, si adatta ad ogni tipo di esigenza su impianti di nuova costruzione.",
     image: "/images/zcs-system.png",
+    pdf: "/schede-tecniche/DS-1PH-HYD-3000-6000-ZP1-IT.pdf",
+    pdf2: "/schede-tecniche/DS-AZZURRO-HV-ZBT-5K-HTR-IT.pdf",
   },
   {
     brand: "ZCS Azzurro Zucchetti",
@@ -43,6 +49,8 @@ const brandSistemi = [
     tag: "Inverter ibrido monofase",
     descrizione: "Gestione automatica dei flussi di energia da fotovoltaico, batteria e rete, energy meter integrato a bordo macchina, parallelabile con possibilità di funzionamento in modalità zero immissione in rete, unità compatibile con batterie al Litio a 48V, modalità di supporto Stand Alone, garantisce la continuità di esercizio ed il funzionamento in isola, sia da fonte fotovoltaica che da batteria, in caso di black-out elettrico, massima potenza di carica/scarica 5000W.",
     image: "/images/zcs2-system.png",
+    pdf: "/schede-tecniche/DS_ZCS-1PH-HYD-3000-6000-ZSS-HP_IT.pdf",
+    pdf2: "/schede-tecniche/DS-AZZURRO-LV-ZSX5000-S-IT.pdf",
   },
   {
     brand: "Huawei",
@@ -50,6 +58,8 @@ const brandSistemi = [
     tag: "Design Modulare Elegante",
     descrizione: "Estetica minimalista ed elettronica avanzata. Ogni blocco batteria è dotato di un ottimizzatore indipendente per sfruttare il 100% della capacità utile.",
     image: "/images/huawei-system.png",
+    pdf: "/schede-tecniche/UM-SUN2000-(3K-6K)-LB0-IT.pdf",
+    pdf2: "/schede-tecniche/LUNA2000-5-15-S0_T.pdf",
   },
   {
     brand: "Fronius",
@@ -57,6 +67,8 @@ const brandSistemi = [
     tag: "Affidabilità Europea",
     descrizione: "Inverter ibrido monofase, ingegnerizzato in Austria. Offre funzioni di backup d'emergenza integrate uniche per la massima continuità di esercizio.",
     image: "/images/fronius-system.png",
+    pdf: "/schede-tecniche/SE_DS_Fronius_Symo_GEN24_GEN24Plus_3_to_10_kW_IT.pdf",
+    pdf2: "/schede-tecniche/SE_DS_FroniusReserva_IT.pdf",
   },
   {
     brand: "Deye",
@@ -64,6 +76,8 @@ const brandSistemi = [
     tag: "Sistema Ibrido",
     descrizione: "Efficienza di conversione al 96,6%, elevata capacità del campo fotovoltaico. Tecnologia di raffreddamento avanzata, design compatto e interfaccia con display LCD per un monitoraggio semplice e intuitivo.",
     image: "/images/deye-system.png",
+    pdf: "/schede-tecniche/deye-sun-6k-sg05lp1-eu.pdf",
+    pdf2: "/schede-tecniche/deye-sun-6k-sg05lp1-eu-batteria.pdf",
   },
    {
     brand: "Unical",
@@ -71,6 +85,8 @@ const brandSistemi = [
     tag: "Doppio inseguitore MPP",
     descrizione: "Gestione di un sistema Backup di serie, continuità operativa (Anti-Blackout), progettato per evitare spegnimenti improvvisi con autolimitazione della potenza, in caso sbalzi di tensione nella rete elettrica. Gestione intelligente delle ombre, analisi costante e continua per rincorrere in ogni momento il punto di massima potenza assoluta, +15% di resa in condizioni di ombra parziale. Oversizing straordinario, con input DC fino a 12 kWp oltre i limiti termici dei prodotti simili, ideale per una casa FULL ELETTRIC.",
     image: "/images/unical-system.png",
+    pdf: "/schede-tecniche/unical-sth-ls-6k.pdf",
+    pdf2: "/schede-tecniche/unical-sth-ls-6k-batteria.pdf",
   },
    {
     brand: "Solis",
@@ -78,6 +94,8 @@ const brandSistemi = [
     tag: "160% della potenza DC nominale dell’inverter",
     descrizione: "Offre funzioni evolute come il supporto dei generatori, l’accoppiamento con inverter già connessi alla rete, il funzionamento in parallelo e la gestione intelligente dei carichi, risultando una soluzione completa e scalabile per l’accumulo energetico in ambito residenziale.",
     image: "/images/solis-system.png",
+    pdf: "/schede-tecniche/solis-s6-eh1p6k-l-plus.pdf",
+    pdf2: "/schede-tecniche/solis-s6-eh1p6k-l-plus-batteria.pdf",
   },
    {
     brand: "Weco",
@@ -85,6 +103,8 @@ const brandSistemi = [
     tag: "Plug & Play",
     descrizione: "Sistema Soppressione incendi integrato, batteria LFP con grado di protezione IP66, modulare impilabile, autoconfigurazione plug & play adattiva, scalabile fino a 12 moduli, sfruttabile fino al 100% DoD, ottimizzazione energetica a livello di modulo, espansione della capacità in ogni momento, modulo di ricarica dc per veicoli elettrici, display LCD.",
     image: "/images/weco-system.png",
+    pdf: "/schede-tecniche/weco-6kw-5k0-smart-eu.pdf",
+    pdf2: "/schede-tecniche/weco-6kw-5k0-smart-eu-batteria.pdf",
   },
   {
     brand: "Canadian Solar",
@@ -92,6 +112,8 @@ const brandSistemi = [
     tag: "Flessibile e conveniente",
     descrizione: "Batterie modulari impilabili facili da trasportare e installare, capacità dell’accumulo personalizzabile da 5 kWh a 20 kWh, design all-in-one, alimentazione automatica garantita durante l'interruzione della rete elettrica, elevata potenza di uscita, sia in modalità di funzionamento normale che in modalità di backup.Batterie al litio-ferro-fosfato con i più elevati standard di sicurezza, protezione IP67. Compatibile con impianti FV pre-esistenti (AC-Retrofit) e nuovi, consente un ingresso FV fino a 16 ADC per MPPT. Compatibile con EV Charger fino a 7,4 kW, monitora la produzione, lo stato di carica e il consumo di energia elettrica in tempo reale. Aggiornamenti firmware automatici OTA (via internet).",
     image: "/images/canadian-solar-system.png",
+    pdf: "/schede-tecniche/canadian-solar-ep-cube.pdf",
+    pdf2: "/schede-tecniche/canadian-solar-ep-cube-batteria.pdf",
   },
   {
     brand: "Haier",
@@ -99,6 +121,8 @@ const brandSistemi = [
     tag: "Sistema integrato",
     descrizione: "Inverter ibrido monofase con una potenza di uscita di 6kW, è dotato di due inseguitori MPP e gestisce una potenza fotovoltaica massima di 12kW. Funziona convertendo la corrente continua dei pannelli solari in corrente alternata, permettendo di immettere l'energia nella rete o accumularla nelle batterie. Grazie al montaggio wireless e al sistema di gestione integrato delle batterie, offre alta efficienza e facilità di installazione, rappresentando una soluzione avanzata per impianti fotovoltaici residenziali e commerciali.",
     image: "/images/haier-system.png",
+    pdf: "/schede-tecniche/haier-smart-cube.pdf",
+    pdf2: "/schede-tecniche/haier-smart-cube-batteria.pdf",
   },
 ];
 
@@ -329,21 +353,104 @@ export default function AccumuloPage() {
                 </div>
 
                 {/* Dettagli Testo */}
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold block mb-1">
-                      {item.brand}
-                    </span>
-                    <h3 className="text-2xl font-light mb-4 tracking-tight">
-                      {item.sistema}
-                    </h3>
-                    <p className="text-zinc-400 text-sm font-light leading-relaxed">
-                      {item.descrizione}
-                    </p>
-                  </div>
-                </div>
-              </div>
+<div className="p-6 flex-1 flex flex-col justify-between">
+
+  <div>
+    <span className="text-xs uppercase tracking-[0.2em] text-zinc-500 font-semibold block mb-2">
+      {item.brand}
+    </span>
+
+    <h3 className="text-2xl font-light tracking-tight mb-4">
+      {item.sistema}
+    </h3>
+
+    <p className="text-zinc-400 text-sm leading-7 font-light">
+      {item.descrizione}
+    </p>
+  </div>
+
+  {/* Pulsanti Premium */}
+  <div
+    className="
+      mt-8
+      flex
+      flex-col
+      gap-3
+      opacity-0
+      translate-y-4
+      group-hover:opacity-100
+      group-hover:translate-y-0
+      transition-all
+      duration-500
+    "
+  >
+
+    {item.pdf && (
+      <a
+        href={item.pdf}
+        target="_blank"
+        rel="noopener noreferrer"
+        download
+        className="
+          flex
+          items-center
+          justify-center
+          gap-2
+          rounded-full
+          border
+          border-white/20
+          bg-white/5
+          backdrop-blur-md
+          py-3
+          text-white
+          hover:bg-white
+          hover:text-black
+          hover:border-white
+          transition-all
+          duration-300
+        "
+      >
+        <Download size={18} />
+        Scheda tecnica inverter
+      </a>
+    )}
+
+    {item.pdf && (
+      <a
+        href={item.pdf2}
+        target="_blank"
+        rel="noopener noreferrer"
+        download
+        className="
+          flex
+          items-center
+          justify-center
+          gap-2
+          rounded-full
+          border
+          border-white/20
+          bg-white/5
+          backdrop-blur-md
+          py-3
+          text-white
+          hover:bg-white
+          hover:text-black
+          hover:border-white
+          transition-all
+          duration-300
+        "
+      >
+        <Download size={18} />
+        Scheda tecnica batteria
+      </a>
+    )}
+
+  </div>
+
+</div>
+            </div>
             ))}
+
           </div>
         </div>
       </section>
