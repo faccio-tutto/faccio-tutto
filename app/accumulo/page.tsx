@@ -95,7 +95,7 @@ const brandSistemi = [
   },
   {
     brand: "Haier",
-    sistema: "Smart Cube inverter ibrido monofase 6kw - MB01D6M00 + batteria al litio da 8,00 kwh - MB01E0M00",
+    sistema: "Smart Cube inverter ibrido monofase 6kw (MB01D6M00) + batteria al litio da 5 kwh (MB01F0M00) oppure 8,00 kwh (MB01E0M00)",
     tag: "Sistema integrato",
     descrizione: "Inverter ibrido monofase con una potenza di uscita di 6kW, è dotato di due inseguitori MPP e gestisce una potenza fotovoltaica massima di 12kW. Funziona convertendo la corrente continua dei pannelli solari in corrente alternata, permettendo di immettere l'energia nella rete o accumularla nelle batterie. Grazie al montaggio wireless e al sistema di gestione integrato delle batterie, offre alta efficienza e facilità di installazione, rappresentando una soluzione avanzata per impianti fotovoltaici residenziali e commerciali.",
     image: "/images/haier-system.png",
