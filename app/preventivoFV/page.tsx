@@ -94,7 +94,7 @@ const PvEstimator: FC = () => {
           { id: "inv9", brand: "Zucchetti ZCS Azzurro", modello: "1PH HYD 6000-ZSS HP", powerKw: 6, price: 1300.00 },
           { id: "inv10", brand: "WECO", modello: "5K0 SMART EU All in One", powerKw: 6, price: 1400.00 },
           { id: "inv11", brand: "CanadianSolar", modello: "EP CUBE", powerKw: 6, price: 1500.00 },
-          { id: "inv12", brand: "Midea", modello: "MHELIOS FLEX-A EA-S6K", powerKw: 6, price: 1100.00 },
+          { id: "inv12", brand: "Haier", modello: "MB01D6M00", powerKw: 6, price: 990.00 },
           { id: "inv13", brand: "U can power", modello: "UHome 6K0L", powerKw: 6, price: 1600.00 },
         ],
         moduli: [
@@ -119,7 +119,7 @@ const PvEstimator: FC = () => {
           { id: "bat12", brand: "Zucchetti ZCS Azzurro", modello: "LV ZSX5000 S", capacityKwh: 5.12, price: 950.00 }, 
           { id: "bat13", brand: "WECO", modello: "5K0 SMART HV PRO", capacityKwh: 5.12, price: 1550.00 }, 
           { id: "bat14", brand: "CanadianSolar", modello: "EP CUBE", capacityKwh: 5.12, price: 1300.00 },
-          { id: "bat16", brand: "Midea", modello: "MHELIOS FLEX-A AL10.2-Eo", capacityKwh: 10.24, price: 2720.00 },
+          { id: "bat16", brand: "Haier", modello: "MB01F0M00", capacityKwh: 5.00, price: 2200.00 },
           { id: "bat17", brand: "U can power", modello: "ULB-5120MT", capacityKwh: 5.12, price: 1750.00 },
         ],
         strutture: [
