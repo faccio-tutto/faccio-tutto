@@ -47,7 +47,7 @@ interface ListiniData {
 // --- CONFIGURAZIONE COSTANTI (Nessuna modifica) ---
 const IVA_RATE = 0.10;
 const PNRR_MAX = 1500; 
-const LABOUR_AND_WIRING_COST_PER_KWP = 286; 
+const LABOUR_AND_WIRING_COST_PER_KWP = 300; 
 const DOCUMENTATION_COST = 250; 
 const DEFAULT_SELECTION_ID = "none"; 
 
@@ -91,7 +91,7 @@ const PvEstimator: FC = () => {
           { id: "inv6", brand: "SMA", modello: "Sunny Boy Smart Energy", powerKw: 6, price: 1500.00 }, 
           { id: "inv7", brand: "Solis", modello: "S6-EH1P6K-L-PLUS Hybrid", powerKw: 6, price: 1180.00 },
           { id: "inv8", brand: "Zucchetti Easy power - all in one", modello: "HYD 6000 ZP1", powerKw: 6, price: 1400.00 },
-          { id: "inv9", brand: "Zucchetti ZCS Azzurro", modello: "1PH HYD 6000-ZSS HP", powerKw: 6, price: 1380.00 },
+          { id: "inv9", brand: "Zucchetti ZCS Azzurro", modello: "1PH HYD 6000-ZSS HP", powerKw: 6, price: 1400.00 },
           { id: "inv10", brand: "WECO", modello: "5K0 SMART EU All in One", powerKw: 6, price: 1400.00 },
           { id: "inv11", brand: "CanadianSolar", modello: "EP CUBE", powerKw: 6, price: 1500.00 },
           { id: "inv12", brand: "Haier", modello: "MB01D6M00", powerKw: 6, price: 990.00 },
@@ -115,18 +115,18 @@ const PvEstimator: FC = () => {
           { id: "bat7", brand: "Huawei", modello: "Luna", capacityKwh: 15, price: 5730.00 }, 
           { id: "bat8", brand: "Dyness", modello: "Powerbox G2", capacityKwh: 10.24, price: 1700.00 }, 
           { id: "bat9", brand: "SMA", modello: "Home storage", capacityKwh: 3.28, price: 1350.00 }, 
-          { id: "bat10", brand: "Deye", modello: "RW-F10.2", capacityKwh: 10.24, price: 2650.00 }, 
+          { id: "bat10", brand: "Deye", modello: "RW-F10.2", capacityKwh: 10.24, price: 2460.00 }, 
           { id: "bat11", brand: "Zucchetti Easy power - all in one", modello: "HV ZBT 5K HTR", capacityKwh: 5.12, price: 1540.00 }, 
-          { id: "bat12", brand: "Zucchetti ZCS Azzurro", modello: "LV ZSX5000 S", capacityKwh: 5.12, price: 950.00 }, 
+          { id: "bat12", brand: "Zucchetti ZCS Azzurro", modello: "LV ZSX5000 S", capacityKwh: 5.12, price: 990.00 }, 
           { id: "bat13", brand: "WECO", modello: "5K0 SMART HV PRO", capacityKwh: 5.12, price: 1550.00 }, 
           { id: "bat14", brand: "CanadianSolar", modello: "EP CUBE", capacityKwh: 5.12, price: 1300.00 },
           { id: "bat16", brand: "Haier", modello: "MB01F0M00", capacityKwh: 5.00, price: 2200.00 },
           { id: "bat17", brand: "U can power", modello: "ULB-5120MT", capacityKwh: 5.12, price: 1750.00 },
         ],
         strutture: [
-          { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 650.00 }, 
-          { id: "str2", type: "Tetto piano (zavorrato)", price: 750.00 }, 
-          { id: "str3", type: "Pensilina / Pergolato", price: 580.00 }, 
+          { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 700.00 }, 
+          { id: "str2", type: "Tetto piano (zavorrato)", price: 850.00 }, 
+          { id: "str3", type: "Pensilina / Pergolato", price: 650.00 }, 
         ],
       };
       setInverterList(data.inverter || []);
