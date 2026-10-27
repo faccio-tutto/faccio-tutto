@@ -44,10 +44,10 @@ const [menuOpen, setMenuOpen] = useState(false);
   const postRecenti = [
     "/images/post 8 maggio architettura.png",
     "/images/post 10 maggio.png",
-    "/images/post 14 maggio.png",
-    "/images/post 21 maggio.png",
-    "/images/post 29 maggio.png",
-    "/images/post 3 giugno.png",
+    "/images/pratiche conto termico 3.0.png",
+    "/images/pratiche e-distribuzione, gse, enea.png",
+    "/images/sostituzione infissi.png",
+    "/images/impianto fotovoltaico promo.png",
   ];
 
   return (
