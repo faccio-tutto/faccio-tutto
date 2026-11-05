@@ -169,7 +169,7 @@ const PvEstimator: FC = () => {
           { id: "bat14", brand: "U can power", modello: "ULB-5120MT", capacityKwh: 5.12, price: 1750.00 },
         ],
         strutture: [
-          { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 700.00, image: "/images/struttura-tetto-inclinato.jpg" },
+          { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 770.00, image: "/images/struttura-tetto-inclinato.jpg" },
           { id: "str2", type: "Tetto piano (zavorrato)", price: 850.00, image: "/images/struttura-tetto-piano.jpg" },
           { id: "str3", type: "Pensilina / Pergolato", price: 650.00, image: "/images/struttura-pensilina.jpg" },
         ],

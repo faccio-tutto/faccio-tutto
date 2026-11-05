@@ -92,6 +92,7 @@ export async function POST(request: Request) {
             .total-amount { font-size: 34pt; font-weight: 200; letter-spacing: -1px; color: #ffffff; margin: 0; }
             .total-subtext { font-size: 8pt; color: #737373; margin-top: 8px; }
             .footer-disclaimer { font-size: 7.5pt; color: #737373; line-height: 1.6; margin-top: 15mm; page-break-inside: avoid; }
+            .footer-disclaimer p { margin: 0 0 2mm; }
         </style>
     </head>
     <body>
@@ -202,24 +203,12 @@ export async function POST(request: Request) {
         </div>
 
         <div class="footer-disclaimer">
-        <tr>
-            <td>Il dimensionamento finale e l'effettiva producibilità dell'impianto sono soggetti al sopralluogo tecnico e strutturale prima dell'avvio dei lavori.</td>
-        </tr>
-        <tr>
-            <td>Dal presente preventivo sono esclusi:</td>
-        </tr>
-        <tr>
-            <td>1) eventuali costi aggiuntivi per opere murarie, elettriche o strutturali non preventivate.</td>
-        </tr>
-        <tr>
-            <td>2) il corrispettivo di connessione e-distribuzione pari a € 100,00 + IVA (se non sono previsti lavori alla rete elettrica) da corrispondere direttamente al distributore di energia elettrica.</td>
-        </tr>
-        <tr>
-            <td>3) l'eventuale costo del mezzo per il sollevamento dei pannelli fotovoltaici sulla copertura.</td>
-        </tr>
-        <tr>
-            <td>Il presente preventivo ha validità di 15 giorni dalla data di emissione.</td>
-        </tr>
+            <p>Il dimensionamento finale e l'effettiva producibilità dell'impianto sono soggetti al sopralluogo tecnico e strutturale prima dell'avvio dei lavori.</p>
+            <p>Dal presente preventivo sono esclusi:</p>
+            <p>1) eventuali costi aggiuntivi per opere murarie, elettriche o strutturali non preventivate.</p>
+            <p>2) il corrispettivo di connessione e-distribuzione pari a € 100,00 + IVA (se non sono previsti lavori alla rete elettrica) da corrispondere direttamente al distributore di energia elettrica.</p>
+            <p>3) l'eventuale costo del mezzo per il sollevamento dei pannelli fotovoltaici sulla copertura.</p>
+            <p>Il presente preventivo ha validità di 15 giorni dalla data di emissione.</p>
         </div>
     </body>
     </html>
