@@ -202,12 +202,24 @@ export async function POST(request: Request) {
         </div>
 
         <div class="footer-disclaimer">
-            Il dimensionamento finale e l'effettiva producibilità dell'impianto sono soggetti al sopralluogo tecnico e strutturale prima dell'avvio dei lavori. 
-            Dal presente preventivo sono esclusi:
-            1) eventuali costi aggiuntivi per opere murarie, elettriche o strutturali non preventivate.
-            2) il corrispettivo di connessione e-distribuzione pari a € 100,00 + IVA (se non sono previsti lavori alla rete elettrica) da corrispondere direttamente al distributore di energia elettrica.
-            3) l'eventuale costo del mezzo per il sollevamento dei pannelli fotovoltaici sulla copertura.
-            Il presente preventivo ha validità di 15 giorni dalla data di emissione.
+        <tr>
+            <td>Il dimensionamento finale e l'effettiva producibilità dell'impianto sono soggetti al sopralluogo tecnico e strutturale prima dell'avvio dei lavori.</td>
+        </tr>
+        <tr>
+            <td>Dal presente preventivo sono esclusi:</td>
+        </tr>
+        <tr>
+            <td>1) eventuali costi aggiuntivi per opere murarie, elettriche o strutturali non preventivate.</td>
+        </tr>
+        <tr>
+            <td>2) il corrispettivo di connessione e-distribuzione pari a € 100,00 + IVA (se non sono previsti lavori alla rete elettrica) da corrispondere direttamente al distributore di energia elettrica.</td>
+        </tr>
+        <tr>
+            <td>3) l'eventuale costo del mezzo per il sollevamento dei pannelli fotovoltaici sulla copertura.</td>
+        </tr>
+        <tr>
+            <td>Il presente preventivo ha validità di 15 giorni dalla data di emissione.</td>
+        </tr>
         </div>
     </body>
     </html>
