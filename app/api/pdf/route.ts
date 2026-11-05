@@ -26,6 +26,7 @@ const technicalDatasheets: Record<string, string> = {
   "inverter:inv11": "DS-EP-Cube-All-in-One-IT.pdf",
   "inverter:inv12": "DS-Haier-SMART-CUBE-IT.pdf",
   "inverter:inv13": "uhome-3k0l-8k0l.pdf",
+  "inverter:inv14": "DS-WECO-INVERTER-ESX-IT (4).pdf",
   "batteria:bat1": "LUNA2000-5-15-S0_T.pdf",
   "batteria:bat2": "SE_DS_FroniusReserva_IT.pdf",
   "batteria:bat3": "12278-12279-12280-12281-12282-12283-Technical-Specs.pdf",
@@ -40,6 +41,7 @@ const technicalDatasheets: Record<string, string> = {
   "batteria:bat12": "DS-EP-Cube-All-in-One-IT.pdf",
   "batteria:bat13": "DS-Haier-SMART-CUBE-IT.pdf",
   "batteria:bat14": "uhome-3k0l-8k0l.pdf",
+  "batteria:bat15": "DS-WECO-16K0-LV-IT (5).pdf",
 };
 
 export async function POST(request: Request) {

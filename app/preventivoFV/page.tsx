@@ -79,6 +79,7 @@ const inverterImages: Record<string, string> = {
   inv11: "/images/inverter-epcube.jpg",
   inv12: "/images/inverter-haier.jpg",
   inv13: "/images/inverter-ucanpower.jpg",
+  inv14: "/images/inverter-weco6.jpg",
 };
 const batteryImages: Record<string, string> = {
   bat1: "/images/batteria-huawei-luna.jpg",
@@ -95,6 +96,7 @@ const batteryImages: Record<string, string> = {
   bat12: "/images/batteria-epcube.jpg",
   bat13: "/images/batteria-haier.jpg",
   bat14: "/images/batteria-ucanpower.jpg",
+  bat15: "/images/batteria-weco16.jpg",
 };
 
   const menuItems = [
@@ -142,6 +144,7 @@ const PvEstimator: FC = () => {
           { id: "inv11", brand: "CanadianSolar", modello: "EP CUBE", powerKw: 6, price: 1500.00 },
           { id: "inv12", brand: "Haier", modello: "MB01D6M00", powerKw: 6, price: 990.00 },
           { id: "inv13", brand: "U can power", modello: "UHome 6K0L", powerKw: 6, price: 1600.00 },
+          { id: "inv14", brand: "WECO", modello: "ESX 6K", powerKw: 6, price: 1050.00 },
         ],
         moduli: [
           { id: "mod1", brand: "TrinaSolar", modello: "TSM-450NEG9R.28", powerW: 450, price: 75.00 }, 
@@ -167,6 +170,7 @@ const PvEstimator: FC = () => {
           { id: "bat12", brand: "CanadianSolar", modello: "EP CUBE", capacityKwh: 5.12, price: 1300.00 },
           { id: "bat13", brand: "Haier", modello: "MB01F0M00", capacityKwh: 5.00, price: 2200.00 },
           { id: "bat14", brand: "U can power", modello: "ULB-5120MT", capacityKwh: 5.12, price: 1750.00 },
+          { id: "bat15", brand: "WECO", modello: "16K0-LV", capacityKwh: 16.00, price: 2250.00 },
         ],
         strutture: [
           { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 770.00, image: "/images/struttura-tetto-inclinato.jpg" },
