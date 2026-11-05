@@ -205,7 +205,13 @@ const PvEstimator: FC = () => {
     if (inverterBrand === "solis") {
       compatibleBrands.add("dyness");
     }
-    return batteriaList.filter(b => compatibleBrands.has(b.brand.trim().toLowerCase()));
+    return batteriaList.filter(b =>
+      compatibleBrands.has(b.brand.trim().toLowerCase()) &&
+      !(
+        (selectedInverterObj.id === "inv14" && b.id === "bat11") ||
+        (selectedInverterObj.id === "inv10" && b.id === "bat15")
+      )
+    );
   }, [selectedInverterObj, batteriaList]);
 
   useEffect(() => {
