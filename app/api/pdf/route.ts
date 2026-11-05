@@ -2,12 +2,50 @@ import { NextResponse } from "next/server";
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 import nodemailer from "nodemailer";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+
+const technicalDatasheets: Record<string, string> = {
+  "modulo:mod1": "DS-Vertex-S+NEG9R.28-IT (1).pdf",
+  "modulo:mod2": "Peimar_IT_OR10E460MNDB(BF).pdf",
+  "modulo:mod3": "DS-Peimar-OR10E510MNDB-FB-IT (1).pdf",
+  "modulo:mod4": "DS-NEG18R.28-ULTRA-495-525W-EN.pdf",
+  "modulo:mod5": "DS-TCL-HSM-ND66-GR-EN.pdf",
+  "modulo:mod6": "DS-TWMNF-66HD720-740W-EN.pdf",
+  "inverter:inv1": "DS-SUN2000-3-6K-LB0-EN.pdf",
+  "inverter:inv2": "DS-SUN2000-3-6K-LB0-EN.pdf",
+  "inverter:inv3": "Deye_sun-xxK-SG05LP1-EU-AM2_scheda_tecnica.pdf",
+  "inverter:inv4": "X13009allegatoDEPLIANT1-1X_zoe1-scheda_ita_04-2026.pdf",
+  "inverter:inv5": "SE_DS_Fronius_Symo_GEN24_GEN24Plus_3_to_10_kW_IT.pdf",
+  "inverter:inv6": "sunny-boy-smart-energy.pdf",
+  "inverter:inv7": "DS-S6-EH1P(3-10)K-L-PLUS-IT.pdf",
+  "inverter:inv8": "DS-1PH-HYD-3000-6000-ZP1-IT.pdf",
+  "inverter:inv9": "DS_ZCS-1PH-HYD-3000-6000-ZSS-HP_IT.pdf",
+  "inverter:inv10": "4822988f44dea18319cfe344cdb9bdb0.pdf",
+  "inverter:inv11": "DS-EP-Cube-All-in-One-IT.pdf",
+  "inverter:inv12": "DS-Haier-SMART-CUBE-IT.pdf",
+  "inverter:inv13": "uhome-3k0l-8k0l.pdf",
+  "batteria:bat1": "LUNA2000-5-15-S0_T.pdf",
+  "batteria:bat2": "SE_DS_FroniusReserva_IT.pdf",
+  "batteria:bat3": "12278-12279-12280-12281-12282-12283-Technical-Specs.pdf",
+  "batteria:bat4": "X13640allegatoDEPLIANT1-1X_batteria-ste-os_scheda-ita_09-2026.pdf",
+  "batteria:bat5": "LUNA2000-5-15-S0_T.pdf",
+  "batteria:bat6": "LUNA2000-5-15-S0_T.pdf",
+  "batteria:bat7": "DynessPowerboxG2DatasheetIT20251016-536.pdf",
+  "batteria:bat8": "HS-BM-10-DS-en-12.pdf",
+  "batteria:bat9": "DS-AZZURRO-HV-ZBT-5K-HTR-IT.pdf",
+  "batteria:bat10": "DS-AZZURRO-LV-ZSX5000-S-IT.pdf",
+  "batteria:bat11": "4822988f44dea18319cfe344cdb9bdb0.pdf",
+  "batteria:bat12": "DS-EP-Cube-All-in-One-IT.pdf",
+  "batteria:bat13": "DS-Haier-SMART-CUBE-IT.pdf",
+  "batteria:bat14": "uhome-3k0l-8k0l.pdf",
+};
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     
-    // Destrutturazione corretta: leggiamo 'batteryQuantity' esattamente come lo passa il frontend
     const { 
       cliente, 
       email, 
@@ -17,23 +55,12 @@ export async function POST(request: Request) {
       batteria, 
       batteryQuantity, 
       struttura, 
-      cablaggio, 
-      totale 
+      totale,
+      applyVAT,
     } = body;
 
     const potenzaTotaleKw = moduli ? ((moduli.powerW * numeroModuli) / 1000).toFixed(2) : "0.00";
-    const prezzoModuli = moduli ? moduli.price * numeroModuli : 0;
-    const prezzoInverter = inverter ? inverter.price : 0;
-    
-    // Gestione dinamica delle quantità della batteria usando la chiave corretta
     const qtaBatterie = batteryQuantity ? parseInt(batteryQuantity) : 1; 
-    const prezzoBatteria = batteria ? (batteria.price * qtaBatterie) : 0;
-    
-    const prezzoStruttura = struttura ? struttura.price : 0;
-    const oneriBurocratici = 250; 
-    
-    const baseImponibile = prezzoModuli + prezzoInverter + prezzoBatteria + prezzoStruttura + cablaggio + oneriBurocratici;
-    const quotaIva = baseImponibile * 0.10;
 
     const formatEuro = (v: number) => v.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
 
@@ -135,47 +162,35 @@ export async function POST(request: Request) {
             </tbody>
         </table>
 
-        <div class="section-header">03 / Scomposizione Finanziaria</div>
+        <div class="section-header">03 / Voci incluse nel preventivo</div>
         <table class="data-table">
             <thead>
                 <tr>
-                    <th style="width: 75%;">Voce di Capitolato</th>
-                    <th class="text-right" style="width: 25%;">Prezzo Netto</th>
+                    <th>Voce di Capitolato</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Fornitura moduli fotovoltaici (${numeroModuli} unità)</td>
-                    <td class="text-right font-mono">${formatEuro(prezzoModuli)}</td>
                 </tr>
                 <tr>
                     <td>Fornitura inverter</td>
-                    <td class="text-right font-mono">${formatEuro(prezzoInverter)}</td>
                 </tr>
                 ${batteria ? `
                 <tr>
                     <td>Fornitura batterie di accumulo (${qtaBatterie} unità)</td>
-                    <td class="text-right font-mono">${formatEuro(prezzoBatteria)}</td>
                 </tr>` : ""}
                 <tr>
                     <td>Tipologia di fissaggio moduli fotovoltaici</td>
-                    <td class="text-right font-mono">${formatEuro(prezzoStruttura)}</td>
                 </tr>
                 <tr>
                     <td>Installazione hardware e cablaggio elettrico a regola d'arte</td>
-                    <td class="text-right font-mono">${formatEuro(cablaggio)}</td>
                 </tr>
                 <tr>
                     <td>Oneri burocratici di connessione e pratiche e-distribuzione / GSE</td>
-                    <td class="text-right font-mono">${formatEuro(oneriBurocratici)}</td>
                 </tr>
                 <tr>
-                    <td style="font-weight: 600; color: #000000; border-top: 1px solid #171717; padding-top: 12px;">Base imponibile netta</td>
-                    <td class="text-right font-mono" style="font-weight: 600; border-top: 1px solid #171717; padding-top: 12px;">${formatEuro(baseImponibile)}</td>
-                </tr>
-                <tr>
-                    <td style="color: #737373; border: none; padding-top: 6px;">Imposta valore aggiunto applicata (IVA 10%)</td>
-                    <td class="text-right font-mono" style="color: #737373; border: none; padding-top: 6px;">${formatEuro(quotaIva)}</td>
+                    <td>IVA agevolata applicata secondo l'aliquota selezionata</td>
                 </tr>
             </tbody>
         </table>
@@ -183,12 +198,16 @@ export async function POST(request: Request) {
         <div class="total-card">
             <div class="total-label">Valore Totale Chiavi in Mano</div>
             <h2 class="total-amount">${formatEuro(totale)}</h2>
-            <div class="total-subtext">* Importo finale omnicomprensivo di materiali, manodopera e oneri burocratici, IVA inclusa.</div>
+            <div class="total-subtext">${applyVAT ? "Importo finale comprensivo di materiali, manodopera e IVA." : "Importo totale al netto dell'IVA."}</div>
         </div>
 
         <div class="footer-disclaimer">
-            <strong>Condizioni di fornitura tecnica e vincoli normativi:</strong><br>
-            Il presente documento viene generato sulla base delle tariffe correnti di mercato e dei vincoli massimali dettati dai decreti PNRR (pari a un tetto di € 1.500,00 per singolo kWp installato). Il dimensionamento finale e l'effettiva producibilità dell'architettura hardware rimangono vincolati all'esito del sopralluogo tecnico e strutturale obbligatorio da eseguirsi in loco prima dell'avvio dei lavori.
+            Il dimensionamento finale e l'effettiva producibilità dell'impianto sono soggetti al sopralluogo tecnico e strutturale prima dell'avvio dei lavori. 
+            Dal presente preventivo sono esclusi:
+            1) eventuali costi aggiuntivi per opere murarie, elettriche o strutturali non preventivate.
+            2) il corrispettivo di connessione e-distribuzione pari a € 100,00 + IVA (se non sono previsti lavori alla rete elettrica) da corrispondere direttamente al distributore di energia elettrica.
+            3) l'eventuale costo del mezzo per il sollevamento dei pannelli fotovoltaici sulla copertura.
+            Il presente preventivo ha validità di 15 giorni dalla data di emissione.
         </div>
     </body>
     </html>
@@ -211,8 +230,125 @@ export async function POST(request: Request) {
       format: "A4",
       printBackground: true,
     });
+    let finalPdfBuffer = Buffer.from(pdfBuffer);
     
     await browser.close();
+
+    const selectedComponents = [
+      { type: "modulo", item: moduli, label: `Moduli fotovoltaici: ${moduli?.brand ?? ""} ${moduli?.modello ?? ""}` },
+      { type: "inverter", item: inverter, label: `Inverter: ${inverter?.brand ?? ""} ${inverter?.modello ?? ""}` },
+      { type: "batteria", item: batteria, label: `Batteria: ${batteria?.brand ?? ""} ${batteria?.modello ?? ""}` },
+      { type: "struttura", item: struttura, label: `Struttura: ${struttura?.type ?? ""}` },
+    ].filter(component => component.item);
+
+    const documents = new Map<string, string[]>();
+    const unavailableDatasheets: string[] = [];
+
+    for (const component of selectedComponents) {
+      const fileName = technicalDatasheets[`${component.type}:${component.item.id}`];
+      if (!fileName) {
+        unavailableDatasheets.push(component.label);
+        continue;
+      }
+
+      const associatedComponents = documents.get(fileName) ?? [];
+      associatedComponents.push(component.label);
+      documents.set(fileName, associatedComponents);
+    }
+
+    if (documents.size > 0 || unavailableDatasheets.length > 0) {
+      const quotePdf = await PDFDocument.load(pdfBuffer);
+      const regularFont = await quotePdf.embedFont(StandardFonts.Helvetica);
+      const boldFont = await quotePdf.embedFont(StandardFonts.HelveticaBold);
+      const appendixPage = quotePdf.addPage();
+      const { width, height } = appendixPage.getSize();
+
+      appendixPage.drawText("Documentazione tecnica", {
+        x: 54,
+        y: height - 72,
+        size: 22,
+        font: boldFont,
+        color: rgb(0.08, 0.08, 0.08),
+      });
+      appendixPage.drawText("Schede tecniche dei componenti selezionati", {
+        x: 54,
+        y: height - 100,
+        size: 11,
+        font: regularFont,
+        color: rgb(0.35, 0.35, 0.35),
+      });
+
+      let y = height - 145;
+      for (const [fileName, components] of documents) {
+        appendixPage.drawText(components.join(" / "), {
+          x: 54,
+          y,
+          size: 10,
+          font: boldFont,
+          color: rgb(0.08, 0.08, 0.08),
+          maxWidth: width - 108,
+        });
+        y -= 18;
+        appendixPage.drawText("Scheda tecnica allegata nelle pagine successive", {
+          x: 54,
+          y,
+          size: 9,
+          font: regularFont,
+          color: rgb(0.35, 0.35, 0.35),
+        });
+        y -= 26;
+      }
+
+      if (unavailableDatasheets.length > 0) {
+        appendixPage.drawText("Schede tecniche non disponibili", {
+          x: 54,
+          y,
+          size: 10,
+          font: boldFont,
+          color: rgb(0.08, 0.08, 0.08),
+        });
+        y -= 18;
+        for (const component of unavailableDatasheets) {
+          appendixPage.drawText(component, {
+            x: 54,
+            y,
+            size: 9,
+            font: regularFont,
+            color: rgb(0.35, 0.35, 0.35),
+            maxWidth: width - 108,
+          });
+          y -= 14;
+        }
+      }
+
+      for (const [fileName, components] of documents) {
+        const separatorPage = quotePdf.addPage();
+        const { width: pageWidth, height: pageHeight } = separatorPage.getSize();
+        separatorPage.drawText("Scheda tecnica", {
+          x: 54,
+          y: pageHeight - 80,
+          size: 20,
+          font: boldFont,
+          color: rgb(0.08, 0.08, 0.08),
+        });
+        separatorPage.drawText(components.join(" / "), {
+          x: 54,
+          y: pageHeight - 110,
+          size: 11,
+          font: regularFont,
+          color: rgb(0.35, 0.35, 0.35),
+          maxWidth: pageWidth - 108,
+        });
+
+        const datasheetPath = path.join(process.cwd(), "public", "schede-tecniche", fileName);
+        const datasheet = await PDFDocument.load(await readFile(datasheetPath));
+        const datasheetPages = await quotePdf.copyPages(datasheet, datasheet.getPageIndices());
+        datasheetPages.forEach(datasheetPage => quotePdf.addPage(datasheetPage));
+      }
+
+      const quoteWithDatasheets = await quotePdf.save();
+      finalPdfBuffer = Buffer.from(quoteWithDatasheets);
+    }
 
     try {
       const transporter = nodemailer.createTransport({
@@ -246,7 +382,7 @@ export async function POST(request: Request) {
         attachments: [
           {
             filename: `preventivo_${nomeFileSenzaSpazi}.pdf`,
-            content: Buffer.from(pdfBuffer),
+            content: finalPdfBuffer,
             contentType: "application/pdf"
           }
         ]
@@ -255,13 +391,13 @@ export async function POST(request: Request) {
       console.error("Errore notifica email:", emailError);
     }
 
-    const pdfBlob = new Blob([pdfBuffer as unknown as BlobPart], { type: "application/pdf" });
+    const pdfBlob = new Blob([finalPdfBuffer], { type: "application/pdf" });
     return new NextResponse(pdfBlob, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": 'attachment; filename="preventivo_tesla.pdf"',
-        "Content-Length": pdfBuffer.length.toString(),
+        "Content-Disposition": 'attachment; filename="preventivo.pdf"',
+        "Content-Length": finalPdfBuffer.length.toString(),
       },
     });
 
