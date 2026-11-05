@@ -239,7 +239,6 @@ export async function POST(request: Request) {
       { type: "modulo", item: moduli, label: `Moduli fotovoltaici: ${moduli?.brand ?? ""} ${moduli?.modello ?? ""}` },
       { type: "inverter", item: inverter, label: `Inverter: ${inverter?.brand ?? ""} ${inverter?.modello ?? ""}` },
       { type: "batteria", item: batteria, label: `Batteria: ${batteria?.brand ?? ""} ${batteria?.modello ?? ""}` },
-      { type: "struttura", item: struttura, label: `Struttura: ${struttura?.type ?? ""}` },
     ].filter(component => component.item);
 
     const documents = new Map<string, string[]>();
