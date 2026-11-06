@@ -60,10 +60,11 @@ const DEFAULT_SELECTION_ID = "none";
 const moduleImages: Record<string, string> = {
   mod1: "/images/modulo-trinasolar-450.jpg",
   mod2: "/images/modulo-peimar-460.jpg",
-  mod3: "/images/modulo-peimar-510.jpg",
-  mod4: "/images/modulo-trinasolar-520.jpg",
-  mod5: "/images/modulo-tcl-620.jpg",
-  mod6: "/images/modulo-tw-730.jpg",
+  mod3: "/images/modulo-dmegc-470.jpg",
+  mod4: "/images/modulo-peimar-510.jpg",
+  mod5: "/images/modulo-trinasolar-520.jpg",
+  mod6: "/images/modulo-tcl-620.jpg",
+  mod7: "/images/modulo-tw-730.jpg",
 };
 const inverterImages: Record<string, string> = {
   inv1: "/images/inverter-huawei-m5.jpg",
@@ -149,10 +150,11 @@ const PvEstimator: FC = () => {
         moduli: [
           { id: "mod1", brand: "TrinaSolar", modello: "TSM-450NEG9R.28", powerW: 450, price: 75.00 }, 
           { id: "mod2", brand: "Peimar", modello:"OR10E460MNDB-BF (bifacciale)",powerW: 460, price: 77.00 }, 
-          { id: "mod3", brand: "Peimar", modello:"OR10E510MNDB-FB8 (bifacciale)",powerW: 510, price: 84.00 },
-          { id: "mod4", brand: "TrinaSolar", modello:"TSM-520NEG18R.28",powerW: 520, price: 86.00 },
-          { id: "mod5", brand: "TCL Solar", modello: "HSM-ND66-GR620 (bifacciale)", powerW: 620, price: 99.00 }, 
-           { id: "mod6", brand: "TW Solar", modello: "TWMNF-66HD730W (bifacciale)", powerW: 730, price: 109.00 },
+          { id: "mod3", brand: "DMEGC Solar", modello:"DM470G12RT-G48HBW",powerW: 470, price: 80.00 }, 
+          { id: "mod4", brand: "Peimar", modello:"OR10E510MNDB-FB8 (bifacciale)",powerW: 510, price: 84.00 },
+          { id: "mod5", brand: "TrinaSolar", modello:"TSM-520NEG18R.28",powerW: 520, price: 86.00 },
+          { id: "mod6", brand: "TCL Solar", modello: "HSM-ND66-GR620 (bifacciale)", powerW: 620, price: 99.00 }, 
+          { id: "mod7", brand: "TW Solar", modello: "TWMNF-66HD730W (bifacciale)", powerW: 730, price: 109.00 },
           
         ],
         batterie: [
