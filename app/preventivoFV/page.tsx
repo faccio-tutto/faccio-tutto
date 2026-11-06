@@ -12,6 +12,7 @@ interface Inverter {
   brand: string;
   modello?: string;
   powerKw: number;
+  maxPvPowerKw: number;
   price: number;
 }
 
@@ -132,20 +133,20 @@ const PvEstimator: FC = () => {
     const fetchData = () => {
       const data: ListiniData = {
         inverter: [
-          { id: "inv1", brand: "Huawei", modello: "SUN2000-M5", powerKw: 5, price: 535.00 },
-          { id: "inv2", brand: "Huawei", modello: "SUN2000-M6", powerKw: 6, price: 700.00 }, 
-          { id: "inv3", brand: "Deye", modello: "SUN-6K-SG05LP1", powerKw: 6, price: 900.00 }, 
-          { id: "inv4", brand: "Unical", modello: "Hybrid 6K", powerKw: 6, price: 1280.00 },  
-          { id: "inv5", brand: "Fronius", modello: "Gen24 Plus", powerKw: 6, price: 1699.00 }, 
-          { id: "inv6", brand: "SMA", modello: "Sunny Boy Smart Energy", powerKw: 6, price: 1500.00 }, 
-          { id: "inv7", brand: "Solis", modello: "S6-EH1P6K-L-PLUS Hybrid", powerKw: 6, price: 1180.00 },
-          { id: "inv8", brand: "Zucchetti Easy power - all in one", modello: "HYD 6000 ZP1", powerKw: 6, price: 1400.00 },
-          { id: "inv9", brand: "Zucchetti ZCS Azzurro", modello: "1PH HYD 6000-ZSS HP", powerKw: 6, price: 1400.00 },
-          { id: "inv10", brand: "WECO", modello: "5K0 SMART EU All in One", powerKw: 6, price: 1400.00 },
-          { id: "inv11", brand: "CanadianSolar", modello: "EP CUBE", powerKw: 6, price: 1500.00 },
-          { id: "inv12", brand: "Haier", modello: "MB01D6M00", powerKw: 6, price: 990.00 },
-          { id: "inv13", brand: "U can power", modello: "UHome 6K0L", powerKw: 6, price: 1600.00 },
-          { id: "inv14", brand: "WECO", modello: "ESX 6K", powerKw: 6, price: 1050.00 },
+          { id: "inv1", brand: "Huawei", modello: "SUN2000-M5", powerKw: 5, maxPvPowerKw: 7.5, price: 535.00 },
+          { id: "inv2", brand: "Huawei", modello: "SUN2000-M6", powerKw: 6, maxPvPowerKw: 9, price: 700.00 },
+          { id: "inv3", brand: "Deye", modello: "SUN-6K-SG05LP1", powerKw: 6, maxPvPowerKw: 12, price: 900.00 },
+          { id: "inv4", brand: "Unical", modello: "Hybrid 6K", powerKw: 6, maxPvPowerKw: 9, price: 1280.00 },
+          { id: "inv5", brand: "Fronius", modello: "Gen24 Plus", powerKw: 6, maxPvPowerKw: 9, price: 1699.00 },
+          { id: "inv6", brand: "SMA", modello: "Sunny Boy Smart Energy", powerKw: 6, maxPvPowerKw: 12, price: 1500.00 },
+          { id: "inv7", brand: "Solis", modello: "S6-EH1P6K-L-PLUS Hybrid", powerKw: 6, maxPvPowerKw: 12, price: 1180.00 },
+          { id: "inv8", brand: "Zucchetti Easy power - all in one", modello: "HYD 6000 ZP1", powerKw: 6, maxPvPowerKw: 9, price: 1400.00 },
+          { id: "inv9", brand: "Zucchetti ZCS Azzurro", modello: "1PH HYD 6000-ZSS HP", powerKw: 6, maxPvPowerKw: 9, price: 1400.00 },
+          { id: "inv10", brand: "WECO", modello: "5K0 SMART EU All in One", powerKw: 6, maxPvPowerKw: 10, price: 1400.00 },
+          { id: "inv11", brand: "CanadianSolar", modello: "EP CUBE", powerKw: 6, maxPvPowerKw: 10, price: 1500.00 },
+          { id: "inv12", brand: "Haier", modello: "MB01D6M00", powerKw: 6, maxPvPowerKw: 12, price: 990.00 },
+          { id: "inv13", brand: "U can power", modello: "UHome 6K0L", powerKw: 6, maxPvPowerKw: 9, price: 1600.00 },
+          { id: "inv14", brand: "WECO", modello: "ESX 6K", powerKw: 6, maxPvPowerKw: 10, price: 1050.00 },
         ],
         moduli: [
           { id: "mod1", brand: "TrinaSolar", modello: "TSM-450NEG9R.28", powerW: 450, price: 75.00 }, 
@@ -254,11 +255,10 @@ const PvEstimator: FC = () => {
     if (moduleCount < 1) errs.push("Inserisci un quantitativo valido di moduli fotovoltaici.");
     if (!cliente.trim() || !email.trim()) errs.push("Specificare nome cliente ed e-mail per sbloccare l'esportazione.");
 
-    if (selectedInverterObj && selectedModuloObj) {
-        if (selectedInverterObj.powerKw > 0 && modulesTotalKw > selectedInverterObj.powerKw * 1.3) {
-          errs.push(`Sovradimensionamento: la potenza dei moduli (${modulesTotalKw} kWp) eccede del 30% la tolleranza dell'inverter (${selectedInverterObj.powerKw} kW).`);
-        }
+    if (selectedInverterObj && modulesTotalKw > selectedInverterObj.maxPvPowerKw) {
+      errs.push(`La potenza dei moduli (${modulesTotalKw} kWp) supera il limite FV previsto per l'inverter selezionato (${selectedInverterObj.maxPvPowerKw} kWp).`);
     }
+
     return errs;
   }, [selectedInverterObj, selectedModuloObj, selectedStruttura, moduleCount, modulesTotalKw, prices.subtotal, selectedInverter, selectedModulo, cliente, email, selectedBatteria, filteredBatteriaList]);
 
