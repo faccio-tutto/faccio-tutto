@@ -96,6 +96,9 @@ export async function POST(request: Request) {
             .total-subtext { font-size: 8pt; color: #737373; margin-top: 8px; }
             .footer-disclaimer { font-size: 7.5pt; color: #737373; line-height: 1.6; margin-top: 15mm; page-break-inside: avoid; }
             .footer-disclaimer p { margin: 0 0 2mm; }
+            .acceptance-signature { width: 72mm; margin: 14mm 0 0 auto; color: #404040; text-align: center; page-break-inside: avoid; }
+            .signature-line { border-top: 1px solid #737373; margin-bottom: 2mm; }
+            .acceptance-signature p { margin: 0; font-size: 8pt; }
         </style>
     </head>
     <body>
@@ -213,6 +216,10 @@ export async function POST(request: Request) {
             <p>3) l'eventuale costo del mezzo per il sollevamento dei pannelli fotovoltaici sulla copertura.</p>
           
             <p>PREVENTIVO VALIDO SOLO IN SICILIA</p>
+            <div class="acceptance-signature">
+                <div class="signature-line"></div>
+                <p>Per accettazione</p>
+            </div>
         </div>
     </body>
     </html>
