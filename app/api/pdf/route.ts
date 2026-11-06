@@ -211,7 +211,7 @@ export async function POST(request: Request) {
             <p>1) eventuali costi aggiuntivi per opere murarie, elettriche o strutturali non preventivate.</p>
             <p>2) il corrispettivo di connessione e-distribuzione pari a € 100,00 + IVA (se non sono previsti lavori alla rete elettrica) da corrispondere direttamente al distributore di energia elettrica.</p>
             <p>3) l'eventuale costo del mezzo per il sollevamento dei pannelli fotovoltaici sulla copertura.</p>
-            <p>Il presente preventivo ha validità di 15 giorni dalla data di emissione.</p>
+          
             <p>PREVENTIVO VALIDO SOLO IN SICILIA</p>
         </div>
     </body>
