@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="640" viewBox="0 0 1600 640" fill="none">
+  <defs>
+    <linearGradient id="background" x1="120" y1="30" x2="1490" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07110F"/>
+      <stop offset=".52" stop-color="#0B1E19"/>
+      <stop offset="1" stop-color="#102B23"/>
+    </linearGradient>
+    <linearGradient id="roof" x1="1050" y1="290" x2="1510" y2="600" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D3D39"/>
+      <stop offset=".55" stop-color="#102A2C"/>
+      <stop offset="1" stop-color="#09191D"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="1000" y1="300" x2="1470" y2="570" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#284E56"/>
+      <stop offset=".5" stop-color="#173640"/>
+      <stop offset="1" stop-color="#102630"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="1275" y1="360" x2="1410" y2="575" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D4244"/>
+      <stop offset="1" stop-color="#0A1D22"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="1325" y1="78" x2="1435" y2="188" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE7A3"/>
+      <stop offset="1" stop-color="#F3A943"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="0" cy="0" r="1" gradientTransform="matrix(0 185 -185 0 1378 132)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F3B44E" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#F3B44E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="chart" x1="857" y1="262" x2="1355" y2="179" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#55D6A0" stop-opacity=".05"/>
+      <stop offset=".52" stop-color="#55D6A0" stop-opacity=".68"/>
+      <stop offset="1" stop-color="#F5C45D" stop-opacity=".85"/>
+    </linearGradient>
+    <pattern id="panelGrid" width="73" height="45" patternUnits="userSpaceOnUse">
+      <path d="M0 .5H73M.5 0V45" stroke="#8CB7BA" stroke-opacity=".35"/>
+    </pattern>
+    <pattern id="fineGrid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" stroke="#A8D9C0" stroke-opacity=".055"/>
+    </pattern>
+    <filter id="blur" x="1120" y="-55" width="500" height="500" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+    <clipPath id="panels">
+      <path d="m1035 329 397-104 254 166-408 151-243-213Z"/>
+    </clipPath>
+    <clipPath id="canvas">
+      <rect width="1600" height="640" rx="32"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#canvas)">
+    <path fill="url(#background)" d="M0 0h1600v640H0z"/>
+    <path fill="url(#fineGrid)" d="M0 0h1600v640H0z"/>
+    <path fill="url(#sunGlow)" d="M1110-53h536v536h-536z" filter="url(#blur)"/>
+
+    <g opacity=".18" stroke="#87BCA4">
+      <path d="M726 541c118-105 191-39 282-119 88-78 117-167 244-149 91 13 144 64 292 21"/>
+      <path d="M697 578c125-111 205-45 299-128 100-89 126-180 260-161 88 12 141 66 302 22"/>
+      <path d="M668 615c132-117 219-52 316-137 110-98 134-194 276-174 84 11 139 68 324 22"/>
+      <path d="M747 501c109-98 178-32 265-110 78-69 109-153 226-138 94 12 149 62 278 20"/>
+    </g>
+
+    <circle cx="1378" cy="132" r="78" fill="url(#sunGlow)"/>
+    <circle cx="1378" cy="132" r="39" fill="url(#sun)"/>
+    <g stroke="#F8D38B" stroke-linecap="round" stroke-opacity=".66" stroke-width="2">
+      <path d="M1378 66V52M1378 212v-14M1312 132h-14M1458 132h-14M1331 85l-10-10M1435 189l-10-10M1425 85l10-10M1321 199l10-10"/>
+    </g>
+
+    <path d="M812 462 1165 278l435 116v246H812V462Z" fill="#0B1719" stroke="#3B6358" stroke-opacity=".5" stroke-width="2"/>
+    <path d="m801 455 365-201 443 127-379 211-429-137Z" fill="url(#roof)" stroke="#52766C" stroke-opacity=".65" stroke-width="3"/>
+    <path d="m1035 329 397-104 254 166-408 151-243-213Z" fill="url(#panel)" stroke="#84AEB0" stroke-opacity=".74" stroke-width="3"/>
+    <g clip-path="url(#panels)">
+      <path fill="url(#panelGrid)" d="M1015 205h700v365h-700z"/>
+      <path d="m1009 327 654 202M1064 289l650 199M1129 253l649 194" stroke="#9CC5C4" stroke-opacity=".2" stroke-width="2"/>
+      <path d="m1102 596 426-356M1184 620l423-359M1274 642l422-357" stroke="#9CC5C4" stroke-opacity=".22" stroke-width="2"/>
+      <path d="m1124 328 348-92M1190 382l351-95M1258 438l350-97M1325 491l351-100" stroke="#B8D9D4" stroke-opacity=".12"/>
+    </g>
+    <path d="m801 455 365-201 443 127" stroke="#A2C8B2" stroke-opacity=".62" stroke-width="3"/>
+
+    <path d="M1159 447 1409 368v272h-250V447Z" fill="#0B1819" stroke="#41645B" stroke-width="2"/>
+    <path d="m1191 464 89-28v204h-89V464ZM1301 430l77-24v234h-77V430Z" fill="url(#glass)" stroke="#7D9D8F" stroke-opacity=".62" stroke-width="2"/>
+    <path d="M1280 436v204M1301 544h77M1191 555h89" stroke="#8AAE9A" stroke-opacity=".55" stroke-width="2"/>
+    <path d="M1410 369 1600 422v218h-191V369Z" fill="#10201E" stroke="#47655A" stroke-opacity=".7" stroke-width="2"/>
+    <path d="M1454 424v216M1508 439v201M1562 454v186" stroke="#47655A" stroke-opacity=".42" stroke-width="2"/>
+
+    <path d="M771 548c119-61 193-19 277-68 82-48 147-145 247-143 65 1 98 37 161 7" stroke="#4FCA96" stroke-opacity=".1" stroke-width="15"/>
+    <path d="M771 548c119-61 193-19 277-68 82-48 147-145 247-143 65 1 98 37 161 7" stroke="url(#chart)" stroke-linecap="round" stroke-width="3"/>
+    <g fill="#BCEED2">
+      <circle cx="771" cy="548" r="4"/>
+      <circle cx="1048" cy="480" r="4"/>
+      <circle cx="1295" cy="337" r="4"/>
+      <circle cx="1456" cy="344" r="4"/>
+    </g>
+
+    <path d="M0 0h1600v640H0z" fill="url(#background)" fill-opacity=".08"/>
+    <path d="M0 0h880v640H0z" fill="url(#background)" fill-opacity=".25"/>
+  </g>
+</svg>
