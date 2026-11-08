@@ -273,12 +273,14 @@ export default function EnergyLandingPage() {
         </div>
       </section>
 
-      {/* SECTION SOLAR */}
+            {/* SECTION SOLAR */}
       <section className="relative min-h-screen flex items-center">
-        <img
+        <Image
           src="/images/fotovoltaicoaltaefficienza.png"
-          alt="Solar"
-          className="absolute inset-0 w-full h-full object-cover"
+          alt="Pannelli di un impianto fotovoltaico"
+          fill
+          sizes="100vw"
+          className="object-cover"
         />
 
         <div className="absolute inset-0 bg-black/55" />
@@ -292,14 +294,15 @@ export default function EnergyLandingPage() {
           >
             <Sun className="w-14 h-14 mb-6 text-yellow-400" />
 
-            <div className="text-5xl md:text-4xl font-semibold leading-tight mb-8">
-              Fotovoltaico ad alta efficienza
-            </div>
+            <h2 className="text-5xl md:text-4xl font-semibold leading-tight mb-8">
+              Componenti e progetto: ogni scelta conta
+            </h2>
 
             <p className="text-xl text-gray-200 max-w-2xl mb-10 leading-relaxed">
-              Soluzioni avanzate per abitazioni e aziende con gestione
-              completa pratiche, incentivi e installazione certificata.
-                       </p>
+              Soluzioni per abitazioni e aziende che considerano componenti,
+              consumi e caratteristiche del sito, con supporto sui passaggi
+              previsti per il progetto.
+            </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/CalcolatoreFV"
@@ -317,6 +320,83 @@ export default function EnergyLandingPage() {
               </Link>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="bg-white px-6 py-24 text-neutral-900 md:px-20">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
+              Una scelta consapevole
+            </p>
+            <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+              Come si valuta un impianto fotovoltaico
+            </h2>
+            <p className="mt-5 text-base leading-7 text-neutral-600">
+              La potenza non si sceglie in base alla sola superficie del tetto.
+              Una prima valutazione mette in relazione i consumi, gli orari di
+              utilizzo e le caratteristiche dell’edificio.
+            </p>
+            <Link
+              href="/CalcolatoreFV"
+              className="mt-6 inline-flex min-h-12 items-center gap-2 font-semibold text-emerald-800 underline underline-offset-4 hover:text-emerald-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+            >
+              Stima la produzione
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              {
+                title: "Consumi e abitudini",
+                text: "Le fasce orarie in cui usi energia aiutano a stimare quanta produzione puoi autoconsumare direttamente.",
+              },
+              {
+                title: "Tetto e ombreggiamenti",
+                text: "Orientamento, inclinazione, ombre e spazio disponibile influiscono sulla produzione attesa.",
+              },
+              {
+                title: "Inverter e moduli",
+                text: "I componenti vanno scelti in base al progetto, alle condizioni di installazione e alla compatibilità del sistema.",
+              },
+              {
+                title: "Accumulo e pratiche",
+                text: "La batteria non è adatta a tutti i profili. Costi, requisiti e pratiche vanno verificati sul caso specifico.",
+              },
+            ].map(({ title, text }) => (
+              <article
+                key={title}
+                className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6"
+              >
+                <h3 className="text-lg font-semibold">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-neutral-600">{text}</p>
+              </article>
+            ))}
+
+            <div className="sm:col-span-2">
+              <p className="text-sm leading-6 text-neutral-600">
+                Per confrontare i componenti, consulta anche i{" "}
+                <Link
+                  href="/accumulo"
+                  className="font-semibold text-emerald-800 underline underline-offset-4 hover:text-emerald-950"
+                >
+                  sistemi e le schede tecniche disponibili
+                </Link>
+                . Per informazioni aggiornate su regole e incentivi, fai
+                riferimento alle fonti ufficiali del{" "}
+                <a
+                  href="https://www.gse.it/servizi-per-te/fotovoltaico"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-emerald-800 underline underline-offset-4 hover:text-emerald-950"
+                >
+                  GSE
+                </a>
+                .
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -379,6 +459,104 @@ export default function EnergyLandingPage() {
         </div>
       </section>
 
+
+            <section className="bg-[#0f1115] px-6 py-24 md:px-20">
+              <div className="mx-auto max-w-4xl">
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
+                  Risposte utili
+                </p>
+                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                  Domande frequenti sugli impianti fotovoltaici
+                </h2>
+                <div className="mt-8 divide-y divide-white/10 border-y border-white/10">
+                  {[
+                    {
+                      question: "Come si dimensiona un impianto fotovoltaico?",
+                      answer:
+                        "La valutazione considera i consumi elettrici, le abitudini di utilizzo, lo spazio disponibile, l’esposizione e le ombre sul tetto. Un calcolo online è indicativo: il progetto va verificato sulle caratteristiche dell’immobile e dell’impianto elettrico.",
+                    },
+                    {
+                      question: "Un sistema di accumulo è sempre necessario?",
+                      answer:
+                        "No. La convenienza dipende da quando si consuma energia, dalla produzione attesa e dai costi della soluzione. È utile confrontare il profilo dei consumi con la produzione prevista prima di scegliere una batteria.",
+                    },
+                    {
+                      question:
+                        "È possibile aggiungere l’accumulo a un impianto esistente?",
+                      answer:
+                        "In molti casi si può valutare un sistema di accumulo anche su un impianto esistente, ma la compatibilità dipende dall’inverter, dalla configurazione elettrica e dai componenti installati. Serve una verifica tecnica del caso specifico.",
+                    },
+                    {
+                      question: "Dove posso verificare incentivi e regole aggiornate?",
+                      answer:
+                        "Requisiti, scadenze e incentivi possono cambiare. Per le informazioni aggiornate consulta le comunicazioni e i servizi ufficiali del Gestore dei Servizi Energetici (GSE) e verifica le condizioni applicabili al tuo intervento.",
+                    },
+                  ].map(({ question, answer }) => (
+                    <details key={question} className="group py-5">
+                      <summary className="cursor-pointer list-none pr-8 text-base font-semibold marker:content-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:text-lg">
+                        {question}
+                        <span
+                          aria-hidden="true"
+                          className="float-right text-emerald-300 transition-transform group-open:rotate-45"
+                        >
+                          +
+                        </span>
+                      </summary>
+                      <p className="max-w-3xl pt-4 text-sm leading-7 text-gray-300">
+                        {answer}
+                      </p>
+                    </details>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+      {/* SECTION SOLAR */}
+      <section className="relative min-h-screen flex items-center">
+        <img
+          src="/images/fotovoltaicoaltaefficienza.png"
+          alt="Solar"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+
+        <div className="absolute inset-0 bg-black/55" />
+
+        <div className="relative z-10 max-w-5xl px-8 md:px-20">
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+          >
+            <Sun className="w-14 h-14 mb-6 text-yellow-400" />
+
+            <div className="text-5xl md:text-4xl font-semibold leading-tight mb-8">
+              Fotovoltaico ad alta efficienza
+            </div>
+
+            <p className="text-xl text-gray-200 max-w-2xl mb-10 leading-relaxed">
+              Soluzioni avanzate per abitazioni e aziende con gestione
+              completa pratiche, incentivi e installazione certificata.
+                       </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/CalcolatoreFV"
+                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Calcola la produzione
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/preventivoFV"
+                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full border border-white/55 bg-black/20 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Configura un preventivo
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
             {/* CTA FINAL */}
       <section className="relative overflow-hidden py-28 text-center sm:py-36">
