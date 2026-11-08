@@ -18,6 +18,7 @@ import {
 } from "react-icons/fa";
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import ImpiantiFotovoltaiciGallery from '@/components/ImpiantiFotovoltaiciGallery';
 
 // --- CONTENUTO PRINCIPALE ---
 
@@ -94,6 +95,8 @@ const [menuOpen, setMenuOpen] = useState(false);
           </div>
         </div>
       </section>
+
+      <ImpiantiFotovoltaiciGallery />
 
       {/* Macro Sezione 3: Comfort Clima & Aria */}
       <section className="bg-white" style={{ backgroundColor: '#ffffff' }}>

@@ -115,3 +115,65 @@ body {
 .text-secondary {
   color: var(--text-secondary);
 }
+
+.solar-gallery {
+  overflow: hidden;
+}
+
+.solar-gallery-track,
+.solar-gallery-group {
+  display: flex;
+  width: max-content;
+}
+
+.solar-gallery-track {
+  animation: solar-gallery-scroll 100s linear infinite;
+}
+
+.solar-gallery-track:hover,
+.solar-gallery-track:focus-within {
+  animation-play-state: paused;
+}
+
+.solar-gallery-group {
+  flex-shrink: 0;
+  gap: 1rem;
+  padding-right: 1rem;
+}
+
+.solar-gallery-card {
+  width: min(78vw, 350px);
+  flex-shrink: 0;
+}
+
+.solar-gallery-backdrop {
+  position: absolute;
+  inset: -1rem;
+  background-position: center;
+  background-size: cover;
+  filter: blur(1rem) brightness(0.65);
+}
+
+.solar-gallery-card img {
+  transition: transform 300ms ease;
+}
+
+.solar-gallery-card:hover img {
+  transform: scale(1.04);
+}
+
+@keyframes solar-gallery-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solar-gallery {
+    overflow-x: auto;
+  }
+
+  .solar-gallery-track {
+    animation: none;
+  }
+}
