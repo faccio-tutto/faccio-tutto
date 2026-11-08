@@ -205,14 +205,14 @@ export default function EnergyLandingPage() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/CalcolatoreFV"
+                href="/preventivoFV"
                 className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Configura un preventivo
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/preventivoFV"
+                href="/CalcolatoreFV"
                 className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full border border-white/55 bg-black/20 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Calcola la produzione
