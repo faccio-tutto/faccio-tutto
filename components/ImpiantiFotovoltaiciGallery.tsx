@@ -11,10 +11,10 @@ const projects = [
   { place: "Riesi", count: 2 },
   { place: "San Cataldo", count: 7 },
   { place: "Serradifalco", count: 7 },
-].flatMap(({ place, count, prefix = "", filePrefix = place }) =>
+].flatMap(({ place, count, filePrefix = place }) =>
   Array.from({ length: count }, (_, index) => {
     const number = index + 1;
-    const fileName = `${prefix}${filePrefix} ${number}.png`;
+    const fileName = `${filePrefix} ${number}.png`;
 
     return {
       src: `/images/Impianti%20fotovoltaici/${encodeURIComponent(fileName)}`,
