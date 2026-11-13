@@ -57,6 +57,10 @@ interface ListiniData {
 const IVA_RATE = 0.10;
 const LABOUR_AND_WIRING_COST_PER_KWP = 300; 
 const DOCUMENTATION_COST = 250; 
+const FLAT_ROOF_STRUCTURE_ID = "str2";
+const FLAT_ROOF_BASE_PRICE = 758.98;
+const FLAT_ROOF_BASE_MODULE_LIMIT = 14;
+const FLAT_ROOF_EXTRA_MODULE_PRICE = 70;
 const DEFAULT_SELECTION_ID = "none"; 
 const moduleImages: Record<string, string> = {
   mod1: "/images/modulo-trinasolar-450.jpg",
@@ -179,7 +183,7 @@ const PvEstimator: FC = () => {
         ],
         strutture: [
           { id: "str1", type: "Tetto inclinato (tegole/coppi)", price: 770.00, image: "/images/struttura-tetto-inclinato.jpg" },
-          { id: "str2", type: "Tetto piano (zavorrato)", price: 850.00, image: "/images/struttura-tetto-piano.jpg" },
+          { id: "str2", type: "Tetto piano (zavorrato)", price: FLAT_ROOF_BASE_PRICE, image: "/images/struttura-tetto-piano.jpg" },
           { id: "str3", type: "Pensilina / Pergolato", price: 650.00, image: "/images/struttura-pensilina.jpg" },
         ],
       };
@@ -238,7 +242,13 @@ const PvEstimator: FC = () => {
     const modulesPrice = selectedModuloObj.price * moduleCount; 
     const inverterPrice = selectedInverterObj.price;
     const batteryPrice = selectedBatteriaObj ? selectedBatteriaObj.price * batteryQuantity : 0;
-    const structurePrice = selectedStrutturaObj.price; 
+    const extraFlatRoofModules =
+      selectedStrutturaObj.id === FLAT_ROOF_STRUCTURE_ID
+        ? Math.max(0, moduleCount - FLAT_ROOF_BASE_MODULE_LIMIT)
+        : 0;
+    const structurePrice =
+      selectedStrutturaObj.price +
+      extraFlatRoofModules * FLAT_ROOF_EXTRA_MODULE_PRICE;
     const materialCost = modulesPrice + inverterPrice + batteryPrice + structurePrice;
     const labourAndWiringPrice = modulesTotalKw * LABOUR_AND_WIRING_COST_PER_KWP; 
     const documentationCost = DOCUMENTATION_COST;
@@ -287,7 +297,7 @@ const PvEstimator: FC = () => {
     selectedStrutturaObj && {
       id: "struttura",
       title: "Struttura di supporto",
-      description: selectedStrutturaObj.type,
+      description: `${selectedStrutturaObj.type} · ${formatEuro(prices.structurePrice)}`,
       image: selectedStrutturaObj.image,
     },
   ].filter((component): component is SelectedComponent => component !== null && component !== undefined);
@@ -309,7 +319,9 @@ const PvEstimator: FC = () => {
         // AGGIUNGI QUESTA RIGA: serve a passare la quantità delle batterie al file di backend
         batteryQuantity: batteryQuantity, 
         
-        struttura: selectedStrutturaObj, 
+        struttura: selectedStrutturaObj
+          ? { ...selectedStrutturaObj, price: prices.structurePrice }
+          : null,
         cablaggio: prices.labourAndWiringPrice, 
         totale: applyVAT ? prices.total : prices.subtotal, 
         applyVAT: applyVAT,
@@ -540,6 +552,13 @@ const PvEstimator: FC = () => {
                   </option>
                 ))}
               </select>
+              {selectedStruttura === FLAT_ROOF_STRUCTURE_ID && (
+                <span className="text-xs leading-5 text-neutral-500">
+                  Costo base {formatEuro(FLAT_ROOF_BASE_PRICE)} fino a 14 moduli;
+                  dal 15°, {formatEuro(FLAT_ROOF_EXTRA_MODULE_PRICE)} per ogni
+                  modulo aggiuntivo.
+                </span>
+              )}
             </label>
 
             {/* Modulo */}

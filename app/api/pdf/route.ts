@@ -164,7 +164,7 @@ export async function POST(request: Request) {
                 </tr>` : ""}
                 <tr>
                     <td><strong>Tipologia installazione</strong></td>
-                    <td>Ancoraggio strutturale specifico per ${struttura?.type}</td>
+                    <td>Ancoraggio strutturale specifico per ${struttura?.type} (${formatEuro(struttura?.price ?? 0)})</td>
                     <td class="text-right font-mono">1 Kit</td>
                 </tr>
             </tbody>
