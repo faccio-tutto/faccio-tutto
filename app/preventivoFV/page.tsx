@@ -60,7 +60,7 @@ const DOCUMENTATION_COST = 250;
 const FLAT_ROOF_STRUCTURE_ID = "str2";
 const FLAT_ROOF_BASE_PRICE = 758.98;
 const FLAT_ROOF_BASE_MODULE_LIMIT = 14;
-const FLAT_ROOF_EXTRA_MODULE_PRICE = 70;
+const FLAT_ROOF_EXTRA_MODULE_PRICE = 60;
 const DEFAULT_SELECTION_ID = "none"; 
 const moduleImages: Record<string, string> = {
   mod1: "/images/modulo-trinasolar-450.jpg",
