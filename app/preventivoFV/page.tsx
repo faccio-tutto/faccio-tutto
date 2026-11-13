@@ -81,7 +81,8 @@ const inverterImages: Record<string, string> = {
   inv11: "/images/inverter-epcube.jpg",
   inv12: "/images/inverter-haier.jpg",
   inv13: "/images/inverter-ucanpower.jpg",
-  inv14: "/images/inverter-weco6.jpg",
+   inv14: "/images/inverter-ucanpower.jpg",
+  inv15: "/images/inverter-weco6.jpg",
 };
 const batteryImages: Record<string, string> = {
   bat1: "/images/batteria-huawei-luna.jpg",
@@ -146,7 +147,8 @@ const PvEstimator: FC = () => {
           { id: "inv11", brand: "CanadianSolar", modello: "EP CUBE", powerKw: 6, maxPvPowerKw: 10, price: 1500.00 },
           { id: "inv12", brand: "Haier", modello: "MB01D6M00", powerKw: 6, maxPvPowerKw: 12, price: 990.00 },
           { id: "inv13", brand: "U can power", modello: "UHome 6K0L", powerKw: 6, maxPvPowerKw: 9, price: 1600.00 },
-          { id: "inv14", brand: "WECO", modello: "ESX 6K", powerKw: 6, maxPvPowerKw: 10, price: 1050.00 },
+          { id: "inv14", brand: "U can power", modello: "UHome 8K0L", powerKw: 8, maxPvPowerKw: 12, price: 1790.00 },
+          { id: "inv15", brand: "WECO", modello: "ESX 6K", powerKw: 6, maxPvPowerKw: 10, price: 1050.00 },
         ],
         moduli: [
           { id: "mod1", brand: "TrinaSolar", modello: "TSM-450NEG9R.28", powerW: 450, price: 75.00 }, 
@@ -211,7 +213,6 @@ const PvEstimator: FC = () => {
     return batteriaList.filter(b =>
       compatibleBrands.has(b.brand.trim().toLowerCase()) &&
       !(
-        (selectedInverterObj.id === "inv14" && b.id === "bat11") ||
         (selectedInverterObj.id === "inv10" && b.id === "bat15")
       )
     );
