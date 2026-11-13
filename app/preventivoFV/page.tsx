@@ -285,7 +285,7 @@ const PvEstimator: FC = () => {
     selectedInverterObj && {
       id: "inverter",
       title: "Inverter",
-      description: `${selectedInverterObj.brand} ${selectedInverterObj.modello ?? ""} · ${selectedInverterObj.powerKw} kW`,
+      description: `${selectedInverterObj.brand} ${selectedInverterObj.modello ?? ""} · ${selectedInverterObj.powerKw} kW · FV max ${selectedInverterObj.maxPvPowerKw} kWp`,
       image: inverterImages[selectedInverterObj.id] ?? "/images/puntoenergia-inverter-solis-hybrid.jpg",
     },
     selectedBatteriaObj && {
@@ -297,7 +297,7 @@ const PvEstimator: FC = () => {
     selectedStrutturaObj && {
       id: "struttura",
       title: "Struttura di supporto",
-      description: `${selectedStrutturaObj.type} · ${formatEuro(prices.structurePrice)}`,
+      description: selectedStrutturaObj.type,
       image: selectedStrutturaObj.image,
     },
   ].filter((component): component is SelectedComponent => component !== null && component !== undefined);
@@ -548,7 +548,7 @@ const PvEstimator: FC = () => {
                 <option value={DEFAULT_SELECTION_ID} disabled hidden={selectedInverter !== DEFAULT_SELECTION_ID}>Seleziona inverter</option>
                 {inverterList.map(i => (
                   <option key={i.id} value={i.id} className="bg-neutral-900 text-white">
-                    {i.brand} {i.modello ? `${i.modello}` : ""} ({i.powerKw} kW)
+                    {i.brand} {i.modello ? `${i.modello}` : ""} ({i.powerKw} kW inverter · fino a {i.maxPvPowerKw} kWp FV)
                   </option>
                 ))}
               </select>
