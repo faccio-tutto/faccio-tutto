@@ -552,13 +552,6 @@ const PvEstimator: FC = () => {
                   </option>
                 ))}
               </select>
-              {selectedStruttura === FLAT_ROOF_STRUCTURE_ID && (
-                <span className="text-xs leading-5 text-neutral-500">
-                  Costo base {formatEuro(FLAT_ROOF_BASE_PRICE)} fino a 14 moduli;
-                  dal 15°, {formatEuro(FLAT_ROOF_EXTRA_MODULE_PRICE)} per ogni
-                  modulo aggiuntivo.
-                </span>
-              )}
             </label>
 
             {/* Modulo */}
