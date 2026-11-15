@@ -107,6 +107,8 @@ const batteryImages: Record<string, string> = {
 };
 
   const menuItems = [
+    { name: "Home", href: "/" },
+    { name: "Chi siamo", href: "/chisiamo" },
     { name: "Architettura", href: "/progettazione" },
     { name: "Fotovoltaico", href: "/fotovoltaico" },
     { name: "Infissi", href: "/infissi" },
