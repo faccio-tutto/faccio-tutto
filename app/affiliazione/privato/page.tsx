@@ -50,7 +50,7 @@ const AffiliazionePrivati = () => {
       <main className="bg-black text-white overflow-hidden">
         <nav
           aria-label="Navigazione principale"
-          className="fixed top-0 z-50 w-full border-b border-white/5 bg-black/30 text-white backdrop-blur-md"
+          className="fixed top-0 z-50 w-full bg-black/30 text-white backdrop-blur-md border-b border-white/5"
         >
           <div className="flex items-center justify-between px-6 py-4 md:px-12">
             <div className="flex items-center gap-6">
@@ -64,7 +64,7 @@ const AffiliazionePrivati = () => {
                 />
               </Link>
 
-              <div className="hidden items-center gap-3 text-xs font-bold uppercase tracking-wider text-neutral-300 sm:flex">
+              <div className="hidden items-center gap-3 text-xs font-bold uppercase tracking-wider text-neutral-300 md:flex">
                 <span>faccio-tutto.it</span>
                 <a
                   href="https://www.instagram.com/infofacciotutto/"
@@ -87,7 +87,7 @@ const AffiliazionePrivati = () => {
               </div>
             </div>
 
-            <ul className="hidden items-center gap-6 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-200 lg:flex xl:gap-8 xl:tracking-[0.2em]">
+            <ul className="hidden items-center gap-10 text-[11px] uppercase tracking-[0.25em] text-white/60 lg:flex">
               {menuItems.map((item) => (
                 <li key={item.href}>
                   <Link
