@@ -23,6 +23,8 @@ export default function RiparazioniVelociPage() {
   const [messaggio, setMessaggio] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 const menuItems = [
+    { name: "Home", href: "/" },
+    { name: "Chi siamo", href: "/chisiamo" },
     { name: "Architettura", href: "/progettazione" },
     { name: "Fotovoltaico", href: "/fotovoltaico" },
     { name: "Infissi", href: "/infissi" },
@@ -30,6 +32,7 @@ const menuItems = [
     { name: "Riparazioni", href: "/riparazioni-veloci" },
     { name: "Contatti", href: "/prenota" },
   ];
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

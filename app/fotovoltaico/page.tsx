@@ -36,7 +36,9 @@ export default function EnergyLandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
 
-  const menuItems = [
+ const menuItems = [
+    { name: "Home", href: "/" },
+    { name: "Chi siamo", href: "/chisiamo" },
     { name: "Architettura", href: "/progettazione" },
     { name: "Fotovoltaico", href: "/fotovoltaico" },
     { name: "Infissi", href: "/infissi" },

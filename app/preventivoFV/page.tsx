@@ -178,7 +178,7 @@ const PvEstimator: FC = () => {
           { id: "bat11", brand: "WECO", modello: "5K0 SMART", capacityKwh: 5.12, price: 1550.00 }, 
           { id: "bat12", brand: "CanadianSolar", modello: "EP CUBE", capacityKwh: 5.12, price: 1300.00 },
           { id: "bat13", brand: "Haier", modello: "MB01F0M00", capacityKwh: 5.00, price: 2200.00 },
-          { id: "bat14", brand: "U can power", modello: "ULB-5120MT", capacityKwh: 5.12, price: 1750.00 },
+          { id: "bat14", brand: "U can power", modello: "ULB-5120MT", capacityKwh: 5.12, price: 1650.00 },
           { id: "bat15", brand: "WECO", modello: "16K0-LV", capacityKwh: 16.00, price: 2250.00 },
         ],
         strutture: [

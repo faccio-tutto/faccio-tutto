@@ -3,11 +3,31 @@
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import {
+  FaInstagram,
+  FaInstagramSquare,
+  FaLinkedin,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 import ModuloContatti from "./ModuloContatti";
 
 export default function AffiliazioneAzienda() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const menuItems = [
+    { name: "Home", href: "/" },
+    { name: "Chi siamo", href: "/chisiamo" },
+    { name: "Architettura", href: "/progettazione" },
+    { name: "Fotovoltaico", href: "/fotovoltaico" },
+    { name: "Infissi", href: "/infissi" },
+    { name: "Climatizzazione", href: "/climatizzazione" },
+    { name: "Riparazioni", href: "/riparazioni-veloci" },
+    { name: "Contatti", href: "/prenota" },
+  ];
+
   return (
     <>
       <Head>
@@ -25,57 +45,115 @@ export default function AffiliazioneAzienda() {
       </Head>
 
       <main className="bg-black text-white overflow-hidden">
-         {/* Navbar Minimal Tesla Style */}
-      <nav className="absolute top-0 left-0 w-full text-white py-4 px-6 md:px-12 flex justify-between items-center z-40 bg-gradient-to-b from-black/50 to-transparent">
-        <div className="flex items-center gap-6">
-          <a href="/" className="transition hover:opacity-80">
-            <Image src="/logo faccio tutto 3.png" alt="Logo Faccio Tutto" width={110} height={110} className="rounded" />
-          </a>
-          <div className="hidden sm:flex items-center gap-3 text-xs tracking-wider uppercase font-bold text-neutral-300">
-            <span>faccio-tutto.it</span>
-            <a href="https://www.instagram.com/infofacciotutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaInstagramSquare className="text-base" /></a>
-            <a href="https://www.linkedin.com/company/faccio-tutto/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition"><FaLinkedin className="text-base" /></a>
+        <nav
+          aria-label="Navigazione principale"
+          className="fixed top-0 z-50 w-full border-b border-white/5 bg-black/30 text-white backdrop-blur-md"
+        >
+          <div className="flex items-center justify-between px-6 py-4 md:px-12">
+            <div className="flex items-center gap-6">
+              <Link href="/" aria-label="Faccio Tutto, pagina iniziale">
+                <Image
+                  src="/logo faccio tutto 3.png"
+                  alt="Logo Faccio Tutto"
+                  width={100}
+                  height={100}
+                  className="rounded"
+                />
+              </Link>
+
+              <div className="hidden items-center gap-3 text-xs font-bold uppercase tracking-wider text-neutral-300 sm:flex">
+                <span>faccio-tutto.it</span>
+                <a
+                  href="https://www.instagram.com/infofacciotutto/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Faccio Tutto su Instagram"
+                  className="transition hover:text-white"
+                >
+                  <FaInstagram className="text-base" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/faccio-tutto/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Faccio Tutto su LinkedIn"
+                  className="transition hover:text-white"
+                >
+                  <FaLinkedin className="text-base" />
+                </a>
+              </div>
+            </div>
+
+            <ul className="hidden items-center gap-6 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-200 lg:flex xl:gap-8 xl:tracking-[0.2em]">
+              {menuItems.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="transition duration-200 hover:text-white"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen((open) => !open)}
+              className="text-2xl text-white lg:hidden"
+              aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <FaTimes /> : <FaBars />}
+            </button>
           </div>
-        </div>
 
-    {/* Menu Centrale */}
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.25 }}
+                className="border-t border-white/10 bg-black/95 backdrop-blur-xl lg:hidden"
+              >
+                <div className="flex flex-col">
+                  {menuItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="border-b border-white/10 px-8 py-5 text-sm uppercase tracking-widest text-white hover:bg-white/5"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
 
-    <ul className="hidden lg:flex items-center gap-8 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-200">
-
-      {[
-
-        { name: "Architettura", href: "/progettazione" },
-
-        { name: "Fotovoltaico", href: "/fotovoltaico" },
-
-        { name: "Infissi", href: "/infissi" },
-
-        { name: "Climatizzazione", href: "/climatizzazione" },
-
-        { name: "Riparazioni", href: "/riparazioni-veloci" },
-
-      ].map((item) => (
-
-        <li key={item.href}>
-
-          <Link
-
-            href={item.href}
-
-            className="hover:text-white transition duration-200"
-
-          >
-
-            {item.name}
-
-          </Link>
-
-        </li>
-
-      ))}
-
-    </ul>
-      </nav>
+                  <div className="flex justify-center gap-6 py-6">
+                    <a
+                      href="https://www.instagram.com/infofacciotutto/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Faccio Tutto su Instagram"
+                      className="text-2xl text-white"
+                    >
+                      <FaInstagram />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/company/faccio-tutto/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Faccio Tutto su LinkedIn"
+                      className="text-2xl text-white"
+                    >
+                      <FaLinkedin />
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
 
         {/* HERO */}
         <section className="relative min-h-screen flex items-center justify-center">

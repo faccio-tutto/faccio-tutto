@@ -8,6 +8,8 @@ import ModuloContatti from './ModuloContatti';
 import { FaInstagramSquare, FaLinkedin, FaGlobe, FaEnvelope, FaPhone, FaBars, FaTimes } from "react-icons/fa";
 
  const menuItems = [
+    { name: "Home", href: "/" },
+    { name: "Chi siamo", href: "/chisiamo" },
     { name: "Architettura", href: "/progettazione" },
     { name: "Fotovoltaico", href: "/fotovoltaico" },
     { name: "Infissi", href: "/infissi" },

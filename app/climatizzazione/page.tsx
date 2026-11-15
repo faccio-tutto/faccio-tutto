@@ -23,6 +23,8 @@ export default function ClimatizzazionePage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const menuItems = [
+    { name: "Home", href: "/" },
+    { name: "Chi siamo", href: "/chisiamo" },
     { name: "Architettura", href: "/progettazione" },
     { name: "Fotovoltaico", href: "/fotovoltaico" },
     { name: "Infissi", href: "/infissi" },
