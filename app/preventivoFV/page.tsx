@@ -146,7 +146,7 @@ const PvEstimator: FC = () => {
           { id: "inv4", brand: "Unical", modello: "Hybrid 6K", powerKw: 6, maxPvPowerKw: 9, price: 1280.00 },
           { id: "inv5", brand: "Fronius", modello: "Gen24 Plus", powerKw: 6, maxPvPowerKw: 9, price: 1699.00 },
           { id: "inv6", brand: "SMA", modello: "Sunny Boy Smart Energy", powerKw: 6, maxPvPowerKw: 12, price: 1500.00 },
-          { id: "inv7", brand: "Solis", modello: "S6-EH1P6K-L-PLUS Hybrid", powerKw: 6, maxPvPowerKw: 12, price: 1180.00 },
+          { id: "inv7", brand: "Solis", modello: "S6-EH1P6K-L-PLUS Hybrid", powerKw: 6, maxPvPowerKw: 9.6, price: 1180.00 },
           { id: "inv8", brand: "Zucchetti Easy power - all in one", modello: "HYD 6000 ZP1", powerKw: 6, maxPvPowerKw: 9, price: 1400.00 },
           { id: "inv9", brand: "Zucchetti ZCS Azzurro", modello: "1PH HYD 6000-ZSS HP", powerKw: 6, maxPvPowerKw: 9, price: 1400.00 },
           { id: "inv10", brand: "WECO", modello: "5K0 SMART EU All in One", powerKw: 6, maxPvPowerKw: 10, price: 1400.00 },
