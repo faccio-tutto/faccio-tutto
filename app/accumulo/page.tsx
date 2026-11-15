@@ -58,7 +58,7 @@ const brandSistemi = [
     tag: "Design Modulare Elegante",
     descrizione: "Estetica minimalista ed elettronica avanzata. Ogni blocco batteria è dotato di un ottimizzatore indipendente per sfruttare il 100% della capacità utile.",
     image: "/images/huawei-system.png",
-    pdf: "/schede-tecniche/UM-SUN2000-(3K-6K)-LB0-IT.pdf",
+    pdf: "/schede-tecniche/DS-SUN2000-3-6K-LB0-EN.pdf",
     pdf2: "/schede-tecniche/LUNA2000-5-15-S0_T.pdf",
   },
   {
@@ -76,8 +76,8 @@ const brandSistemi = [
     tag: "Sistema Ibrido",
     descrizione: "Efficienza di conversione al 96,6%, elevata capacità del campo fotovoltaico. Tecnologia di raffreddamento avanzata, design compatto e interfaccia con display LCD per un monitoraggio semplice e intuitivo.",
     image: "/images/deye-system.png",
-    pdf: "/schede-tecniche/deye-sun-6k-sg05lp1-eu.pdf",
-    pdf2: "/schede-tecniche/deye-sun-6k-sg05lp1-eu-batteria.pdf",
+    pdf: "/schede-tecniche/Deye_sun-xxK-SG05LP1-EU-AM2_scheda_tecnica.pdf",
+    pdf2: "/schede-tecniche/12278-12279-12280-12281-12282-12283-Technical-Specs.pdf",
   },
    {
     brand: "Unical",
@@ -85,8 +85,8 @@ const brandSistemi = [
     tag: "Doppio inseguitore MPP",
     descrizione: "Gestione di un sistema Backup di serie, continuità operativa (Anti-Blackout), progettato per evitare spegnimenti improvvisi con autolimitazione della potenza, in caso sbalzi di tensione nella rete elettrica. Gestione intelligente delle ombre, analisi costante e continua per rincorrere in ogni momento il punto di massima potenza assoluta, +15% di resa in condizioni di ombra parziale. Oversizing straordinario, con input DC fino a 12 kWp oltre i limiti termici dei prodotti simili, ideale per una casa FULL ELETTRIC.",
     image: "/images/unical-system.png",
-    pdf: "/schede-tecniche/unical-sth-ls-6k.pdf",
-    pdf2: "/schede-tecniche/unical-sth-ls-6k-batteria.pdf",
+    pdf: "/schede-tecniche/X13009allegatoDEPLIANT1-1X_zoe1-scheda_ita_04-2026.pdf",
+    pdf2: "/schede-tecniche/X13640allegatoDEPLIANT1-1X_batteria-ste-os_scheda-ita_09-2026.pdf",
   },
    {
     brand: "Solis",
@@ -94,8 +94,8 @@ const brandSistemi = [
     tag: "160% della potenza DC nominale dell’inverter",
     descrizione: "Offre funzioni evolute come il supporto dei generatori, l’accoppiamento con inverter già connessi alla rete, il funzionamento in parallelo e la gestione intelligente dei carichi, risultando una soluzione completa e scalabile per l’accumulo energetico in ambito residenziale.",
     image: "/images/solis-system.png",
-    pdf: "/schede-tecniche/solis-s6-eh1p6k-l-plus.pdf",
-    pdf2: "/schede-tecniche/solis-s6-eh1p6k-l-plus-batteria.pdf",
+    pdf: "/schede-tecniche/DS-S6-EH1P(3-10)K-L-PLUS-IT.pdf",
+    pdf2: "/schede-tecniche/DynessPowerboxG2DatasheetIT20251016-536.pdf",
   },
    {
     brand: "Weco",
@@ -103,8 +103,8 @@ const brandSistemi = [
     tag: "Plug & Play",
     descrizione: "Sistema Soppressione incendi integrato, batteria LFP con grado di protezione IP66, modulare impilabile, autoconfigurazione plug & play adattiva, scalabile fino a 12 moduli, sfruttabile fino al 100% DoD, ottimizzazione energetica a livello di modulo, espansione della capacità in ogni momento, modulo di ricarica dc per veicoli elettrici, display LCD.",
     image: "/images/weco-system.png",
-    pdf: "/schede-tecniche/weco-6kw-5k0-smart-eu.pdf",
-    pdf2: "/schede-tecniche/weco-6kw-5k0-smart-eu-batteria.pdf",
+    pdf: "/schede-tecniche/4822988f44dea18319cfe344cdb9bdb0.pdf",
+    pdf2: "/schede-tecniche/4822988f44dea18319cfe344cdb9bdb0.pdf",
   },
   {
     brand: "Canadian Solar",
@@ -112,8 +112,8 @@ const brandSistemi = [
     tag: "Flessibile e conveniente",
     descrizione: "Batterie modulari impilabili facili da trasportare e installare, capacità dell’accumulo personalizzabile da 5 kWh a 20 kWh, design all-in-one, alimentazione automatica garantita durante l'interruzione della rete elettrica, elevata potenza di uscita, sia in modalità di funzionamento normale che in modalità di backup.Batterie al litio-ferro-fosfato con i più elevati standard di sicurezza, protezione IP67. Compatibile con impianti FV pre-esistenti (AC-Retrofit) e nuovi, consente un ingresso FV fino a 16 ADC per MPPT. Compatibile con EV Charger fino a 7,4 kW, monitora la produzione, lo stato di carica e il consumo di energia elettrica in tempo reale. Aggiornamenti firmware automatici OTA (via internet).",
     image: "/images/canadian-solar-system.png",
-    pdf: "/schede-tecniche/canadian-solar-ep-cube.pdf",
-    pdf2: "/schede-tecniche/canadian-solar-ep-cube-batteria.pdf",
+    pdf: "/schede-tecniche/DS-EP-Cube-All-in-One-IT.pdf",
+    pdf2: "/schede-tecniche/DS-EP-Cube-All-in-One-IT.pdf",
   },
   {
     brand: "Haier",
@@ -121,8 +121,8 @@ const brandSistemi = [
     tag: "Sistema integrato",
     descrizione: "Inverter ibrido monofase con una potenza di uscita di 6kW, è dotato di due inseguitori MPP e gestisce una potenza fotovoltaica massima di 12kW. Funziona convertendo la corrente continua dei pannelli solari in corrente alternata, permettendo di immettere l'energia nella rete o accumularla nelle batterie. Grazie al montaggio wireless e al sistema di gestione integrato delle batterie, offre alta efficienza e facilità di installazione, rappresentando una soluzione avanzata per impianti fotovoltaici residenziali e commerciali.",
     image: "/images/haier-system.png",
-    pdf: "/schede-tecniche/haier-smart-cube.pdf",
-    pdf2: "/schede-tecniche/haier-smart-cube-batteria.pdf",
+    pdf: "/schede-tecniche/DS-Haier-SMART-CUBE-IT.pdf",
+    pdf2: "/schede-tecniche/DS-Haier-SMART-CUBE-IT.pdf",
   },
 ];
 
@@ -417,7 +417,7 @@ export default function AccumuloPage() {
       </a>
     )}
 
-    {item.pdf && (
+    {item.pdf2 && (
       <a
         href={item.pdf2}
         target="_blank"

@@ -151,7 +151,7 @@ const PvEstimator: FC = () => {
           { id: "inv9", brand: "Zucchetti ZCS Azzurro", modello: "1PH HYD 6000-ZSS HP", powerKw: 6, maxPvPowerKw: 9, price: 1400.00 },
           { id: "inv10", brand: "WECO", modello: "5K0 SMART EU All in One", powerKw: 6, maxPvPowerKw: 10, price: 1400.00 },
           { id: "inv11", brand: "CanadianSolar", modello: "EP CUBE", powerKw: 6, maxPvPowerKw: 10, price: 1500.00 },
-          { id: "inv12", brand: "Haier", modello: "MB01D6M00", powerKw: 6, maxPvPowerKw: 12, price: 990.00 },
+          { id: "inv12", brand: "Haier", modello: "MB01D6M00", powerKw: 6, maxPvPowerKw: 9.6, price: 990.00 },
           { id: "inv13", brand: "U can power", modello: "UHome 6K0L", powerKw: 6, maxPvPowerKw: 9, price: 1600.00 },
           { id: "inv14", brand: "U can power", modello: "UHome 8K0L", powerKw: 8, maxPvPowerKw: 12, price: 1790.00 },
           { id: "inv15", brand: "WECO", modello: "ESX 6K", powerKw: 6, maxPvPowerKw: 10, price: 1050.00 },
