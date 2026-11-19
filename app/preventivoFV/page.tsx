@@ -157,7 +157,7 @@ const PvEstimator: FC = () => {
           { id: "inv15", brand: "WECO", modello: "ESX 6K", powerKw: 6, maxPvPowerKw: 10, price: 1050.00 },
         ],
         moduli: [
-          { id: "mod1", brand: "TrinaSolar", modello: "TSM-450NEG9R.28", powerW: 450, price: 75.00 }, 
+          { id: "mod1", brand: "TrinaSolar", modello: "TSM-455NEG9R.28", powerW: 455, price: 76.00 }, 
           { id: "mod2", brand: "Peimar", modello:"OR10E460MNDB-BF (bifacciale)",powerW: 460, price: 77.00 }, 
           { id: "mod3", brand: "DMEGC Solar", modello:"DM470G12RT-G48HBW",powerW: 470, price: 80.00 }, 
           { id: "mod4", brand: "Peimar", modello:"OR10E510MNDB-FB8 (bifacciale)",powerW: 510, price: 84.00 },
