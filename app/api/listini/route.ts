@@ -21,8 +21,8 @@ export async function GET() {
     moduli: [
       // Modulo 430W (~0.23 €/W)
       { id: "mod1", brand: "JA Solar", powerW: 430, price: 99.00 }, 
-      // Modulo 450W (~0.24 €/W)
-      { id: "mod2", brand: "Trina", powerW: 450, price: 108.00 }, 
+      // Modulo 455W (~0.24 €/W)
+      { id: "mod2", brand: "Trina", powerW: 455, price: 108.00 },
       // Modulo 460W (~0.25 €/W)
       { id: "mod3", brand: "Canadian Solar", powerW: 460, price: 115.00 }, 
     ],

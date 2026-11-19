@@ -81,7 +81,7 @@ const PvEstimator: FC = () => {
         ],
         moduli: [
           { id: "mod1", brand: "JA Solar", powerW: 430, price: 99 }, 
-          { id: "mod2", brand: "Trina", powerW: 450, price: 108 }, 
+          { id: "mod2", brand: "Trina", powerW: 455, price: 108 },
           { id: "mod3", brand: "Canadian Solar", powerW: 460, price: 115 }, 
         ],
         batterie: [

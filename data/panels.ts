@@ -13,7 +13,7 @@ price:85
 {
 id:"p2",
 brand:"Trina",
-power:450,
+power:455,
 efficiency:20.6,
 width:1.1,
 height:1.9,
