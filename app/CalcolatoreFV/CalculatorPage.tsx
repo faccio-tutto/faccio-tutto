@@ -952,7 +952,7 @@ export default function CalculatorPage() {
       <footer className="flex w-full flex-col items-center justify-center gap-4 border-t border-neutral-900 bg-black py-8 text-center text-[10px] font-medium uppercase tracking-[0.15em] text-neutral-500 sm:flex-row sm:gap-8">
         <span className="text-neutral-600">faccio-tutto.it © {new Date().getFullYear()}</span>
         <Link
-          href="/privacy"
+          href="/termini%20e%20condizioni.pdf"
           className="underline-offset-2 transition hover:text-neutral-300 hover:underline"
         >
           Privacy e Note Legali

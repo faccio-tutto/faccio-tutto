@@ -234,7 +234,7 @@ export default function EnergyLandingPage() {
   <span>faccio-tutto.it &copy; {new Date().getFullYear()}</span>
 
   <Link
-    href="/privacy"
+    href="/termini%20e%20condizioni.pdf"
     className="hover:opacity-70 transition"
   >
     Privacy e Note Legali
